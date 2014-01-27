@@ -1,0 +1,11 @@
+/vendor/
+/composer.phar
+/composer.lock
+
+# ide directories
+/.idea
+/nbproject
+
+# tmp etc
+.DS_Store
+Thumbs.db

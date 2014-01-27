@@ -1,0 +1,42 @@
+{
+    "name": "imatic/data-bundle",
+    "type": "symfony-bundle",
+    "description": "Imatic Data Bundle",
+    "keywords": [],
+    "homepage": "http://imatic.cz",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Stepan Koci",
+            "email": "stepan.koci@imatic.cz"
+        },
+        {
+            "name": "Imatic Software s.r.o.",
+            "homepage": "http://imatic.cz/"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://composer.imatic.cz"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "symfony/framework-bundle": "2.3.*",
+        "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/orm": ">=2.2.3,<2.4-dev"
+    },
+    "require-dev": {
+        "imatic/testing-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Imatic\\Bundle\\DataBundle": ""
+        }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "Imatic/Bundle/DataBundle",
+    "extra": {
+    }
+}
