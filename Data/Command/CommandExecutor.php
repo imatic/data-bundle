@@ -3,17 +3,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 /*
- * todo
- * zpravy
- * - vypis pro uzivatele jak sync tak async
- *
- * vyjimky
- * - bude se zobrazovat text vyjimky uzivateli, nebo vse pojede pres zpravy?
- * - jak chytat a zpracovavat vyjimky?
- *  - musim poznat kdy je vyjimka napr nenalezeni dat (async message vyrizena???) a kdy nastala chyba (async message nevyrizena)
- *
- * uzivatel
- * - pokud je async zpracovani, musim umet predat uzivateli zpravy o zpracovani pokud bude treba
+ * todo: uzivatel - pokud je async zpracovani, musim umet predat uzivateli zpravy o zpracovani pokud bude treba
  */
 
 class CommandExecutor implements CommandExecutorInterface
@@ -28,9 +18,27 @@ class CommandExecutor implements CommandExecutorInterface
         $this->commandHandlerRepository = $commandHandlerRepository;
     }
 
+    /**
+     * @param CommandInterface $command
+     * @return CommandResultInterface
+     */
     public function execute(CommandInterface $command)
     {
         $commandHandler = $this->commandHandlerRepository->getCommandHandler($command);
-        $commandHandler->handle($command);
+        try {
+            $result = $commandHandler->handle($command);
+
+            if (!($result instanceof CommandResultInterface)) {
+                if (false === $result) {
+                    $result = new CommandResult(false);
+                } else {
+                    $result = new CommandResult(true);
+                }
+            }
+        } catch (\Exception $e) {
+            $result = new CommandResult(false, [], $e);
+        }
+
+        return $result;
     }
 }

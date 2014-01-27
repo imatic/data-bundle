@@ -6,7 +6,7 @@ interface CommandExecutorInterface
 {
     /**
      * @param CommandInterface $command
-     * @return void
+     * @return CommandResultInterface
      */
     public function execute(CommandInterface $command);
 }
