@@ -2,6 +2,8 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
+
 interface QueryExecutorInterface
 {
     /**

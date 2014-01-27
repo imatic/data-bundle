@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
-interface BatchCommandHandlerInterface
+interface BatchCommandHandlerInterface extends CommandHandlerInterface
 {
     public function handle(BatchCommandInterface $batchCommand);
 }

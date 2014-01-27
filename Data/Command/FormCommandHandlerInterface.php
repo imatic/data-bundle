@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
-interface FormCommandHandlerInterface
+interface FormCommandHandlerInterface extends CommandHandlerInterface
 {
     public function handle(FormCommandInterface $formCommand);
 }

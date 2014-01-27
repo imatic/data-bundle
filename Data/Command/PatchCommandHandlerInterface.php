@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
-interface PatchCommandHandlerInterface
+interface PatchCommandHandlerInterface extends CommandHandlerInterface
 {
     public function handle(PatchCommandInterface $pathCommand);
 }

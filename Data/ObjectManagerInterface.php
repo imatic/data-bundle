@@ -4,9 +4,20 @@ namespace Imatic\Bundle\DataBundle\Data;
 
 interface ObjectManagerInterface
 {
+    /**
+     * @return void
+     */
     public function flush();
 
-    public function persist();
+    /**
+     * @param object $object
+     * @return void
+     */
+    public function persist($object);
 
-    public function remove();
+    /**
+     * @param object $object
+     * @return void
+     */
+    public function remove($object);
 }
