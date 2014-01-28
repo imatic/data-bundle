@@ -2,15 +2,15 @@
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
-use Imatic\Bundle\DataBundle\Data\Command\PatchCommand;
-use Imatic\Bundle\DataBundle\Data\Command\PatchCommandHandlerInterface;
-use Imatic\Bundle\DataBundle\Data\Command\PatchCommandInterface;
+use Imatic\Bundle\DataBundle\Data\Command\Command;
+use Imatic\Bundle\DataBundle\Data\Command\CommandHandlerInterface;
+use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
+use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\ObjectManagerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
 
 // UserQuery
-
 class UserQuery implements QueryObjectInterface
 {
     /**
@@ -39,7 +39,7 @@ class UserQuery implements QueryObjectInterface
 
 // create command handler
 
-class UserDeactivateHandler implements PatchCommandHandlerInterface
+class UserDeactivateHandler implements CommandHandlerInterface
 {
     /**
      * @var Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface
@@ -57,9 +57,9 @@ class UserDeactivateHandler implements PatchCommandHandlerInterface
         $this->objectManager = $objectManager;
     }
 
-    public function handle(PatchCommandInterface $pathCommand)
+    public function handle(CommandInterface $pathCommand)
     {
-        $user = $this->queryExecutor->findOne(new UserQuery($pathCommand->getObjectIdentity()));
+        $user = $this->queryExecutor->findOne(new UserQuery($pathCommand->getParameter('id')));
         $user->deactivate();
 
         // publish events to update some stats (in transaction) etc..
@@ -70,8 +70,9 @@ class UserDeactivateHandler implements PatchCommandHandlerInterface
 }
 
 // create and run command
-$command = new PatchCommand('user.deactivate', 123);
+$command = new Command('user.deactivate', ['id' => 123]);
 
+/** @var CommandResultInterface $result */
 $result = $this->get('imatic_data.command_executor')->execute($command);
 $result->isSuccessful(); // bool
 $result->hasException(); // bool

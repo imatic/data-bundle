@@ -2,24 +2,67 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
-abstract class Command implements CommandInterface
+use Imatic\Bundle\DataBundle\Exception\ParameterNotFoundException;
+
+class Command implements CommandInterface
 {
     /**
      * @var string
      */
-    private $commandHandlerName;
+    private $handlerName;
 
-    public function __construct($commandHandlerName)
+    /**
+     * @var array
+     */
+    private $parameters;
+
+    /**
+     * @param string $handlerName
+     * @param array $parameters
+     */
+    public function __construct($handlerName, array $parameters = [])
     {
-        $this->commandHandlerName = $commandHandlerName;
+        $this->handlerName = $handlerName;
+        $this->parameters = $parameters;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getHandlerName()
     {
-        return $this->commandHandlerName;
+        return $this->handlerName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @param string $name
+     * @throws ParameterNotFoundException
+     * @return mixed
+     */
+    public function getParameter($name)
+    {
+        if (array_key_exists($name, $this->parameters)) {
+            return $this->parameters[$name];
+        }
+
+        throw new ParameterNotFoundException($name);
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasParameter($name)
+    {
+        return array_key_exists($name, $this->parameters);
     }
 
     /**
