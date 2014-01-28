@@ -72,8 +72,9 @@ class UserDeactivateHandler implements PatchCommandHandlerInterface
 // create and run command
 $command = new PatchCommand('user.deactivate', 123);
 
-try {
-    $this->get('imatic_data.command_executor')->execute($command);
-} catch (\Exception $e) {
-    echo $e->getMessage();
-}
+$result = $this->get('imatic_data.command_executor')->execute($command);
+$result->isSuccessful(); // bool
+$result->hasException(); // bool
+$result->getException(); // \Exception|null
+$result->getMessages(); // [{ type: success|error|..., message: string, params: {key: value} }]
+$result->hasMessages(); // bool
