@@ -3,7 +3,7 @@
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Command\Command;
-use Imatic\Bundle\DataBundle\Data\Command\CommandHandlerInterface;
+use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\ObjectManagerInterface;
@@ -39,7 +39,7 @@ class UserQuery implements QueryObjectInterface
 
 // create command handler
 
-class UserDeactivateHandler implements CommandHandlerInterface
+class UserDeactivateHandler implements HandlerInterface
 {
     /**
      * @var Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface
