@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-class Sorter implements \IteratorAggregate
+class Sorter implements SorterInterface
 {
     /**
      * @var SorterRule[]
