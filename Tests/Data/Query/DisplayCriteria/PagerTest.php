@@ -15,44 +15,30 @@ class PagerTest extends \PHPUnit_Framework_TestCase
         $pager = new Pager($this->page);
         $this->assertEquals($this->page, $pager->getPage(), 'Standard set/get');
 
-        $pager = new Pager();
-        $pager->setPage($this->page);
+        $pager = new Pager($this->page);
         $this->assertEquals($this->page, $pager->getPage(), 'Standard set/get');
 
-        $pager = new Pager();
-        $pager->setPage(-10);
+        $pager = new Pager(-10);
         $this->assertEquals($pager->getFirstPage(), $pager->getPage(), 'Setting negative page');
 
-        $pager = new Pager();
-        $pager->setPage(0);
+        $pager = new Pager(0);
         $this->assertEquals($pager->getFirstPage(), $pager->getPage(), 'Setting zero page');
     }
 
     public function testLimit()
     {
-        $pager = new Pager();
-        $pager->setLimit($this->limit);
+        $pager = new Pager(null, $this->limit);
         $this->assertEquals($this->limit, $pager->getLimit(), 'Standard set/get');
 
-        $pager = new Pager();
-        $pager->setLimit(1000);
+        $pager = new Pager(null, 1000);
         $pager->setMaxLimit($this->limit);
         $this->assertEquals($this->limit, $pager->getLimit(), 'Setting big limit before');
 
-        $pager = new Pager();
-        $pager->setMaxLimit($this->limit);
-        $pager->setLimit(1000);
-        $this->assertEquals($this->limit, $pager->getLimit(), 'Setting big limit after');
+        $pager = new Pager(null, 0);
+        $this->assertEquals($pager->getDefaultLimit(), $pager->getLimit(), 'Setting zero limit');
 
-        $pager = new Pager();
-        $pager->setDefaultLimit($this->limit);
-        $pager->setLimit(0);
-        $this->assertEquals($this->limit, $pager->getLimit(), 'Setting zero limit');
-
-        $pager = new Pager();
-        $pager->setDefaultLimit($this->limit);
-        $pager->setLimit(-10);
-        $this->assertEquals($this->limit, $pager->getLimit(), 'Setting negative limit');
+        $pager = new Pager(null, -10);
+        $this->assertEquals($pager->getDefaultLimit(), $pager->getLimit(), 'Setting negative limit');
     }
 
     public function testIndice()
@@ -64,17 +50,15 @@ class PagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(60, $pager->getLastIndice(), 'Last indice');
 
-        $pager = new Pager();
-        $pager->setLimit(10);
+        $pager = new Pager(null, 10);
         $pager->setTotal(1000);
 
         $this->assertEquals(1, $pager->getFirstIndice(), 'First indice');
 
         $this->assertEquals(10, $pager->getLastIndice(), 'Last indice');
 
-        $pager = new Pager(3);
+        $pager = new Pager(3, 10);
         $pager->setTotal(25);
-        $pager->setLimit(10);
 
         $this->assertEquals(25, $pager->getLastIndice(), 'Last indice');
     }
@@ -85,8 +69,7 @@ class PagerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(50, $pager->getOffset());
 
-        $pager = new Pager();
-        $pager->setLimit(10);
+        $pager = new Pager(null, 10);
 
         $this->assertEquals(0, $pager->getOffset());
     }

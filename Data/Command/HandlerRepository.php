@@ -4,7 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 
 use Imatic\Bundle\DataBundle\Exception\HandlerNotFoundException;
 
-class CommandHandlerRepository implements HandlerRepositoryInterface
+class HandlerRepository implements HandlerRepositoryInterface
 {
     /**
      * @var HandlerInterface[]

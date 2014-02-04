@@ -19,7 +19,7 @@ class CommandExecutor implements CommandExecutorInterface
     }
 
     /**
-     * @param CommandInterface $command
+     * @param  CommandInterface       $command
      * @return CommandResultInterface
      */
     public function execute(CommandInterface $command)

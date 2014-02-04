@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle\Exception;
 
-class ParameterNotFoundException extends \InvalidArgumentException implements DataExceptionInterface
+class ParameterNotFoundExceptionException extends \InvalidArgumentException implements DataExceptionInterface
 {
     public function __construct($parameterName)
     {

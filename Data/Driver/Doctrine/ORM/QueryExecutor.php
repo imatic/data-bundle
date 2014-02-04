@@ -57,8 +57,8 @@ class QueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param QueryObjectInterface $queryObject
-     * @param DisplayCriteriaInterface $displayCriteria
+     * @param  QueryObjectInterface     $queryObject
+     * @param  DisplayCriteriaInterface $displayCriteria
      * @return \Doctrine\ORM\Query
      */
     private function getQuery(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)

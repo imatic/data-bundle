@@ -21,8 +21,8 @@ class SorterRule
     protected $direction;
 
     /**
-     * @param string $column
-     * @param string $direction
+     * @param  string                    $column
+     * @param  string                    $direction
      * @throws \InvalidArgumentException
      */
     public function __construct($column, $direction = self::ASC)
@@ -44,7 +44,7 @@ class SorterRule
     }
 
     /**
-     * @param bool $lowercase
+     * @param  bool   $lowercase
      * @return string
      */
     public function getDirection($lowercase = false)
@@ -58,7 +58,7 @@ class SorterRule
     }
 
     /**
-     * @param bool $lowercase
+     * @param  bool   $lowercase
      * @return string
      */
     public function getReverseDirection($lowercase = false)
@@ -72,11 +72,11 @@ class SorterRule
     }
 
     /**
-     * @param string $direction
+     * @param  string $direction
      * @return bool
      */
     public function isDirection($direction)
     {
-        return $this->direction === strtoupper((string)$direction);
+        return $this->direction === strtoupper((string) $direction);
     }
 }

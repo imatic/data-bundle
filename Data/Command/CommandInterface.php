@@ -17,14 +17,14 @@ interface CommandInterface extends \Serializable
     public function getParameters();
 
     /**
-     * @param string $name
+     * @param  string                     $name
      * @throws ParameterNotFoundException
      * @return mixed
      */
     public function getParameter($name);
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     public function hasParameter($name);
