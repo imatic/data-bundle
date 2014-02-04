@@ -1,6 +1,6 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Driver\Doctrine\ORM;
+namespace Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;

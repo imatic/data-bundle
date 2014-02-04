@@ -1,0 +1,8 @@
+services:
+    app_imatic_data.handler.user_deactivate_handler:
+        class: Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler
+        arguments:
+            - @imatic_data.query_executor
+            - @imatic_data.object_manager
+        tags:
+            - { name: imatic_data.handler, alias: user.deactivate }
