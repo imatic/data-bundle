@@ -6,6 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
 
@@ -67,9 +70,41 @@ class QueryExecutor implements QueryExecutorInterface
         $qb = $queryObject->build($this->entityManager);
 
         if ($displayCriteria) {
-            // process display criteria
+            $this->applyPager($qb, $displayCriteria->getPager());
+            $this->applyFilter($qb, $displayCriteria->getFilter());
+            $this->applySorter($qb, $displayCriteria->getSorter());
         }
 
         return $qb->getQuery();
+    }
+
+    /**
+     * @param QueryBuilder   $qb
+     * @param PagerInterface $pager
+     */
+    private function applyPager(QueryBuilder $qb, PagerInterface $pager)
+    {
+        $qb
+            ->setFirstResult($pager->getOffset())
+            ->setMaxResults($pager->getLimit())
+        ;
+    }
+
+    /**
+     * @param QueryBuilder    $qb
+     * @param FilterInterface $filter
+     */
+    private function applyFilter(QueryBuilder $qb, FilterInterface $filter)
+    {
+
+    }
+
+    /**
+     * @param QueryBuilder    $qb
+     * @param SorterInterface $sorter
+     */
+    private function applySorter(QueryBuilder $qb, SorterInterface $sorter)
+    {
+
     }
 }

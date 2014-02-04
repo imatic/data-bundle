@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @todo: spatne, prepsat
  */
-class Filter implements \IteratorAggregate
+class Filter implements \IteratorAggregate, FilterInterface
 {
 
     protected $filterRules = array();
