@@ -5,21 +5,14 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 interface PagerInterface
 {
     /**
-     * @param int $limit
-     */
-    public function setLimit($limit);
-
-    /**
      * @return int
      */
     public function getLimit();
 
-    public function getOffset();
-
     /**
-     * @param int $page
+     * @return int
      */
-    public function setPage($page);
+    public function getOffset();
 
     /**
      * @return int

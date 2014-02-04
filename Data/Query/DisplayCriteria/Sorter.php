@@ -23,7 +23,7 @@ class Sorter implements SorterInterface
      * @param SorterRule $sorterRule
      * @return $this
      */
-    public function addSorterRule(SorterRule $sorterRule)
+    protected function addSorterRule(SorterRule $sorterRule)
     {
         $this->sorterRules[$sorterRule->getColumn()] = $sorterRule;
 

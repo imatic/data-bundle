@@ -4,11 +4,6 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use LogicException;
 
-/**
- * Class Pager
- *
- * @todo: konfigurovatelne DEFAULT_MAX_LIMIT, DEFAULT_LIMIT => nebudou konstanty
- */
 class Pager implements PagerInterface
 {
     const DEFAULT_MAX_LIMIT = 300;
@@ -54,7 +49,7 @@ class Pager implements PagerInterface
     /**
      * @param int $limit
      */
-    public function setLimit($limit)
+    protected function setLimit($limit)
     {
         $limit = intval($limit);
         if ($limit < 1) {
@@ -82,7 +77,7 @@ class Pager implements PagerInterface
     /**
      * @param int $page
      */
-    public function setPage($page)
+    protected function setPage($page)
     {
         $page = intval($page);
         if ($page < self::MIN_PAGE) {

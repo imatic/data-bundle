@@ -9,13 +9,13 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 class CommandExecutor implements CommandExecutorInterface
 {
     /**
-     * @var CommandHandlerRepositoryInterface
+     * @var HandlerRepositoryInterface
      */
-    private $commandHandlerRepository;
+    private $handlerRepository;
 
-    public function __construct(CommandHandlerRepositoryInterface $commandHandlerRepository)
+    public function __construct(HandlerRepositoryInterface $handlerRepository)
     {
-        $this->commandHandlerRepository = $commandHandlerRepository;
+        $this->handlerRepository = $handlerRepository;
     }
 
     /**
@@ -24,7 +24,7 @@ class CommandExecutor implements CommandExecutorInterface
      */
     public function execute(CommandInterface $command)
     {
-        $commandHandler = $this->commandHandlerRepository->getCommandHandler($command);
+        $commandHandler = $this->handlerRepository->getHandler($command);
         try {
             $result = $commandHandler->handle($command);
 
