@@ -21,6 +21,10 @@ class HandlerRepository implements HandlerRepositoryInterface
      */
     public function addHandler($name, HandlerInterface $handler)
     {
+        if ($this->hasHandler($name)) {
+            throw new \LogicException(sprintf('Cannot register 2nd handler with name "%s".', $name));
+        }
+
         $this->handlers[$name] = $handler;
     }
 
@@ -38,9 +42,19 @@ class HandlerRepository implements HandlerRepositoryInterface
     public function getHandler(CommandInterface $command)
     {
         $name = $command->getHandlerName();
-        if (array_key_exists($name, $this->handlers)) {
+        if ($this->hasHandler($name)) {
             return $this->handlers[$name];
         }
         throw new HandlerNotFoundException($name);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    private function hasHandler($name)
+    {
+        return array_key_exists($name, $this->handlers);
     }
 }
