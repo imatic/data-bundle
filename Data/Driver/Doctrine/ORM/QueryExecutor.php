@@ -9,6 +9,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
 
@@ -105,6 +106,9 @@ class QueryExecutor implements QueryExecutorInterface
      */
     private function applySorter(QueryBuilder $qb, SorterInterface $sorter)
     {
-
+        /* @var $sorterRule SorterRule */
+        foreach ($sorter as $sorterRule) {
+            $qb->addOrderBy($sorterRule->getColumn(), $sorterRule->getDirection());
+        }
     }
 }

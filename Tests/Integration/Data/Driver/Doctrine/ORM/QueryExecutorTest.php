@@ -8,6 +8,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
@@ -29,6 +30,7 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnsCorrectPagesBasedOnDisplayCriteria()
     {
+        // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
         $firstPageCriteria = new DisplayCriteria(new Pager(1, 1), new Sorter(), new Filter());
@@ -44,11 +46,46 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnOnePageWithTwoResultsBasedOnDisplayCriteria()
     {
+        // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
         $criteria = new DisplayCriteria(new Pager(1, 2), new Sorter(), new Filter());
         $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
         $this->assertCount(2, $results);
+    }
+
+    public function testQueryExecutorShouldReturnSortedResultsAscBasedOnDisplayCriteria()
+    {
+        // guard
+        $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
+
+        $sorter = new Sorter([
+            new SorterRule('u.name', SorterRule::ASC),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(2, $results);
+        $this->assertEquals('Adam', $results[0]->getName());
+        $this->assertEquals('Eva', $results[1]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnSortedResultsDescBasedOnDisplayCriteria()
+    {
+        // guard
+        $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
+
+        $sorter = new Sorter([
+            new SorterRule('u.name', SorterRule::DESC),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(2, $results);
+        $this->assertEquals('Eva', $results[0]->getName());
+        $this->assertEquals('Adam', $results[1]->getName());
     }
 
     /**
