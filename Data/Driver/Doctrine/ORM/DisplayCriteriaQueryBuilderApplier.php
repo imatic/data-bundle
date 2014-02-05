@@ -87,9 +87,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
     private function getColumnDqlPart(FilterRule $filterRule, QueryBuilder $qb)
     {
         if (!$filterRule->isAggregated() && strpos($filterRule->getColumn(), '.') === false) {
-            $aliases = $qb->getRootAliases();
-
-            return sprintf('%s.%s', reset($aliases), $filterRule->getColumn());
+            return $this->getPrefixedColumnWithRootEntityAlias($filterRule->getColumn(), $qb);
         }
 
         return $filterRule->getColumn();
@@ -116,7 +114,44 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
     {
         /* @var $sorterRule SorterRule */
         foreach ($sorter as $sorterRule) {
-            $qb->addOrderBy($sorterRule->getColumn(), $sorterRule->getDirection());
+            $column = $sorterRule->getColumn();
+            if (strpos($sorterRule->getColumn(), '.') === false && !$this->isSorterRuleAggregated($sorterRule, $qb)) {
+                $column = $this->getPrefixedColumnWithRootEntityAlias($sorterRule->getColumn(), $qb);
+            }
+
+            $qb->addOrderBy($column, $sorterRule->getDirection());
         }
+    }
+
+    /**
+     * @param SorterRule   $sorterRule
+     * @param QueryBuilder $qb
+     *
+     * @return bool
+     */
+    private function isSorterRuleAggregated(SorterRule $sorterRule, QueryBuilder $qb)
+    {
+        $selectedColumns = [];
+        $selectPart = implode(',', $qb->getDQLPart('select'));
+        $chunks = explode(',', $selectPart);
+        foreach ($chunks as $chunk) {
+            $c = explode(' ', $chunk);
+            $selectedColumns[] = end($c);
+        }
+
+        return in_array($sorterRule->getColumn(), $selectedColumns);
+    }
+
+    /**
+     * @param string       $column
+     * @param QueryBuilder $qb
+     *
+     * @return string
+     */
+    private function getPrefixedColumnWithRootEntityAlias($column, QueryBuilder $qb)
+    {
+        $aliases = $qb->getRootAliases();
+
+        return sprintf('%s.%s', reset($aliases), $column);
     }
 }

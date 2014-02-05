@@ -90,6 +90,40 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals('Adam', $results[1]->getName());
     }
 
+    public function testQueryExecutorShouldReturnSortedResultsAscBasedOnDisplayCriteriaWithoutSpecifyingAlias()
+    {
+        // guard
+        $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
+
+        $sorter = new Sorter([
+            new SorterRule('name', SorterRule::ASC),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(2, $results);
+        $this->assertEquals('Adam', $results[0]->getName());
+        $this->assertEquals('Eva', $results[1]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnSortedResultsDescBasedOnDisplayCriteriaWithoutSpecifyingAlias()
+    {
+        // guard
+        $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
+
+        $sorter = new Sorter([
+            new SorterRule('name', SorterRule::DESC),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(2, $results);
+        $this->assertEquals('Eva', $results[0]->getName());
+        $this->assertEquals('Adam', $results[1]->getName());
+    }
+
     public function testQueryExecutorShouldReturnSortedResultsAscByAggregatedField()
     {
         // guard
