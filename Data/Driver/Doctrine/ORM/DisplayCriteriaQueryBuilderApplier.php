@@ -67,7 +67,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
             $parameterName = str_replace('.', '_', $filterRule->getColumn());
 
             $dqlPart = sprintf('%s %s %s',
-                $filterRule->getColumn(),
+                $this->getColumnDqlPart($filterRule, $qb),
                 $filterRule->getOperator(),
                 $this->getParameterDqlPart($parameterName, $filterRule->getValue())
             );
@@ -76,6 +76,23 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
             $qb->$qbMethod($dqlPart);
             $qb->setParameter($parameterName, $filterRule->getValue());
         }
+    }
+
+    /**
+     * @param FilterRule   $filterRule
+     * @param QueryBuilder $qb
+     *
+     * @return string
+     */
+    private function getColumnDqlPart(FilterRule $filterRule, QueryBuilder $qb)
+    {
+        if (!$filterRule->isAggregated() && strpos($filterRule->getColumn(), '.') === false) {
+            $aliases = $qb->getRootAliases();
+
+            return sprintf('%s.%s', reset($aliases), $filterRule->getColumn());
+        }
+
+        return $filterRule->getColumn();
     }
 
     /**

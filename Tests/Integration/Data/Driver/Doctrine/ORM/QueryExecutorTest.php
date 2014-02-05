@@ -103,6 +103,32 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals('Adam', $results[0]->getName());
     }
 
+    public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteriaWithoutSpecifyingAlias()
+    {
+        $filter = new Filter([
+            new FilterRule('name', 'Adam', '='),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('Adam', $results[0]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteriaWithoutSpecifyingAlias()
+    {
+        $filter = new Filter([
+            new FilterRule('name', 'Eva', '='),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('Eva', $results[0]->getName());
+    }
+
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteria()
     {
         $filter = new Filter([
