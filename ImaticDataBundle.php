@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle;
 
-use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\HandlerCompilerPass;
+use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\CommandHandlerCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -13,6 +13,6 @@ class ImaticDataBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new HandlerCompilerPass());
+        $container->addCompilerPass(new CommandHandlerCompilerPass());
     }
 }

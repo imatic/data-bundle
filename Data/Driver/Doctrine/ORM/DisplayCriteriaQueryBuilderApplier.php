@@ -67,7 +67,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
             $parameterName = str_replace('.', '_', $filterRule->getColumn());
 
             $dqlPart = sprintf('%s %s %s',
-                $this->getColumnDqlPart($filterRule, $qb),
+                $this->getFilterColumnDqlPart($filterRule, $qb),
                 $filterRule->getOperator(),
                 $this->getParameterDqlPart($parameterName, $filterRule->getValue())
             );
@@ -84,7 +84,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
      *
      * @return string
      */
-    private function getColumnDqlPart(FilterRule $filterRule, QueryBuilder $qb)
+    private function getFilterColumnDqlPart(FilterRule $filterRule, QueryBuilder $qb)
     {
         if (!$filterRule->isAggregated() && strpos($filterRule->getColumn(), '.') === false) {
             return $this->getPrefixedColumnWithRootEntityAlias($filterRule->getColumn(), $qb);
@@ -115,7 +115,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
         /* @var $sorterRule SorterRule */
         foreach ($sorter as $sorterRule) {
             $column = $sorterRule->getColumn();
-            if (strpos($sorterRule->getColumn(), '.') === false && !$this->isSorterRuleAggregated($sorterRule, $qb)) {
+            if (strpos($sorterRule->getColumn(), '.') === false && !$this->isColumnSelected($sorterRule->getColumn(), $qb)) {
                 $column = $this->getPrefixedColumnWithRootEntityAlias($sorterRule->getColumn(), $qb);
             }
 
@@ -129,7 +129,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
      *
      * @return bool
      */
-    private function isSorterRuleAggregated(SorterRule $sorterRule, QueryBuilder $qb)
+    private function isColumnSelected($column, QueryBuilder $qb)
     {
         $selectedColumns = [];
         $selectPart = implode(',', $qb->getDQLPart('select'));
@@ -139,7 +139,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
             $selectedColumns[] = end($c);
         }
 
-        return in_array($sorterRule->getColumn(), $selectedColumns);
+        return in_array($column, $selectedColumns);
     }
 
     /**

@@ -2,9 +2,9 @@ services:
     imatic_data.command_executor:
         class: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
         arguments:
-            - @imatic_data.handler_repository
+            - @imatic_data.command_handler_repository
 
-    imatic_data.handler_repository:
+    imatic_data.command_handler_repository:
         class: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
 
     imatic_data.object_manager:

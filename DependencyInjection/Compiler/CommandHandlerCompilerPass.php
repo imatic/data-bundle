@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class HandlerCompilerPass implements CompilerPassInterface
+class CommandHandlerCompilerPass implements CompilerPassInterface
 {
     /**
      * @param ContainerBuilder $container
@@ -16,7 +16,7 @@ class HandlerCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $handlers = $container->findTaggedServiceIds('imatic_data.handler');
-        $handlerRepositoryDef = $container->findDefinition('imatic_data.handler_repository');
+        $handlerRepositoryDef = $container->findDefinition('imatic_data.command_handler_repository');
 
         foreach ($handlers as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {

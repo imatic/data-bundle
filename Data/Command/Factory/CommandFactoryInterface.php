@@ -1,6 +1,6 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Command;
+namespace Imatic\Bundle\DataBundle\Data\Command\Factory;
 
 interface CommandFactoryInterface
 {
