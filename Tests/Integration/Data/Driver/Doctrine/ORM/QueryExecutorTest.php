@@ -6,10 +6,12 @@ use Doctrine\ORM\EntityRepository;
 use Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM\QueryExecutor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserWithOrderNumbersQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
@@ -86,6 +88,96 @@ class QueryExecutorTest extends WebTestCase
         $this->assertCount(2, $results);
         $this->assertEquals('Eva', $results[0]->getName());
         $this->assertEquals('Adam', $results[1]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteria()
+    {
+        $filter = new Filter([
+            new FilterRule('u.name', 'Adam', '='),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('Adam', $results[0]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteria()
+    {
+        $filter = new Filter([
+            new FilterRule('u.name', 'Eva', '='),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('Eva', $results[0]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnAdamBasedOnArrayFilterInDisplayCriteria()
+    {
+        $filter = new Filter([
+            new FilterRule('u.name', ['Adam'], 'IN'),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('Adam', $results[0]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnEvaBasedOnArrayFilterInDisplayCriteria()
+    {
+        $filter = new Filter([
+            new FilterRule('u.name', ['Eva'], 'IN'),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('Eva', $results[0]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnAdamAndEvaBasedOnArrayFilterInDisplayCriteria()
+    {
+        $filter = new Filter([
+            new FilterRule('u.name', ['Adam', 'Eva'], 'IN'),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+
+        $this->assertCount(2, $results);
+    }
+
+    public function testQueryExecutorShouldReturnAdamBasedOnAggregatedFilterInDisplayCriteria()
+    {
+        $filter = new Filter([
+            new FilterRule('order_num', 5, '<', FilterRule::CONDITION_AND, true)
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserWithOrderNumbersQuery(), $criteria);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('Adam', $results[0][0]->getName());
+    }
+
+    public function testQueryExecutorShouldReturnEvaBasedOnAggregatedFilterInDisplayCriteria()
+    {
+        $filter = new Filter([
+            new FilterRule('order_num', 5, '>', FilterRule::CONDITION_AND, true),
+        ]);
+
+        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
+        $results = $this->getQueryExecutor()->find(new UserWithOrderNumbersQuery(), $criteria);
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('Eva', $results[0][0]->getName());
     }
 
     /**

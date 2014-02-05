@@ -19,10 +19,22 @@ class ImaticDataExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
+
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.yml');
+        $this->processPager($config['pager'], $container);
+    }
+
+    /**
+     * @param array            $pagerConfig
+     * @param ContainerBuilder $container
+     */
+    private function processPager(array $pagerConfig, ContainerBuilder $container)
+    {
+        $pagerFactoryDef = $container->findDefinition('imatic_data.pager_factory');
+        $pagerFactoryDef->addMethodCall('setDefaultLimit', [$pagerConfig['default_limit']]);
     }
 }

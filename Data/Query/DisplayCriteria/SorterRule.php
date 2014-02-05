@@ -8,7 +8,7 @@ class SorterRule
 
     const DESC = 'DESC';
 
-    const COLUMN_PATTERN = '/^[a-zA-Z]{1,1}[a-zA-Z0-9\.\_]{0,50}[a-zA-Z0-9\_]{1,1}$/';
+    const COLUMN_PATTERN = '/^[a-zA-Z0-9]{1,1}[a-zA-Z0-9\.\_]{0,50}[a-zA-Z0-9\_]{1,1}$/';
 
     /**
      * @var string
