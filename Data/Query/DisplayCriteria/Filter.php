@@ -33,4 +33,12 @@ class Filter implements FilterInterface
     {
         return count($this->filterRules);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAt($index)
+    {
+        return $this->filterRules[$index];
+    }
 }
