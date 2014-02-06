@@ -81,4 +81,12 @@ class Sorter implements SorterInterface
     {
         return new \ArrayIterator($this->sorterRules);
     }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->sorterRules);
+    }
 }

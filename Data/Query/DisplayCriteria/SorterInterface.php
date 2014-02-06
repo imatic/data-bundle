@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-interface SorterInterface extends \IteratorAggregate
+interface SorterInterface extends \IteratorAggregate, \Countable
 {
     /**
      * @return boolean

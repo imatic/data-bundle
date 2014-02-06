@@ -2,6 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-interface FilterInterface
+interface FilterInterface extends \IteratorAggregate, \Countable
 {
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-class Filter implements \IteratorAggregate, FilterInterface
+class Filter implements FilterInterface
 {
     /**
      * @var FilterRule[]
@@ -24,5 +24,13 @@ class Filter implements \IteratorAggregate, FilterInterface
     public function getIterator()
     {
         return new \ArrayIterator($this->filterRules);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->filterRules);
     }
 }
