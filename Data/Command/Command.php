@@ -18,7 +18,7 @@ class Command implements CommandInterface
 
     /**
      * @param string $handlerName
-     * @param array $parameters
+     * @param array  $parameters
      */
     public function __construct($handlerName, array $parameters = [])
     {
@@ -43,7 +43,7 @@ class Command implements CommandInterface
     }
 
     /**
-     * @param string $name
+     * @param  string                     $name
      * @throws ParameterNotFoundException
      * @return mixed
      */
@@ -57,7 +57,7 @@ class Command implements CommandInterface
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     public function hasParameter($name)
@@ -78,7 +78,7 @@ class Command implements CommandInterface
     /**
      * Constructs the object
      *
-     * @param string $serialized
+     * @param  string $serialized
      * @return void
      */
     public function unserialize($serialized)

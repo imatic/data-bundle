@@ -9,8 +9,8 @@ interface QueryExecutorInterface
     /**
      * Find set of objects.
      *
-     * @param QueryObjectInterface $queryObject
-     * @param DisplayCriteriaInterface $displayCriteria
+     * @param  QueryObjectInterface     $queryObject
+     * @param  DisplayCriteriaInterface $displayCriteria
      * @return object[]
      */
     public function find(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria);
@@ -18,7 +18,7 @@ interface QueryExecutorInterface
     /**
      * Find one object.
      *
-     * @param QueryObjectInterface $queryObject
+     * @param  QueryObjectInterface $queryObject
      * @return object
      */
     public function findOne(QueryObjectInterface $queryObject);
@@ -26,7 +26,7 @@ interface QueryExecutorInterface
     /**
      * Execute batch update/delete operation.
      *
-     * @param QueryObjectInterface $queryObject
+     * @param  QueryObjectInterface $queryObject
      * @return integer
      */
     public function execute(QueryObjectInterface $queryObject);
@@ -34,8 +34,8 @@ interface QueryExecutorInterface
     /**
      * Count matched objects.
      *
-     * @param QueryObjectInterface $queryObject
-     * @return integer Affected rows
+     * @param  QueryObjectInterface $queryObject
+     * @return integer              Affected rows
      */
     public function count(QueryObjectInterface $queryObject);
 }

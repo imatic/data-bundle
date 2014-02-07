@@ -1,33 +1,19 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-use Symfony\Component\HttpFoundation\Request;
-
-/**
- * Class Filter
- *
- * @todo: spatne, prepsat
- */
-class Filter implements \IteratorAggregate
+class Filter implements FilterInterface
 {
-
+    /**
+     * @var FilterRule[]
+     */
     protected $filterRules = array();
 
-    protected $request;
-
-    protected $prefix;
-
-    public function __construct(Request $request = null)
+    /**
+     * @param FilterRule[] $filterRules
+     */
+    public function __construct(array $filterRules = [])
     {
-        if ($request) {
-            $this->setRequest($request);
-        }
-    }
-
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
+        $this->filterRules = $filterRules;
     }
 
     /**
@@ -38,5 +24,21 @@ class Filter implements \IteratorAggregate
     public function getIterator()
     {
         return new \ArrayIterator($this->filterRules);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->filterRules);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAt($index)
+    {
+        return $this->filterRules[$index];
     }
 }

@@ -2,10 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
-/*
- * todo: uzivatel - pokud je async zpracovani, musim umet predat uzivateli zpravy o zpracovani pokud bude treba
- */
-
 class CommandExecutor implements CommandExecutorInterface
 {
     /**
@@ -13,13 +9,16 @@ class CommandExecutor implements CommandExecutorInterface
      */
     private $handlerRepository;
 
+    /**
+     * @param HandlerRepositoryInterface $handlerRepository
+     */
     public function __construct(HandlerRepositoryInterface $handlerRepository)
     {
         $this->handlerRepository = $handlerRepository;
     }
 
     /**
-     * @param CommandInterface $command
+     * @param  CommandInterface       $command
      * @return CommandResultInterface
      */
     public function execute(CommandInterface $command)

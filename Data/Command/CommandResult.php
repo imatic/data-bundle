@@ -20,9 +20,9 @@ class CommandResult implements CommandResultInterface
     private $exception;
 
     /**
-     * @param boolean $success
-     * @param array $messages
-     * @param \Exception $exception
+     * @param  boolean         $success
+     * @param  array           $messages
+     * @param  \Exception      $exception
      * @throws \LogicException
      */
     public function __construct($success, array $messages = [], \Exception $exception = null)
@@ -31,8 +31,8 @@ class CommandResult implements CommandResultInterface
             throw new \LogicException('Result cannot be successful with exception.');
         }
 
-        $this->success = (bool)$success;
-        $this->messages = (array)$messages;
+        $this->success = (bool) $success;
+        $this->messages = (array) $messages;
         $this->exception = $exception;
     }
 
@@ -49,7 +49,7 @@ class CommandResult implements CommandResultInterface
      */
     public function hasMessages()
     {
-        return (bool)count($this->messages);
+        return (bool) count($this->messages);
     }
 
     /**

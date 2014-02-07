@@ -1,0 +1,25 @@
+services:
+    imatic_data.command_executor:
+        class: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
+        arguments:
+            - @imatic_data.command_handler_repository
+
+    imatic_data.command_handler_repository:
+        class: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
+
+    imatic_data.object_manager:
+        class: Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM\ObjectManager
+        arguments:
+            - @doctrine.orm.entity_manager
+
+    imatic_data.query_executor:
+        class: Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM\QueryExecutor
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @imatic_data.display_criteria_query_builder_applier
+
+    imatic_data.display_criteria_query_builder_applier:
+        class: Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM\DisplayCriteriaQueryBuilderApplier
+
+    imatic_data.pager_factory:
+        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory

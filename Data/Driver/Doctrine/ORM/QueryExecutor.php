@@ -1,11 +1,12 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Driver\Doctrine\ORM;
+namespace Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderApplierInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
 
@@ -16,9 +17,19 @@ class QueryExecutor implements QueryExecutorInterface
      */
     private $entityManager;
 
-    public function __construct(EntityManager $entityManager)
+    /**
+     * @var DisplayCriteriaQueryBuilderApplierInterface
+     */
+    private $displayCriteriaQueryBuilderApplier;
+
+    /**
+     * @param EntityManager                               $entityManager
+     * @param DisplayCriteriaQueryBuilderApplierInterface $displayCriteriaQueryBuilderApplier
+     */
+    public function __construct(EntityManager $entityManager, DisplayCriteriaQueryBuilderApplierInterface $displayCriteriaQueryBuilderApplier)
     {
         $this->entityManager = $entityManager;
+        $this->displayCriteriaQueryBuilderApplier = $displayCriteriaQueryBuilderApplier;
     }
 
     /**
@@ -57,8 +68,8 @@ class QueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param QueryObjectInterface $queryObject
-     * @param DisplayCriteriaInterface $displayCriteria
+     * @param  QueryObjectInterface     $queryObject
+     * @param  DisplayCriteriaInterface $displayCriteria
      * @return \Doctrine\ORM\Query
      */
     private function getQuery(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -66,9 +77,7 @@ class QueryExecutor implements QueryExecutorInterface
         /** @var QueryBuilder $qb */
         $qb = $queryObject->build($this->entityManager);
 
-        if ($displayCriteria) {
-            // process display criteria
-        }
+        $this->displayCriteriaQueryBuilderApplier->apply($qb, $displayCriteria);
 
         return $qb->getQuery();
     }
