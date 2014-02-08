@@ -23,9 +23,9 @@
     ],
     "require": {
         "php": ">=5.4",
-        "symfony/framework-bundle": "2.3.*",
+        "symfony/framework-bundle": "2.4.*",
         "doctrine/doctrine-bundle": "~1.2",
-        "doctrine/orm": ">=2.2.3,<2.4-dev"
+        "doctrine/orm": "~2.2,>=2.2.3"
     },
     "require-dev": {
         "imatic/testing-bundle": "dev-master"
@@ -38,5 +38,8 @@
     "minimum-stability": "dev",
     "target-dir": "Imatic/Bundle/DataBundle",
     "extra": {
+        "branch-alias": {
+            "dev-master": "2.4.x-dev"
+        }
     }
 }
