@@ -6,7 +6,7 @@ interface HandlerInterface
 {
     /**
      * @param  CommandInterface       $command
-     * @return CommandResultInterface
+     * @return CommandResultInterface|bool|void
      */
     public function handle(CommandInterface $command);
 }

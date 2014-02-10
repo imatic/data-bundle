@@ -3,9 +3,6 @@ namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject;
 
 use Imatic\Bundle\TestingBundle\Test\TestKernel as BaseTestKernel;
 
-/**
- * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
- */
 class TestKernel extends BaseTestKernel
 {
     /**
