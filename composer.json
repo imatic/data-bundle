@@ -28,7 +28,7 @@
         "doctrine/orm": "~2.2,>=2.2.3"
     },
     "require-dev": {
-        "imatic/testing-bundle": "dev-master"
+        "imatic/testing-bundle": "2.4.*"
     },
     "autoload": {
         "psr-0": {
