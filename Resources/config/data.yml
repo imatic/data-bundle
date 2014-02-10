@@ -1,0 +1,23 @@
+services:
+    # command
+    imatic_data.command_executor:
+        class: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
+        arguments:
+            - @imatic_data.command_handler_repository
+
+    imatic_data.command_handler_repository:
+        class: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
+
+    # driver
+    imatic_data.driver_repository:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DriverRepository
+
+    # query executor
+    imatic_data.query_executor:
+        class: Imatic\Bundle\DataBundle\Data\Query\QueryExecutor
+        arguments:
+            - @imatic_data.driver_repository
+
+    # display criteria
+    imatic_data.pager_factory:
+        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory

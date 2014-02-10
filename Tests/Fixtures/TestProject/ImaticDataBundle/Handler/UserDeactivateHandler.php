@@ -35,9 +35,10 @@ class UserDeactivateHandler implements HandlerInterface
      */
     public function handle(CommandInterface $pathCommand)
     {
-        $user = $this->queryExecutor->findOne(new UserQuery($pathCommand->getParameter('id')));
+        $user = $this->queryExecutor->execute(new UserQuery($pathCommand->getParameter('id')));
         $user->deactivate();
 
         $this->objectManager->flush();
+
     }
 }

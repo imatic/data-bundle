@@ -5,6 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="user")
  *
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */

@@ -1,11 +1,11 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
 use Imatic\Bundle\DataBundle\Data\ObjectManagerInterface;
 
-class ObjectManager implements ObjectManagerInterface
+class DoctrineORMObjectManager implements ObjectManagerInterface
 {
     /**
      * @var EntityManager

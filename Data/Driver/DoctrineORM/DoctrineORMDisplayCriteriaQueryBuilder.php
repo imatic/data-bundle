@@ -1,9 +1,8 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderApplierInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
@@ -13,7 +12,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderApplierInterface
+class DoctrineORMDisplayCriteriaQueryBuilder
 {
     /**
      * @var array [isColumnAggregated][conditionType] which returns method on queryBuilder to call
@@ -30,10 +29,10 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
     ];
 
     /**
-     * @param QueryBuilder             $qb
+     * @param QueryBuilder $qb
      * @param DisplayCriteriaInterface $displayCriteria
      */
-    public function apply($qb, DisplayCriteriaInterface $displayCriteria = null)
+    public function apply(QueryBuilder $qb, DisplayCriteriaInterface $displayCriteria = null)
     {
         if ($displayCriteria === null) {
             return;
@@ -45,19 +44,18 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
     }
 
     /**
-     * @param QueryBuilder   $qb
+     * @param QueryBuilder $qb
      * @param PagerInterface $pager
      */
     private function applyPager(QueryBuilder $qb, PagerInterface $pager)
     {
         $qb
             ->setFirstResult($pager->getOffset())
-            ->setMaxResults($pager->getLimit())
-        ;
+            ->setMaxResults($pager->getLimit());
     }
 
     /**
-     * @param QueryBuilder    $qb
+     * @param QueryBuilder $qb
      * @param FilterInterface $filter
      */
     private function applyFilter(QueryBuilder $qb, FilterInterface $filter)
@@ -79,9 +77,8 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
     }
 
     /**
-     * @param FilterRule   $filterRule
+     * @param FilterRule $filterRule
      * @param QueryBuilder $qb
-     *
      * @return string
      */
     private function getFilterColumnDqlPart(FilterRule $filterRule, QueryBuilder $qb)
@@ -95,8 +92,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
 
     /**
      * @param string $parameterName
-     * @param mixed  $filterValue
-     *
+     * @param mixed $filterValue
      * @return string
      */
     private function getParameterDqlPart($parameterName, $filterValue)
@@ -107,7 +103,7 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
     }
 
     /**
-     * @param QueryBuilder    $qb
+     * @param QueryBuilder $qb
      * @param SorterInterface $sorter
      */
     private function applySorter(QueryBuilder $qb, SorterInterface $sorter)
@@ -124,9 +120,8 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
     }
 
     /**
-     * @param SorterRule   $sorterRule
+     * @param SorterRule $sorterRule
      * @param QueryBuilder $qb
-     *
      * @return bool
      */
     private function isColumnSelected($column, QueryBuilder $qb)
@@ -143,9 +138,8 @@ class DisplayCriteriaQueryBuilderApplier implements DisplayCriteriaQueryBuilderA
     }
 
     /**
-     * @param string       $column
+     * @param string $column
      * @param QueryBuilder $qb
-     *
      * @return string
      */
     private function getPrefixedColumnWithRootEntityAlias($column, QueryBuilder $qb)

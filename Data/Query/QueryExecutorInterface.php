@@ -7,29 +7,13 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface
 interface QueryExecutorInterface
 {
     /**
-     * Find set of objects.
-     *
-     * @param  QueryObjectInterface     $queryObject
-     * @param  DisplayCriteriaInterface $displayCriteria
-     * @return object[]
-     */
-    public function find(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria);
-
-    /**
-     * Find one object.
+     * Execute query.
      *
      * @param  QueryObjectInterface $queryObject
-     * @return object
+     * @param  DisplayCriteria\DisplayCriteriaInterface $displayCriteria
+     * @return mixed
      */
-    public function findOne(QueryObjectInterface $queryObject);
-
-    /**
-     * Execute batch update/delete operation.
-     *
-     * @param  QueryObjectInterface $queryObject
-     * @return integer
-     */
-    public function execute(QueryObjectInterface $queryObject);
+    public function execute(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null);
 
     /**
      * Count matched objects.

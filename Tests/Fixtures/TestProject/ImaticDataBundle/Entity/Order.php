@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="`Order`")
+ * @ORM\Table(name="user_order")
  *
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */

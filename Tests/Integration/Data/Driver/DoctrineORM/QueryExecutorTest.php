@@ -1,17 +1,17 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\Doctrine\ORM;
+namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Imatic\Bundle\DataBundle\Data\Driver\Doctrine\ORM\QueryExecutor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
+use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserWithOrderNumbersQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListWithOrderNumbersQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
@@ -20,15 +20,8 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 class QueryExecutorTest extends WebTestCase
 {
     private $client;
+
     private $container;
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->client = static::createClient();
-        $this->container = $this->client->getContainer();
-    }
 
     public function testQueryExecutorShouldReturnsCorrectPagesBasedOnDisplayCriteria()
     {
@@ -36,11 +29,11 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
         $firstPageCriteria = new DisplayCriteria(new Pager(1, 1), new Sorter(), new Filter());
-        $firstResults = $this->getQueryExecutor()->find(new UserListQuery(), $firstPageCriteria);
+        $firstResults = $this->getQueryExecutor()->execute(new UserListQuery(), $firstPageCriteria);
         $this->assertCount(1, $firstResults);
 
         $secondPageCriteria = new DisplayCriteria(new Pager(2, 1), new Sorter(), new Filter());
-        $secondResults = $this->getQueryExecutor()->find(new UserListQuery(), $secondPageCriteria);
+        $secondResults = $this->getQueryExecutor()->execute(new UserListQuery(), $secondPageCriteria);
         $this->assertCount(1, $secondResults);
 
         $this->assertNotEquals($firstResults[0]->getId(), $secondResults[0]->getId());
@@ -52,7 +45,7 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
         $criteria = new DisplayCriteria(new Pager(1, 2), new Sorter(), new Filter());
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
         $this->assertCount(2, $results);
     }
 
@@ -66,7 +59,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
         $this->assertEquals('Adam', $results[0]->getName());
@@ -83,7 +76,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
         $this->assertEquals('Eva', $results[0]->getName());
@@ -100,7 +93,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
         $this->assertEquals('Adam', $results[0]->getName());
@@ -117,7 +110,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
         $this->assertEquals('Eva', $results[0]->getName());
@@ -134,7 +127,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
-        $results = $this->getQueryExecutor()->find(new UserWithOrderNumbersQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListWithOrderNumbersQuery(), $criteria);
 
         $this->assertCount(2, $results);
         $this->assertEquals('Adam', $results[0][0]->getName());
@@ -151,7 +144,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
-        $results = $this->getQueryExecutor()->find(new UserWithOrderNumbersQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListWithOrderNumbersQuery(), $criteria);
 
         $this->assertCount(2, $results);
         $this->assertEquals('Eva', $results[0][0]->getName());
@@ -165,7 +158,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
         $this->assertEquals('Adam', $results[0]->getName());
@@ -178,7 +171,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
         $this->assertEquals('Adam', $results[0]->getName());
@@ -191,7 +184,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
         $this->assertEquals('Eva', $results[0]->getName());
@@ -204,7 +197,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
         $this->assertEquals('Eva', $results[0]->getName());
@@ -217,7 +210,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
         $this->assertEquals('Adam', $results[0]->getName());
@@ -230,7 +223,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
         $this->assertEquals('Eva', $results[0]->getName());
@@ -243,7 +236,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserListQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
     }
@@ -255,7 +248,7 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserWithOrderNumbersQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListWithOrderNumbersQuery(), $criteria);
 
         $this->assertCount(1, $results);
         $this->assertEquals('Adam', $results[0][0]->getName());
@@ -268,14 +261,14 @@ class QueryExecutorTest extends WebTestCase
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->find(new UserWithOrderNumbersQuery(), $criteria);
+        $results = $this->getQueryExecutor()->execute(new UserListWithOrderNumbersQuery(), $criteria);
 
         $this->assertCount(1, $results);
         $this->assertEquals('Eva', $results[0][0]->getName());
     }
 
     /**
-     * @return QueryExecutor
+     * @return QueryExecutorInterface
      */
     public function getQueryExecutor()
     {
@@ -296,5 +289,13 @@ class QueryExecutorTest extends WebTestCase
     public function getEntityManager()
     {
         return $this->container->get('doctrine.orm.entity_manager');
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->client = static::createClient();
+        $this->container = $this->client->getContainer();
     }
 }
