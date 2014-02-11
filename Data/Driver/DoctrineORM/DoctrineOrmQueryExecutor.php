@@ -74,7 +74,7 @@ class DoctrineORMQueryExecutor implements QueryExecutorInterface
         } elseif ($queryObject instanceof ScalarResultQueryObjectInterface) {
             return $query->getScalarResult();
         } elseif ($queryObject instanceof SingleResultQueryObjectInterface) {
-            return $query->getSingleResult();
+            return $query->getOneOrNullResult();
         } else {
             return $query->getResult();
         }
