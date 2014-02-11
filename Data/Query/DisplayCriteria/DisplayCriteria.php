@@ -5,21 +5,21 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 class DisplayCriteria implements DisplayCriteriaInterface
 {
     /**
-     * @var Pager
+     * @var PagerInterface
      */
     protected $pager;
 
     /**
-     * @var Sorter
+     * @var SorterInterface
      */
     protected $sorter;
 
     /**
-     * @var Filter
+     * @var FilterInterface
      */
     protected $filter;
 
-    public function __construct(Pager $pager, Sorter $sorter, Filter $filter)
+    public function __construct(PagerInterface $pager, SorterInterface $sorter, FilterInterface $filter)
     {
         $this->pager = $pager;
         $this->sorter = $sorter;

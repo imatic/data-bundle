@@ -1,5 +1,4 @@
 imports:
-    - { resource: @ImaticDataBundle/Resources/config/data.yml }
     - { resource: @ImaticDataBundle/Resources/config/data_doctrine.yml }
 
 framework:

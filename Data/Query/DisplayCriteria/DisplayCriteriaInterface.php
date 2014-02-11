@@ -5,17 +5,17 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 interface DisplayCriteriaInterface
 {
     /**
-     * @return Pager
+     * @return PagerInterface
      */
     public function getPager();
 
     /**
-     * @return Filter
+     * @return FilterInterface
      */
     public function getFilter();
 
     /**
-     * @return Sorter
+     * @return SorterInterface
      */
     public function getSorter();
 }
