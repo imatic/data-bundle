@@ -28,7 +28,7 @@ class HandlerRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \LogicException
      * @expectedExceptionMessage Cannot register 2nd handler with name "handler".
      */
     public function testAddHandlerShouldThrowExceptionIfHandlerWithTheSameNameIsAlreadyRegistered()

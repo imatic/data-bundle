@@ -50,7 +50,6 @@ class HandlerRepository implements HandlerRepositoryInterface
 
     /**
      * @param string $name
-     *
      * @return bool
      */
     private function hasHandler($name)

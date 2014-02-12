@@ -5,7 +5,7 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 interface CommandResultInterface
 {
     /**
-     * @return array
+     * @return MessageInterface[]
      */
     public function getMessages();
 
