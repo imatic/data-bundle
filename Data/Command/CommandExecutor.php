@@ -10,15 +10,23 @@ class CommandExecutor implements CommandExecutorInterface
     private $handlerRepository;
 
     /**
-     * @param HandlerRepositoryInterface $handlerRepository
+     * @var boolean
      */
-    public function __construct(HandlerRepositoryInterface $handlerRepository)
+    private $debug;
+
+    /**
+     * @param HandlerRepositoryInterface $handlerRepository
+     * @param bool $debug
+     */
+    public function __construct(HandlerRepositoryInterface $handlerRepository, $debug = false)
     {
         $this->handlerRepository = $handlerRepository;
+        $this->debug = $debug;
     }
 
     /**
-     * @param  CommandInterface       $command
+     * @param  CommandInterface $command
+     * @throws \Exception
      * @return CommandResultInterface
      */
     public function execute(CommandInterface $command)
@@ -35,6 +43,10 @@ class CommandExecutor implements CommandExecutorInterface
                 }
             }
         } catch (\Exception $e) {
+            if (!$this->debug) {
+                throw $e;
+            }
+
             $result = new CommandResult(false, [], $e);
         }
 
