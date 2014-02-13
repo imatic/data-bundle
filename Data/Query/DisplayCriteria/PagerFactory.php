@@ -1,8 +1,6 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
+namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -15,9 +13,8 @@ class PagerFactory
     protected $defaultLimit = 100;
 
     /**
-     * @param int      $page
+     * @param int $page
      * @param int|null $limit
-     *
      * @return PagerInterface
      */
     public function createPager($page, $limit = null)
