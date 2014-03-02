@@ -43,7 +43,7 @@ class CommandExecutor implements CommandExecutorInterface
                 }
             }
         } catch (\Exception $e) {
-            if (!$this->debug) {
+            if ($this->debug) {
                 throw $e;
             }
 
