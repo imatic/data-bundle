@@ -24,7 +24,7 @@
     "require": {
         "php": ">=5.4",
         "symfony/framework-bundle": "2.4.*",
-        "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/doctrine-bundle": ">=1.2",
         "doctrine/orm": "~2.2,>=2.2.3"
     },
     "require-dev": {
