@@ -36,6 +36,26 @@ class CommandResult implements CommandResultInterface
         $this->exception = $exception;
     }
 
+    public static function success($message = null, array $parameters = [])
+    {
+        $messages = [];
+        if ($message) {
+            $messages[] = new Message('error', $message, $parameters);
+        }
+
+        return new static(true, $messages);
+    }
+
+    public static function error($message = null, array $parameters = [])
+    {
+        $messages = [];
+        if ($message) {
+            $messages[] = new Message('error', $message, $parameters);
+        }
+
+        return new static(false, $messages);
+    }
+
     /**
      * {@inheritdoc}
      */
