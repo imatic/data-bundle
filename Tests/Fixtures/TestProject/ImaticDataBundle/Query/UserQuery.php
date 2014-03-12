@@ -3,10 +3,10 @@ namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Q
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\DoctrineORMQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 
-class UserQuery implements DoctrineORMQueryObjectInterface, SingleResultQueryObjectInterface
+class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterface
 {
     /**
      * @var int

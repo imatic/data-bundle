@@ -1,20 +1,20 @@
 services:
     # object manager
     imatic_data.doctrine.object_manager:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\DoctrineORMObjectManager
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager
         arguments:
             - @doctrine.orm.entity_manager
 
     # query executor
     imatic_data.doctrine.query_executor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\DoctrineORMQueryExecutor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor
         arguments:
             - @doctrine.orm.entity_manager
             - @imatic_data.doctrine.display_criteria_query_builder
 
     # display criteria
     imatic_data.doctrine.display_criteria_query_builder:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\DoctrineORMDisplayCriteriaQueryBuilder
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\DisplayCriteriaQueryBuilder
 
     # driver
     imatic_data.driver.doctrine_orm:
@@ -23,6 +23,6 @@ services:
             - "doctrine.orm"
             - @imatic_data.doctrine.object_manager
             - @imatic_data.doctrine.query_executor
-            - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\DoctrineORMQueryObjectInterface"
+            - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\QueryObjectInterface"
         tags:
             - { name: imatic_data.driver }

@@ -7,13 +7,13 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\ScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
 
-class DoctrineORMQueryExecutor implements QueryExecutorInterface
+class QueryExecutor implements QueryExecutorInterface
 {
     /**
      * @var EntityManager
@@ -21,15 +21,15 @@ class DoctrineORMQueryExecutor implements QueryExecutorInterface
     private $entityManager;
 
     /**
-     * @var DoctrineORMDisplayCriteriaQueryBuilder
+     * @var DisplayCriteriaQueryBuilder
      */
     private $displayCriteriaQueryBuilder;
 
     /**
      * @param EntityManager $entityManager
-     * @param DoctrineORMDisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder
+     * @param DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder
      */
-    public function __construct(EntityManager $entityManager, DoctrineORMDisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder)
+    public function __construct(EntityManager $entityManager, DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder)
     {
         $this->entityManager = $entityManager;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
@@ -38,9 +38,9 @@ class DoctrineORMQueryExecutor implements QueryExecutorInterface
     /**
      * {@inheritdoc}
      */
-    public function count(QueryObjectInterface $queryObject)
+    public function count(BaseQueryObjectInterface $queryObject)
     {
-        if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
+        if (!($queryObject instanceof BaseQueryObjectInterface)) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
         }
 
@@ -53,9 +53,9 @@ class DoctrineORMQueryExecutor implements QueryExecutorInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
-        if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
+        if (!($queryObject instanceof BaseQueryObjectInterface)) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
         }
 
@@ -63,11 +63,11 @@ class DoctrineORMQueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param QueryObjectInterface $queryObject
+     * @param BaseQueryObjectInterface $queryObject
      * @param Query $query
      * @return mixed
      */
-    private function getResult(QueryObjectInterface $queryObject, Query $query)
+    private function getResult(BaseQueryObjectInterface $queryObject, Query $query)
     {
         if ($queryObject instanceof SingleScalarResultQueryObjectInterface) {
             return $query->getSingleScalarResult();
@@ -81,11 +81,11 @@ class DoctrineORMQueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param  DoctrineORMQueryObjectInterface $queryObject
+     * @param  BaseQueryObjectInterface $queryObject
      * @param  DisplayCriteriaInterface $displayCriteria
      * @return Query
      */
-    private function getQuery(DoctrineORMQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    private function getQuery(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         $qb = $queryObject->build($this->entityManager);
 

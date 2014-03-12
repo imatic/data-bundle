@@ -4,9 +4,9 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
-use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
 
-interface DoctrineORMQueryObjectInterface extends QueryObjectInterface
+interface QueryObjectInterface extends BaseQueryObjectInterface
 {
     /**
      * @param  EntityManager $em

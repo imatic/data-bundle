@@ -12,7 +12,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class DoctrineORMDisplayCriteriaQueryBuilder
+class DisplayCriteriaQueryBuilder
 {
     /**
      * @var array [isColumnAggregated][conditionType] which returns method on queryBuilder to call
