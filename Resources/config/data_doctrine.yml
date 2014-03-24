@@ -26,3 +26,26 @@ services:
             - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\QueryObjectInterface"
         tags:
             - { name: imatic_data.driver }
+
+    # Generic command handlers
+    imatic_data.driver.command.edit:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\EditHandler
+        arguments:
+            - '@imatic_data.doctrine.object_manager'
+        tags:
+            - { name: imatic_data.handler, alias: imatic_data.generic_edit }
+
+    imatic_data.driver.command.create:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler
+        arguments:
+            - '@imatic_data.doctrine.object_manager'
+        tags:
+            - { name: imatic_data.handler, alias: imatic_data.generic_create }
+
+    imatic_data.driver.command.delete:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler
+        arguments:
+            - '@imatic_data.doctrine.object_manager'
+            - '@imatic_data.query_executor'
+        tags:
+            - { name: imatic_data.handler, alias: imatic_data.generic_delete }
