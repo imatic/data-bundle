@@ -1,0 +1,130 @@
+<?php
+namespace Imatic\Bundle\DataBundle\Request\Query;
+
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+
+/**
+ * @todo Podle typu dat (json/xml...) pridat servanty
+ * ($this->servants['json']->getCriteria($displayCriteriaData))
+ */
+class DisplayCriteriaFactory
+{
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
+
+    /**
+     * @var PagerFactory
+     */
+    protected $pagerFactory;
+
+    /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    /**
+     * @param RequestStack $requestStack
+     * @param PagerFactory $pagerFactory
+     * @param FormFactoryInterface $formFactory
+     */
+    public function __construct(RequestStack $requestStack, PagerFactory $pagerFactory, FormFactoryInterface $formFactory)
+    {
+        $this->requestStack = $requestStack;
+        $this->pagerFactory = $pagerFactory;
+        $this->formFactory = $formFactory;
+    }
+
+    /**
+     * @param array $options
+     * @return DisplayCriteria
+     */
+    public function createCriteria(array $options = [])
+    {
+        $componentId = isset($options['componentId']) ? $options['componentId'] : null;
+        $filter = isset($options['filter']) ? $options['filter'] : null;
+
+        return new DisplayCriteria(
+            $this->createPager($componentId),
+            $this->createSorter($componentId),
+            $this->createFilter($componentId, $filter)
+        );
+    }
+
+    /**
+     * @param string|null $componentId
+     * @return PagerInterface
+     */
+    public function createPager($componentId = null)
+    {
+        return $this->pagerFactory->createPager(
+            $this->getAttribute('page', null, $componentId),
+            $this->getAttribute('limit', null, $componentId)
+        );
+    }
+
+    /**
+     * @param string|null $componentId
+     * @param string|null $filter
+     * @return FilterInterface
+     */
+    public function createFilter($componentId = null, $filter = null)
+    {
+        if (is_null($filter)) {
+            return new Filter();
+        } else {
+            $filterData = $this->getAttribute('filter', [], $componentId);
+            $form = $this->formFactory->createNamed('filter', $filter);
+            $form->submit($filterData);
+
+            $filter = $form->getData();
+            $filter->setForm($form);
+
+            return $filter;
+        }
+    }
+
+    /**
+     * @param string|null $componentId
+     * @return SorterInterface
+     */
+    public function createSorter($componentId = null)
+    {
+        $sorterData = $this->getAttribute('sorter', [], $componentId);
+
+        $sorterRules = [];
+        foreach ($sorterData as $fieldName => $direction) {
+            $sorterRules[] = new SorterRule($fieldName, $direction);
+        }
+
+        return new Sorter($sorterRules);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed|null $default
+     * @param string|null $component
+     * @return mixed
+     */
+    protected function getAttribute($name, $default = null, $component = null)
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        $path = $name;
+        if ($component) {
+            $path = $component . '[' . $name . ']';
+        }
+
+        return $request->query->get($path, $default, true);
+    }
+}

@@ -14,18 +14,12 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
  */
 class DisplayCriteriaQueryBuilder
 {
-    /**
-     * @var array [isColumnAggregated][conditionType] which returns method on queryBuilder to call
-     */
-    private $filterAggregatedMap = [
-        true => [
-            FilterRule::CONDITION_AND => 'andHaving',
-            FilterRule::CONDITION_OR => 'orHaving',
-        ],
-        false => [
-            FilterRule::CONDITION_AND => 'andWhere',
-            FilterRule::CONDITION_OR => 'orWhere',
-        ],
+    private static $operatorMap = [
+        'equal' => '=',
+        'not-equal' => '<>',
+        'in' => 'IN',
+        'contains' => 'LIKE',
+        'empty' => 'IS NULL',
     ];
 
     /**
@@ -66,12 +60,11 @@ class DisplayCriteriaQueryBuilder
 
             $dqlPart = sprintf('%s %s %s',
                 $this->getFilterColumnDqlPart($filterRule, $qb),
-                $filterRule->getOperator(),
+                self::$operatorMap[$filterRule->getOperator()],
                 $this->getParameterDqlPart($parameterName, $filterRule->getValue())
             );
 
-            $qbMethod = $this->filterAggregatedMap[$filterRule->isAggregated()][$filterRule->getCondition()];
-            $qb->$qbMethod($dqlPart);
+            $qb->andWhere($dqlPart);
             $qb->setParameter($parameterName, $filterRule->getValue());
         }
     }
@@ -83,7 +76,7 @@ class DisplayCriteriaQueryBuilder
      */
     private function getFilterColumnDqlPart(FilterRule $filterRule, QueryBuilder $qb)
     {
-        if (!$filterRule->isAggregated() && strpos($filterRule->getColumn(), '.') === false) {
+        if (strpos($filterRule->getColumn(), '.') === false) {
             return $this->getPrefixedColumnWithRootEntityAlias($filterRule->getColumn(), $qb);
         }
 

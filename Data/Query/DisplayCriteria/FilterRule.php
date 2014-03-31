@@ -1,27 +1,9 @@
 <?php
-/*
- * This file is part of the ImaticApplicationBundle package.
- *
- * (c) Imatic Software s.r.o. & Stepan Koci <stepan.koci@imatic.cz>
- *
- * For the full copyright and license information, please view the LICENSE
- * file.
- */
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-/**
- * String: = != NULL IN + *syntaxe (=), muze byt pole IN
- * Integer: < > = <= >= IN (=) + muze byt pole IN
- * Date/Time: < > = <= >= (=)
- * Boolean: YES NO|NULL (YES)
- * { column: name, value: value, operator: operator }
- */
-class FilterRule
+abstract class FilterRule
 {
-    const CONDITION_AND = 'AND';
-    const CONDITION_OR = 'OR';
-
     const COLUMN_PATTERN = '/^[a-zA-Z0-9]{1,1}[a-zA-Z0-9\.\_]{0,50}[a-zA-Z0-9\_]{1,1}$/';
 
     /**
@@ -40,36 +22,32 @@ class FilterRule
     protected $operator;
 
     /**
-     * @var string
-     */
-    protected $condition;
-
-    /**
-     * @var bool
-     */
-    protected $aggregated;
-
-    /**
      * @param string $column
-     * @param string $value
-     * @param string $operator
-     * @param string $condition
+     * @param mixed $value
+     * @param string|null $operator
+     * @throws \InvalidArgumentException
      */
-    public function __construct($column, $value, $operator, $condition = self::CONDITION_AND, $aggregated = false)
+    public function __construct($column, $value, $operator = null)
     {
         if (!preg_match(self::COLUMN_PATTERN, $column)) {
             throw new \InvalidArgumentException(sprintf('"%s" is not valid column name', $column));
         }
+        if (!$this->validateValue($value)) {
+            throw new \InvalidArgumentException(sprintf('Invalid filter value "%s" for "%s"', var_export($value, true), $column));
+        }
 
+        $operator = strtolower($operator);
+        $operators = static::getOperators();
+        if (!in_array($operator, $operators)) {
+            $operator = reset($operators);
+        }
         $this->column = $column;
         $this->value = $value;
         $this->operator = $operator;
-        $this->condition = $condition;
-        $this->aggregated = $aggregated;
     }
 
     /**
-     * @var string
+     * @return string
      */
     public function getColumn()
     {
@@ -77,7 +55,7 @@ class FilterRule
     }
 
     /**
-     * @var string
+     * @return mixed
      */
     public function getValue()
     {
@@ -85,26 +63,26 @@ class FilterRule
     }
 
     /**
-     * @var string
+     * @return string
      */
     public function getOperator()
     {
         return $this->operator;
     }
 
-    /**
-     * @var string
-     */
-    public function getCondition()
-    {
-        return $this->condition;
-    }
+    abstract protected function validateValue($value);
+
+    public static function getOperators() {}
 
     /**
-     * @return bool
+     * @return array
      */
-    public function isAggregated()
+    private function getOperatorMap()
     {
-        return $this->aggregated;
+        return [
+            'number' => ['equal', 'not-equal', 'in', 'greater', 'lesser', 'greater-equal', 'lesser-equal', 'null'],
+            'bool' => ['null'],
+            'date' => ['equal', 'not-equal', 'in', 'greater', 'lesser', 'greater-equal', 'lesser-equal', 'null'],
+        ];
     }
 }
