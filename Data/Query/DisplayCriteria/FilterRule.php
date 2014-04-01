@@ -4,7 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 abstract class FilterRule
 {
-    const COLUMN_PATTERN = '/^[a-zA-Z0-9]{1,1}[a-zA-Z0-9\.\_]{0,50}[a-zA-Z0-9\_]{1,1}$/';
+    const COLUMN_PATTERN = '/^[a-zA-Z0-9]{1,1}[a-zA-Z0-9\_]{0,50}[a-zA-Z0-9\_]{1,1}$/';
 
     /**
      * @var string
@@ -80,9 +80,11 @@ abstract class FilterRule
     private function getOperatorMap()
     {
         return [
-            'number' => ['equal', 'not-equal', 'in', 'greater', 'lesser', 'greater-equal', 'lesser-equal', 'null'],
-            'bool' => ['null'],
-            'date' => ['equal', 'not-equal', 'in', 'greater', 'lesser', 'greater-equal', 'lesser-equal', 'null'],
+            'string' => ['equal', 'not-equal', 'contains', 'not-contains', 'null', 'not-null'], // text
+            'number' => ['equal', 'not-equal', 'greater', 'lesser', 'greater-equal', 'lesser-equal', 'null', 'not-null'], // number
+            'bool' => ['null'], // values yes, no, yes-no, null
+            'date' => ['equal', 'not-equal', 'greater', 'lesser', 'greater-equal', 'lesser-equal', 'null', 'not-null'], // date
+            'date_range' => ['between', 'not-between'], // date_from, date_to
         ];
     }
 }

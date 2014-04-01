@@ -90,7 +90,7 @@ class QueryExecutor implements QueryExecutorInterface
         $qb = $queryObject->build($this->entityManager);
 
         if ($displayCriteria) {
-            $this->displayCriteriaQueryBuilder->apply($qb, $displayCriteria);
+            $this->displayCriteriaQueryBuilder->apply($qb, $queryObject, $displayCriteria);
         }
 
         return $qb->getQuery();

@@ -56,7 +56,7 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
         $sorter = new Sorter([
-            new SorterRule('u.name', SorterRule::ASC),
+            new SorterRule('user_name', SorterRule::ASC),
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
@@ -73,7 +73,7 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
         $sorter = new Sorter([
-            new SorterRule('u.name', SorterRule::DESC),
+            new SorterRule('user_name', SorterRule::DESC),
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), $sorter, new Filter());
@@ -155,7 +155,7 @@ class QueryExecutorTest extends WebTestCase
     public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteria()
     {
         $filter = new Filter([
-            new FilterRuleText('u.name', 'Adam', '='),
+            new FilterRuleText('user_name', 'Adam', '='),
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
@@ -194,7 +194,7 @@ class QueryExecutorTest extends WebTestCase
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteria()
     {
         $filter = new Filter([
-            new FilterRuleText('u.name', 'Eva', '='),
+            new FilterRuleText('user_name', 'Eva', '='),
         ]);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
@@ -202,44 +202,6 @@ class QueryExecutorTest extends WebTestCase
 
         $this->assertCount(1, $results);
         $this->assertEquals('Eva', $results[0]->getName());
-    }
-
-    public function testQueryExecutorShouldReturnAdamBasedOnArrayFilterInDisplayCriteria()
-    {
-        $filter = new Filter([
-            new FilterRuleText('u.name', ['Adam'], 'IN'),
-        ]);
-
-        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
-
-        $this->assertCount(1, $results);
-        $this->assertEquals('Adam', $results[0]->getName());
-    }
-
-    public function testQueryExecutorShouldReturnEvaBasedOnArrayFilterInDisplayCriteria()
-    {
-        $filter = new Filter([
-            new FilterRuleText('u.name', ['Eva'], 'IN'),
-        ]);
-
-        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
-
-        $this->assertCount(1, $results);
-        $this->assertEquals('Eva', $results[0]->getName());
-    }
-
-    public function testQueryExecutorShouldReturnAdamAndEvaBasedOnArrayFilterInDisplayCriteria()
-    {
-        $filter = new Filter([
-            new FilterRuleText('u.name', ['Adam', 'Eva'], 'IN'),
-        ]);
-
-        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
-
-        $this->assertCount(2, $results);
     }
 
     /**
