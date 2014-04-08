@@ -1,0 +1,13 @@
+imatic_data.generic_edit:
+    success:            Položka byla upravena
+    error:              Nepodařilo se upravit položku
+
+imatic_data.generic_create:
+    success:            Položka byla vytvořena
+    error:              Nepodařilo se vytvořit položku
+
+imatic_data.generic_delete:
+    success:            Položka byla smazána
+    error:              Nepodařilo se smazat položku
+
+
