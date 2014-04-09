@@ -62,6 +62,21 @@ class QueryExecutor implements QueryExecutorInterface
         return $this->getResult($queryObject, $this->getQuery($queryObject, $displayCriteria));
     }
 
+    public function beginTransaction()
+    {
+        $this->entityManager->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->entityManager->commit();
+    }
+
+    public function rollback()
+    {
+        $this->entityManager->rollback();
+    }
+
     /**
      * @param BaseQueryObjectInterface $queryObject
      * @param Query $query

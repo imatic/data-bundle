@@ -32,6 +32,10 @@ class CommandExecutor implements CommandExecutorInterface
     public function execute(CommandInterface $command)
     {
         $commandHandler = $this->handlerRepository->getHandler($command);
+        if ($commandHandler instanceof CommandExecutorAwareInterface) {
+            $commandHandler->setCommandExecutor($this);
+        }
+
         try {
             $result = $commandHandler->handle($command);
 

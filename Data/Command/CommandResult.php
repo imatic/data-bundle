@@ -40,7 +40,7 @@ class CommandResult implements CommandResultInterface
     {
         $messages = [];
         if ($message) {
-            $messages[] = new Message('error', $message, $parameters);
+            $messages[] = new Message('success', $message, $parameters);
         }
 
         return new static(true, $messages);
