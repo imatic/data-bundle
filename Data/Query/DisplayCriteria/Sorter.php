@@ -7,20 +7,14 @@ class Sorter implements SorterInterface
     /**
      * @var SorterRule[]
      */
-    protected $sorterRules = array();
+    protected $sorterRules;
 
     /**
      * @param SorterRule[] $sorterRules
      */
     public function __construct(array $sorterRules = array())
     {
-        foreach ($sorterRules as $key => $sorterRule) {
-            if ($sorterRule instanceof SorterRule) {
-                $this->addSorterRule($sorterRule);
-            } else {
-                $this->addSorterRule(new SorterRule($key, $sorterRule));
-            }
-        }
+        $this->setSorterRules($sorterRules);
     }
 
     public function hasSorterRules()
@@ -81,6 +75,21 @@ class Sorter implements SorterInterface
     public function count()
     {
         return count($this->sorterRules);
+    }
+
+    /**
+     * @param SorterRule[] $sorterRules
+     */
+    public function setSorterRules(array $sorterRules)
+    {
+        $this->sorterRules = [];
+        foreach ($sorterRules as $key => $sorterRule) {
+            if ($sorterRule instanceof SorterRule) {
+                $this->addSorterRule($sorterRule);
+            } else {
+                $this->addSorterRule(new SorterRule($key, $sorterRule));
+            }
+        }
     }
 
     /**

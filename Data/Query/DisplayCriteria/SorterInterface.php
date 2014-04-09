@@ -27,4 +27,9 @@ interface SorterInterface extends \IteratorAggregate, \Countable
      * @return string
      */
     public function getReverseDirection($column, $lowercase = false);
+
+    /**
+     * @param SorterRule[] $sorterRules
+     */
+    public function setSorterRules(array $sorterRules);
 }

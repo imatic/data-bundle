@@ -96,7 +96,7 @@ class DisplayCriteriaQueryBuilder
 
             // Default sorting if no sorter rules exists
             if (0 === $sorter->count() && 0 < count($queryObject->getDefaultSort())) {
-                $sorter = new Sorter($queryObject->getDefaultSort());
+                $sorter->setSorterRules($queryObject->getDefaultSort());
             }
 
             /* @var $sorterRule SorterRule */
