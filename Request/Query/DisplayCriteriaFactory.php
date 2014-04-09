@@ -53,10 +53,11 @@ class DisplayCriteriaFactory
     {
         $componentId = isset($options['componentId']) ? $options['componentId'] : null;
         $filter = isset($options['filter']) ? $options['filter'] : null;
+        $sorter = isset($options['sorter']) ? $options['sorter'] : [];
 
         return new DisplayCriteria(
             $this->createPager($componentId),
-            $this->createSorter($componentId),
+            $this->createSorter($componentId, $sorter),
             $this->createFilter($componentId, $filter)
         );
     }
@@ -96,11 +97,12 @@ class DisplayCriteriaFactory
 
     /**
      * @param string|null $componentId
+     * @param array $sorter
      * @return SorterInterface
      */
-    public function createSorter($componentId = null)
+    public function createSorter($componentId = null, array $sorter = [])
     {
-        $sorterData = $this->getAttribute('sorter', [], $componentId);
+        $sorterData = $this->getAttribute('sorter', $sorter, $componentId);
 
         $sorterRules = [];
         foreach ($sorterData as $fieldName => $direction) {

@@ -40,4 +40,12 @@ class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterf
             'name' => 'u.name',
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function getDefaultSort()
+    {
+        return [];
+    }
 }

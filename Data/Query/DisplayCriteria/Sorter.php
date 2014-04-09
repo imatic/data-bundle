@@ -14,8 +14,12 @@ class Sorter implements SorterInterface
      */
     public function __construct(array $sorterRules = array())
     {
-        foreach ($sorterRules as $sorterRule) {
-            $this->addSorterRule($sorterRule);
+        foreach ($sorterRules as $key => $sorterRule) {
+            if ($sorterRule instanceof SorterRule) {
+                $this->addSorterRule($sorterRule);
+            } else {
+                $this->addSorterRule(new SorterRule($key, $sorterRule));
+            }
         }
     }
 

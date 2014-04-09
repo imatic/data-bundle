@@ -32,4 +32,12 @@ class UserListWithOrderNumbersQuery implements QueryObjectInterface, SortableQue
             'order_num' => 'order_num'
         ];
     }
+
+    /**
+     * @return array
+     */
+    public function getDefaultSort()
+    {
+        return [];
+    }
 }

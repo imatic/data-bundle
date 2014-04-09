@@ -8,12 +8,14 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as DoctrineORMQueryObjectInterface;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
+ * @author Stepan Koci <stepan.koci@imatic.cz>
  */
 class DisplayCriteriaQueryBuilder
 {
@@ -91,6 +93,11 @@ class DisplayCriteriaQueryBuilder
     {
         if ($queryObject instanceof SortableQueryObjectInterface) {
             $sorterMap = $queryObject->getSorterMap();
+
+            // Default sorting if no sorter rules exists
+            if (0 === $sorter->count() && 0 < count($queryObject->getDefaultSort())) {
+                $sorter = new Sorter($queryObject->getDefaultSort());
+            }
 
             /* @var $sorterRule SorterRule */
             foreach ($sorter as $sorterRule) {

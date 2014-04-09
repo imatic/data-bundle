@@ -8,4 +8,9 @@ interface SortableQueryObjectInterface
      * @return array
      */
     public function getSorterMap();
+
+    /**
+     * @return array
+     */
+    public function getDefaultSort();
 }
