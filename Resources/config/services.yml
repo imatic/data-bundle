@@ -11,7 +11,3 @@ services:
             - @form.factory
 
     # Form filter
-    imatic_data.form.type.filter:
-        class: Imatic\Bundle\DataBundle\Form\Type\Filter\TextRuleType
-        tags:
-            - { name: form.type, alias: imatic_data_text_filter }

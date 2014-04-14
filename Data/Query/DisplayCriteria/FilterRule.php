@@ -4,54 +4,103 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 abstract class FilterRule
 {
-    const COLUMN_PATTERN = '/^[a-zA-Z0-9]{1,1}[a-zA-Z0-9\_]{0,50}[a-zA-Z0-9\_]{1,1}$/';
-
     /**
-     * @var string
+     * @var bool
      */
-    protected $column;
+    protected $bound;
 
     /**
+     * Filer value for compare
+     *
      * @var string
      */
     protected $value;
 
     /**
+     * Filer operator for compare
+     *
      * @var string
      */
     protected $operator;
 
     /**
-     * @param string $column
-     * @param mixed $value
-     * @param string|null $operator
-     * @throws \InvalidArgumentException
+     * Filer name for compare
+     *
+     * @var string
      */
-    public function __construct($column, $value, $operator = null)
+    protected $name;
+
+    /**
+     * Allowed operators
+     *
+     * @var string|null|array
+     */
+    protected $operators;
+
+    /**
+     * Form type
+     *
+     * @var string
+     */
+    protected $formType;
+
+    /**
+     * Form options
+     *
+     * @var array
+     */
+    protected $formOptions;
+
+    public function __construct($name, $formType = null, array $formOptions = [], array $operators = null)
     {
-        if (!preg_match(self::COLUMN_PATTERN, $column)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not valid column name', $column));
+        $this->bound = false;
+        $this->name = $name;
+
+        $this->formType = $formType ? : $this->getDefaultFormType();
+        $this->formOptions = array_merge($this->getDefaultFormOptions(), $formOptions);
+
+        if (is_null($operators)) {
+            $this->operators = $this->getDefaultOperators();
+        } else {
+            $invalid = [];
+            if (!$this->validateOperators($operators, $invalid)) {
+                throw new \InvalidArgumentException(sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', implode(', ', $operators), $name));
+            }
+            $this->operators = $operators;
         }
+    }
+
+    public function bind($value, $operator = null)
+    {
         if (!$this->validateValue($value)) {
-            throw new \InvalidArgumentException(sprintf('Invalid filter value "%s" for "%s"', var_export($value, true), $column));
+            $type = is_object($value) ? get_class($value) : gettype($value);
+            throw new \InvalidArgumentException(sprintf('Binding invalid value (type "%s") into filter "%s"', $type, $this->name));
         }
 
-        $operator = strtolower($operator);
-        $operators = static::getOperators();
-        if (!in_array($operator, $operators)) {
-            $operator = reset($operators);
+        if (empty($operator)) {
+            $operator = $this->getDefaultOperators()[0];
         }
-        $this->column = $column;
+
+        if (!$this->validateOperator($operator)) {
+            throw new \InvalidArgumentException(sprintf('Binding invalid operator "%s" into filter "%s"', $operator, $this->name));
+        }
+
         $this->value = $value;
         $this->operator = $operator;
+        $this->bound = true;
+    }
+
+    public function isBound()
+    {
+        return $this->bound;
     }
 
     /**
      * @return string
      */
-    public function getColumn()
+    public function getName()
     {
-        return $this->column;
+        return $this->name;
     }
 
     /**
@@ -70,21 +119,78 @@ abstract class FilterRule
         return $this->operator;
     }
 
-    abstract protected function validateValue($value);
+    /**
+     * @return array|null
+     */
+    public function getOperators()
+    {
+        return $this->operators;
+    }
 
-    public static function getOperators() {}
+    /**
+     * @return string
+     */
+    public function getFormType()
+    {
+        return $this->formType;
+    }
 
     /**
      * @return array
      */
-    private function getOperatorMap()
+    public function getFormOptions()
     {
-        return [
-            'string' => ['equal', 'not-equal', 'contains', 'not-contains', 'null', 'not-null'], // text
-            'number' => ['equal', 'not-equal', 'greater', 'lesser', 'greater-equal', 'lesser-equal', 'null', 'not-null'], // number
-            'bool' => ['null'], // values yes, no, yes-no, null
-            'date' => ['equal', 'not-equal', 'greater', 'lesser', 'greater-equal', 'lesser-equal', 'null', 'not-null'], // date
-            'date_range' => ['between', 'not-between'], // date_from, date_to
-        ];
+        return $this->formOptions;
+    }
+
+    /**
+     * @param string $value
+     * @return bool
+     */
+    abstract protected function validateValue($value);
+
+    /**
+     * @return array
+     */
+    abstract protected function getDefaultOperators();
+
+    /**
+     * @return string
+     */
+    abstract protected function getDefaultFormType();
+
+    /**
+     * @return array
+     */
+    protected function getDefaultFormOptions()
+    {
+        return [];
+    }
+
+    /**
+     * @param string $operator
+     * @return bool
+     */
+    protected function validateOperator($operator)
+    {
+        return in_array($operator, $this->getDefaultOperators());
+    }
+
+    /**
+     * @param array $operators
+     * @param array $invalid
+     * @return bool
+     */
+    protected function validateOperators($operators, array &$invalid = [])
+    {
+        $defaultOperators = $this->getDefaultOperators();
+
+        foreach ($operators as $operator) {
+            if (!in_array($operator, $defaultOperators)) {
+                $invalid[] = $operator;
+            }
+        }
+
+        return 0 === count($invalid);
     }
 }

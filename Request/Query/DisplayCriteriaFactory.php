@@ -9,6 +9,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
+use Imatic\Bundle\DataBundle\Form\Type\Filter\FilterType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -76,23 +77,25 @@ class DisplayCriteriaFactory
 
     /**
      * @param string|null $componentId
-     * @param string|null $filter
+     * @param FilterInterface|null $filter
      * @return FilterInterface
      */
-    public function createFilter($componentId = null, $filter = null)
+    public function createFilter($componentId = null, FilterInterface $filter = null)
     {
-        if (is_null($filter)) {
-            return new Filter();
-        } else {
+        if (!is_null($filter)) {
             $filterData = $this->getAttribute('filter', [], $componentId);
-            $form = $this->formFactory->createNamed('filter', $filter);
+            $form = $this->formFactory->createNamed('filter', new FilterType($filter));
             $form->submit($filterData);
 
-            $filter = $form->getData();
-            $filter->setForm($form);
+            if ($form->isValid()) {
+                $filter = $form->getData();
+                $filter->setForm($form);
 
-            return $filter;
+                return $filter;
+            }
         }
+
+        return new Filter();
     }
 
     /**

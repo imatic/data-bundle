@@ -1,0 +1,16 @@
+# Filter operators
+eq:             Je rovno
+neq:            Není rovno
+like:           Obsahuje
+notLike:        Neobsahuje
+isNull:         Je prázdné
+isNotNull:      Není prázdné
+gt:             Je větší než
+gte:            Je větší než nebo rovno
+lt:             Je menší než
+lte:            Je menší než nebo rovno
+
+# Boolean values
+yes:            Ano
+no:             Ne
+yesNo:          Ano i Ne

@@ -1,14 +1,15 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
+use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as DoctrineORMQueryObjectInterface;
@@ -19,14 +20,6 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as DoctrineORMQuery
  */
 class DisplayCriteriaQueryBuilder
 {
-    private static $operatorMap = [
-        'equal' => '=',
-        'not-equal' => '<>',
-        'in' => 'IN',
-        'contains' => 'LIKE',
-        'empty' => 'IS NULL',
-    ];
-
     /**
      * @param QueryBuilder $qb
      * @param DoctrineORMQueryObjectInterface $queryObject
@@ -67,18 +60,52 @@ class DisplayCriteriaQueryBuilder
 
             /* @var $filterRule FilterRule */
             foreach ($filter as $filterRule) {
-                if (!isset($filterMap[$filterRule->getColumn()])) {
+                // Rule must be bound
+                if (!$filterRule->isBound()) {
+                    continue;
+                }
+
+                // Rule must be presented in filter map
+                if (!isset($filterMap[$filterRule->getName()])) {
                     throw new \InvalidArgumentException(sprintf('Column "%s" is not presented in filter map', $filterRule->getColumn()));
                 }
 
-                $dqlPart = sprintf('%s %s %s',
-                    $filterMap[$filterRule->getColumn()],
-                    self::$operatorMap[$filterRule->getOperator()],
-                    ':' . $filterRule->getColumn()
-                );
+                $this->addFilterRule($qb, $filterRule, $filterMap[$filterRule->getName()]);
+            }
+        }
+    }
 
-                $qb->andWhere($dqlPart);
-                $qb->setParameter($filterRule->getColumn(), $filterRule->getValue());
+    private function addFilterRule(QueryBuilder $qb, FilterRule $rule, $column)
+    {
+        if ($column instanceof \Closure) {
+            $column($qb, $rule);
+        } else {
+            $param = ':' . $rule->getName();
+            $name = $rule->getName();
+            switch ($rule->getOperator()) {
+//                case FilterOperatorMap::OPERATOR_BETWEEN:
+//                    $ex->gte($column, $param . 'From');
+//                    $ex->lte($column, $param . 'To');
+//                    $qb->setParameter($name . 'From', $rule->getValue()['from']);
+//                    $qb->setParameter($name . 'To', $rule->getValue()['to']);
+//                    break;
+//                case FilterOperatorMap::OPERATOR_NOT_BETWEEN:
+//                    $ex->lte($column, $param . 'From');
+//                    $ex->gte($column, $param . 'To');
+//                    $qb->setParameter($name . 'From', $rule->getValue()['from']);
+//                    $qb->setParameter($name . 'To', $rule->getValue()['to']);
+//                    break;
+                case FilterOperatorMap::OPERATOR_CONTAINS:
+                case FilterOperatorMap::OPERATOR_NOT_CONTAINS:
+                    $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
+                    $qb->setParameter($name, '%' . $rule->getValue() . '%');
+                    break;
+//                case FilterOperatorMap::OPERATOR_EMPTY:
+//                    $ex->isNull($column);
+//                    break;
+                default:
+                    $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
+                    $qb->setParameter($name, $rule->getValue());
             }
         }
     }

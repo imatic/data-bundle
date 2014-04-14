@@ -16,11 +16,13 @@ class Filter implements FilterInterface
     protected $form;
 
     /**
-     * @param FilterRule[] $filterRules
+     * @var string
      */
-    public function __construct(array $filterRules = [])
+    protected $translationDomain;
+
+    public function __construct()
     {
-        $this->filterRules = $filterRules;
+        $this->configure();
     }
 
     /**
@@ -41,10 +43,19 @@ class Filter implements FilterInterface
         return count($this->filterRules);
     }
 
+    public function boundCount()
+    {
+        return array_reduce($this->filterRules, function ($count, FilterRule $rule) {
+            if ($rule->isBound()) $count++;
+
+            return $count;
+        }, 0);
+    }
+
     /**
      * {@inheritdoc}
      */
-    public function getAt($index)
+    public function get($index)
     {
         return $this->filterRules[$index];
     }
@@ -67,5 +78,47 @@ class Filter implements FilterInterface
             throw new \LogicException('Form is already set.');
         }
         $this->form = $form;
+    }
+
+    /**
+     * @return FilterRule[]
+     */
+    public function getRules()
+    {
+        return $this->filterRules;
+    }
+
+    /**
+     * @param FilterRule $rule
+     * @return $this
+     */
+    public function addRule(FilterRule $rule)
+    {
+        $this->filterRules[] = $rule;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslationDomain()
+    {
+        return $this->translationDomain;
+    }
+
+    /**
+     * @param string $translationDomain
+     * @return $this
+     */
+    public function setTranslationDomain($translationDomain)
+    {
+        $this->translationDomain = $translationDomain;
+
+        return $this;
+    }
+
+    protected function configure()
+    {
     }
 }

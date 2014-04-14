@@ -6,13 +6,18 @@ use Symfony\Component\Form\FormInterface;
 interface FilterInterface extends \IteratorAggregate, \Countable
 {
     /**
-     * @param int $index
+     * @param string $index
      * @return FilterRule
      */
-    public function getAt($index);
+    public function get($index);
 
     /**
      * @return FormInterface
      */
     public function getForm();
+
+    /**
+     * @return string
+     */
+    public function getTranslationDomain();
 }
