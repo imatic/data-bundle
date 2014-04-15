@@ -38,7 +38,7 @@ class FilterType extends AbstractType
             $choices = $rule->getOperators();
 
             $field = $builder->create($fieldName, null, ['compound' => true, 'mapped' => false]);
-            if ($choices) {
+            if (count($choices) > 1) {
                 $field->add('operator', 'choice', [
                         'mapped' => false,
                         'choices' => array_combine($choices, $choices),

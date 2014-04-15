@@ -23,7 +23,7 @@ class FilterRuleBoolean extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_bool($value);
+        return is_bool($value) || is_string($value);
     }
 
     protected function getDefaultFormType()

@@ -9,6 +9,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleBoolean;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
@@ -79,6 +80,22 @@ class DisplayCriteriaQueryBuilder
     {
         if ($column instanceof \Closure) {
             $column($qb, $rule);
+        } elseif ($rule instanceof FilterRuleBoolean) {
+            if (FilterOperatorMap::OPERATOR_EMPTY === $rule->getOperator()) {
+                $qb->andWhere($qb->expr()->isNull($column));
+            } else {
+                switch ($rule->getValue()) {
+                    case FilterRuleBoolean::NO:
+                    case false:
+                        $qb->andWhere($qb->expr()->eq($column, 'false'));
+                        break;
+                    case FilterRuleBoolean::YES_NO:
+                        $qb->andWhere($qb->expr()->isNotNull($column));
+                        break;
+                    default:
+                        $qb->andWhere($qb->expr()->eq($column, 'true'));
+                }
+            }
         } else {
             $param = ':' . $rule->getName();
             $name = $rule->getName();
@@ -100,9 +117,12 @@ class DisplayCriteriaQueryBuilder
                     $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
                     $qb->setParameter($name, '%' . $rule->getValue() . '%');
                     break;
-//                case FilterOperatorMap::OPERATOR_EMPTY:
-//                    $ex->isNull($column);
-//                    break;
+                case FilterOperatorMap::OPERATOR_EMPTY:
+                    $qb->andWhere($qb->expr()->isNull($column));
+                    break;
+                case FilterOperatorMap::OPERATOR_NOT_EMPTY:
+                    $qb->andWhere($qb->expr()->isNotNull($column));
+                    break;
                 default:
                     $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
                     $qb->setParameter($name, $rule->getValue());
