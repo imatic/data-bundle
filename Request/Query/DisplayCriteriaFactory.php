@@ -85,7 +85,7 @@ class DisplayCriteriaFactory
         if (!is_null($filter)) {
             $filterData = $this->getAttribute('filter', [], $componentId);
             $form = $this->formFactory->createNamed('filter', new FilterType($filter));
-            $form->submit($filterData);
+            $form->submit($filterData, false);
 
             if ($form->isValid()) {
                 $filter = $form->getData();

@@ -68,7 +68,7 @@ class DisplayCriteriaQueryBuilder
 
                 // Rule must be presented in filter map
                 if (!isset($filterMap[$filterRule->getName()])) {
-                    throw new \InvalidArgumentException(sprintf('Column "%s" is not presented in filter map', $filterRule->getColumn()));
+                    throw new \InvalidArgumentException(sprintf('Column "%s" is not presented in filter map', $filterRule->getName()));
                 }
 
                 $this->addFilterRule($qb, $filterRule, $filterMap[$filterRule->getName()]);

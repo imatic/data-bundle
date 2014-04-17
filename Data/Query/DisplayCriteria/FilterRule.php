@@ -12,9 +12,16 @@ abstract class FilterRule
     /**
      * Filer value for compare
      *
-     * @var string
+     * @var mixed
      */
     protected $value;
+
+    /**
+     * Default filer value
+     *
+     * @var mixed
+     */
+    protected $default;
 
     /**
      * Filer operator for compare
@@ -88,6 +95,33 @@ abstract class FilterRule
         $this->value = $value;
         $this->operator = $operator;
         $this->bound = true;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefault()
+    {
+        return $this->default;
+    }
+
+    /**
+     * @param mixed $default
+     * @return $this
+     */
+    public function setDefault($default)
+    {
+        $this->default = $default;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDefault()
+    {
+        return !is_null($this->default);
     }
 
     public function isBound()

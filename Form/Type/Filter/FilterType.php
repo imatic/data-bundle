@@ -6,6 +6,8 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -45,10 +47,21 @@ class FilterType extends AbstractType
                         'translation_domain' => 'ImaticDataBundle']
                 );
             }
-            $field->add('value', $fieldType, $fieldOptions);
 
+            if ($rule->hasDefault()) {
+                $fieldOptions['data'] = $rule->getDefault();
+            }
+
+            $field->add('value', $fieldType, $fieldOptions);
             $builder->add($field);
         }
+
+        $builder->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $this->bindFilter($event->getForm());
+            }
+        );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -57,19 +70,7 @@ class FilterType extends AbstractType
             'data_class' => 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter',
             'csrf_protection' => false,
             'translation_domain' => $this->filter->getTranslationDomain(),
-            'empty_data' => function (FormInterface $form) {
-                    /** @var $rule FilterRule */
-                    foreach ($this->filter as $rule) {
-                        $field = $form->get($rule->getName());
-                        if ($field->has('value') && !is_null($data = $field->get('value')->getData())) {
-                            $operator = null;
-                            if ($field->has('operator')) {
-                                $operator = $field->get('operator')->getData();
-                            }
-                            $rule->bind($data, $operator);
-                        }
-                    }
-
+            'empty_data' => function () {
                     return $this->filter;
                 }
         ]);
@@ -78,5 +79,20 @@ class FilterType extends AbstractType
     public function getName()
     {
         return 'filter';
+    }
+
+    protected function bindFilter(FormInterface $form)
+    {
+        /** @var $rule FilterRule */
+        foreach ($this->filter as $rule) {
+            $field = $form->get($rule->getName());
+            if ($field->has('value') && !is_null($data = $field->get('value')->getData())) {
+                $operator = null;
+                if ($field->has('operator')) {
+                    $operator = $field->get('operator')->getData();
+                }
+                $rule->bind($data, $operator);
+            }
+        }
     }
 }
