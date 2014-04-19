@@ -123,6 +123,10 @@ class DisplayCriteriaQueryBuilder
                 case FilterOperatorMap::OPERATOR_NOT_EMPTY:
                     $qb->andWhere($qb->expr()->isNotNull($column));
                     break;
+                case FilterOperatorMap::OPERATOR_IN:
+                    $qb->andWhere($qb->expr()->in($column, $param));
+                    $qb->setParameter($name, $rule->getValue());
+                    break;
                 default:
                     $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
                     $qb->setParameter($name, $rule->getValue());

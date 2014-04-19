@@ -9,6 +9,8 @@ gt:             Je větší než
 gte:            Je větší než nebo rovno
 lt:             Je menší než
 lte:            Je menší než nebo rovno
+in:             Je v
+notIn:          Není v
 
 # Boolean values
 yes:            Ano

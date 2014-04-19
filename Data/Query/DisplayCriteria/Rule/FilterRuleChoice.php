@@ -10,7 +10,8 @@ class FilterRuleChoice extends FilterRule
     protected function getDefaultOperators()
     {
         return [
-            FilterOperatorMap::OPERATOR_EQUAL,
+            FilterOperatorMap::OPERATOR_IN,
+            FilterOperatorMap::OPERATOR_NOT_IN,
         ];
     }
 

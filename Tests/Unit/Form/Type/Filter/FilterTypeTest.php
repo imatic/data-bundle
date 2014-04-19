@@ -16,11 +16,11 @@ class FilterTypeTest extends TypeTestCase
         $filterRule2 = new FilterRuleNumber('field2');
 
         $filter = new Filter();
-        $filter->addRule($filterRule1);
-        $filter->addRule($filterRule2);
+        $filter->add($filterRule1);
+        $filter->add($filterRule2);
 
-        $type = new FilterType($filter);
-        $form = $this->factory->create($type);
+        $type = new FilterType();
+        $form = $this->factory->create($type, $filter, ['filter' => $filter]);
 
         $form->submit([
             'field1' => [
@@ -33,26 +33,27 @@ class FilterTypeTest extends TypeTestCase
 
         /** @var Filter $data */
         $data = $form->getData();
+
         $this->assertTrue($form->isSynchronized());
         $this->assertTrue($form->isValid());
         $this->assertInstanceOf('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter', $data);
-        $this->assertEquals($filterRule1, $data->get(0));
-        $this->assertEquals($filterRule2, $data->get(1));
+        $this->assertEquals($filterRule1, $data->get('field1'));
+        $this->assertEquals($filterRule2, $data->get('field2'));
 
-        $this->assertEquals('text', $data->get(0)->getValue());
-        $this->assertEquals(100, $data->get(1)->getValue());
+        $this->assertEquals('text', $data->get('field1')->getValue());
+        $this->assertEquals(100, $data->get('field2')->getValue());
     }
 
     public function testFilterRuleDefaultValueSetsFormData()
     {
         $filterRule1 = new FilterRuleText('field1');
-        $filterRule1->setDefault('default text');
+        $filterRule1->setValue('default text');
 
         $filter = new Filter();
-        $filter->addRule($filterRule1);
+        $filter->add($filterRule1);
 
-        $type = new FilterType($filter);
-        $form = $this->factory->create($type);
+        $type = new FilterType();
+        $form = $this->factory->create($type, $filter, ['filter' => $filter]);
         $view = $form->createView();
         $this->assertEquals('default text', $form->get('field1')->get('value')->getData());
         $this->assertEquals('default text', $view->children['field1']->vars['form']->children['value']->vars['value']);

@@ -8,7 +8,7 @@ class Filter implements FilterInterface
     /**
      * @var FilterRule[]
      */
-    protected $filterRules = array();
+    protected $rules = array();
 
     /**
      * @var FormInterface
@@ -25,27 +25,9 @@ class Filter implements FilterInterface
         $this->configure();
     }
 
-    /**
-     * Retrieve an external iterator
-     *
-     * @return \Iterator
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->filterRules);
-    }
-
-    /**
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->filterRules);
-    }
-
     public function boundCount()
     {
-        return array_reduce($this->filterRules, function ($count, FilterRule $rule) {
+        return array_reduce($this->rules, function ($count, FilterRule $rule) {
             if ($rule->isBound()) $count++;
 
             return $count;
@@ -53,11 +35,47 @@ class Filter implements FilterInterface
     }
 
     /**
+     * @return FilterRule[]
+     */
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function get($index)
     {
-        return $this->filterRules[$index];
+        return $this->rules[$index];
+    }
+
+    /**
+     * @param $index
+     * @return bool
+     */
+    public function has($index)
+    {
+        return isset($this->rules[$index]);
+    }
+
+    /**
+     * @param string $index
+     */
+    public function remove($index)
+    {
+        unset($this->rules[$index]);
+    }
+
+    /**
+     * @param FilterRule $rule
+     * @return $this
+     */
+    public function add(FilterRule $rule)
+    {
+        $this->rules[$rule->getName()] = $rule;
+
+        return $this;
     }
 
     /**
@@ -81,25 +99,6 @@ class Filter implements FilterInterface
     }
 
     /**
-     * @return FilterRule[]
-     */
-    public function getRules()
-    {
-        return $this->filterRules;
-    }
-
-    /**
-     * @param FilterRule $rule
-     * @return $this
-     */
-    public function addRule(FilterRule $rule)
-    {
-        $this->filterRules[] = $rule;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getTranslationDomain()
@@ -116,6 +115,47 @@ class Filter implements FilterInterface
         $this->translationDomain = $translationDomain;
 
         return $this;
+    }
+
+    public function offsetExists($index)
+    {
+        return $this->has($index);
+    }
+
+    public function offsetGet($index)
+    {
+        return $this->get($index);
+    }
+
+    public function offsetSet($index, $value)
+    {
+        if (!($value instanceof FilterRule) || $index != $value->getName()) {
+            throw new \InvalidArgumentException('Value must be a instance of FilterRule and index must be same as rule name');
+        }
+        $this->add($value);
+    }
+
+    public function offsetUnset($index)
+    {
+        $this->remove($index);
+    }
+
+    /**
+     * Retrieve an external iterator
+     *
+     * @return \Iterator
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->rules);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->rules);
     }
 
     protected function configure()

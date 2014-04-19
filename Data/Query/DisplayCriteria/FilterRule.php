@@ -5,6 +5,13 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 abstract class FilterRule
 {
     /**
+     * Filer name for compare
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
      * @var bool
      */
     protected $bound;
@@ -17,25 +24,11 @@ abstract class FilterRule
     protected $value;
 
     /**
-     * Default filer value
-     *
-     * @var mixed
-     */
-    protected $default;
-
-    /**
      * Filer operator for compare
      *
      * @var string
      */
     protected $operator;
-
-    /**
-     * Filer name for compare
-     *
-     * @var string
-     */
-    protected $name;
 
     /**
      * Allowed operators
@@ -58,72 +51,19 @@ abstract class FilterRule
      */
     protected $formOptions;
 
-    public function __construct($name, $formType = null, array $formOptions = [], array $operators = null)
+    public function __construct($name, $formType = null, array $formOptions = [], array $operators = [])
     {
         $this->bound = false;
         $this->name = $name;
-
         $this->formType = $formType ? : $this->getDefaultFormType();
         $this->formOptions = array_merge($this->getDefaultFormOptions(), $formOptions);
-
-        if (is_null($operators)) {
-            $this->operators = $this->getDefaultOperators();
-        } else {
-            $invalid = [];
-            if (!$this->validateOperators($operators, $invalid)) {
-                throw new \InvalidArgumentException(sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', implode(', ', $operators), $name));
-            }
-            $this->operators = $operators;
-        }
-    }
-
-    public function bind($value, $operator = null)
-    {
-        if (!$this->validateValue($value)) {
-            $type = is_object($value) ? get_class($value) : gettype($value);
-            throw new \InvalidArgumentException(sprintf('Binding invalid value (type "%s") into filter "%s"', $type, $this->name));
-        }
-
-        if (empty($operator)) {
-            $operator = $this->getDefaultOperators()[0];
-        }
-
-        if (!$this->validateOperator($operator)) {
-            throw new \InvalidArgumentException(sprintf('Binding invalid operator "%s" into filter "%s"', $operator, $this->name));
-        }
-
-        $this->value = $value;
-        $this->operator = $operator;
-        $this->bound = true;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDefault()
-    {
-        return $this->default;
-    }
-
-    /**
-     * @param mixed $default
-     * @return $this
-     */
-    public function setDefault($default)
-    {
-        $this->default = $default;
-
-        return $this;
+        $this->setOperators($operators ? : $this->getDefaultOperators());
+        $this->setOperator(reset($this->operators));
     }
 
     /**
      * @return bool
      */
-    public function hasDefault()
-    {
-        return !is_null($this->default);
-    }
-
     public function isBound()
     {
         return $this->bound;
@@ -146,6 +86,23 @@ abstract class FilterRule
     }
 
     /**
+     * @param mixed $value
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    public function setValue($value)
+    {
+        if (!$this->validateValue($value)) {
+            $type = is_object($value) ? get_class($value) : gettype($value);
+            throw new \InvalidArgumentException(sprintf('Binding invalid value (type "%s") into filter "%s"', $type, $this->name));
+        }
+        $this->bound = true;
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getOperator()
@@ -154,11 +111,41 @@ abstract class FilterRule
     }
 
     /**
-     * @return array|null
+     * @param string $operator
+     * @return $this
+     * @throws \InvalidArgumentException
+     */
+    public function setOperator($operator)
+    {
+        if ($operator) {
+            if (!$this->validateOperator($operator)) {
+                throw new \InvalidArgumentException(sprintf('Binding invalid operator "%s" into filter "%s"', $operator, $this->name));
+            }
+            $this->operator = $operator;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array
      */
     public function getOperators()
     {
         return $this->operators;
+    }
+
+    /**
+     * @param array $operators
+     * @throws \InvalidArgumentException
+     */
+    public function setOperators(array $operators)
+    {
+        $invalid = [];
+        if (!$this->validateOperators($operators, $invalid)) {
+            throw new \InvalidArgumentException(sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', implode(', ', $operators), $name));
+        }
+        $this->operators = $operators;
     }
 
     /**
