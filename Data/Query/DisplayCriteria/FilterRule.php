@@ -165,7 +165,7 @@ abstract class FilterRule
     }
 
     /**
-     * @param string $value
+     * @param mixed $value
      * @return bool
      */
     abstract protected function validateValue($value);

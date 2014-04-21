@@ -100,18 +100,16 @@ class DisplayCriteriaQueryBuilder
             $param = ':' . $rule->getName();
             $name = $rule->getName();
             switch ($rule->getOperator()) {
-//                case FilterOperatorMap::OPERATOR_BETWEEN:
-//                    $ex->gte($column, $param . 'From');
-//                    $ex->lte($column, $param . 'To');
-//                    $qb->setParameter($name . 'From', $rule->getValue()['from']);
-//                    $qb->setParameter($name . 'To', $rule->getValue()['to']);
-//                    break;
-//                case FilterOperatorMap::OPERATOR_NOT_BETWEEN:
-//                    $ex->lte($column, $param . 'From');
-//                    $ex->gte($column, $param . 'To');
-//                    $qb->setParameter($name . 'From', $rule->getValue()['from']);
-//                    $qb->setParameter($name . 'To', $rule->getValue()['to']);
-//                    break;
+                case FilterOperatorMap::OPERATOR_BETWEEN:
+                    $qb->andWhere($qb->expr()->orX($qb->expr()->gte($column, $param . 'Start'), $qb->expr()->lte($column, $param . 'End')));
+                    $qb->setParameter($name . 'Start', $rule->getValue()['start']);
+                    $qb->setParameter($name . 'End', $rule->getValue()['end']);
+                    break;
+                case FilterOperatorMap::OPERATOR_NOT_BETWEEN:
+                    $qb->andWhere($qb->expr()->orX($qb->expr()->lte($column, $param . 'Start'), $qb->expr()->gte($column, $param . 'End')));
+                    $qb->setParameter($name . 'Start', $rule->getValue()['start']);
+                    $qb->setParameter($name . 'End', $rule->getValue()['end']);
+                    break;
                 case FilterOperatorMap::OPERATOR_CONTAINS:
                 case FilterOperatorMap::OPERATOR_NOT_CONTAINS:
                     $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
