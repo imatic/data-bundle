@@ -11,21 +11,25 @@ class HandlerRepository implements HandlerRepositoryInterface
      */
     private $handlers;
 
+    private $bundles;
+
     public function __construct()
     {
         $this->handlers = [];
+        $this->bundles = [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function addHandler($name, HandlerInterface $handler)
+    public function addHandler($name, HandlerInterface $handler, $bundleName)
     {
         if ($this->hasHandler($name)) {
             throw new \LogicException(sprintf('Cannot register 2nd handler with name "%s".', $name));
         }
 
         $this->handlers[$name] = $handler;
+        $this->bundles[$name] = $bundleName;
     }
 
     /**
@@ -46,6 +50,19 @@ class HandlerRepository implements HandlerRepositoryInterface
             return $this->handlers[$name];
         }
         throw new HandlerNotFoundException($name);
+    }
+
+    /**
+     * @param CommandInterface|string $command
+     * @return string
+     */
+    public function getBundleName($command)
+    {
+        if ($command instanceof CommandInterface) {
+            $command = $command->getHandlerName();
+        }
+
+        return $this->bundles[$command];
     }
 
     /**

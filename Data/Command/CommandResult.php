@@ -56,41 +56,38 @@ class CommandResult implements CommandResultInterface
         return new static(false, $messages);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isSuccessful()
     {
         return $this->success;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasMessages()
     {
         return (bool)count($this->messages);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getMessages()
     {
         return $this->messages;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function addMessage(MessageInterface $message)
+    {
+        $this->messages[] = $message;
+    }
+
+    public function addMessages(array $messages)
+    {
+        foreach ($messages as $message) {
+            $this->addMessage($message);
+        }
+    }
+
     public function hasException()
     {
         return $this->exception !== null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getException()
     {
         return $this->exception;

@@ -54,6 +54,33 @@ class CommandExecutor implements CommandExecutorInterface
             $result = new CommandResult(false, [], $e);
         }
 
+        $this->processMessages($command, $result);
+
         return $result;
+    }
+
+    /**
+     * todo: mela by resit post-execute event
+     *
+     * @param CommandInterface $command
+     * @param CommandResultInterface $result
+     */
+    private function processMessages(CommandInterface $command, CommandResultInterface $result)
+    {
+        $translationDomain = $this->handlerRepository->getBundleName($command) . 'Messages';
+
+        if ($result->hasMessages()) {
+            foreach ($result->getMessages() as $message) {
+                if (!$message->getTranslationDomain()) {
+                    $message->setTranslationDomain($translationDomain);
+                    $message->setPrefix($command->getHandlerName());
+                }
+            }
+        } else {
+            $type = $result->isSuccessful() ? 'success' : 'error';
+            $message = new Message($type, $type, [], $translationDomain);
+            $message->setPrefix($command->getHandlerName());
+            $result->addMessage($message);
+        }
     }
 }

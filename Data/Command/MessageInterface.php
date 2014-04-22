@@ -17,5 +17,30 @@ interface MessageInterface
     /**
      * @return string
      */
+    public function getMessage();
+
+    /**
+     * @return string
+     */
     public function getText();
+
+    /**
+     * @return string
+     */
+    public function getTranslationDomain();
+
+    /**
+     * @param string $translationDomain
+     */
+    public function setTranslationDomain($translationDomain);
+
+    /**
+     * @param string $prefix
+     */
+    public function setPrefix($prefix);
+
+    /**
+     * @return string
+     */
+    public function getPrefix();
 }

@@ -28,4 +28,14 @@ interface CommandResultInterface
      * @return \Exception
      */
     public function getException();
+
+    /**
+     * @param MessageInterface $message
+     */
+    public function addMessage(MessageInterface $message);
+
+    /**
+     * @param MessageInterface[] $messages
+     */
+    public function addMessages(array $messages);
 }

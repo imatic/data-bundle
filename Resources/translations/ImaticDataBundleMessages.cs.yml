@@ -1,13 +1,20 @@
-imatic_data.generic_edit:
+edit:
     success:            Položka byla upravena
     error:              Nepodařilo se upravit položku
 
-imatic_data.generic_create:
+create:
     success:            Položka byla vytvořena
     error:              Nepodařilo se vytvořit položku
 
-imatic_data.generic_delete:
+delete:
     success:            Položka byla smazána
     error:              Nepodařilo se smazat položku
 
+success:                Akce proběhla úspěšně
+error:                  Nastala chyba při provádění akce
 
+batch_success:          Hromadná akce byla provedena pro %count% položek
+batch_error:            Nastala chyba při provádění hromadné akce
+
+invalid_instance:       Neplatná data
+invalid_state:          Neplatný stav

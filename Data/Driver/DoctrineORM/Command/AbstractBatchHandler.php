@@ -5,7 +5,6 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
-use Imatic\Bundle\DataBundle\Data\Command\Message;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor;
 
 abstract class AbstractBatchHandler
@@ -39,15 +38,15 @@ abstract class AbstractBatchHandler
         } catch (\Exception $e) {
             $this->queryExecutor->rollback();
 
-            $messages = [new Message('error', 'error')];
+            $return = CommandResult::error('batch_error');
             if (isset($result)) {
-                $messages = array_merge($messages, $result->getMessages());
+                $return->addMessages($result->getMessages());
             }
 
-            return new CommandResult(false, $messages);
+            return $return;
         }
 
-        return CommandResult::success('success', ['%count%' => count($ids)]);
+        return CommandResult::success('batch_success', ['%count%' => count($ids)]);
     }
 
     /**
