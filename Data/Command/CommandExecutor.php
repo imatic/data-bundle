@@ -73,8 +73,8 @@ class CommandExecutor implements CommandExecutorInterface
             foreach ($result->getMessages() as $message) {
                 if (!$message->getTranslationDomain()) {
                     $message->setTranslationDomain($translationDomain);
-                    $message->setPrefix($command->getHandlerName());
                 }
+                $message->setPrefix($command->getHandlerName());
             }
         } else {
             $type = $result->isSuccessful() ? 'success' : 'error';
