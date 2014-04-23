@@ -13,6 +13,15 @@ class FilterRuleBoolean extends FilterRule
 
     const YES_NO = 'yesNo';
 
+    public function setValue($value)
+    {
+        if (is_null($value)) {
+            return $this;
+        }
+
+        return parent::setValue($value);
+    }
+
     protected function getDefaultOperators()
     {
         return [

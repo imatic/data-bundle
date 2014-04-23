@@ -5,8 +5,19 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
-class FilterRuleRange extends FilterRule
+abstract class FilterRuleRange extends FilterRule
 {
+    public function setValue($value)
+    {
+        if ($this->validateValue($value)) {
+            if (is_null($value['start']) && is_null($value['end'])) {
+                return $this;
+            }
+        }
+
+        return parent::setValue($value);
+    }
+
     protected function getDefaultOperators()
     {
         return [
@@ -25,21 +36,5 @@ class FilterRuleRange extends FilterRule
         }
 
         return true;
-    }
-
-    protected function getDefaultFormType()
-    {
-        return 'imatic_type_datetime_range';
-    }
-
-    protected function getDefaultFormOptions()
-    {
-        return [
-            'field_options' => [
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text',
-//                'attr' => ['style' => 'width: 10em;']
-            ]
-        ];
     }
 }

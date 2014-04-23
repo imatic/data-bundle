@@ -11,6 +11,12 @@ lt:             Je menší než
 lte:            Je menší než nebo rovno
 in:             Je v
 notIn:          Není v
+between:        Je mezi
+notBetween:     Není mezi
+
+# Filter labels
+Start:          Od
+End:            Do
 
 # Boolean values
 yes:            Ano
