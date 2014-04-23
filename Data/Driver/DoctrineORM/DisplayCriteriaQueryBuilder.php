@@ -101,7 +101,7 @@ class DisplayCriteriaQueryBuilder
             $name = $rule->getName();
             switch ($rule->getOperator()) {
                 case FilterOperatorMap::OPERATOR_BETWEEN:
-                    $qb->andWhere($qb->expr()->orX($qb->expr()->gte($column, $param . 'Start'), $qb->expr()->lte($column, $param . 'End')));
+                    $qb->andWhere($qb->expr()->andX($qb->expr()->gte($column, $param . 'Start'), $qb->expr()->lte($column, $param . 'End')));
                     $qb->setParameter($name . 'Start', $rule->getValue()['start']);
                     $qb->setParameter($name . 'End', $rule->getValue()['end']);
                     break;
