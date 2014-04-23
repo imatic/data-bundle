@@ -15,10 +15,6 @@ class FilterRuleBoolean extends FilterRule
 
     public function setValue($value)
     {
-        if (is_null($value)) {
-            return $this;
-        }
-
         return parent::setValue($value);
     }
 
@@ -32,7 +28,7 @@ class FilterRuleBoolean extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_bool($value) || is_string($value);
+        return is_bool($value) || is_string($value) || is_null($value);
     }
 
     protected function getDefaultFormType()
