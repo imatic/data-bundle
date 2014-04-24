@@ -5,6 +5,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface as DoctrineORMQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
@@ -38,13 +39,18 @@ class QueryExecutor implements QueryExecutorInterface
     /**
      * {@inheritdoc}
      */
-    public function count(BaseQueryObjectInterface $queryObject)
+    public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
-        if (!($queryObject instanceof BaseQueryObjectInterface)) {
+        if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
         }
 
-        $query = $this->getQuery($queryObject);
+        $qb = $queryObject->build($this->entityManager);
+        if ($displayCriteria) {
+            $this->displayCriteriaQueryBuilder->applyFilter($qb, $displayCriteria->getFilter(), $queryObject);
+        }
+
+        $query = $qb->getQuery();
         $paginator = new Paginator($query, true);
 
         return count($paginator);
@@ -55,11 +61,17 @@ class QueryExecutor implements QueryExecutorInterface
      */
     public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
-        if (!($queryObject instanceof BaseQueryObjectInterface)) {
+        if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
         }
 
-        return $this->getResult($queryObject, $this->getQuery($queryObject, $displayCriteria));
+        $qb = $queryObject->build($this->entityManager);
+
+        if ($displayCriteria) {
+            $this->displayCriteriaQueryBuilder->apply($qb, $queryObject, $displayCriteria);
+        }
+
+        return $this->getResult($queryObject, $qb->getQuery());
     }
 
     public function beginTransaction()
@@ -93,21 +105,5 @@ class QueryExecutor implements QueryExecutorInterface
         } else {
             return $query->getResult();
         }
-    }
-
-    /**
-     * @param  BaseQueryObjectInterface $queryObject
-     * @param  DisplayCriteriaInterface $displayCriteria
-     * @return Query
-     */
-    private function getQuery(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
-    {
-        $qb = $queryObject->build($this->entityManager);
-
-        if ($displayCriteria) {
-            $this->displayCriteriaQueryBuilder->apply($qb, $queryObject, $displayCriteria);
-        }
-
-        return $qb->getQuery();
     }
 }

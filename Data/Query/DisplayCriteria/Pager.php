@@ -37,6 +37,11 @@ class Pager implements PagerInterface
      */
     protected $total;
 
+    /**
+     * @var bool
+     */
+    protected $enabled;
+
     public function __construct($page = null, $limit = null)
     {
         $this->setDefaultLimit(self::DEFAULT_LIMIT);
@@ -44,6 +49,23 @@ class Pager implements PagerInterface
 
         $this->setPage($page);
         $this->setLimit($limit);
+
+        $this->enable();
+    }
+
+    public function disable()
+    {
+        $this->enabled = false;
+    }
+
+    public function enable()
+    {
+        $this->enabled = true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->enabled;
     }
 
     /**

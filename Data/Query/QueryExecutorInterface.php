@@ -19,7 +19,8 @@ interface QueryExecutorInterface
      * Count matched objects.
      *
      * @param  QueryObjectInterface $queryObject
+     * @param  DisplayCriteria\DisplayCriteriaInterface $displayCriteria
      * @return integer              Affected rows
      */
-    public function count(QueryObjectInterface $queryObject);
+    public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null);
 }

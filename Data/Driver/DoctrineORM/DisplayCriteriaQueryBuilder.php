@@ -41,11 +41,13 @@ class DisplayCriteriaQueryBuilder
      * @param QueryBuilder $qb
      * @param PagerInterface $pager
      */
-    private function applyPager(QueryBuilder $qb, PagerInterface $pager)
+    public function applyPager(QueryBuilder $qb, PagerInterface $pager)
     {
-        $qb
-            ->setFirstResult($pager->getOffset())
-            ->setMaxResults($pager->getLimit());
+        if ($pager->isEnabled()) {
+            $qb
+                ->setFirstResult($pager->getOffset())
+                ->setMaxResults($pager->getLimit());
+        }
     }
 
     /**
@@ -54,7 +56,7 @@ class DisplayCriteriaQueryBuilder
      * @param DoctrineORMQueryObjectInterface $queryObject
      * @throws \InvalidArgumentException
      */
-    private function applyFilter(QueryBuilder $qb, FilterInterface $filter, DoctrineORMQueryObjectInterface $queryObject)
+    public function applyFilter(QueryBuilder $qb, FilterInterface $filter, DoctrineORMQueryObjectInterface $queryObject)
     {
         if ($queryObject instanceof FilterableQueryObjectInterface) {
             $filterMap = $queryObject->getFilterMap();
@@ -72,6 +74,33 @@ class DisplayCriteriaQueryBuilder
                 }
 
                 $this->addFilterRule($qb, $filterRule, $filterMap[$filterRule->getName()]);
+            }
+        }
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     * @param SorterInterface $sorter
+     * @param DoctrineORMQueryObjectInterface $queryObject
+     * @throws \InvalidArgumentException
+     */
+    public function applySorter(QueryBuilder $qb, SorterInterface $sorter, DoctrineORMQueryObjectInterface $queryObject)
+    {
+        if ($queryObject instanceof SortableQueryObjectInterface) {
+            $sorterMap = $queryObject->getSorterMap();
+
+            // Default sorting if no sorter rules exists
+            if (0 === $sorter->count() && 0 < count($queryObject->getDefaultSort())) {
+                $sorter->setSorterRules($queryObject->getDefaultSort());
+            }
+
+            /* @var $sorterRule SorterRule */
+            foreach ($sorter as $sorterRule) {
+                if (!isset($sorterMap[$sorterRule->getColumn()])) {
+                    throw new \InvalidArgumentException(sprintf('Column "%s" is not presented in sorter map', $sorterRule->getColumn()));
+                }
+
+                $qb->addOrderBy($sorterMap[$sorterRule->getColumn()], $sorterRule->getDirection());
             }
         }
     }
@@ -128,33 +157,6 @@ class DisplayCriteriaQueryBuilder
                 default:
                     $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
                     $qb->setParameter($name, $rule->getValue());
-            }
-        }
-    }
-
-    /**
-     * @param QueryBuilder $qb
-     * @param SorterInterface $sorter
-     * @param DoctrineORMQueryObjectInterface $queryObject
-     * @throws \InvalidArgumentException
-     */
-    private function applySorter(QueryBuilder $qb, SorterInterface $sorter, DoctrineORMQueryObjectInterface $queryObject)
-    {
-        if ($queryObject instanceof SortableQueryObjectInterface) {
-            $sorterMap = $queryObject->getSorterMap();
-
-            // Default sorting if no sorter rules exists
-            if (0 === $sorter->count() && 0 < count($queryObject->getDefaultSort())) {
-                $sorter->setSorterRules($queryObject->getDefaultSort());
-            }
-
-            /* @var $sorterRule SorterRule */
-            foreach ($sorter as $sorterRule) {
-                if (!isset($sorterMap[$sorterRule->getColumn()])) {
-                    throw new \InvalidArgumentException(sprintf('Column "%s" is not presented in sorter map', $sorterRule->getColumn()));
-                }
-
-                $qb->addOrderBy($sorterMap[$sorterRule->getColumn()], $sorterRule->getDirection());
             }
         }
     }

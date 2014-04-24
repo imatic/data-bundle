@@ -4,6 +4,15 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 interface PagerInterface
 {
+    public function disable();
+
+    public function enable();
+
+    /**
+     * @return bool
+     */
+    public function isEnabled();
+
     /**
      * @return int
      */
@@ -97,7 +106,7 @@ interface PagerInterface
     /**
      * Return pager navigation links
      *
-     * @param  int   $nb
+     * @param  int $nb
      * @return array
      */
     public function getLinks($nb = 5);

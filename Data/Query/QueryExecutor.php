@@ -29,8 +29,8 @@ class QueryExecutor implements QueryExecutorInterface
     /**
      * {@inheritdoc}
      */
-    public function count(QueryObjectInterface $queryObject)
+    public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
-        return $this->driverRepository->getQueryExecutorFor($queryObject)->count($queryObject);
+        return $this->driverRepository->getQueryExecutorFor($queryObject)->count($queryObject, $displayCriteria);
     }
 }
