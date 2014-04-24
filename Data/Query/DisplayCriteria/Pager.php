@@ -69,6 +69,14 @@ class Pager implements PagerInterface
     }
 
     /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+
+    /**
      * @param int $limit
      */
     protected function setLimit($limit)
@@ -83,17 +91,17 @@ class Pager implements PagerInterface
         $this->limit = $limit;
     }
 
-    /**
-     * @return int
-     */
-    public function getLimit()
-    {
-        return $this->limit;
-    }
-
     public function getOffset()
     {
         return ($this->getPage() - 1) * $this->getLimit();
+    }
+
+    /**
+     * @return int
+     */
+    public function getPage()
+    {
+        return $this->page;
     }
 
     /**
@@ -109,22 +117,6 @@ class Pager implements PagerInterface
     }
 
     /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * @param int $total
-     */
-    public function setTotal($total)
-    {
-        $this->total = intval($total);
-    }
-
-    /**
      * @throws \LogicException
      * @return int
      */
@@ -135,6 +127,14 @@ class Pager implements PagerInterface
         }
 
         return $this->total;
+    }
+
+    /**
+     * @param int $total
+     */
+    public function setTotal($total)
+    {
+        $this->total = intval($total);
     }
 
     /**
@@ -252,7 +252,7 @@ class Pager implements PagerInterface
     /**
      * Return pager navigation links
      *
-     * @param  int   $nb
+     * @param  int $nb
      * @return array
      */
     public function getLinks($nb = 5)
@@ -280,6 +280,14 @@ class Pager implements PagerInterface
     }
 
     /**
+     * @return int
+     */
+    public function getDefaultLimit()
+    {
+        return $this->defaultLimit;
+    }
+
+    /**
      * @param int $defaultLimit
      */
     public function setDefaultLimit($defaultLimit)
@@ -290,9 +298,9 @@ class Pager implements PagerInterface
     /**
      * @return int
      */
-    public function getDefaultLimit()
+    public function getMaxLimit()
     {
-        return $this->defaultLimit;
+        return $this->maxLimit;
     }
 
     /**
@@ -305,13 +313,5 @@ class Pager implements PagerInterface
             $this->setLimit($maxLimit);
         }
         $this->maxLimit = $maxLimit;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaxLimit()
-    {
-        return $this->maxLimit;
     }
 }
