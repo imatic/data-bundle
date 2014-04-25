@@ -10,4 +10,10 @@ services:
             - @imatic_data.pager_factory
             - @form.factory
 
-    # Form filter
+    # Form extensions
+    imatic_data.form.extension.query_object:
+        class: Imatic\Bundle\DataBundle\Form\Extension\EntityTypeQueryObjectExtension
+        arguments:
+            - '@imatic_data.query_executor'
+        tags:
+            - { name: 'form.type_extension', alias: entity }
