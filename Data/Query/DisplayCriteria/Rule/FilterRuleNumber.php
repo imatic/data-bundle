@@ -23,7 +23,7 @@ class FilterRuleNumber extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_numeric($value) || (is_array($value) && count(array_filter($value, 'is_numeric')) == count($value));
+        return is_numeric($value);
     }
 
     protected function getDefaultFormType()

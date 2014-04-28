@@ -7,11 +7,9 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 class FilterRuleBoolean extends FilterRule
 {
-    const YES = 'yes';
+    const YES = 'true';
 
-    const NO = 'no';
-
-    const YES_NO = 'yesNo';
+    const NO = 'false';
 
     public function setValue($value)
     {
@@ -23,6 +21,7 @@ class FilterRuleBoolean extends FilterRule
         return [
             FilterOperatorMap::OPERATOR_EQUAL,
             FilterOperatorMap::OPERATOR_EMPTY,
+            FilterOperatorMap::OPERATOR_NOT_EMPTY,
         ];
     }
 
@@ -40,8 +39,7 @@ class FilterRuleBoolean extends FilterRule
     {
         $choices = [
             self::YES,
-            self::NO,
-            self::YES_NO,
+            self::NO
         ];
 
         return [

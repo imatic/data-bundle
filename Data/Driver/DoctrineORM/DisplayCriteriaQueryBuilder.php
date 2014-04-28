@@ -105,6 +105,16 @@ class DisplayCriteriaQueryBuilder
         }
     }
 
+    private function addFilterRule1(QueryBuilder $qb, FilterRule $rule, $column)
+    {
+//        if ($column instanceof \Closure) {
+//            $column($qb, $rule);
+//        } else {
+//            $r = new RuleProcessor();
+//            $r->process($qb);
+//        }
+    }
+
     private function addFilterRule(QueryBuilder $qb, FilterRule $rule, $column)
     {
         if ($column instanceof \Closure) {
@@ -117,9 +127,6 @@ class DisplayCriteriaQueryBuilder
                     case FilterRuleBoolean::NO:
                     case false:
                         $qb->andWhere($qb->expr()->eq($column, 'false'));
-                        break;
-                    case FilterRuleBoolean::YES_NO:
-                        $qb->andWhere($qb->expr()->isNotNull($column));
                         break;
                     default:
                         $qb->andWhere($qb->expr()->eq($column, 'true'));

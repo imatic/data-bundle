@@ -21,7 +21,7 @@ class FilterRuleText extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_string($value) || (is_array($value) && count(array_filter($value, 'is_string')) == count($value));
+        return is_string($value);
     }
 
     protected function getDefaultFormType()
