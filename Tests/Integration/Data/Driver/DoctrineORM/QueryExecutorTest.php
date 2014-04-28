@@ -5,12 +5,13 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleText;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleText;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListWithOrderNumbersQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
@@ -154,9 +155,12 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteria()
     {
-        $filter = new Filter([
-            new FilterRuleText('user_name', 'Adam', '='),
-        ]);
+        $nameRule = new FilterRuleText('name');
+        $nameRule->setValue('Adam');
+        $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
+
+        $filter = new UserFilter();
+        $filter->add($nameRule);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
@@ -167,9 +171,12 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteriaWithoutSpecifyingAlias()
     {
-        $filter = new Filter([
-            new FilterRuleText('name', 'Adam', '='),
-        ]);
+        $nameRule = new FilterRuleText('name');
+        $nameRule->setValue('Adam');
+        $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
+
+        $filter = new UserFilter();
+        $filter->add($nameRule);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
@@ -180,9 +187,12 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteriaWithoutSpecifyingAlias()
     {
-        $filter = new Filter([
-            new FilterRuleText('name', 'Eva', '='),
-        ]);
+        $nameRule = new FilterRuleText('name');
+        $nameRule->setValue('Eva');
+        $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
+
+        $filter = new UserFilter();
+        $filter->add($nameRule);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
@@ -193,9 +203,12 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteria()
     {
-        $filter = new Filter([
-            new FilterRuleText('user_name', 'Eva', '='),
-        ]);
+        $nameRule = new FilterRuleText('name');
+        $nameRule->setValue('Eva');
+        $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
+
+        $filter = new UserFilter();
+        $filter->add($nameRule);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);

@@ -17,8 +17,8 @@ class HandlerRepositoryTest extends \PHPUnit_Framework_TestCase
         $handler2 = new Handler();
 
         $handlerRepository = new HandlerRepository();
-        $handlerRepository->addHandler('handler1', $handler1);
-        $handlerRepository->addHandler('handler2', $handler2);
+        $handlerRepository->addHandler('handler1', $handler1, 'AppImaticDataBundle');
+        $handlerRepository->addHandler('handler2', $handler2, 'AppImaticDataBundle');
 
         $command1 = new Command('handler1');
         $command2 = new Command('handler2');
@@ -34,8 +34,8 @@ class HandlerRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testAddHandlerShouldThrowExceptionIfHandlerWithTheSameNameIsAlreadyRegistered()
     {
         $handlerRepository = new HandlerRepository();
-        $handlerRepository->addHandler('handler', new Handler());
-        $handlerRepository->addHandler('handler', new Handler());
+        $handlerRepository->addHandler('handler', new Handler(), 'AppImaticDataBundle');
+        $handlerRepository->addHandler('handler', new Handler(), 'AppImaticDataBundle');
     }
 }
 

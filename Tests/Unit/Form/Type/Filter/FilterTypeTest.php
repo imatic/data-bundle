@@ -7,9 +7,19 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleNumber;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleText;
 use Imatic\Bundle\DataBundle\Form\Type\Filter\FilterType;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\Form\Forms;
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 
 class FilterTypeTest extends TypeTestCase
 {
+    protected function setUp()
+    {
+        $this->factory = Forms::createFormFactoryBuilder()
+            ->addExtensions($this->getExtensions())
+            ->addType(new Select2Type('choice'))
+            ->getFormFactory();
+    }
+
     public function testFormSubmitReturnCorrectFilter()
     {
         $filterRule1 = new FilterRuleText('field1');
