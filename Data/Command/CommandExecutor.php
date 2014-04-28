@@ -16,7 +16,7 @@ class CommandExecutor implements CommandExecutorInterface
 
     /**
      * @param HandlerRepositoryInterface $handlerRepository
-     * @param bool $debug
+     * @param bool                       $debug
      */
     public function __construct(HandlerRepositoryInterface $handlerRepository, $debug = false)
     {
@@ -25,7 +25,7 @@ class CommandExecutor implements CommandExecutorInterface
     }
 
     /**
-     * @param  CommandInterface $command
+     * @param  CommandInterface       $command
      * @throws \Exception
      * @return CommandResultInterface
      */
@@ -62,7 +62,7 @@ class CommandExecutor implements CommandExecutorInterface
     /**
      * todo: mela by resit post-execute event
      *
-     * @param CommandInterface $command
+     * @param CommandInterface       $command
      * @param CommandResultInterface $result
      */
     private function processMessages(CommandInterface $command, CommandResultInterface $result)

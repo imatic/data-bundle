@@ -25,7 +25,7 @@ class FilterRuleChoice extends FilterRule
 
     public function setMultiple($bool = true)
     {
-        $this->multiple = (bool)$bool;
+        $this->multiple = (bool) $bool;
 
         return $this;
     }

@@ -9,7 +9,7 @@ interface QueryExecutorInterface
     /**
      * Execute query.
      *
-     * @param  QueryObjectInterface $queryObject
+     * @param  QueryObjectInterface                     $queryObject
      * @param  DisplayCriteria\DisplayCriteriaInterface $displayCriteria
      * @return mixed
      */
@@ -18,9 +18,9 @@ interface QueryExecutorInterface
     /**
      * Count matched objects.
      *
-     * @param  QueryObjectInterface $queryObject
+     * @param  QueryObjectInterface                     $queryObject
      * @param  DisplayCriteria\DisplayCriteriaInterface $displayCriteria
-     * @return integer              Affected rows
+     * @return integer                                  Affected rows
      */
     public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null);
 }

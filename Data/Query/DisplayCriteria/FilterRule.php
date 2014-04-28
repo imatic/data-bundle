@@ -86,8 +86,8 @@ abstract class FilterRule
     }
 
     /**
-     * @param mixed $value
-     * @return $this
+     * @param  mixed                     $value
+     *                                          @return $this
      * @throws \InvalidArgumentException
      */
     public function setValue($value)
@@ -111,8 +111,8 @@ abstract class FilterRule
     }
 
     /**
-     * @param string $operator
-     * @return $this
+     * @param  string                    $operator
+     *                                             @return $this
      * @throws \InvalidArgumentException
      */
     public function setOperator($operator)
@@ -136,7 +136,7 @@ abstract class FilterRule
     }
 
     /**
-     * @param array $operators
+     * @param  array                     $operators
      * @throws \InvalidArgumentException
      */
     public function setOperators(array $operators)
@@ -165,7 +165,7 @@ abstract class FilterRule
     }
 
     /**
-     * @param mixed $value
+     * @param  mixed $value
      * @return bool
      */
     abstract protected function validateValue($value);
@@ -189,7 +189,7 @@ abstract class FilterRule
     }
 
     /**
-     * @param string $operator
+     * @param  string $operator
      * @return bool
      */
     protected function validateOperator($operator)
@@ -198,8 +198,8 @@ abstract class FilterRule
     }
 
     /**
-     * @param array $operators
-     * @param array $invalid
+     * @param  array $operators
+     * @param  array $invalid
      * @return bool
      */
     protected function validateOperators($operators, array &$invalid = [])

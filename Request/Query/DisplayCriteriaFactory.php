@@ -35,8 +35,8 @@ class DisplayCriteriaFactory
     private $formFactory;
 
     /**
-     * @param RequestStack $requestStack
-     * @param PagerFactory $pagerFactory
+     * @param RequestStack         $requestStack
+     * @param PagerFactory         $pagerFactory
      * @param FormFactoryInterface $formFactory
      */
     public function __construct(RequestStack $requestStack, PagerFactory $pagerFactory, FormFactoryInterface $formFactory)
@@ -47,7 +47,7 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param array $options
+     * @param  array           $options
      * @return DisplayCriteria
      */
     public function createCriteria(array $options = [])
@@ -64,7 +64,7 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param string|null $componentId
+     * @param  string|null    $componentId
      * @return PagerInterface
      */
     public function createPager($componentId = null)
@@ -76,8 +76,8 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param string|null $componentId
-     * @param FilterInterface|null $filter
+     * @param  string|null          $componentId
+     * @param  FilterInterface|null $filter
      * @return FilterInterface
      */
     public function createFilter($componentId = null, FilterInterface $filter = null)
@@ -102,8 +102,8 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param string|null $componentId
-     * @param array $sorter
+     * @param  string|null     $componentId
+     * @param  array           $sorter
      * @return SorterInterface
      */
     public function createSorter($componentId = null, array $sorter = [])
@@ -119,9 +119,9 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param string $name
-     * @param mixed|null $default
-     * @param string|null $component
+     * @param  string      $name
+     * @param  mixed|null  $default
+     * @param  string|null $component
      * @return mixed
      */
     protected function getAttribute($name, $default = null, $component = null)

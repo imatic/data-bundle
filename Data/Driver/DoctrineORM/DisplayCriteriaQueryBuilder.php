@@ -22,9 +22,9 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as DoctrineORMQuery
 class DisplayCriteriaQueryBuilder
 {
     /**
-     * @param QueryBuilder $qb
+     * @param QueryBuilder                    $qb
      * @param DoctrineORMQueryObjectInterface $queryObject
-     * @param DisplayCriteriaInterface $displayCriteria
+     * @param DisplayCriteriaInterface        $displayCriteria
      */
     public function apply(QueryBuilder $qb, DoctrineORMQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
@@ -38,7 +38,7 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param QueryBuilder $qb
+     * @param QueryBuilder   $qb
      * @param PagerInterface $pager
      */
     public function applyPager(QueryBuilder $qb, PagerInterface $pager)
@@ -51,9 +51,9 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param FilterInterface $filter
-     * @param DoctrineORMQueryObjectInterface $queryObject
+     * @param  QueryBuilder                    $qb
+     * @param  FilterInterface                 $filter
+     * @param  DoctrineORMQueryObjectInterface $queryObject
      * @throws \InvalidArgumentException
      */
     public function applyFilter(QueryBuilder $qb, FilterInterface $filter, DoctrineORMQueryObjectInterface $queryObject)
@@ -79,9 +79,9 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param SorterInterface $sorter
-     * @param DoctrineORMQueryObjectInterface $queryObject
+     * @param  QueryBuilder                    $qb
+     * @param  SorterInterface                 $sorter
+     * @param  DoctrineORMQueryObjectInterface $queryObject
      * @throws \InvalidArgumentException
      */
     public function applySorter(QueryBuilder $qb, SorterInterface $sorter, DoctrineORMQueryObjectInterface $queryObject)

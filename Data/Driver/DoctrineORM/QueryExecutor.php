@@ -27,7 +27,7 @@ class QueryExecutor implements QueryExecutorInterface
     private $displayCriteriaQueryBuilder;
 
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManager               $entityManager
      * @param DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder
      */
     public function __construct(EntityManager $entityManager, DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder)
@@ -90,8 +90,8 @@ class QueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param BaseQueryObjectInterface $queryObject
-     * @param Query $query
+     * @param  BaseQueryObjectInterface $queryObject
+     * @param  Query                    $query
      * @return mixed
      */
     private function getResult(BaseQueryObjectInterface $queryObject, Query $query)
