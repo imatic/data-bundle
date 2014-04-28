@@ -2,11 +2,12 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Request\Query;
 
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
 use Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Symfony\Component\Form\Forms;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -127,4 +128,14 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Lee', $filter['name']->getValue());
         $this->assertEquals(FilterOperatorMap::OPERATOR_NOT_EQUAL, $filter['name']->getOperator());
     }
+}
+
+class UserFilter extends Filter
+{
+     protected function configure()
+     {
+         $this
+            ->add(new Rule\FilterRuleText('name'))
+        ;
+     }
 }

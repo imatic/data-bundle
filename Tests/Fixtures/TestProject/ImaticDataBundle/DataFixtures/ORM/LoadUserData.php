@@ -17,11 +17,17 @@ class LoadUserData extends AbstractFixture
     {
         $adam = new User();
         $adam->setName('Adam');
+        $adam->activate();
+        $adam->setBirthDate(new \DateTime('1990-01-01'));
+        $adam->setHairs('short');
         $this->addReference(static::ADAM_REF, $adam);
         $manager->persist($adam);
 
         $eva = new User();
         $eva->setName('Eva');
+        $eva->deactivate();
+        $eva->setBirthDate(new \DateTime('1995-03-05'));
+        $eva->setHairs('long');
         $this->addReference(static::EVA_REF, $eva);
         $manager->persist($eva);
 

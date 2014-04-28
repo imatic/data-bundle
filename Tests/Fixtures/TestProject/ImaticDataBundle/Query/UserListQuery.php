@@ -27,6 +27,10 @@ class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterf
         return [
             'user_name' => 'u.name',
             'name' => 'u.name',
+            'id' => 'u.id',
+            'activated' => 'u.activated',
+            'birthDate' => 'u.birthDate',
+            'hairs' => 'u.hairs',
         ];
     }
 

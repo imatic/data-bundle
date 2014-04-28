@@ -13,21 +13,10 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
  */
 class CommandExecutorTest extends WebTestCase
 {
-    private $client;
-    private $container;
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->client = static::createClient();
-        $this->container = $this->client->getContainer();
-    }
-
     public function testGivenCommandShouldBeSuccessfullyExecuted()
     {
         /* @var $user User */
-        $user = $this->getUserRepository()->findOneByName('Eva');
+        $user = $this->getUserRepository()->findOneByName('Adam');
 
         // guard
         $this->assertTrue($user->isActivated());

@@ -21,10 +21,6 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
  */
 class QueryExecutorTest extends WebTestCase
 {
-    private $client;
-
-    private $container;
-
     public function testQueryExecutorShouldReturnsCorrectPagesBasedOnDisplayCriteria()
     {
         // guard
@@ -239,13 +235,5 @@ class QueryExecutorTest extends WebTestCase
     public function getEntityManager()
     {
         return $this->container->get('doctrine.orm.entity_manager');
-    }
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->client = static::createClient();
-        $this->container = $this->client->getContainer();
     }
 }
