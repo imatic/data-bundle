@@ -91,7 +91,7 @@ Vytvoření command handleru pro deaktivaci uživatele
         // který se následně deaktivuje a všechno se nakonec flushne aby se změny promítly do db.
         public function handle(CommandInterface $pathCommand)
         {
-            $user = $this->queryExecutor->getResult(new UserQuery($pathCommand->getParameter('id')));
+            $user = $this->queryExecutor->execute(new UserQuery($pathCommand->getParameter('id')));
             $user->deactivate();
 
             $this->objectManager->flush();
@@ -118,24 +118,14 @@ Provedení commandu
 .. sourcecode:: php
 
     <?php
-    namespace Imatic\Bundle\ImaticBundle\Controller;
+    $id = 3;
 
-    class UserController
-    {
-        public function deactivateUserAction($id)
-        {
-            // vytvoří se Command, kterému se jako první argument předá alias handler
-            // a jako druhý argument se pak předá pole parametrů
-            $command = new Command('user.deactivate', ['id' => $id]);
+    // vytvoří se Command, kterému se jako první argument předá alias handler
+    // a jako druhý argument se pak předá pole parametrů
+    $command = new Command('user.deactivate', ['id' => $id]);
 
-            // nakonec se získá CommandQueryExecutor který může vrátit CommandResultInterface
-            $result = $this->get('imatic_data.command_executor')->execute($command);
-
-            return new JsonResponse([
-                'success' => $result->isSuccessful(),
-            ]);
-        }
-    }
+    // nakonec se získá CommandQueryExecutor který může vrátit CommandResultInterface
+    $result = $this->get('imatic_data.command_executor')->execute($command);
 
 CommandResultInterface
 ----------------------
@@ -293,30 +283,19 @@ Filtrování a sortování query objektu podle dat z requestu
 
 .. sourcecode:: php
 
-use Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory;
+    /* @var $displayCriteriaFactory \Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory */
+    $displayCriteriaFactory = $this->get('imatic_data.display_criteria_factory');
 
-class UserController
-{
-    public function listAction(Request $request)
-    {
-        $displayCriteriaFactory = $this->get('imatic_data.display_criteria_factory');
+    $displayCriteria = $displayCriteriaFactory->createCriteria([
+        'componentId' => 'componentFromRequest',
+        'filter' => new UserFilter(),
+    ]);
 
-        $displayCriteria = $displayCriteriaFactory->createCriteria([
-            'componentId' => 'componentFromRequest',
-            'filter' => new UserFilter(),
-        ]);
+    // formulář filtrů
+    $form = $displayCriteria->getFilter->getForm();
 
-        // formulář filtrů
-        $form = $displayCriteria->getFilter->getForm();
-
-        return new JsonResponse(
-            // formular filtru
-            'filterForm' => $form->createView(),
-            // link na sortovani podle id
-            'sortByIdLink' => '<a href="http://localhost?sorter[id]=asc">Sort by id</a>',
-        );
-    }
-}
+    // link na sortovani podle id
+    // <a href="http://localhost?sorter[id]=asc">Sort by id</a>
 
 Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory
 -------------------------------------------------------------
