@@ -14,7 +14,7 @@ interface RuleProcessorInterface
      * @param FilterRule   $rule
      * @param string       $column
      */
-    public function supports(QueryBuilder $qb, FilterRule $rule, $column);
+    public function supports(FilterRule $rule, $column);
 
     /**
      * @param QueryBuilder $qb

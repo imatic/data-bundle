@@ -22,7 +22,7 @@ class EmptyOperatorProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function supports(QueryBuilder $qb, FilterRule $rule, $column)
+    public function supports(FilterRule $rule, $column)
     {
         return in_array($rule->getOperator(), [
             FilterOperatorMap::OPERATOR_EMPTY,

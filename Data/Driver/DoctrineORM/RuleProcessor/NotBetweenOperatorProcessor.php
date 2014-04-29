@@ -24,7 +24,7 @@ class NotBetweenOperatorProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function supports(QueryBuilder $qb, FilterRule $rule, $column)
+    public function supports(FilterRule $rule, $column)
     {
         return $rule->getOperator() === FilterOperatorMap::OPERATOR_NOT_BETWEEN;
     }

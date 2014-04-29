@@ -24,7 +24,7 @@ class RuleProcessor
     public function process(QueryBuilder $qb, FilterRule $rule, $column)
     {
         foreach ($this->ruleProcessors as $ruleProcessor) {
-            if ($ruleProcessor->supports($qb, $rule, $column)) {
+            if ($ruleProcessor->supports($rule, $column)) {
                 $ruleProcessor->process($qb, $rule, $column);
 
                 return;

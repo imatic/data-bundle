@@ -31,7 +31,7 @@ class RuleBooleanProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function supports(QueryBuilder $qb, FilterRule $rule, $column)
+    public function supports(FilterRule $rule, $column)
     {
         return $rule instanceof FilterRuleBoolean;
     }
