@@ -89,9 +89,9 @@ Vytvoření command handleru pro deaktivaci uživatele
         // který vytvoří QueryBuilder a ten se pak předá QueryExecutoru, který vrátí právě 1 uživatele
         // (díky tomu, že QueryObjekt implementuje rozhraní SingleResultQueryObjectInterface)
         // který se následně deaktivuje a všechno se nakonec flushne aby se změny promítly do db.
-        public function handle(CommandInterface $pathCommand)
+        public function handle(CommandInterface $command)
         {
-            $user = $this->queryExecutor->execute(new UserQuery($pathCommand->getParameter('id')));
+            $user = $this->queryExecutor->execute(new UserQuery($command->getParameter('id')));
             $user->deactivate();
 
             $this->objectManager->flush();
