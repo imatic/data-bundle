@@ -283,6 +283,7 @@ Filtrování a sortování query objektu podle dat z requestu
 
 .. sourcecode:: php
 
+    <?php
     /* @var $displayCriteriaFactory \Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory */
     $displayCriteriaFactory = $this->get('imatic_data.display_criteria_factory');
 
