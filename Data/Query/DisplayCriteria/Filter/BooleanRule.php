@@ -1,11 +1,11 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
+namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
-class FilterRuleBoolean extends FilterRule
+class BooleanRule extends FilterRule
 {
     const YES = 'true';
 

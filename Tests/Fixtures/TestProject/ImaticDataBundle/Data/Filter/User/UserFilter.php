@@ -1,19 +1,19 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
 
 class UserFilter extends Filter
 {
     protected function configure()
     {
         $this
-            ->add(new Rule\FilterRuleNumber('id'))
-            ->add(new Rule\FilterRuleText('name'))
-            ->add(new Rule\FilterRuleBoolean('activated'))
-            ->add(new Rule\FilterRuleDateRange('birthDate'))
-            ->add(new Rule\FilterRuleChoice('hairs', ['long', 'short']))
+            ->add(new FilterRule\NumberRule('id'))
+            ->add(new FilterRule\TextRule('name'))
+            ->add(new FilterRule\BooleanRule('activated'))
+            ->add(new FilterRule\DateRangeRule('birthDate'))
+            ->add(new FilterRule\ChoiceRule('hairs', ['long', 'short']))
         ;
     }
 }

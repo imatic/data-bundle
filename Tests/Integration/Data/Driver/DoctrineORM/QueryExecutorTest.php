@@ -7,7 +7,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleText;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
@@ -151,7 +151,7 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteria()
     {
-        $nameRule = new FilterRuleText('name');
+        $nameRule = new TextRule('name');
         $nameRule->setValue('Adam');
         $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
 
@@ -167,7 +167,7 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteriaWithoutSpecifyingAlias()
     {
-        $nameRule = new FilterRuleText('name');
+        $nameRule = new TextRule('name');
         $nameRule->setValue('Adam');
         $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
 
@@ -183,7 +183,7 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteriaWithoutSpecifyingAlias()
     {
-        $nameRule = new FilterRuleText('name');
+        $nameRule = new TextRule('name');
         $nameRule->setValue('Eva');
         $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
 
@@ -199,7 +199,7 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteria()
     {
-        $nameRule = new FilterRuleText('name');
+        $nameRule = new TextRule('name');
         $nameRule->setValue('Eva');
         $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
 

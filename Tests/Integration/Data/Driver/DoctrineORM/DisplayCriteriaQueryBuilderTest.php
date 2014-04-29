@@ -1,7 +1,7 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\DisplayCriteriaQueryBuilder;
@@ -13,8 +13,8 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleBooleanYes()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleBoolean('activated');
-        $activatedRule->setValue(Rule\FilterRuleBoolean::YES);
+        $activatedRule = new Filter\BooleanRule('activated');
+        $activatedRule->setValue(Filter\BooleanRule::YES);
         $filter->add($activatedRule);
 
         $qb = (new UserListQuery)->build($this->getEntityManager());
@@ -27,8 +27,8 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleBooleanNo()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleBoolean('activated');
-        $activatedRule->setValue(Rule\FilterRuleBoolean::NO);
+        $activatedRule = new Filter\BooleanRule('activated');
+        $activatedRule->setValue(Filter\BooleanRule::NO);
         $filter->add($activatedRule);
 
         $qb = (new UserListQuery)->build($this->getEntityManager());
@@ -41,7 +41,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleChoiceShort()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleChoice('hairs', ['long', 'short']);
+        $activatedRule = new Filter\ChoiceRule('hairs', ['long', 'short']);
         $activatedRule->setValue('short');
         $filter->add($activatedRule);
 
@@ -55,7 +55,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleChoiceLong()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleChoice('hairs', ['long', 'short']);
+        $activatedRule = new Filter\ChoiceRule('hairs', ['long', 'short']);
         $activatedRule->setValue('long');
         $filter->add($activatedRule);
 
@@ -69,7 +69,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleDataRange1990()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleDateRange('birthDate');
+        $activatedRule = new Filter\DateRangeRule('birthDate');
         $activatedRule->setValue([
             'start' => new \DateTime('1985-03-05'),
             'end' => new \DateTime('1994-09-06'),
@@ -86,7 +86,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleDataRange1995()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleDateRange('birthDate');
+        $activatedRule = new Filter\DateRangeRule('birthDate');
         $activatedRule->setValue([
             'start' => new \DateTime('1995-03-04'),
             'end' => new \DateTime('1995-03-06'),
@@ -103,7 +103,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleNumber()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleNumber('id');
+        $activatedRule = new Filter\NumberRule('id');
         $activatedRule->setValue(1);
         $filter->add($activatedRule);
 
@@ -117,7 +117,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleRange2()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleDateRange('id');
+        $activatedRule = new Filter\DateRangeRule('id');
         $activatedRule->setValue([
             'start' => 2,
             'end' => 10,
@@ -134,7 +134,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleRange1()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleDateRange('id');
+        $activatedRule = new Filter\DateRangeRule('id');
         $activatedRule->setValue([
             'start' => -10,
             'end' => 1,
@@ -151,7 +151,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleText()
     {
         $filter = new UserFilter();
-        $activatedRule = new Rule\FilterRuleText('name');
+        $activatedRule = new Filter\TextRule('name');
         $activatedRule->setValue('Adam');
         $filter->add($activatedRule);
 

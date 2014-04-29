@@ -3,7 +3,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleBoolean;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\BooleanRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Doctrine\ORM\QueryBuilder;
 
@@ -18,7 +18,7 @@ class RuleBooleanProcessor extends AbstractRuleProcessor
             $qb->andWhere($qb->expr()->isNull($column));
         } else {
             switch ($rule->getValue()) {
-                case FilterRuleBoolean::NO:
+                case BooleanRule::NO:
                 case false:
                     $qb->andWhere($qb->expr()->eq($column, 'false'));
                     break;
@@ -33,7 +33,7 @@ class RuleBooleanProcessor extends AbstractRuleProcessor
      */
     public function supports(FilterRule $rule, $column)
     {
-        return $rule instanceof FilterRuleBoolean;
+        return $rule instanceof BooleanRule;
     }
 
 }

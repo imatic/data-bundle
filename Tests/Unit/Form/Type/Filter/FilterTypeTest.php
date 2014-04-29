@@ -3,8 +3,8 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Form\Type\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleNumber;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleText;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\NumberRule;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
 use Imatic\Bundle\DataBundle\Form\Type\Filter\FilterType;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\Forms;
@@ -22,8 +22,8 @@ class FilterTypeTest extends TypeTestCase
 
     public function testFormSubmitReturnCorrectFilter()
     {
-        $filterRule1 = new FilterRuleText('field1');
-        $filterRule2 = new FilterRuleNumber('field2');
+        $filterRule1 = new TextRule('field1');
+        $filterRule2 = new NumberRule('field2');
 
         $filter = new Filter();
         $filter->add($filterRule1);
@@ -56,7 +56,7 @@ class FilterTypeTest extends TypeTestCase
 
     public function testFilterRuleDefaultValueSetsFormData()
     {
-        $filterRule1 = new FilterRuleText('field1');
+        $filterRule1 = new TextRule('field1');
         $filterRule1->setValue('default text');
 
         $filter = new Filter();

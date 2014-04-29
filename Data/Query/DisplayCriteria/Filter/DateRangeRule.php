@@ -1,8 +1,8 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
+namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
-class FilterRuleDateRange extends FilterRuleRange
+class DateRangeRule extends RangeRule
 {
     protected function getDefaultFormType()
     {

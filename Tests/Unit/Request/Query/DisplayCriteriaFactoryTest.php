@@ -2,12 +2,12 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Request\Query;
 
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
 use Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory;
 use Symfony\Component\Form\Forms;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -135,7 +135,7 @@ class UserFilter extends Filter
      protected function configure()
      {
          $this
-            ->add(new Rule\FilterRuleText('name'))
+            ->add(new FilterRule\TextRule('name'))
         ;
      }
 }

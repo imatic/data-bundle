@@ -1,11 +1,11 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
+namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
-class FilterRuleChoice extends FilterRule
+class ChoiceRule extends FilterRule
 {
     protected $multiple = false;
 
