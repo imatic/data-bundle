@@ -19,6 +19,5 @@ Start:          Od
 End:            Do
 
 # Boolean values
-yes:            Ano
-no:             Ne
-yesNo:          Ano i Ne
+'true':         Ano
+'false':        Ne

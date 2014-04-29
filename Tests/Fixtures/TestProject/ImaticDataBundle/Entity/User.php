@@ -31,6 +31,18 @@ class User
     private $activated = true;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $birthDate;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $hairs;
+
+    /**
      * @return int
      */
     public function getId()
@@ -70,5 +82,37 @@ class User
     public function deactivate()
     {
         $this->activated = false;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getBirthDate()
+    {
+        return $this->birthDate;
+    }
+
+    /**
+     * @param \DateTime $birthDate
+     */
+    public function setBirthDate(\DateTime $birthDate)
+    {
+        $this->birthDate = $birthDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHairs()
+    {
+        return $this->hairs;
+    }
+
+    /**
+     * @param string $hairs
+     */
+    public function setHairs($hairs)
+    {
+        $this->hairs = $hairs;
     }
 }

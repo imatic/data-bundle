@@ -1,15 +1,13 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
-use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\RuleProcessor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule\FilterRuleBoolean;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
@@ -21,10 +19,18 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as DoctrineORMQuery
  */
 class DisplayCriteriaQueryBuilder
 {
+    /** @var RuleProcessor */
+    private $ruleProcessor;
+
+    public function __construct(RuleProcessor $ruleProcessor)
+    {
+        $this->ruleProcessor = $ruleProcessor;
+    }
+
     /**
-     * @param QueryBuilder $qb
+     * @param QueryBuilder                    $qb
      * @param DoctrineORMQueryObjectInterface $queryObject
-     * @param DisplayCriteriaInterface $displayCriteria
+     * @param DisplayCriteriaInterface        $displayCriteria
      */
     public function apply(QueryBuilder $qb, DoctrineORMQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
@@ -38,7 +44,7 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param QueryBuilder $qb
+     * @param QueryBuilder   $qb
      * @param PagerInterface $pager
      */
     public function applyPager(QueryBuilder $qb, PagerInterface $pager)
@@ -51,9 +57,9 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param FilterInterface $filter
-     * @param DoctrineORMQueryObjectInterface $queryObject
+     * @param  QueryBuilder                    $qb
+     * @param  FilterInterface                 $filter
+     * @param  DoctrineORMQueryObjectInterface $queryObject
      * @throws \InvalidArgumentException
      */
     public function applyFilter(QueryBuilder $qb, FilterInterface $filter, DoctrineORMQueryObjectInterface $queryObject)
@@ -73,15 +79,15 @@ class DisplayCriteriaQueryBuilder
                     throw new \InvalidArgumentException(sprintf('Column "%s" is not presented in filter map', $filterRule->getName()));
                 }
 
-                $this->addFilterRule($qb, $filterRule, $filterMap[$filterRule->getName()]);
+                $this->ruleProcessor->process($qb, $filterRule, $filterMap[$filterRule->getName()]);
             }
         }
     }
 
     /**
-     * @param QueryBuilder $qb
-     * @param SorterInterface $sorter
-     * @param DoctrineORMQueryObjectInterface $queryObject
+     * @param  QueryBuilder                    $qb
+     * @param  SorterInterface                 $sorter
+     * @param  DoctrineORMQueryObjectInterface $queryObject
      * @throws \InvalidArgumentException
      */
     public function applySorter(QueryBuilder $qb, SorterInterface $sorter, DoctrineORMQueryObjectInterface $queryObject)
@@ -101,62 +107,6 @@ class DisplayCriteriaQueryBuilder
                 }
 
                 $qb->addOrderBy($sorterMap[$sorterRule->getColumn()], $sorterRule->getDirection());
-            }
-        }
-    }
-
-    private function addFilterRule(QueryBuilder $qb, FilterRule $rule, $column)
-    {
-        if ($column instanceof \Closure) {
-            $column($qb, $rule);
-        } elseif ($rule instanceof FilterRuleBoolean) {
-            if (FilterOperatorMap::OPERATOR_EMPTY === $rule->getOperator()) {
-                $qb->andWhere($qb->expr()->isNull($column));
-            } else {
-                switch ($rule->getValue()) {
-                    case FilterRuleBoolean::NO:
-                    case false:
-                        $qb->andWhere($qb->expr()->eq($column, 'false'));
-                        break;
-                    case FilterRuleBoolean::YES_NO:
-                        $qb->andWhere($qb->expr()->isNotNull($column));
-                        break;
-                    default:
-                        $qb->andWhere($qb->expr()->eq($column, 'true'));
-                }
-            }
-        } else {
-            $param = ':' . $rule->getName();
-            $name = $rule->getName();
-            switch ($rule->getOperator()) {
-                case FilterOperatorMap::OPERATOR_BETWEEN:
-                    $qb->andWhere($qb->expr()->andX($qb->expr()->gte($column, $param . 'Start'), $qb->expr()->lte($column, $param . 'End')));
-                    $qb->setParameter($name . 'Start', $rule->getValue()['start']);
-                    $qb->setParameter($name . 'End', $rule->getValue()['end']);
-                    break;
-                case FilterOperatorMap::OPERATOR_NOT_BETWEEN:
-                    $qb->andWhere($qb->expr()->orX($qb->expr()->lte($column, $param . 'Start'), $qb->expr()->gte($column, $param . 'End')));
-                    $qb->setParameter($name . 'Start', $rule->getValue()['start']);
-                    $qb->setParameter($name . 'End', $rule->getValue()['end']);
-                    break;
-                case FilterOperatorMap::OPERATOR_CONTAINS:
-                case FilterOperatorMap::OPERATOR_NOT_CONTAINS:
-                    $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
-                    $qb->setParameter($name, '%' . $rule->getValue() . '%');
-                    break;
-                case FilterOperatorMap::OPERATOR_EMPTY:
-                    $qb->andWhere($qb->expr()->isNull($column));
-                    break;
-                case FilterOperatorMap::OPERATOR_NOT_EMPTY:
-                    $qb->andWhere($qb->expr()->isNotNull($column));
-                    break;
-                case FilterOperatorMap::OPERATOR_IN:
-                    $qb->andWhere($qb->expr()->in($column, $param));
-                    $qb->setParameter($name, $rule->getValue());
-                    break;
-                default:
-                    $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $param));
-                    $qb->setParameter($name, $rule->getValue());
             }
         }
     }

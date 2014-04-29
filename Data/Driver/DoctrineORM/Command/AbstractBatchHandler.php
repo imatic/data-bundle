@@ -15,7 +15,7 @@ abstract class AbstractBatchHandler
     protected $queryExecutor;
 
     /**
-     * @param  CommandInterface $command
+     * @param  CommandInterface                 $command
      * @throws \Exception
      * @return CommandResultInterface|bool|void
      */
@@ -50,7 +50,7 @@ abstract class AbstractBatchHandler
     }
 
     /**
-     * @param mixed $id
+     * @param  mixed                  $id
      * @return CommandResultInterface
      */
     abstract protected function handleOne($id);

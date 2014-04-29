@@ -11,19 +11,19 @@ class FilterRuleType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         /** @var $rule FilterRule */
         $rule = $options['filter_rule'];
-        $choices = $rule->getOperators();
+        $operators = $rule->getOperators();
 
-        if (count($choices) > 1) {
+        if (count($operators) > 1) {
             $builder->add(
                 'operator',
-                'choice', [
-                    'choices' => array_combine($choices, $choices),
+                'genemu_jqueryselect2_choice', [
+                    'choices' => array_combine($operators, $operators),
                     'translation_domain' => 'ImaticDataBundle'
                 ]
             );

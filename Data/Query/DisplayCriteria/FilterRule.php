@@ -51,13 +51,13 @@ abstract class FilterRule
      */
     protected $formOptions;
 
-    public function __construct($name, $formType = null, array $formOptions = [], array $operators = [])
+    public function __construct($name)
     {
         $this->bound = false;
         $this->name = $name;
-        $this->formType = $formType ? : $this->getDefaultFormType();
-        $this->formOptions = array_merge($this->getDefaultFormOptions(), $formOptions);
-        $this->setOperators($operators ? : $this->getDefaultOperators());
+        $this->formType = $this->getDefaultFormType();
+        $this->formOptions = $this->getDefaultFormOptions();
+        $this->setOperators($this->getDefaultOperators());
         $this->setOperator(reset($this->operators));
     }
 
@@ -86,8 +86,8 @@ abstract class FilterRule
     }
 
     /**
-     * @param mixed $value
-     * @return $this
+     * @param  mixed                     $value
+     *                                          @return $this
      * @throws \InvalidArgumentException
      */
     public function setValue($value)
@@ -111,8 +111,8 @@ abstract class FilterRule
     }
 
     /**
-     * @param string $operator
-     * @return $this
+     * @param  string                    $operator
+     *                                             @return $this
      * @throws \InvalidArgumentException
      */
     public function setOperator($operator)
@@ -136,14 +136,14 @@ abstract class FilterRule
     }
 
     /**
-     * @param array $operators
+     * @param  array                     $operators
      * @throws \InvalidArgumentException
      */
     public function setOperators(array $operators)
     {
         $invalid = [];
         if (!$this->validateOperators($operators, $invalid)) {
-            throw new \InvalidArgumentException(sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', implode(', ', $operators), $name));
+            throw new \InvalidArgumentException(sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', implode(', ', $operators), $this->getName()));
         }
         $this->operators = $operators;
     }
@@ -165,7 +165,17 @@ abstract class FilterRule
     }
 
     /**
-     * @param mixed $value
+     * @param string $translationDomain
+     */
+    public function setTranslationDomain($translationDomain)
+    {
+        $this->formOptions['translation_domain'] = $translationDomain;
+
+        return $this;
+    }
+
+    /**
+     * @param  mixed $value
      * @return bool
      */
     abstract protected function validateValue($value);
@@ -189,7 +199,7 @@ abstract class FilterRule
     }
 
     /**
-     * @param string $operator
+     * @param  string $operator
      * @return bool
      */
     protected function validateOperator($operator)
@@ -198,8 +208,8 @@ abstract class FilterRule
     }
 
     /**
-     * @param array $operators
-     * @param array $invalid
+     * @param  array $operators
+     * @param  array $invalid
      * @return bool
      */
     protected function validateOperators($operators, array &$invalid = [])

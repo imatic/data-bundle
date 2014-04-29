@@ -1,19 +1,21 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Rule;
+namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
-class FilterRuleText extends FilterRule
+class NumberRule extends FilterRule
 {
     protected function getDefaultOperators()
     {
         return [
             FilterOperatorMap::OPERATOR_EQUAL,
             FilterOperatorMap::OPERATOR_NOT_EQUAL,
-            FilterOperatorMap::OPERATOR_CONTAINS,
-            FilterOperatorMap::OPERATOR_NOT_CONTAINS,
+            FilterOperatorMap::OPERATOR_GREATER,
+            FilterOperatorMap::OPERATOR_GREATER_EQUAL,
+            FilterOperatorMap::OPERATOR_LESSER,
+            FilterOperatorMap::OPERATOR_LESSER_EQUAL,
             FilterOperatorMap::OPERATOR_EMPTY,
             FilterOperatorMap::OPERATOR_NOT_EMPTY,
         ];
@@ -21,11 +23,11 @@ class FilterRuleText extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_string($value) || (is_array($value) && count(array_filter($value, 'is_string')) == count($value));
+        return is_numeric($value);
     }
 
     protected function getDefaultFormType()
     {
-        return 'text';
+        return 'number';
     }
 }

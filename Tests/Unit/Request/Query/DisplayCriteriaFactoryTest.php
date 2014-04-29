@@ -1,12 +1,13 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Request\Query;
 
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
-use Imatic\Bundle\DataBundle\Form\Type\Filter\TextRuleType;
 use Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Form\Type\UserFilterType;
 use Symfony\Component\Form\Forms;
-use Symfony\Component\Form\PreloadedExtension;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,6 +18,33 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
     private $displayCriteriaFactory;
 
     private $currentRequest;
+
+    protected function setUp()
+    {
+        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+
+        $requestStack
+            ->expects($this->any())
+            ->method('getCurrentRequest')
+            ->will($this->returnCallback(function () {
+                return $this->currentRequest;
+            }));
+
+        $pagerFactory = $this->getMock('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory');
+
+        $pagerFactory
+            ->expects($this->any())
+            ->method('createPager')
+            ->will($this->returnCallback(function ($page, $limit) {
+                return new Pager($page, $limit);
+            }));
+
+        $formFactory = Forms::createFormFactoryBuilder()->addTypes([
+            'genemu_jqueryselect2_choice' => new Select2Type('choice'),
+        ])->getFormFactory();
+
+        $this->displayCriteriaFactory = new DisplayCriteriaFactory($requestStack, $pagerFactory, $formFactory);
+    }
 
     public function testcreateCriteriaShouldReturnDefaultValuesIfComponentIsNotInsideRequest()
     {
@@ -48,7 +76,7 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
 
         $displayCriteria = $this->displayCriteriaFactory->createCriteria([
             'componentId' => 'componentFromRequest',
-            'filter' => 'user_filter'
+            'filter' => new UserFilter(),
         ]);
 
         $pager = $displayCriteria->getPager();
@@ -61,9 +89,9 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
 
         $filter = $displayCriteria->getFilter();
         $this->assertCount(1, $filter);
-        $this->assertEquals('name', $filter->getAt(0)->getColumn());
-        $this->assertEquals('Lee', $filter->getAt(0)->getValue());
-        $this->assertEquals('equal', $filter->getAt(0)->getOperator());
+        $this->assertEquals('name', $filter['name']->getName());
+        $this->assertEquals('Lee', $filter['name']->getValue());
+        $this->assertEquals(FilterOperatorMap::OPERATOR_EQUAL, $filter['name']->getOperator());
     }
 
     public function testCreateCriteriaShouldReturnValuesFromRequestRootIfComponentIdWasNotSpecified()
@@ -72,7 +100,7 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
             'filter' => [
                 'name' => [
                     'value' => 'Lee',
-                    'operator' => 'not-equal',
+                    'operator' => FilterOperatorMap::OPERATOR_NOT_EQUAL,
                 ],
             ],
             'sorter' => [
@@ -82,7 +110,9 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
             'limit' => 123,
         ]);
 
-        $displayCriteria = $this->displayCriteriaFactory->createCriteria(['filter' => 'user_filter']);
+        $displayCriteria = $this->displayCriteriaFactory->createCriteria([
+            'filter' => new UserFilter(),
+        ]);
 
         $pager = $displayCriteria->getPager();
         $this->assertEquals(31, $pager->getPage());
@@ -94,39 +124,18 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
 
         $filter = $displayCriteria->getFilter();
         $this->assertCount(1, $filter);
-        $this->assertEquals('name', $filter->getAt(0)->getColumn());
-        $this->assertEquals('Lee', $filter->getAt(0)->getValue());
-        $this->assertEquals('not-equal', $filter->getAt(0)->getOperator());
+        $this->assertEquals('name', $filter['name']->getName());
+        $this->assertEquals('Lee', $filter['name']->getValue());
+        $this->assertEquals(FilterOperatorMap::OPERATOR_NOT_EQUAL, $filter['name']->getOperator());
     }
+}
 
-    protected function setUp()
-    {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
-
-        $requestStack
-            ->expects($this->any())
-            ->method('getCurrentRequest')
-            ->will($this->returnCallback(function () {
-                return $this->currentRequest;
-            }));
-
-        $pagerFactory = $this->getMock('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory');
-
-        $pagerFactory
-            ->expects($this->any())
-            ->method('createPager')
-            ->will($this->returnCallback(function ($page, $limit) {
-                return new Pager($page, $limit);
-            }));
-
-        $userFilterType = new UserFilterType();
-        $textFilter = new TextRuleType();
-        $extensions = array(new PreloadedExtension(array(
-            $userFilterType->getName() => $userFilterType,
-            $textFilter->getName() => $textFilter
-        ), array()));
-        $formFactory = Forms::createFormFactoryBuilder()->addExtensions($extensions)->getFormFactory();
-
-        $this->displayCriteriaFactory = new DisplayCriteriaFactory($requestStack, $pagerFactory, $formFactory);
-    }
+class UserFilter extends Filter
+{
+     protected function configure()
+     {
+         $this
+            ->add(new FilterRule\TextRule('name'))
+        ;
+     }
 }
