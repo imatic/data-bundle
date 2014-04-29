@@ -14,6 +14,9 @@ class FilterRuleChoice extends FilterRule
     public function __construct($name, array $choices, $multiple = false, $type = null)
     {
         parent::__construct($name);
+        $this->choices = $choices;
+        $this->multiple = $multiple;
+        $this->formType = $type;
     }
 
     public function setChoices(array $choices)

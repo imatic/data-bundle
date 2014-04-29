@@ -165,6 +165,16 @@ abstract class FilterRule
     }
 
     /**
+     * @param string $translationDomain
+     */
+    public function setTranslationDomain($translationDomain)
+    {
+        $this->formOptions['translation_domain'] = $translationDomain;
+
+        return $this;
+    }
+
+    /**
      * @param  mixed $value
      * @return bool
      */
