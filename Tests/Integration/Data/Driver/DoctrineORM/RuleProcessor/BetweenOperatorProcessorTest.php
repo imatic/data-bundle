@@ -49,7 +49,7 @@ class BetweenOperatorProcessorTest extends WebTestCase
         $this->assertEquals('1990-01-01', $result[0]->getBirthDate()->format('Y-m-d'));
     }
 
-    public function testProcessShouldReturnQbWhichReturnsResultsNotBetweenValueEnd()
+    public function testProcessShouldReturnQbWhichReturnsResultsBetweenValueIncludingEndEvenIfTimeIsOver()
     {
         $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
 
