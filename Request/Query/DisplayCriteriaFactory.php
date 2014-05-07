@@ -84,6 +84,17 @@ class DisplayCriteriaFactory
     {
         if (!is_null($filter)) {
             $filterData = $this->getAttribute('filter', [], $componentId);
+
+            if (isset($filterData['clearFilter']) || $filterData) {
+                foreach ($filter as $rule) {
+                    $rule->reset();
+                }
+            }
+
+            if (isset($filterData['clearFilter'])) {
+                $filterData = [];
+            }
+
             $form = $this->formFactory->createNamed('filter', new FilterType(), $filter, [
                 'filter' => $filter,
                 'translation_domain' => $filter->getTranslationDomain(),

@@ -18,6 +18,11 @@ interface FilterInterface extends \IteratorAggregate, \Countable, \ArrayAccess
     public function has($index);
 
     /**
+     * @return bool
+     */
+    public function hasDefaults();
+
+    /**
      * @return FormInterface
      */
     public function getForm();
