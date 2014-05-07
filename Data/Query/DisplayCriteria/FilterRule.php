@@ -96,7 +96,7 @@ abstract class FilterRule
             $type = is_object($value) ? get_class($value) : gettype($value);
             throw new \InvalidArgumentException(sprintf('Binding invalid value (type "%s") into filter "%s"', $type, $this->name));
         }
-        $this->bound = true;
+        $this->bound = is_null($value) ? false : true;
         $this->value = $value;
 
         return $this;

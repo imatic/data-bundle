@@ -20,6 +20,11 @@ class Filter implements FilterInterface
      */
     protected $translationDomain;
 
+    /**
+     * @var bool
+     */
+    protected $hasDefaults = false;
+
     public function __construct()
     {
         $this->configure();
@@ -59,6 +64,14 @@ class Filter implements FilterInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasDefaults()
+    {
+        return $this->hasDefaults;
+    }
+
+    /**
      * @param string $index
      */
     public function remove($index)
@@ -73,6 +86,10 @@ class Filter implements FilterInterface
     public function add(FilterRule $rule)
     {
         $this->rules[$rule->getName()] = $rule;
+
+        if (!is_null($rule->getValue())) {
+            $this->hasDefaults = true;
+        }
 
         return $this;
     }
