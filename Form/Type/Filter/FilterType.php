@@ -24,6 +24,7 @@ class FilterType extends AbstractType
                     'property_path' => sprintf('[%s]', $rule->getName()),
                 ]);
         }
+        $builder->add('clearFilter', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

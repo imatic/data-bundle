@@ -224,4 +224,10 @@ abstract class FilterRule
 
         return 0 === count($invalid);
     }
+
+    public function reset()
+    {
+        $this->value = null;
+        $this->bound = false;
+    }
 }
