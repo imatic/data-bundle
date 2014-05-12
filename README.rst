@@ -1,6 +1,87 @@
 ImaticDataBundle
 ================
 
+Data API
+========
+
+Data/Model (data a jejich zpracování)
+-------------------------------------
+Práce s daty musí být sjednocena do jedné vrstvy/jednoho místa, kde probíhají všechny změny.
+Není možné aby bylo čtení a změny dat napříč celou aplikací.
+Vznikají potom duplicity a chyby, protože není kontrola co kde je.
+
+Query (čtení dat)
+^^^^^^^^^^^^^^^^^
+Při čtení dat je nutné znát několik skupin kritérií:
+
+- parametry pro čtení (např ID záznamu, nebo název kategorie produktů v případě výpisu)
+- vnitřní logika čtení jako připojení jiných dat, omezení smazaných nebo neaktivních záznamů atp.
+- přístupová práva k záznamu/záznamům
+- v případě výpisu i omezení zobrazení (filtr, řazení, krokování)
+
+K tomu většinou slouží repository, ve které se ukládají jednotlivé dotazy do metod s parametry.
+Repository mají ale několik nevýhod:
+
+- dotaz je metoda nikoliv objekt, nemožnost konfigurace jinak nez parametry dané metody
+- při větším počtu dotazů vzniká velké množství metod a repository narůstá do nepřehledně velké třídy
+- všechen kód bývá pouze v jedné dlouhé metodě
+- nemožnost pracovat s dotazem dál, repository vrací rovnou pole záznamů
+
+Doporučovanou alternativou je tzv. **QueryObject**. Každý dotaz je zabalen do objektu s daným rozhraním.
+Výhody jsou:
+
+- **každý dotaz je sémanticky pojmenován a uložen ve své třídě, kód je přehledně rozdělen a bez duplicit**
+- možnost konfigurace dotazu jak přes parametry konstruktoru (povinné) tak přes metody (doplňující nastavení)
+- třídu s dotazem je možné vnitřně rozdělit do dalších metod pro lepší čitelnost
+- query objekt vrací instanci QueryBuilder, je tedy možné pracovat s dotazem dál (omezení zobrazení jako filtr apod)
+
+Command (modifikace dat)
+^^^^^^^^^^^^^^^^^^^^^^^^
+Pro modifikaci dat lze použít QueryObject stejně dobře jako pro čtení. V určitých případech to je i doporučené.
+Většinou si ale s jeho logikou nevystačíme, protože je třeba komplexnější změna, která se nevejde do jednoho příkazu.
+Nemusíme také chtít hromadné mazání nebo aktualizaci (QueryObject), protože potřebujeme volat události nad objekty atp.
+
+Změny dat se většinou realizují třemi způsoby:
+
+- form editace (data jsou načtena z databáze, vložena do formuláře a následně modifikována podle uživatelova vstupu)
+- batch akce (hromadné změny dat, například mazání více záznamů nad jejich výpisem)
+- patch akce (většinou změna jednoho nebo více atributů záznamu, například deaktivace uživatele z kontextového menu)
+
+Každý způsob má jinak definovaný vstup viz sekce command v části request.
+Pro veškeré změny dat a další operace se používá tzv **Handler**, který vystupuje jako aplikační fasáda.
+
+Charakteristika handleru:
+
+- **konkrétní handler reprezentuje jednu pojmenovanou operaci (USE CASE) v aplikaci**
+- handler je možné volat jak z controlleru, tak přes CLI command, web service atp
+- handler v sobě obsahuje transakční logiku (nikde jinde nesmí být transakce)
+- handler je možno volat přes MessageQueue, jeho command je serializovatelný
+- místo handleru je možné v controlleru volat rovnou MessageQueue a nechat zpracování na později
+- handler je registrován do DI kontejneru jako služba a může mít různé závislosti
+- každý způsob modifikace dat (form, batch, ...) má pro handler odlišné rozhraní
+- handler by měl mít minimální závislost na frameworku a jeho službách (výjimky: EventDispatcher, SecurityContext)
+
+Doménové služby
+"""""""""""""""
+
+Ne vždycky se vejde nebo hodí všechna logika do entit. Jsou situace kdy je lepší danou logiku oddělit do zvláštní služby.
+
+
+Datové služby pro čtení a modifikaci dat
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Služba, která má k dispozici entity manager a přes kterou se data načítají a mění.
+Její API umožňuje:
+
+- načíst a měnit data pomocí QueryObject
+- spočítat počet záznamů podle QueryObject
+- flush dat
+- persist dat
+
+Filtrování, krokování a řazení výsledků při čtení dat je zajištěno automaticky.
+Služba doplňuje DisplayCriteria ke QueryBuilder vráceného z QueryObject.
+
+
 Vytvoření query objektu
 -----------------------
 
@@ -302,3 +383,17 @@ Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory
 -------------------------------------------------------------
 
 * Vytváří Filtery, Sortery a Pager z requestu (lze je přepsat pokud se předají jako parametr metodě createCriteria)
+
+
+
+Dořešit
+-------
+Uložené filtry, zobrazení apod.
+
+Pro jednotlivé třídy entit je možné registrovat tzv filtry.
+Filtry jsou dvojího druhu:
+
+- filtry umožňující automaticky doplnit například nějaké kritérium dotazu, které by se jinak opakovalo ve všech dotazech
+  Tímto způsobem je možné například hlídat přístupová oprávnění podle nějakého atributu přihlášeného uživatele.
+- filtry umožňující projít načtená data a provést nějakou modifikaci
+  Tímto způsobem je možné například hlídat přístupová oprávnění podle nějakého atributu přihlášeného uživatele.
