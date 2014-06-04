@@ -1,6 +1,6 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\BooleanRule;

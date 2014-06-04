@@ -4,7 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\PDOStatement;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\DisplayCriteriaQueryBuilder;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface as DoctrineDBALQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;

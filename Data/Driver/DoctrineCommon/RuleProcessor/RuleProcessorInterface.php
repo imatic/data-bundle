@@ -1,5 +1,5 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor;
 
 use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
@@ -11,7 +11,6 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 interface RuleProcessorInterface
 {
     /**
-     * @param QueryBuilder $qb
      * @param FilterRule   $rule
      * @param string       $column
      */
