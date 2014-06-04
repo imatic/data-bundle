@@ -2,7 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor;
 
-use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
@@ -14,7 +13,7 @@ class NotBetweenOperatorProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function process(QueryBuilder $qb, FilterRule $rule, $column)
+    public function process($qb, FilterRule $rule, $column)
     {
         $qb->andWhere($qb->expr()->orX($qb->expr()->lt($column, $this->getQueryParameter($rule) . 'Start'), $qb->expr()->gt($column, $this->getQueryParameter($rule) . 'End')));
         $qb->setParameter($this->getQueryParameterName($rule) . 'Start', $rule->getValue()['start']);

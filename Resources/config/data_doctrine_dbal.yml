@@ -1,0 +1,11 @@
+services:
+    imatic_data.doctrine.dbal.query_executor:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor
+        arguments:
+            - @doctrine.dbal.default_connection
+            - @imatic_data.doctrine.dbal.display_criteria_query_builder
+
+    imatic_data.doctrine.dbal.display_criteria_query_builder:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\DisplayCriteriaQueryBuilder
+        arguments:
+            - @imatic_data.doctrine.rule_processor

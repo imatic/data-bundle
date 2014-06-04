@@ -1,7 +1,8 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor;
 
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
+use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 /**
@@ -17,9 +18,9 @@ interface RuleProcessorInterface
     public function supports(FilterRule $rule, $column);
 
     /**
-     * @param QueryBuilder $qb
+     * @param ORMQueryBuilder|DBALQueryBuilder $qb
      * @param FilterRule   $rule
      * @param string       $column
      */
-    public function process(QueryBuilder $qb, FilterRule $rule, $column);
+    public function process($qb, FilterRule $rule, $column);
 }

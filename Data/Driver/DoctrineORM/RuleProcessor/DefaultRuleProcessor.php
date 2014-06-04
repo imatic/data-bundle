@@ -1,7 +1,6 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor;
 
-use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 /**
@@ -20,7 +19,7 @@ class DefaultRuleProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function process(QueryBuilder $qb, FilterRule $rule, $column)
+    public function process($qb, FilterRule $rule, $column)
     {
         $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule)));
         $qb->setParameter($this->getQueryParameterName($rule), $rule->getValue());
