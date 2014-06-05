@@ -9,6 +9,7 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler
         arguments:
             - @doctrine.dbal.default_connection
+            - @imatic_data.driver.doctrine_dbal.schema
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_create }
 
@@ -16,6 +17,7 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler
         arguments:
             - @doctrine.dbal.default_connection
+            - @imatic_data.driver.doctrine_dbal.schema
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_edit }
 
@@ -25,3 +27,8 @@ services:
             - @doctrine.dbal.default_connection
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_delete }
+
+    imatic_data.driver.doctrine_dbal.schema:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema
+        arguments:
+            - @=service('doctrine.dbal.default_connection').getSchemaManager()

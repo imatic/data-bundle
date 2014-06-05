@@ -21,7 +21,7 @@ class CreateHandlerTest extends WebTestCase
             'data' => [
                 'name' => 'new-user',
                 'activated' => true,
-                'birthDate' => '1985-05-03',
+                'birthDate' => new \DateTime('1985-05-03'),
                 'hairs' => 'nice',
             ],
         ];
@@ -32,7 +32,7 @@ class CreateHandlerTest extends WebTestCase
         $newUser = $this->findUserByName('new-user');
         $this->assertEquals('new-user', $newUser['name']);
         $this->assertEquals(true, $newUser['activated']);
-        $this->assertEquals('1985-05-03', $newUser['birthDate']);
+        $this->assertEquals('1985-05-03 00:00:00', $newUser['birthDate']);
         $this->assertEquals('nice', $newUser['hairs']);
     }
 
