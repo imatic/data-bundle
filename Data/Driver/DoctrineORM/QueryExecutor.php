@@ -13,6 +13,7 @@ use Imatic\Bundle\DataBundle\Data\Query\ScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder;
 
 class QueryExecutor implements QueryExecutorInterface
 {

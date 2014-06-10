@@ -1,8 +1,7 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineORM;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
+namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL;
+
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
@@ -12,9 +11,10 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListWithOrderNumbersQuery;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserListQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserListWithOrderNumbersQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UsernameQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
@@ -35,7 +35,7 @@ class QueryExecutorTest extends WebTestCase
         $secondResults = $this->getQueryExecutor()->execute(new UserListQuery(), $secondPageCriteria);
         $this->assertCount(1, $secondResults);
 
-        $this->assertNotEquals($firstResults[0]->getId(), $secondResults[0]->getId());
+        $this->assertNotEquals($firstResults[0]['id'], $secondResults[0]['id']);
     }
 
     public function testQueryExecutorShouldReturnOnePageWithTwoResultsBasedOnDisplayCriteria()
@@ -61,8 +61,8 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
-        $this->assertEquals('Adam', $results[0]->getName());
-        $this->assertEquals('Eva', $results[1]->getName());
+        $this->assertEquals('Adam', $results[0]['name']);
+        $this->assertEquals('Eva', $results[1]['name']);
     }
 
     public function testQueryExecutorShouldReturnSortedResultsDescBasedOnDisplayCriteria()
@@ -78,8 +78,8 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
-        $this->assertEquals('Eva', $results[0]->getName());
-        $this->assertEquals('Adam', $results[1]->getName());
+        $this->assertEquals('Eva', $results[0]['name']);
+        $this->assertEquals('Adam', $results[1]['name']);
     }
 
     public function testQueryExecutorShouldReturnSortedResultsAscBasedOnDisplayCriteriaWithoutSpecifyingAlias()
@@ -95,8 +95,8 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
-        $this->assertEquals('Adam', $results[0]->getName());
-        $this->assertEquals('Eva', $results[1]->getName());
+        $this->assertEquals('Adam', $results[0]['name']);
+        $this->assertEquals('Eva', $results[1]['name']);
     }
 
     public function testQueryExecutorShouldReturnSortedResultsDescBasedOnDisplayCriteriaWithoutSpecifyingAlias()
@@ -112,8 +112,8 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(2, $results);
-        $this->assertEquals('Eva', $results[0]->getName());
-        $this->assertEquals('Adam', $results[1]->getName());
+        $this->assertEquals('Eva', $results[0]['name']);
+        $this->assertEquals('Adam', $results[1]['name']);
     }
 
     public function testQueryExecutorShouldReturnSortedResultsAscByAggregatedField()
@@ -129,8 +129,8 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListWithOrderNumbersQuery(), $criteria);
 
         $this->assertCount(2, $results);
-        $this->assertEquals('Adam', $results[0][0]->getName());
-        $this->assertEquals('Eva', $results[1][0]->getName());
+        $this->assertEquals('Adam', $results[0]['name']);
+        $this->assertEquals('Eva', $results[1]['name']);
     }
 
     public function testQueryExecutorShouldReturnSortedResultsDescByAggregatedField()
@@ -146,8 +146,8 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListWithOrderNumbersQuery(), $criteria);
 
         $this->assertCount(2, $results);
-        $this->assertEquals('Eva', $results[0][0]->getName());
-        $this->assertEquals('Adam', $results[1][0]->getName());
+        $this->assertEquals('Eva', $results[0]['name']);
+        $this->assertEquals('Adam', $results[1]['name']);
     }
 
     public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteria()
@@ -163,7 +163,7 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
-        $this->assertEquals('Adam', $results[0]->getName());
+        $this->assertEquals('Adam', $results[0]['name']);
     }
 
     public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteriaWithoutSpecifyingAlias()
@@ -179,7 +179,7 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
-        $this->assertEquals('Adam', $results[0]->getName());
+        $this->assertEquals('Adam', $results[0]['name']);
     }
 
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteriaWithoutSpecifyingAlias()
@@ -195,7 +195,7 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
-        $this->assertEquals('Eva', $results[0]->getName());
+        $this->assertEquals('Eva', $results[0]['name']);
     }
 
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteria()
@@ -211,14 +211,21 @@ class QueryExecutorTest extends WebTestCase
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
 
         $this->assertCount(1, $results);
-        $this->assertEquals('Eva', $results[0]->getName());
+        $this->assertEquals('Eva', $results[0]['name']);
     }
 
     public function testQueryExecutorShouldReturnSingleResultWhenQueryObjectImplementsSingleResultQueryObjectInterface()
     {
         $user = $this->getQueryExecutor()->execute(new UserQuery(1));
 
-        $this->assertEquals(1, $user->getId());
+        $this->assertEquals(1, $user['id']);
+    }
+
+    public function testQueryExecutorShouldReturnSingleScalarResultWhenQueryObjectImplementsSingleScalarResultQueryObjectInterface()
+    {
+        $adamUsername = $this->getQueryExecutor()->execute(new UsernameQuery(1));
+
+        $this->assertEquals('Adam', $adamUsername);
     }
 
     /**
@@ -226,22 +233,6 @@ class QueryExecutorTest extends WebTestCase
      */
     public function getQueryExecutor()
     {
-        return $this->container->get('imatic_data.query_executor');
-    }
-
-    /**
-     * @return EntityRepository
-     */
-    public function getUserRepository()
-    {
-        return $this->getEntityManager()->getRepository('AppImaticDataBundle:User');
-    }
-
-    /**
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->container->get('doctrine.orm.entity_manager');
+        return $this->container->get('imatic_data.doctrine.dbal.query_executor');
     }
 }

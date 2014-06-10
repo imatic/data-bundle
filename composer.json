@@ -24,15 +24,17 @@
     "require": {
         "php": ">=5.4",
         "symfony/framework-bundle": "2.4.*",
-        "doctrine/doctrine-bundle": ">=1.2",
-        "doctrine/orm": "~2.2,>=2.2.3"
+        "doctrine/doctrine-bundle": ">=1.2"
     },
     "require-dev": {
         "imatic/testing-bundle": "2.4.*",
-        "genemu/form-bundle": "~2.2.2"
+        "genemu/form-bundle": "~2.2.2",
+        "doctrine/orm": "~2.2,>=2.2.3"
     },
     "suggest": {
-        "genemu/form-bundle": ""
+        "genemu/form-bundle": "*",
+        "doctrine/dbal": "*",
+        "doctrine/orm": "*"
     },
     "autoload": {
         "psr-0": {

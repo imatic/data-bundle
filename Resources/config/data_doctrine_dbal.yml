@@ -1,0 +1,34 @@
+services:
+    imatic_data.doctrine.dbal.query_executor:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor
+        arguments:
+            - @doctrine.dbal.default_connection
+            - @imatic_data.doctrine.display_criteria_query_builder
+
+    imatic_data.driver.doctrine_dbal.command.create:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler
+        arguments:
+            - @doctrine.dbal.default_connection
+            - @imatic_data.driver.doctrine_dbal.schema
+        tags:
+            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_create }
+
+    imatic_data.driver.doctrine_dbal.command.edit:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler
+        arguments:
+            - @doctrine.dbal.default_connection
+            - @imatic_data.driver.doctrine_dbal.schema
+        tags:
+            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_edit }
+
+    imatic_data.driver.doctrine_dbal.command.delete:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\DeleteHandler
+        arguments:
+            - @doctrine.dbal.default_connection
+        tags:
+            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_delete }
+
+    imatic_data.driver.doctrine_dbal.schema:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema
+        arguments:
+            - @=service('doctrine.dbal.default_connection').getSchemaManager()

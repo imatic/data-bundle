@@ -4,7 +4,7 @@ namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\Rul
 
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateRangeRule;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\BetweenOperatorProcessor;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\BetweenOperatorProcessor;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>

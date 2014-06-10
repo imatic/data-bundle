@@ -1,59 +1,11 @@
 services:
-    # object manager
-    imatic_data.doctrine.object_manager:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager
-        arguments:
-            - @doctrine.orm.entity_manager
-
-    # query executor
-    imatic_data.doctrine.query_executor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor
-        arguments:
-            - @doctrine.orm.entity_manager
-            - @imatic_data.doctrine.display_criteria_query_builder
-
-    # display criteria
     imatic_data.doctrine.display_criteria_query_builder:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\DisplayCriteriaQueryBuilder
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder
         arguments:
             - @imatic_data.doctrine.rule_processor
 
-    # driver
-    imatic_data.driver.doctrine_orm:
-        class: Imatic\Bundle\DataBundle\Data\Driver\Driver
-        arguments:
-            - "doctrine.orm"
-            - @imatic_data.doctrine.object_manager
-            - @imatic_data.doctrine.query_executor
-            - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\QueryObjectInterface"
-        tags:
-            - { name: imatic_data.driver }
-
-    # Generic command handlers
-    imatic_data.driver.command.edit:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\EditHandler
-        arguments:
-            - '@imatic_data.doctrine.object_manager'
-        tags:
-            - { name: imatic_data.handler, alias: imatic_data.generic_edit }
-
-    imatic_data.driver.command.create:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler
-        arguments:
-            - '@imatic_data.doctrine.object_manager'
-        tags:
-            - { name: imatic_data.handler, alias: imatic_data.generic_create }
-
-    imatic_data.driver.command.delete:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler
-        arguments:
-            - '@imatic_data.doctrine.object_manager'
-            - '@imatic_data.query_executor'
-        tags:
-            - { name: imatic_data.handler, alias: imatic_data.generic_delete }
-
     imatic_data.doctrine.rule_processor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\RuleProcessor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\RuleProcessor
         calls:
             - [addRuleProcessor, [@imatic_data.doctrine.callback_processor]]
             - [addRuleProcessor, [@imatic_data.doctrine.rule_boolean_processor]]
@@ -64,22 +16,22 @@ services:
             - [addRuleProcessor, [@imatic_data.doctrine.default_rule_processor]]
 
     imatic_data.doctrine.callback_processor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\CallbackProcessor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\CallbackProcessor
 
     imatic_data.doctrine.rule_boolean_processor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\RuleBooleanProcessor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\RuleBooleanProcessor
 
     imatic_data.doctrine.default_rule_processor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\DefaultRuleProcessor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\DefaultRuleProcessor
 
     imatic_data.doctrine.between_operator_processor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\BetweenOperatorProcessor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\BetweenOperatorProcessor
 
     imatic_data.doctrine.not_between_operator_processor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\NotBetweenOperatorProcessor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\NotBetweenOperatorProcessor
 
     imatic_data.doctrine.contains_operator_processor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\ContainsOperatorProcessor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\ContainsOperatorProcessor
 
     imatic_data.doctrine.empty_operator_processor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\EmptyOperatorProcessor
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\EmptyOperatorProcessor

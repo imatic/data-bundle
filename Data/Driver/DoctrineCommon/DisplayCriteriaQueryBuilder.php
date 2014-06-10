@@ -1,8 +1,9 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon;
 
-use Doctrine\ORM\QueryBuilder;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor\RuleProcessor;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
+use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\RuleProcessor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
@@ -28,11 +29,11 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param QueryBuilder                    $qb
+     * @param ORMQueryBuilder|DBALQueryBuilder $qb
      * @param DoctrineORMQueryObjectInterface $queryObject
      * @param DisplayCriteriaInterface        $displayCriteria
      */
-    public function apply(QueryBuilder $qb, DoctrineORMQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function apply($qb, DoctrineORMQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         if ($displayCriteria === null) {
             return;
@@ -44,10 +45,10 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param QueryBuilder   $qb
+     * @param ORMQueryBuilder|DBALQueryBuilder $qb
      * @param PagerInterface $pager
      */
-    public function applyPager(QueryBuilder $qb, PagerInterface $pager)
+    public function applyPager($qb, PagerInterface $pager)
     {
         if ($pager->isEnabled()) {
             $qb
@@ -57,12 +58,12 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param  QueryBuilder                    $qb
+     * @param  ORMQueryBuilder|DBALQueryBuilder $qb
      * @param  FilterInterface                 $filter
      * @param  DoctrineORMQueryObjectInterface $queryObject
      * @throws \InvalidArgumentException
      */
-    public function applyFilter(QueryBuilder $qb, FilterInterface $filter, DoctrineORMQueryObjectInterface $queryObject)
+    public function applyFilter($qb, FilterInterface $filter, DoctrineORMQueryObjectInterface $queryObject)
     {
         if ($queryObject instanceof FilterableQueryObjectInterface) {
             $filterMap = $queryObject->getFilterMap();
@@ -85,12 +86,12 @@ class DisplayCriteriaQueryBuilder
     }
 
     /**
-     * @param  QueryBuilder                    $qb
+     * @param  ORMQueryBuilder|DBALQueryBuilder $qb
      * @param  SorterInterface                 $sorter
      * @param  DoctrineORMQueryObjectInterface $queryObject
      * @throws \InvalidArgumentException
      */
-    public function applySorter(QueryBuilder $qb, SorterInterface $sorter, DoctrineORMQueryObjectInterface $queryObject)
+    public function applySorter($qb, SorterInterface $sorter, DoctrineORMQueryObjectInterface $queryObject)
     {
         if ($queryObject instanceof SortableQueryObjectInterface) {
             $sorterMap = $queryObject->getSorterMap();

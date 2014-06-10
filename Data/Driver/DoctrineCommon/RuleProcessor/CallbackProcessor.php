@@ -1,8 +1,7 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor;
 
-use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 /**
@@ -13,7 +12,7 @@ class CallbackProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function process(QueryBuilder $qb, FilterRule $rule, $column)
+    public function process($qb, FilterRule $rule, $column)
     {
          $column($qb, $rule);
     }
