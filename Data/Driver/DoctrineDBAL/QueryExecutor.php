@@ -10,7 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface
 use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
 use Imatic\Bundle\DataBundle\Data\Query\NoResultException;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
@@ -32,7 +32,7 @@ class QueryExecutor implements QueryExecutorInterface
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
     }
 
-    public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!$queryObject instanceof DoctrineDBALQueryObjectInterface) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
@@ -52,7 +52,7 @@ class QueryExecutor implements QueryExecutorInterface
         return $statement->fetch()['count'];
     }
 
-    public function execute(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!$queryObject instanceof DoctrineDBALQueryObjectInterface) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
@@ -84,11 +84,11 @@ class QueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param  QueryObjectInterface $queryObject
+     * @param  BaseQueryObjectInterface $queryObject
      * @param  PDOStatement         $statement
      * @return mixed
      */
-    private function getResult(QueryObjectInterface $queryObject, PDOStatement $statement)
+    private function getResult(BaseQueryObjectInterface $queryObject, PDOStatement $statement)
     {
         $result = $statement->fetchAll();
 

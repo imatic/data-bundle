@@ -29,10 +29,10 @@ class Driver implements DriverInterface
 
     public function __construct(
         $name,
-        ObjectManagerInterface $objectManager,
         QueryExecutorInterface $queryExecutor,
-        $queryObjectClass)
-    {
+        $queryObjectClass,
+        ObjectManagerInterface $objectManager = null
+    ) {
         $this->name = $name;
         $this->objectManager = $objectManager;
         $this->queryExecutor = $queryExecutor;

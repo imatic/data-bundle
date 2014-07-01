@@ -17,9 +17,9 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Driver\Driver
         arguments:
             - "doctrine.orm"
-            - @imatic_data.doctrine.object_manager
             - @imatic_data.doctrine.query_executor
             - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\QueryObjectInterface"
+            - @imatic_data.doctrine.object_manager
         tags:
             - { name: imatic_data.driver }
 

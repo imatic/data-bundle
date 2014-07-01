@@ -32,3 +32,12 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema
         arguments:
             - @=service('doctrine.dbal.default_connection').getSchemaManager()
+
+    imatic_data.driver.doctrine_dbal:
+        class: Imatic\Bundle\DataBundle\Data\Driver\Driver
+        arguments:
+            - "doctrine.dbal"
+            - @imatic_data.doctrine.dbal.query_executor
+            - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\QueryObjectInterface"
+        tags:
+            - { name: imatic_data.driver }

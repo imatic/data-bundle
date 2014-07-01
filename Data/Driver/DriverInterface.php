@@ -13,7 +13,7 @@ interface DriverInterface
     public function getName();
 
     /**
-     * @return ObjectManagerInterface
+     * @return ObjectManagerInterface|null
      */
     public function getObjectManager();
 
