@@ -4,6 +4,7 @@ services:
         arguments:
             - @doctrine.dbal.default_connection
             - @imatic_data.doctrine.display_criteria_query_builder
+            - @imatic_data.driver.doctrine_dbal.schema
 
     imatic_data.driver.doctrine_dbal.command.create:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler

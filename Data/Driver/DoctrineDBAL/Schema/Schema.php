@@ -38,4 +38,21 @@ class Schema
 
         return new QueryData($table, $data, array_values($columnTypes));
     }
+
+    /**
+     * @param string $table
+     *
+     * @return array Associative array with columns as keys and type as it's values
+     */
+    public function getColumnTypes($table)
+    {
+        $columns = $this->schemaManager->listTableColumns($table);
+
+        $columnTypes = [];
+        foreach ($columns as $column) {
+            $columnTypes[$column->getName()] = $column->getType()->getName();
+        }
+
+        return $columnTypes;
+    }
 }

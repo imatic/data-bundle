@@ -14,22 +14,28 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectI
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class QueryExecutor implements QueryExecutorInterface
 {
+    /** @var Schema */
+    private $schema;
+
     /** @var Connection */
     private $connection;
 
     /** @var DisplayCriteriaQueryBuilder */
     private $displayCriteriaQueryBuilder;
 
-    public function __construct(Connection $connection, DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder)
+    public function __construct(Connection $connection, DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder, Schema $schema)
     {
         $this->connection = $connection;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
+        $this->schema = $schema;
     }
 
     public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -90,7 +96,7 @@ class QueryExecutor implements QueryExecutorInterface
      */
     private function getResult(BaseQueryObjectInterface $queryObject, PDOStatement $statement)
     {
-        $result = $statement->fetchAll();
+        $result = $this->getNormalizedResult($statement);
 
         if ($queryObject instanceof SingleScalarResultQueryObjectInterface) {
             return $this->getSingleScalarResult($result);
@@ -125,5 +131,33 @@ class QueryExecutor implements QueryExecutorInterface
         }
 
         throw new NonUniqueResultException();
+    }
+
+    private function getNormalizedResult(PDOStatement $statement)
+    {
+        $tables = [];
+        preg_match('/FROM *"?(\w+)"?/i', $statement->queryString, $tables);
+
+        if (count($tables) !== 2) {
+            throw new \LogicException(sprintf('Found %d tables in queryString "%s", but 1 expected.', max([0, count($tables) - 1]), $statement->queryString));
+        }
+
+        $columnTypes = $this->schema->getColumnTypes($tables[1]);
+        $platform = $this->connection->getSchemaManager()->getDatabasePlatform();
+
+        $normalizedResult = [];
+        $result = $statement->fetchAll();
+        $resultCount = count($result);
+        for ($i = 0; $i < $resultCount; $i++) {
+            foreach ($result[$i] as $column => $value) {
+                if (isset($columnTypes[$column])) {
+                    $normalizedResult[$i][$column] = Type::getType($columnTypes[$column])->convertToPHPValue($value, $platform);
+                } else {
+                    $normalizedResult[$i][$column] = $value;
+                }
+            }
+        }
+
+        return $normalizedResult;
     }
 }
