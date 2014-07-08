@@ -3,6 +3,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
+use Doctrine\DBAL\Connection;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -12,9 +13,13 @@ class Schema
     /** @var AbstractSchemaManager */
     private $schemaManager;
 
-    public function __construct(AbstractSchemaManager $schemaManager)
+    /** @var Connection */
+    private $connection;
+
+    public function __construct(Connection $connection)
     {
-        $this->schemaManager = $schemaManager;
+        $this->connection = $connection;
+        $this->schemaManager = $connection->getSchemaManager();
     }
 
     /**
@@ -36,7 +41,11 @@ class Schema
         ksort($data);
         ksort($columnTypes);
 
-        return new QueryData($table, $data, array_values($columnTypes));
+        return new QueryData(
+            $this->connection->quoteIdentifier($table),
+            $data,
+            array_values($columnTypes)
+        );
     }
 
     /**

@@ -32,7 +32,7 @@ services:
     imatic_data.driver.doctrine_dbal.schema:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema
         arguments:
-            - @=service('doctrine.dbal.default_connection').getSchemaManager()
+            - @doctrine.dbal.default_connection
 
     imatic_data.driver.doctrine_dbal:
         class: Imatic\Bundle\DataBundle\Data\Driver\Driver
