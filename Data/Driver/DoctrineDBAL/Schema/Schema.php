@@ -4,6 +4,8 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Schema\Sequence;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -63,5 +65,54 @@ class Schema
         }
 
         return $columnTypes;
+    }
+
+    public function getNextIdValue($tableName)
+    {
+        $sequence = $this->findAutoincrementSequence($tableName);
+
+        if (!$sequence) {
+            return null;
+        }
+
+        $sql = $this->connection->getSchemaManager()->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
+        $statement = $this->connection->executeQuery($sql);
+
+        return $statement->fetchColumn();
+    }
+
+    /**
+     * @param string $tableName
+     * @return Sequence|null
+     */
+    private function findAutoincrementSequence($tableName)
+    {
+        $table = $this->findTableByName($tableName);
+
+        $sequences = $this->connection->getSchemaManager()->listSequences();
+        foreach ($sequences as $sequence) {
+            $sequenceName = $sequence->getShortestName($table->getNamespaceName());
+            if ($sequenceName === $sequence->getName()) {
+                return $sequence;
+            }
+        }
+    }
+
+    /**
+     * @param string $tableName
+     *
+     * @return Table
+     * @throws \InvalidArgumentException
+     */
+    private function findTableByName($tableName)
+    {
+        $tables = $this->schemaManager->listTables();
+        foreach ($tables as $table) {
+            if ($table->getName() === $tableName) {
+                return $table;
+            }
+        }
+
+        throw new \InvalidArgumentException(sprintf('Table with name "%s" does not exists.', $tableName));
     }
 }
