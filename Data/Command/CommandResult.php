@@ -10,6 +10,11 @@ class CommandResult implements CommandResultInterface
     private $success;
 
     /**
+     * @var array
+     */
+    private $data;
+
+    /**
      * @var MessageInterface[]
      */
     private $messages;
@@ -20,9 +25,9 @@ class CommandResult implements CommandResultInterface
     private $exception;
 
     /**
-     * @param  boolean            $success
+     * @param  boolean $success
      * @param  MessageInterface[] $messages
-     * @param  \Exception         $exception
+     * @param  \Exception $exception
      * @throws \LogicException
      */
     public function __construct($success, array $messages = [], \Exception $exception = null)
@@ -31,9 +36,10 @@ class CommandResult implements CommandResultInterface
             throw new \LogicException('Result cannot be successful with exception.');
         }
 
-        $this->success = (bool) $success;
-        $this->messages = (array) $messages;
+        $this->success = (bool)$success;
+        $this->messages = (array)$messages;
         $this->exception = $exception;
+        $this->data = [];
     }
 
     public static function success($message = null, array $parameters = [])
@@ -63,7 +69,7 @@ class CommandResult implements CommandResultInterface
 
     public function hasMessages()
     {
-        return (bool) count($this->messages);
+        return (bool)count($this->messages);
     }
 
     public function getMessages()
@@ -91,5 +97,21 @@ class CommandResult implements CommandResultInterface
     public function getException()
     {
         return $this->exception;
+    }
+
+    public function get($name, $default = null)
+    {
+        if (isset($this->data[$name])) {
+            return $this->data[$name];
+        }
+
+        return $default;
+    }
+
+    public function set($name, $value)
+    {
+        $this->data[$name] = $value;
+
+        return $this;
     }
 }
