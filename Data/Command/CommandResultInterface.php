@@ -38,4 +38,23 @@ interface CommandResultInterface
      * @param MessageInterface[] $messages
      */
     public function addMessages(array $messages);
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function has($name);
+
+    /**
+     * @param string $name
+     * @param mixed  $default
+     * @return mixed
+     */
+    public function get($name, $default = null);
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     */
+    public function set($name, $value);
 }

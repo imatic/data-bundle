@@ -99,6 +99,11 @@ class CommandResult implements CommandResultInterface
         return $this->exception;
     }
 
+    public function has($name)
+    {
+        return isset($this->data[$name]);
+    }
+
     public function get($name, $default = null)
     {
         if (isset($this->data[$name])) {
