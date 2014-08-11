@@ -41,9 +41,9 @@ class CommandExecutor implements CommandExecutorInterface
 
             if (!($result instanceof CommandResultInterface)) {
                 if (false === $result) {
-                    $result = new CommandResult(false);
+                    $result = CommandResult::error();
                 } else {
-                    $result = new CommandResult(true);
+                    $result = CommandResult::success();
                 }
             }
         } catch (\Exception $e) {
@@ -51,7 +51,7 @@ class CommandExecutor implements CommandExecutorInterface
                 throw $e;
             }
 
-            $result = new CommandResult(false, [], $e);
+            $result = CommandResult::error(null, [], $e);
         }
 
         $this->processMessages($command, $result);
@@ -69,18 +69,11 @@ class CommandExecutor implements CommandExecutorInterface
     {
         $translationDomain = $this->handlerRepository->getBundleName($command) . 'Messages';
 
-        if ($result->hasMessages()) {
-            foreach ($result->getMessages() as $message) {
-                if (!$message->getTranslationDomain()) {
-                    $message->setTranslationDomain($translationDomain);
-                }
-                $message->setPrefix($command->getHandlerName());
+        foreach ($result->getMessages() as $message) {
+            if (!$message->getTranslationDomain()) {
+                $message->setTranslationDomain($translationDomain);
             }
-        } else {
-            $type = $result->isSuccessful() ? 'success' : 'error';
-            $message = new Message($type, $type, [], $translationDomain);
             $message->setPrefix($command->getHandlerName());
-            $result->addMessage($message);
         }
     }
 }

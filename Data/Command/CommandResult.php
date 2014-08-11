@@ -52,14 +52,14 @@ class CommandResult implements CommandResultInterface
         return new static(true, $messages);
     }
 
-    public static function error($message = null, array $parameters = [])
+    public static function error($message = null, array $parameters = [], \Exception $exception = null)
     {
         $messages = [];
         if ($message) {
             $messages[] = new Message('error', $message, $parameters);
         }
 
-        return new static(false, $messages);
+        return new static(false, $messages, $exception);
     }
 
     public function isSuccessful()
@@ -69,7 +69,7 @@ class CommandResult implements CommandResultInterface
 
     public function hasMessages()
     {
-        return (bool)count($this->messages);
+        return !empty($this->messages);
     }
 
     public function getMessages()
