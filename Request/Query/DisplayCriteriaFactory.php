@@ -101,12 +101,10 @@ class DisplayCriteriaFactory
             ]);
             $form->submit($filterData, false);
 
-            if ($form->isValid()) {
-                $filter = $form->getData();
-                $filter->setForm($form);
+            $filter = $form->getData();
+            $filter->setForm($form);
 
-                return $filter;
-            }
+            return $filter;
         }
 
         return new Filter();
