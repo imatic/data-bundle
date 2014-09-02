@@ -58,7 +58,7 @@ abstract class FilterRule
         $this->formType = $this->getDefaultFormType();
         $this->formOptions = $this->getDefaultFormOptions();
         $this->setOperators($this->getDefaultOperators());
-        $this->setOperator(reset($this->operators));
+        $this->setOperator($this->getDefaultOperator());
     }
 
     /**
@@ -184,6 +184,14 @@ abstract class FilterRule
      * @return array
      */
     abstract protected function getDefaultOperators();
+
+    /**
+     * @return string|null
+     */
+    protected function getDefaultOperator()
+    {
+        return reset($this->operators);
+    }
 
     /**
      * @return string

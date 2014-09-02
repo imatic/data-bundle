@@ -18,12 +18,14 @@ class FilterRuleType extends AbstractType
         /** @var $rule FilterRule */
         $rule = $options['filter_rule'];
         $operators = $rule->getOperators();
+        $preferredOperator = $rule->getOperator();
 
         if (count($operators) > 1) {
             $builder->add(
                 'operator',
                 'genemu_jqueryselect2_choice', [
                     'choices' => array_combine($operators, $operators),
+                    'data' => $preferredOperator,
                     'translation_domain' => 'ImaticDataBundle'
                 ]
             );

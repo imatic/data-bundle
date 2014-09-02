@@ -19,6 +19,11 @@ class TextRule extends FilterRule
         ];
     }
 
+    protected function getDefaultOperator()
+    {
+        return FilterOperatorMap::OPERATOR_CONTAINS;
+    }
+
     protected function validateValue($value)
     {
         return is_string($value);
