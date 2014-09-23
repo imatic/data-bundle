@@ -36,16 +36,21 @@ class Schema
         $columnTypes = [];
         foreach ($columns as $column) {
             if (isset($data[$column->getName()])) {
-                $columnTypes[$column->getName()] = $column->getType()->getName();
+                $columnTypes[$this->connection->quoteIdentifier($column->getName())] = $column->getType()->getName();
             }
         }
 
-        ksort($data);
+        $quotedData = [];
+        foreach ($data as $column => $value) {
+            $quotedData[$this->connection->quoteIdentifier($column)] = $value;
+        }
+
+        ksort($quotedData);
         ksort($columnTypes);
 
         return new QueryData(
             $this->connection->quoteIdentifier($table),
-            $data,
+            $quotedData,
             array_values($columnTypes)
         );
     }
