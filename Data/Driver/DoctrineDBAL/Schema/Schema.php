@@ -88,11 +88,16 @@ class Schema
     private function findAutoincrementSequence($tableName)
     {
         $table = $this->findTableByName($tableName);
+        $pkColumns = $table->getPrimaryKey()->getColumns();
 
+        if (count($pkColumns) !== 1) {
+            return;
+        }
+
+        $tableSequenceName = sprintf('%s_%s_seq', $table->getName(), $pkColumns[0]);
         $sequences = $this->connection->getSchemaManager()->listSequences();
         foreach ($sequences as $sequence) {
-            $sequenceName = $sequence->getShortestName($table->getNamespaceName());
-            if ($sequenceName === $sequence->getName()) {
+            if ($tableSequenceName === $sequence->getName()) {
                 return $sequence;
             }
         }
