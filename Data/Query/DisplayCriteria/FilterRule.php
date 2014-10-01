@@ -2,6 +2,9 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 abstract class FilterRule
 {
     /**
@@ -10,6 +13,11 @@ abstract class FilterRule
      * @var string
      */
     protected $name;
+
+    /**
+     * @var array
+     */
+    protected $options;
 
     /**
      * @var bool
@@ -51,10 +59,11 @@ abstract class FilterRule
      */
     protected $formOptions;
 
-    public function __construct($name)
+    public function __construct($name, array $options = [])
     {
         $this->bound = false;
         $this->name = $name;
+        $this->options = $this->processOptions($options);
         $this->formType = $this->getDefaultFormType();
         $this->formOptions = $this->getDefaultFormOptions();
         $this->setOperators($this->getDefaultOperators());
@@ -75,6 +84,19 @@ abstract class FilterRule
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @throws \OutOfBoundsException
+     * @return mixed
+     */
+    public function getOption($name)
+    {
+        if (!array_key_exists($name, $this->options)) {
+            throw new \OutOfBoundsException(sprintf('Unknown option "%s"', $name));
+        }
+
+        return $this->options[$name];
     }
 
     /**
@@ -172,6 +194,28 @@ abstract class FilterRule
         $this->formOptions['translation_domain'] = $translationDomain;
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     * @return array
+     */
+    protected function processOptions(array $options)
+    {
+        $resolver = new OptionsResolver();
+        $this->setDefaultOptions($resolver);
+
+        return $resolver->resolve($options);
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    protected function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'query_parameter_format' => '%s',
+        ]);
     }
 
     /**

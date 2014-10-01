@@ -16,7 +16,10 @@ abstract class AbstractRuleProcessor implements RuleProcessorInterface
      */
     protected function getQueryParameter(FilterRule $rule)
     {
-        return ':' . $this->getQueryParameterName($rule);
+        return sprintf(
+            $rule->getOption('query_parameter_format'),
+            ':' . $this->getQueryParameterName($rule)
+        );
     }
 
     /**
