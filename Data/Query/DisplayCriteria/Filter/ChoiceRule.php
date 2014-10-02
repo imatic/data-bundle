@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
+use Symfony\Component\OptionsResolver\Options;
 
 class ChoiceRule extends FilterRule
 {
@@ -11,12 +12,14 @@ class ChoiceRule extends FilterRule
 
     protected $choices = [];
 
-    public function __construct($name, array $choices, $multiple = false, $type = null)
+    public function __construct($name, array $choices, $multiple = false, $type = null, array $options = [])
     {
-        parent::__construct($name);
+        parent::__construct($name, $options);
         $this->choices = $choices;
         $this->multiple = $multiple;
-        $this->formType = $type;
+        if (null !== $type) {
+            $this->formType = $type;
+        }
     }
 
     public function setChoices(array $choices)
@@ -56,6 +59,17 @@ class ChoiceRule extends FilterRule
         return [
             'choices' => &$this->choices,
             'multiple' => &$this->multiple,
+            'configs' => function (Options $options, $configs) {
+                if (empty($configs)) {
+                    $configs = [];
+
+                    if (!$options->get('required')) {
+                        $configs['allowClear'] = true;
+                    }
+                }
+
+                return $configs;
+            },
         ];
     }
 }
