@@ -36,8 +36,8 @@ class CommandResult implements CommandResultInterface
             throw new \LogicException('Result cannot be successful with exception.');
         }
 
-        $this->success = (bool)$success;
-        $this->messages = (array)$messages;
+        $this->success = (bool) $success;
+        $this->messages = (array) $messages;
         $this->exception = $exception;
         $this->data = [];
     }
