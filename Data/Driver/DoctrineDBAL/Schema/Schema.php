@@ -36,16 +36,21 @@ class Schema
         $columnTypes = [];
         foreach ($columns as $column) {
             if (isset($data[$column->getName()])) {
-                $columnTypes[$column->getName()] = $column->getType()->getName();
+                $columnTypes[$this->connection->quoteIdentifier($column->getName())] = $column->getType()->getName();
             }
         }
 
-        ksort($data);
+        $quotedData = [];
+        foreach ($data as $column => $value) {
+            $quotedData[$this->connection->quoteIdentifier($column)] = $value;
+        }
+
+        ksort($quotedData);
         ksort($columnTypes);
 
         return new QueryData(
             $this->connection->quoteIdentifier($table),
-            $data,
+            $quotedData,
             array_values($columnTypes)
         );
     }
@@ -88,11 +93,16 @@ class Schema
     private function findAutoincrementSequence($tableName)
     {
         $table = $this->findTableByName($tableName);
+        $pkColumns = $table->getPrimaryKey()->getColumns();
 
+        if (count($pkColumns) !== 1) {
+            return;
+        }
+
+        $tableSequenceName = sprintf('%s_%s_seq', $table->getName(), $pkColumns[0]);
         $sequences = $this->connection->getSchemaManager()->listSequences();
         foreach ($sequences as $sequence) {
-            $sequenceName = $sequence->getShortestName($table->getNamespaceName());
-            if ($sequenceName === $sequence->getName()) {
+            if ($tableSequenceName === $sequence->getName()) {
                 return $sequence;
             }
         }
