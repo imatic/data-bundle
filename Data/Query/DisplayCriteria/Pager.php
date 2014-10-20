@@ -114,6 +114,7 @@ class Pager implements PagerInterface
             $page = self::MIN_PAGE;
         }
         $this->page = $page;
+        $this->fixPage();
     }
 
     /**
@@ -135,6 +136,7 @@ class Pager implements PagerInterface
     public function setTotal($total)
     {
         $this->total = intval($total);
+        $this->fixPage();
     }
 
     /**
@@ -313,5 +315,15 @@ class Pager implements PagerInterface
             $this->setLimit($maxLimit);
         }
         $this->maxLimit = $maxLimit;
+    }
+
+    /**
+     * Fix current page so it is not past the last one
+     */
+    protected function fixPage()
+    {
+        if (null !== $this->total) {
+            $this->page = min($this->page, $this->getLastPage());
+        }
     }
 }

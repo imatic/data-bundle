@@ -17,24 +17,13 @@ class DisplayCriteriaFactory extends BaseDisplayCriteriaFactory
      */
     protected $requestStack;
 
-    /**
-     * @param RequestStack         $requestStack
-     * @param PagerFactory         $pagerFactory
-     * @param FormFactoryInterface $formFactory
-     */
     public function __construct(RequestStack $requestStack, PagerFactory $pagerFactory, FormFactoryInterface $formFactory)
     {
         parent::__construct($pagerFactory, $formFactory);
         $this->requestStack = $requestStack;
     }
 
-    /**
-     * @param  string      $name
-     * @param  mixed|null  $default
-     * @param  string|null $component
-     * @return mixed
-     */
-    protected function getAttribute($name, $default = null, $component = null)
+    protected function getAttribute($name, $default = null, $component = null, $persistent = true)
     {
         $request = $this->requestStack->getCurrentRequest();
 
@@ -43,6 +32,60 @@ class DisplayCriteriaFactory extends BaseDisplayCriteriaFactory
             $path = $component . '[' . $name . ']';
         }
 
-        return $request->query->get($path, $default, true);
+        $value = $request->query->get($path, null, true);
+
+        if (
+            $persistent
+            && ($session = $request->getSession())
+            && ($sessionKey = $this->getAttributeSessionKey($name, $component))
+        ) {
+            if (null === $value) {
+                if ($session->has($sessionKey)) {
+                    $value = $session->get($sessionKey);
+                }
+            } else {
+                $session->set($sessionKey, $value);
+            }
+        }
+
+        return null !== $value
+            ? $value
+            : $default
+        ;
+    }
+
+    protected function clearAttribute($name, $component = null, $emptyValue = null)
+    {
+        if (
+            ($session = ($this->requestStack->getCurrentRequest()->getSession()))
+            && ($sessionKey = $this->getAttributeSessionKey($name, $component))
+        ) {
+            if (null === $emptyValue) {
+                $session->remove($sessionKey);
+            } else {
+                $session->set($sessionKey, $emptyValue);
+            }
+        }
+    }
+
+    /**
+     * Get attribute session key
+     *
+     * @param string $name
+     * @param string $component
+     * @return string|null
+     */
+    protected function getAttributeSessionKey($name, $component = null)
+    {
+        $request = $this->requestStack->getCurrentRequest();
+
+        if ($request->attributes->has('_route') && $request->attributes->has('_route_params')) {
+            return sprintf(
+                'imatic.data.display_criteria.%s(%s|%s)',
+                null !== $component ? "{$component}[{$name}]" : $name,
+                $request->attributes->get('_route'),
+                serialize($request->attributes->get('_route_params'))
+            );
+        }
     }
 }

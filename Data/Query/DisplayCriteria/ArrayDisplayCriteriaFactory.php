@@ -11,8 +11,17 @@ class ArrayDisplayCriteriaFactory extends DisplayCriteriaFactory
         $this->attributes = $attributes;
     }
 
-    protected function getAttribute($name, $default = null, $component = null)
+    protected function getAttribute($name, $default = null, $component = null, $persistent = true)
     {
         return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : $default;
+    }
+
+    protected function clearAttribute($name, $component = null, $emptyValue = null)
+    {
+        if (null === $emptyValue) {
+            unset($this->attributes[$name]);
+        } else {
+            $this->attributes[$name] = $emptyValue;
+        }
     }
 }

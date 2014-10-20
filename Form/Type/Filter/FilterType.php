@@ -25,6 +25,7 @@ class FilterType extends AbstractType
                 ]);
         }
         $builder->add('clearFilter', 'submit');
+        $builder->add('defaultFilter', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
