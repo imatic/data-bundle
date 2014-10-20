@@ -113,7 +113,7 @@ abstract class DisplayCriteriaFactory
      */
     public function createSorter($componentId = null, array $sorter = [])
     {
-        $sorterData = $this->getAttribute('sorter', $sorter, $componentId, true);
+        $sorterData = $this->getAttribute('sorter', $sorter, $componentId);
 
         $sorterRules = [];
         foreach ($sorterData as $fieldName => $direction) {
