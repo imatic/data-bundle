@@ -63,7 +63,8 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
             'componentFromRequest' => [
                 'filter' => [
                     'name' => [
-                        'value' => 'Lee'
+                        'value' => 'Lee',
+                        'operator' => FilterOperatorMap::OPERATOR_EQUAL,
                     ],
                 ],
                 'sorter' => [
