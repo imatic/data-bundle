@@ -181,7 +181,7 @@ class Pager implements PagerInterface
      */
     public function getLastPage()
     {
-        return ceil($this->getTotal() / $this->getLimit());
+        return max(self::MIN_PAGE, ceil($this->getTotal() / $this->getLimit()));
     }
 
     /**
