@@ -2,7 +2,7 @@ imports:
     - { resource: data.yml }
 
 services:
-    imatic_data.display_criteria.request_query_reader:
+    imatic_data.display_criteria_reader:
         class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader
         arguments:
             - @request_stack
@@ -13,7 +13,7 @@ services:
         arguments:
             - @imatic_data.pager_factory
             - @form.factory
-            - @imatic_data.display_criteria.request_query_reader
+            - @imatic_data.display_criteria_reader
 
     # Form extensions
     imatic_data.form.extension.query_object:
