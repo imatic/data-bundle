@@ -1,11 +1,12 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Tests\Unit\Request\Query;
+namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria;
 
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
-use Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
 use Symfony\Component\Form\Forms;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,7 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
             'genemu_jqueryselect2_choice' => new Select2Type('choice'),
         ])->getFormFactory();
 
-        $this->displayCriteriaFactory = new DisplayCriteriaFactory($requestStack, $pagerFactory, $formFactory);
+        $this->displayCriteriaFactory = new DisplayCriteriaFactory($pagerFactory, $formFactory, new RequestQueryReader($requestStack));
     }
 
     public function testcreateCriteriaShouldReturnDefaultValuesIfComponentIsNotInsideRequest()

@@ -4,8 +4,9 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Form\Type\Filter\FilterType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 
-abstract class DisplayCriteriaFactory
+class DisplayCriteriaFactory
 {
     /**
      * @var PagerFactory
@@ -18,13 +19,23 @@ abstract class DisplayCriteriaFactory
     private $formFactory;
 
     /**
+     * @var DisplayCriteriaReader
+     */
+    protected $displayCriteriaReader;
+
+    /**
      * @param PagerFactory         $pagerFactory
      * @param FormFactoryInterface $formFactory
+     * @param DisplayCriteriaReader $displayCriteriaReader
      */
-    public function __construct(PagerFactory $pagerFactory, FormFactoryInterface $formFactory)
-    {
+    public function __construct(
+        PagerFactory $pagerFactory,
+        FormFactoryInterface $formFactory,
+        DisplayCriteriaReader $displayCriteriaReader
+    ) {
         $this->pagerFactory = $pagerFactory;
         $this->formFactory = $formFactory;
+        $this->displayCriteriaReader = $displayCriteriaReader;
     }
 
     /**
@@ -51,8 +62,8 @@ abstract class DisplayCriteriaFactory
     public function createPager($componentId = null)
     {
         return $this->pagerFactory->createPager(
-            $this->getAttribute('page', null, $componentId),
-            $this->getAttribute('limit', null, $componentId)
+            $this->displayCriteriaReader->readAttribute('page', null, $componentId),
+            $this->displayCriteriaReader->readAttribute('limit', null, $componentId)
         );
     }
 
@@ -64,8 +75,8 @@ abstract class DisplayCriteriaFactory
     public function createFilter($componentId = null, FilterInterface $filter = null)
     {
         if (!is_null($filter)) {
-            $filterData = $this->getAttribute('filter', null, $componentId, true);
-            
+            $filterData = $this->displayCriteriaReader->readAttribute('filter', null, $componentId, true);
+
             $clearFilter = null !== $filterData && isset($filterData['clearFilter']);
             $defaultFilter = null !== $filterData && isset($filterData['defaultFilter']);
 
@@ -83,12 +94,12 @@ abstract class DisplayCriteriaFactory
 
             // make filter data empty if the filters are cleared
             if ($clearFilter) {
-                $this->clearAttribute('filter', $componentId, []);
+                $this->displayCriteriaReader->clearAttribute('filter', $componentId, []);
             }
 
             // unset filter data if defaults are requested
             if ($defaultFilter) {
-                $this->clearAttribute('filter', $componentId, null);
+                $this->displayCriteriaReader->clearAttribute('filter', $componentId, null);
             }
 
             $form = $this->formFactory->createNamed('filter', new FilterType(), $filter, [
@@ -113,7 +124,7 @@ abstract class DisplayCriteriaFactory
      */
     public function createSorter($componentId = null, array $sorter = [])
     {
-        $sorterData = $this->getAttribute('sorter', $sorter, $componentId);
+        $sorterData = $this->displayCriteriaReader->readAttribute('sorter', $sorter, $componentId);
 
         $sorterRules = [];
         foreach ($sorterData as $fieldName => $direction) {
@@ -122,20 +133,4 @@ abstract class DisplayCriteriaFactory
 
         return new Sorter($sorterRules);
     }
-
-    /**
-     * @param  string      $name
-     * @param  mixed|null  $default
-     * @param  string|null $component
-     * @param  bool        $persistent
-     * @return mixed
-     */
-    abstract protected function getAttribute($name, $default = null, $component = null, $persistent = true);
-
-    /**
-     * @param  string      $name
-     * @param  string|null $component
-     * @param  mixed       $emptyValue
-     */
-    abstract protected function clearAttribute($name, $component = null, $emptyValue = null);
 }
