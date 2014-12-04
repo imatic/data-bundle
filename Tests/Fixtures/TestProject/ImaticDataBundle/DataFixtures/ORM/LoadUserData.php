@@ -19,6 +19,8 @@ class LoadUserData extends AbstractFixture
         $adam->setName('Adam');
         $adam->activate();
         $adam->setBirthDate(new \DateTime('1990-01-01'));
+        $adam->setFavoriteDay(new \DateTime('2013-05-03'));
+        $adam->setFavoriteTime(new \DateTime('5:32'));
         $adam->setHairs('short');
         $this->addReference(static::ADAM_REF, $adam);
         $manager->persist($adam);
@@ -27,6 +29,8 @@ class LoadUserData extends AbstractFixture
         $eva->setName('Eva');
         $eva->deactivate();
         $eva->setBirthDate(new \DateTime('1995-03-05'));
+        $eva->setFavoriteDay(new \DateTime('1983-06-03'));
+        $eva->setFavoriteTime(new \DateTime('12:00'));
         $eva->setHairs('long');
         $this->addReference(static::EVA_REF, $eva);
         $manager->persist($eva);
