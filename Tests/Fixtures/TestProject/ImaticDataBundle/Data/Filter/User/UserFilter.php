@@ -13,6 +13,8 @@ class UserFilter extends Filter
             ->add(new FilterRule\TextRule('name'))
             ->add(new FilterRule\BooleanRule('activated'))
             ->add(new FilterRule\DateRangeRule('birthDate'))
+            ->add(new FilterRule\DateRangeRule('favoriteDay'))
+            ->add(new FilterRule\TimeRangeRule('favoriteTime'))
             ->add(new FilterRule\ChoiceRule('hairs', ['long', 'short']))
         ;
     }
