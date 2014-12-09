@@ -95,6 +95,10 @@ class Schema
      */
     private function findAutoincrementSequence($tableName)
     {
+        if (!$this->connection->getDatabasePlatform()->supportsSequences()) {
+            return null;
+        }
+
         $table = $this->findTableByName($tableName);
         $pkColumns = $table->getPrimaryKey()->getColumns();
 
