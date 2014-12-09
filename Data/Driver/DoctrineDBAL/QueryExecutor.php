@@ -136,7 +136,8 @@ class QueryExecutor implements QueryExecutorInterface
     private function getNormalizedResult(PDOStatement $statement)
     {
         $tables = [];
-        preg_match('/FROM *"?(\w+)"?/i', $statement->queryString, $tables);
+        $quoteCharacter = $this->connection->getDatabasePlatform()->getIdentifierQuoteCharacter();
+        preg_match(sprintf('/FROM *%1$s?(\w+)%1$s?/i', $quoteCharacter), $statement->queryString, $tables);
 
         if (count($tables) !== 2) {
             throw new \LogicException(sprintf('Found %d tables in queryString "%s", but 1 expected.', max([0, count($tables) - 1]), $statement->queryString));
