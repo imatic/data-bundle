@@ -35,14 +35,17 @@ class Schema
 
         $columnTypes = [];
         foreach ($columns as $column) {
-            if (isset($data[$column->getName()])) {
+            if (array_key_exists($column->getName(), $data)) {
                 $columnTypes[$this->connection->quoteIdentifier($column->getName())] = $column->getType()->getName();
             }
         }
 
         $quotedData = [];
         foreach ($data as $column => $value) {
-            $quotedData[$this->connection->quoteIdentifier($column)] = $value;
+            $quotedColumn = $this->connection->quoteIdentifier($column);
+            if (array_key_exists($quotedColumn, $columnTypes)) {
+                $quotedData[$quotedColumn] = $value;
+            }
         }
 
         ksort($quotedData);

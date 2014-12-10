@@ -22,6 +22,8 @@ class CreateHandlerTest extends WebTestCase
                 'name' => 'new-user',
                 'activated' => true,
                 'birthDate' => new \DateTime('1985-05-03'),
+                'favoriteDay' => new \DateTime('1890-09-03'),
+                'favoriteTime' => new \DateTime('16:30'),
                 'hairs' => 'nice',
             ],
         ];
@@ -33,6 +35,8 @@ class CreateHandlerTest extends WebTestCase
         $this->assertEquals('new-user', $newUser['name']);
         $this->assertEquals(true, $newUser['activated']);
         $this->assertEquals('1985-05-03 00:00:00', $newUser['birthDate']);
+        $this->assertEquals('1890-09-03', $newUser['favoriteDay']);
+        $this->assertEquals('16:30:00', $newUser['favoriteTime']);
         $this->assertEquals('nice', $newUser['hairs']);
     }
 
@@ -47,7 +51,7 @@ class CreateHandlerTest extends WebTestCase
     private function findUserByName($name)
     {
         return $this->getConnection()->createQueryBuilder()
-            ->select('u.id, u.name, u.activated, u.birthDate, u.hairs')
+            ->select('u.*')
             ->from('user', 'u')
             ->andWhere('u.name = :name')
             ->setParameter('name', $name)

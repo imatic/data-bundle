@@ -37,6 +37,18 @@ class User
     private $birthDate;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(type="date")
+     */
+    private $favoriteDay;
+
+    /**
+     * @var \Datetime
+     * @ORM\Column(type="time")
+     */
+    private $favoriteTime;
+
+    /**
      * @var string
      * @ORM\Column(type="string")
      */
@@ -98,6 +110,26 @@ class User
     public function setBirthDate(\DateTime $birthDate)
     {
         $this->birthDate = $birthDate;
+    }
+
+    public function getFavoriteDay()
+    {
+        return $this->favoriteDay;
+    }
+
+    public function getFavoriteTime()
+    {
+        return $this->favoriteTime;
+    }
+
+    public function setFavoriteDay(\DateTime $favoriteDay)
+    {
+        $this->favoriteDay = $favoriteDay;
+    }
+
+    public function setFavoriteTime(\Datetime $favoriteTime)
+    {
+        $this->favoriteTime = $favoriteTime;
     }
 
     /**

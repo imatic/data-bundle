@@ -2,24 +2,27 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
-class DateRangeRule extends RangeRule
+/**
+ * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
+ */
+class TimeRangeRule extends RangeRule
 {
     public function setValue($value)
     {
         parent::setValue($value);
 
         if ($this->value['start'] instanceof \DateTime) {
-            $this->value['start']->setTime(0, 0, 0);
+            $this->value['start']->setDate(1970, 1, 1);
         }
 
         if ($this->value['start'] instanceof \DateTime) {
-            $this->value['end']->setTime(23, 59, 59);
+            $this->value['end']->setDate(1970, 1, 1);
         }
     }
 
     protected function getDefaultFormType()
     {
-        return 'imatic_type_date_range';
+        return 'imatic_type_time_range';
     }
 
     protected function getDefaultFormOptions()
