@@ -36,10 +36,11 @@ class Schema
     {
         $columns = $this->schemaManager->listTableColumns($table);
 
+        $allColumnTypes = $this->getColumnTypes($table);
         $columnTypes = [];
         foreach ($columns as $column) {
             if (array_key_exists($column->getName(), $data)) {
-                $columnTypes[$this->connection->quoteIdentifier($column->getName())] = $column->getType()->getName();
+                $columnTypes[$this->connection->quoteIdentifier($column->getName())] = $allColumnTypes[$column->getName()];
             }
         }
 
