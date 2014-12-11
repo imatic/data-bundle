@@ -18,6 +18,9 @@ class Schema
     /** @var Connection */
     private $connection;
 
+    /** @var array */
+    private $overwrittenColumnTypes = [];
+
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -72,7 +75,11 @@ class Schema
             $columnTypes[$column->getName()] = $column->getType()->getName();
         }
 
-        return $columnTypes;
+        if (!isset($this->overwrittenColumnTypes[$table])) {
+            return $columnTypes;
+        }
+
+        return array_merge($columnTypes, $this->overwrittenColumnTypes[$table]);
     }
 
     public function getNextIdValue($tableName)
@@ -131,5 +138,10 @@ class Schema
         }
 
         throw new \InvalidArgumentException(sprintf('Table with name "%s" does not exists.', $tableName));
+    }
+
+    public function overwriteColumnTypes(array $overwrittenColumnTypes = [])
+    {
+        $this->overwrittenColumnTypes = $overwrittenColumnTypes;
     }
 }

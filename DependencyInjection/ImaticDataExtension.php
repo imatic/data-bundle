@@ -26,6 +26,7 @@ class ImaticDataExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $this->processPager($config['pager'], $container);
+        $this->processColumnTypes($config['column_types'], $container);
     }
 
     /**
@@ -36,5 +37,14 @@ class ImaticDataExtension extends Extension
     {
         $pagerFactoryDef = $container->findDefinition('imatic_data.pager_factory');
         $pagerFactoryDef->addMethodCall('setDefaultLimit', [$pagerConfig['default_limit']]);
+    }
+
+    /**
+     * @param array            $columnTypesConfig
+     * @param ContainerBuilder $container
+     */
+    private function processColumnTypes(array $columnTypesConfig, ContainerBuilder $container)
+    {
+        $container->setParameter('imatic_data.driver.doctrine_dbal.schema.column_types', $columnTypesConfig);
     }
 }
