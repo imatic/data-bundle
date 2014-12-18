@@ -2,9 +2,10 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
-use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
-use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Doctrine\DBAL\Connection;
+use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
+use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
+use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
 
 /**
@@ -28,8 +29,12 @@ class CreateHandler implements HandlerInterface
     {
         $data = $command->getParameter('data');
         $table = $command->getParameter('table');
-        $queryData = $this->schema->getQueryData($table, $data);
 
+        $data['id'] = $this->schema->getNextIdValue($table);
+
+        $queryData = $this->schema->getQueryData($table, $data);
         $this->connection->insert($queryData->getTable(), $queryData->getData(), $queryData->getTypes());
+
+        return CommandResult::success()->set('result', $data['id'] !== null ? $data['id'] : $this->connection->lastInsertId());
     }
 }
