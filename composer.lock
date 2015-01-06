@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3378fd94968869e23bcddadc1d0fe78c",
+    "hash": "0dc0e04bb083fe0e5f93740a500829bb",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -772,19 +772,19 @@
         },
         {
             "name": "imatic/form-bundle",
-            "version": "2.2.x-dev",
+            "version": "2.3.x-dev",
             "target-dir": "Imatic/Bundle/FormBundle",
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:imatic/imatic-formbundle.git",
-                "reference": "c5b01183f70bc5f0172b72defd33a194c14e0204"
+                "reference": "acf722e539346f08dbfc338c607fd52aa5cd1f68"
             },
             "require": {
                 "doctrine/doctrine-bundle": "~1.2",
-                "doctrine/orm": "~2.2,>=2.2.3",
-                "genemu/form-bundle": "~2.1",
+                "doctrine/orm": ">=2.2.3,<2.5-dev",
+                "genemu/form-bundle": "2.2.*",
                 "php": ">=5.3.3",
-                "symfony/framework-bundle": "~2.2",
+                "symfony/framework-bundle": "~2.3",
                 "symfony/validator": "*"
             },
             "require-dev": {
@@ -793,7 +793,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2.x-dev"
+                    "dev-master": "2.3.x-dev"
                 }
             },
             "autoload": {
@@ -812,7 +812,7 @@
                 }
             ],
             "description": "Imatic Form Bundle",
-            "time": "2014-11-27 07:47:00"
+            "time": "2015-01-06 12:36:33"
         },
         {
             "name": "jdorn/sql-formatter",

@@ -29,6 +29,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->variableNode('column_types')
+                    ->defaultValue([])
                 ->end()
             ->end()
         ;
