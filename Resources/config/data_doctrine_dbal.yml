@@ -33,6 +33,8 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema
         arguments:
             - @doctrine.dbal.default_connection
+        calls:
+            - [overwriteColumnTypes, ["%imatic_data.driver.doctrine_dbal.schema.column_types%"]]
 
     imatic_data.driver.doctrine_dbal:
         class: Imatic\Bundle\DataBundle\Data\Driver\Driver

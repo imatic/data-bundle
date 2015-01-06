@@ -9,7 +9,7 @@ class DateTimeRangeRule extends RangeRule
 {
     protected function getDefaultFormType()
     {
-        return 'imatic_type_date_time_range';
+        return 'imatic_type_datetime_range';
     }
 
     protected function getDefaultFormOptions()

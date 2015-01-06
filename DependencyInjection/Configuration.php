@@ -28,6 +28,8 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('default_limit')->defaultValue(100)->end()
                     ->end()
                 ->end()
+                ->variableNode('column_types')
+                ->end()
             ->end()
         ;
 

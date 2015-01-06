@@ -18,6 +18,9 @@ class Schema
     /** @var Connection */
     private $connection;
 
+    /** @var array */
+    private $overwrittenColumnTypes = [];
+
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -33,10 +36,11 @@ class Schema
     {
         $columns = $this->schemaManager->listTableColumns($table);
 
+        $allColumnTypes = $this->getColumnTypes($table);
         $columnTypes = [];
         foreach ($columns as $column) {
             if (array_key_exists($column->getName(), $data)) {
-                $columnTypes[$this->connection->quoteIdentifier($column->getName())] = $column->getType()->getName();
+                $columnTypes[$this->connection->quoteIdentifier($column->getName())] = $allColumnTypes[$column->getName()];
             }
         }
 
@@ -72,7 +76,11 @@ class Schema
             $columnTypes[$column->getName()] = $column->getType()->getName();
         }
 
-        return $columnTypes;
+        if (!isset($this->overwrittenColumnTypes[$table])) {
+            return $columnTypes;
+        }
+
+        return array_merge($columnTypes, $this->overwrittenColumnTypes[$table]);
     }
 
     public function getNextIdValue($tableName)
@@ -95,6 +103,10 @@ class Schema
      */
     private function findAutoincrementSequence($tableName)
     {
+        if (!$this->connection->getDatabasePlatform()->supportsSequences()) {
+            return null;
+        }
+
         $table = $this->findTableByName($tableName);
         $pkColumns = $table->getPrimaryKey()->getColumns();
 
@@ -127,5 +139,10 @@ class Schema
         }
 
         throw new \InvalidArgumentException(sprintf('Table with name "%s" does not exists.', $tableName));
+    }
+
+    public function overwriteColumnTypes(array $overwrittenColumnTypes = [])
+    {
+        $this->overwrittenColumnTypes = $overwrittenColumnTypes;
     }
 }
