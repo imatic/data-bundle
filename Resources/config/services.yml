@@ -20,6 +20,12 @@ services:
             - @form.factory
             - @imatic_data.display_criteria_reader
 
+    imatic_data.array_display_criteria_factory:
+        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory
+        arguments:
+            - @imatic_data.pager_factory
+            - @form.factory
+
     # Form extensions
     imatic_data.form.extension.query_object:
         class: Imatic\Bundle\DataBundle\Form\Extension\EntityTypeQueryObjectExtension
