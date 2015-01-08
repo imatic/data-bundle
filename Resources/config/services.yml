@@ -2,8 +2,13 @@ imports:
     - { resource: data.yml }
 
 services:
-    imatic_data.display_criteria_reader:
+    imatic_data.request_query_display_criteria_reader:
         class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader
+        arguments:
+            - @request_stack
+
+    imatic_data.extjs_display_criteria_reader:
+        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader
         arguments:
             - @request_stack
 
