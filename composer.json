@@ -30,7 +30,8 @@
     },
     "require-dev": {
         "imatic/testing-bundle": "2.4.*",
-        "doctrine/orm": "~2.2,>=2.2.3"
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "mikey179/vfsStream": "~1.4"
     },
     "suggest": {
         "genemu/form-bundle": "*",
