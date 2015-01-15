@@ -10,6 +10,9 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 
+/**
+ * @deprecated In favor of Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator
+ */
 abstract class AbstractBatchHandler
 {
     /**
