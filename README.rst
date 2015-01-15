@@ -379,12 +379,82 @@ Filtrování a sortování query objektu podle dat z requestu
     // link na sortovani podle id
     // <a href="http://localhost?sorter[id]=asc">Sort by id</a>
 
-Imatic\Bundle\DataBundle\Request\Query\DisplayCriteriaFactory
--------------------------------------------------------------
+Imatic\\Bundle\\DataBundle\\Request\\Query\\DisplayCriteriaFactory
+------------------------------------------------------------------
 
 * Vytváří Filtery, Sortery a Pager z requestu (lze je přepsat pokud se předají jako parametr metodě createCriteria)
 
 
+Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Schema\\Schema
+----------------------------------------------------------------------
+
+* třída usnadňující práci s doctrine dbal
+* automaticky escapuje názvy sloupců a tabulky, takže lze používat i rezervovaná slova
+* získá typ pro každý sloupec, takže se např. DateTime automaticky převede na databázovou hodnotu
+
+.. sourcecode:: php
+
+   <?php
+       
+   $queryData = $this->schema->getQueryData($table = 'user', $data = [
+       'name' => 'John Doe',
+       'score' => 20,
+   ]);
+
+   $this->connection->insert($queryData->getTable(), $queryData->getData(), $queryData->getTypes());
+
+Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Sql\\Sql
+----------------------------------------------------------------
+
+* třída umožňující vytvářet dotazy nezávisle na použíté databázi
+
+.. sourcecode:: php
+
+   <?php
+
+   $query = sprintf('SELECT  u.id AS id %s AS full_name FROM user', Sql::concat([
+       'u.first_name', ' ', 'u.last_name',
+   ], $this->connection);
+
+Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Type\\FileType
+----------------------------------------------------------------------
+
+* type do doctrine umožňující ukládat soubory do db (do db se uloží pouze cesta)
+  
+Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\RecordIterator
+------------------------------------------------------------------------------
+
+* používá se u batch akcí pro iteraci jednotlivými záznamy/idčky
+
+.. sourcecode:: php
+
+        <?php
+
+        public function handle(CommandInterface $command) {
+            // iterate through ids
+            $idCallback = function($id)) {
+                echo sprintf("Processing user with id %s", $id);
+
+                return CommandResult::success();
+            };
+            $recordIteratorIdArgs = new RecordIteratorArgs($command, new UserListQuery(), $idCallback);
+            $this->recordIterator->eachIdentifier($recordIteratorIdArgs);
+
+            // iterate through objects
+            $userCallback = function(User $user) {
+                echo sprintf("Processing user %s", $user->getFullName());
+
+                return CommandResult::success();
+            };
+            $recordIteratorUserArgs = new RecordIteratorArgs($command, new UserListQuery(), $userCallback);
+            $this->recordIterator->each($recordIteratorUserArgs);
+        }
+
+Předpřipravené command handlery
+-------------------------------
+
+ * pro jednoduché operace lze u jednotlivých driverů nalézt základní command handlery
+ * např. pro DoctrineORM jsou to: create, edit, delete ("src/Data/Driver/DoctrineORM/Command/")
 
 Dořešit
 -------

@@ -33,6 +33,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->variableNode('column_types')
+                    ->info('Array of table names pointing to array of their columns with specified types as their values')
                     ->defaultValue([])
                 ->end()
             ->end()
