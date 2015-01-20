@@ -45,3 +45,17 @@ services:
             - '@imatic_data.query_executor'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.generic_delete }
+
+    imatic_data.driver.doctrine_orm.record_iterator:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator
+        arguments:
+            - @imatic_data.doctrine.query_executor
+            - @imatic_data.driver.doctrine_orm.result_iterator_factory
+
+    imatic_data.driver.doctrine_orm.result_iterator_factory:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory
+        arguments:
+            - @imatic_data.array_display_criteria_factory
+            - @imatic_data.filter_factory
+            - @imatic_data.doctrine.query_executor
+            - @doctrine.orm.entity_manager

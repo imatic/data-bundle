@@ -22,6 +22,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('display_criteria_reader')
+                    ->info('Id of the service (e.g. "imatic_data.extjs_display_criteria_reader")')
+                    ->defaultValue('imatic_data.request_query_display_criteria_reader')
+                ->end()
                 ->arrayNode('pager')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -29,6 +33,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->variableNode('column_types')
+                    ->info('Array of table names pointing to array of their columns with specified types as their values')
                     ->defaultValue([])
                 ->end()
             ->end()

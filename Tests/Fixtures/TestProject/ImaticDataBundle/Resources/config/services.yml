@@ -6,3 +6,8 @@ services:
             - @imatic_data.doctrine.object_manager
         tags:
             - { name: imatic_data.handler, alias: user.deactivate }
+
+    app_imatic_data.user_filter:
+        class: Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter
+        tags:
+            - { name: imatic_data.filter, alias: app_imatic_data.user }

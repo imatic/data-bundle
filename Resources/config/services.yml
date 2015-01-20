@@ -2,8 +2,13 @@ imports:
     - { resource: data.yml }
 
 services:
-    imatic_data.display_criteria_reader:
+    imatic_data.request_query_display_criteria_reader:
         class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader
+        arguments:
+            - @request_stack
+
+    imatic_data.extjs_display_criteria_reader:
+        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader
         arguments:
             - @request_stack
 
@@ -14,6 +19,12 @@ services:
             - @imatic_data.pager_factory
             - @form.factory
             - @imatic_data.display_criteria_reader
+
+    imatic_data.array_display_criteria_factory:
+        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory
+        arguments:
+            - @imatic_data.pager_factory
+            - @form.factory
 
     # Form extensions
     imatic_data.form.extension.query_object:

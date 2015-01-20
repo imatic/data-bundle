@@ -25,6 +25,12 @@ class ImaticDataExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setAlias('imatic_data.display_criteria_reader', $config['display_criteria_reader']);
+
+        if (!$container->hasParameter('imatic_data.base_file_path')) {
+            $container->setParameter('imatic_data.base_file_path', realpath(sprintf('%s/..', $container->getParameter('kernel.root_dir'))));
+        }
+
         $this->processPager($config['pager'], $container);
         $this->processColumnTypes($config['column_types'], $container);
     }
