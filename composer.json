@@ -25,11 +25,11 @@
         "php": ">=5.4",
         "symfony/framework-bundle": "2.4.*",
         "doctrine/doctrine-bundle": "~1.2",
-        "imatic/form-bundle": "2.3.x-dev",
         "genemu/form-bundle": "~2.2.2"
     },
     "require-dev": {
         "imatic/testing-bundle": "2.4.*",
+        "imatic/form-bundle": "~2.4.0",
         "doctrine/orm": "~2.2,>=2.2.3",
         "mikey179/vfsStream": "~1.4"
     },
