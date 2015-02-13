@@ -22,6 +22,13 @@ services:
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_edit }
 
+    imatic_data.driver.doctrine_dbal.command.create_or_edit:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateOrEditHandler
+        arguments:
+            - @imatic_data.doctrine.dbal.query_executor
+        tags:
+            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_create_or_edit }
+
     imatic_data.driver.doctrine_dbal.command.delete:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\DeleteHandler
         arguments:
