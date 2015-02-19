@@ -27,6 +27,6 @@ class DefaultRuleProcessor extends AbstractRuleProcessor
         }
 
         $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule)));
-        $qb->setParameter($this->getQueryParameterName($rule), $value);
+        $qb->setParameter($this->getQueryParameterName($rule), $value, $rule->getType());
     }
 }
