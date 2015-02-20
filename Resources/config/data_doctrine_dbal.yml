@@ -36,6 +36,13 @@ services:
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_delete }
 
+    imatic_data.driver.doctrine_dbal.command.soft_delete:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler
+        arguments:
+            - @imatic_data.doctrine.dbal.query_executor
+        tags:
+            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_soft_delete }
+
     imatic_data.driver.doctrine_dbal.schema:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema
         arguments:
