@@ -23,7 +23,10 @@ class DefaultRuleProcessor extends AbstractRuleProcessor
     {
         $value = $rule->getValue();
         if (is_array($value)) {
-            $value = implode(',', $value);
+            $value = sprintf('%s', implode(',', $value));
+            $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $value));
+
+            return;
         }
 
         $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule)));

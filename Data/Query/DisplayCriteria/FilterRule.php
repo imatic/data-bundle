@@ -173,6 +173,8 @@ abstract class FilterRule
             throw new \InvalidArgumentException(sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', implode(', ', $operators), $this->getName()));
         }
         $this->operators = $operators;
+
+        return $this;
     }
 
     /**
