@@ -16,7 +16,7 @@ class ContainsOperatorProcessor extends AbstractRuleProcessor
     public function process($qb, FilterRule $rule, $column)
     {
         $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule)));
-        $qb->setParameter($this->getQueryParameterName($rule), '%' . $rule->getValue() . '%');
+        $qb->setParameter($this->getQueryParameterName($rule), '%' . $rule->getValue() . '%', $rule->getType());
     }
 
     /**

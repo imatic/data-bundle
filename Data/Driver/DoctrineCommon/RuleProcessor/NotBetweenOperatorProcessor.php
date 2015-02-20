@@ -16,8 +16,8 @@ class NotBetweenOperatorProcessor extends AbstractRuleProcessor
     public function process($qb, FilterRule $rule, $column)
     {
         $qb->andWhere($qb->expr()->orX($qb->expr()->lt($column, $this->getQueryParameter($rule) . 'Start'), $qb->expr()->gt($column, $this->getQueryParameter($rule) . 'End')));
-        $qb->setParameter($this->getQueryParameterName($rule) . 'Start', $rule->getValue()['start']);
-        $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end']);
+        $qb->setParameter($this->getQueryParameterName($rule) . 'Start', $rule->getValue()['start'], $rule->getType());
+        $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end'], $rule->getType());
     }
 
     /**

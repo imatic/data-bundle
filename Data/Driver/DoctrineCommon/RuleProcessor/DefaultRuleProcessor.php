@@ -21,7 +21,15 @@ class DefaultRuleProcessor extends AbstractRuleProcessor
      */
     public function process($qb, FilterRule $rule, $column)
     {
+        $value = $rule->getValue();
+        if (is_array($value)) {
+            $value = sprintf('%s', implode(',', $value));
+            $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $value));
+
+            return;
+        }
+
         $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule)));
-        $qb->setParameter($this->getQueryParameterName($rule), $rule->getValue());
+        $qb->setParameter($this->getQueryParameterName($rule), $value, $rule->getType());
     }
 }

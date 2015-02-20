@@ -71,6 +71,10 @@ class QueryExecutor implements QueryExecutorInterface
 
         $statement = $qb->execute();
 
+        if (is_scalar($statement)) {
+            return $statement;
+        }
+
         return $this->getResult($queryObject, $statement);
     }
 

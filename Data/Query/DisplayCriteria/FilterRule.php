@@ -59,6 +59,11 @@ abstract class FilterRule
      */
     protected $formOptions;
 
+    /**
+     * @var string
+     */
+    protected $type;
+
     public function __construct($name, array $options = [])
     {
         $this->bound = false;
@@ -168,6 +173,8 @@ abstract class FilterRule
             throw new \InvalidArgumentException(sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', implode(', ', $operators), $this->getName()));
         }
         $this->operators = $operators;
+
+        return $this;
     }
 
     /**
@@ -194,6 +201,26 @@ abstract class FilterRule
         $this->formOptions['translation_domain'] = $translationDomain;
 
         return $this;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 
     /**

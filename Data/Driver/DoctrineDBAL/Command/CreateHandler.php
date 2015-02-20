@@ -30,7 +30,9 @@ class CreateHandler implements HandlerInterface
         $data = $command->getParameter('data');
         $table = $command->getParameter('table');
 
-        $data['id'] = $this->schema->getNextIdValue($table);
+        if (!array_key_exists('id', $data)) {
+            $data['id'] = $this->schema->getNextIdValue($table);
+        }
 
         $queryData = $this->schema->getQueryData($table, $data);
         $this->connection->insert($queryData->getTable(), $queryData->getData(), $queryData->getTypes());
