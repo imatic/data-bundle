@@ -59,17 +59,6 @@ class ChoiceRule extends FilterRule
         return [
             'choices' => &$this->choices,
             'multiple' => &$this->multiple,
-            'configs' => function (Options $options, $configs) {
-                if (empty($configs)) {
-                    $configs = [];
-
-                    if (!$options->get('required')) {
-                        $configs['allowClear'] = true;
-                    }
-                }
-
-                return $configs;
-            },
         ];
     }
 }

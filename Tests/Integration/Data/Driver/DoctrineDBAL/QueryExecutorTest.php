@@ -16,12 +16,26 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\D
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UsernameQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
+use Doctrine\DBAL\Connection;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class QueryExecutorTest extends WebTestCase
 {
+    public function testCountShouldReturnCorrectNumberOfRows()
+    {
+        $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
+    }
+
+    public function testCountShouldReturnCorrectNumberOfRowsWithGroupByClause()
+    {
+        // guard
+        $this->assertGreaterThan(1, (new UserListWithOrderNumbersQuery())->build($this->getConnection())->execute()->fetchAll());
+
+        $this->assertEquals(1, $this->getQueryExecutor()->count(new UserListWithOrderNumbersQuery()));
+    }
+
     public function testQueryExecutorShouldReturnsCorrectPagesBasedOnDisplayCriteria()
     {
         // guard
@@ -226,6 +240,14 @@ class QueryExecutorTest extends WebTestCase
         $adamUsername = $this->getQueryExecutor()->execute(new UsernameQuery(1));
 
         $this->assertEquals('Adam', $adamUsername);
+    }
+
+    /**
+     * @return Connection
+     */
+    private function getConnection()
+    {
+        return $this->container->get('doctrine.dbal.default_connection');
     }
 
     /**

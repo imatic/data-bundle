@@ -49,9 +49,16 @@ class QueryExecutor implements QueryExecutorInterface
             $this->displayCriteriaQueryBuilder->applyFilter($qb, $displayCriteria->getFilter(), $queryObject);
         }
 
+        $count = '1';
+
+        $groupByPart = $qb->getQueryPart('groupBy');
+        if ($groupByPart) {
+            $count = sprintf('DISTINCT(%s)', implode(', ', $groupByPart));
+        }
+
         /* @var $statement PDOStatement */
         $statement = $qb
-            ->select('COUNT(1) count')
+            ->select(sprintf('COUNT(%s) count', $count))
             ->execute()
         ;
 

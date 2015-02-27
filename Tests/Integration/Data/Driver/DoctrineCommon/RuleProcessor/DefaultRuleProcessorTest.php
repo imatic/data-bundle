@@ -3,6 +3,7 @@
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\RuleProcessor;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Types\Type;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\DefaultRuleProcessor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\ChoiceRule;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
@@ -37,6 +38,7 @@ class DefaultRuleProcessorTest extends WebTestCase
         ;
 
         $rule = new ChoiceRule('name', ['Adam' => 'Adam'], true);
+        $rule->setType(Type::SIMPLE_ARRAY);
         $rule->setValue(['Adam']);
 
         $processor = new DefaultRuleProcessor();

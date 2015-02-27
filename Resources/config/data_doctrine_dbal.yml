@@ -58,3 +58,16 @@ services:
             - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\QueryObjectInterface"
         tags:
             - { name: imatic_data.driver }
+
+    imatic_data.driver.doctrine_dbal.record_iterator:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator
+        arguments:
+            - @imatic_data.doctrine.dbal.query_executor
+            - @imatic_data.driver.doctrine_dbal.result_iterator_factory
+
+    imatic_data.driver.doctrine_dbal.result_iterator_factory:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory
+        arguments:
+            - @imatic_data.array_display_criteria_factory
+            - @imatic_data.filter_factory
+            - @imatic_data.doctrine.dbal.query_executor
