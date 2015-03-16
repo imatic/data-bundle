@@ -54,6 +54,7 @@ class QueryExecutor implements QueryExecutorInterface
         $groupByPart = $qb->getQueryPart('groupBy');
         if ($groupByPart) {
             $count = sprintf('DISTINCT(%s)', implode(', ', $groupByPart));
+            $qb->resetQueryPart('groupBy');
         }
 
         /* @var $statement PDOStatement */
