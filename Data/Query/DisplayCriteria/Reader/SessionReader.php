@@ -74,4 +74,9 @@ class SessionReader implements DisplayCriteriaReader
             );
         }
     }
+
+    public function attributeName($name)
+    {
+        return $name;
+    }
 }

@@ -7,6 +7,11 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader;
  */
 interface DisplayCriteriaReader
 {
+    const FILTER = 'filter';
+    const SORTER = 'sorter';
+    const PAGE = 'page';
+    const LIMIT = 'limit';
+
     /**
      * @param  string      $name
      * @param  mixed|null  $default
@@ -23,4 +28,11 @@ interface DisplayCriteriaReader
      * @param  mixed       $emptyValue
      */
     public function clearAttribute($name, $component = null, $emptyValue = null);
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    public function attributeName($name);
 }

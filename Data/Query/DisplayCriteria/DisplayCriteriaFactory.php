@@ -62,8 +62,8 @@ class DisplayCriteriaFactory
     public function createPager($componentId = null)
     {
         return $this->pagerFactory->createPager(
-            $this->displayCriteriaReader->readAttribute('page', null, $componentId),
-            $this->displayCriteriaReader->readAttribute('limit', null, $componentId)
+            $this->displayCriteriaReader->readAttribute(DisplayCriteriaReader::PAGE, null, $componentId),
+            $this->displayCriteriaReader->readAttribute(DisplayCriteriaReader::LIMIT, null, $componentId)
         );
     }
 
@@ -75,7 +75,7 @@ class DisplayCriteriaFactory
     public function createFilter($componentId = null, FilterInterface $filter = null)
     {
         if (!is_null($filter)) {
-            $filterData = $this->displayCriteriaReader->readAttribute('filter', null, $componentId, true);
+            $filterData = $this->displayCriteriaReader->readAttribute(DisplayCriteriaReader::FILTER, null, $componentId, true);
 
             $clearFilter = null !== $filterData && isset($filterData['clearFilter']);
             $defaultFilter = null !== $filterData && isset($filterData['defaultFilter']);
@@ -94,12 +94,12 @@ class DisplayCriteriaFactory
 
             // make filter data empty if the filters are cleared
             if ($clearFilter) {
-                $this->displayCriteriaReader->clearAttribute('filter', $componentId, []);
+                $this->displayCriteriaReader->clearAttribute(DisplayCriteriaReader::FILTER, $componentId, []);
             }
 
             // unset filter data if defaults are requested
             if ($defaultFilter) {
-                $this->displayCriteriaReader->clearAttribute('filter', $componentId, null);
+                $this->displayCriteriaReader->clearAttribute(DisplayCriteriaReader::FILTER, $componentId, null);
             }
 
             $form = $this->formFactory->createNamed('filter', new FilterType(), $filter, [
@@ -124,7 +124,7 @@ class DisplayCriteriaFactory
      */
     public function createSorter($componentId = null, array $sorter = [])
     {
-        $sorterData = $this->displayCriteriaReader->readAttribute('sorter', $sorter, $componentId);
+        $sorterData = $this->displayCriteriaReader->readAttribute(DisplayCriteriaReader::SORTER, $sorter, $componentId);
 
         $sorterRules = [];
         foreach ($sorterData as $fieldName => $direction) {

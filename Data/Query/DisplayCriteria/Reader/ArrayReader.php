@@ -30,4 +30,9 @@ class ArrayReader implements DisplayCriteriaReader
     {
         return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : $default;
     }
+
+    public function attributeName($name)
+    {
+        return $name;
+    }
 }
