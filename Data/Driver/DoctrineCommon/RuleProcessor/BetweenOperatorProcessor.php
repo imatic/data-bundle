@@ -15,9 +15,21 @@ class BetweenOperatorProcessor extends AbstractRuleProcessor
      */
     public function process($qb, FilterRule $rule, $column)
     {
-        $qb->andWhere($qb->expr()->andX($qb->expr()->gte($column, $this->getQueryParameter($rule) . 'Start'), $qb->expr()->lte($column, $this->getQueryParameter($rule) . 'End')));
-        $qb->setParameter($this->getQueryParameterName($rule) . 'Start', $rule->getValue()['start'], $rule->getType());
-        $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end'], $rule->getType());
+        $start = $rule->getValue()['start'];
+        $end = $rule->getValue()['end'];
+
+        $conditions = [];
+        if ($start) {
+            $conditions[] = $qb->expr()->gte($column, $this->getQueryParameter($rule) . 'Start');
+            $qb->setParameter($this->getQueryParameterName($rule) . 'Start', $rule->getValue()['start'], $rule->getType());
+        }
+
+        if ($end) {
+            $conditions[] = $qb->expr()->lte($column, $this->getQueryParameter($rule) . 'End');
+            $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end'], $rule->getType());
+        }
+
+        $qb->andWhere(call_user_func_array([$qb->expr(), 'andX'], $conditions));
     }
 
     /**

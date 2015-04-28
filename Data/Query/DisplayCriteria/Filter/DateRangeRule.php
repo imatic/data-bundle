@@ -12,7 +12,7 @@ class DateRangeRule extends RangeRule
             $this->value['start']->setTime(0, 0, 0);
         }
 
-        if ($this->value['start'] instanceof \DateTime) {
+        if ($this->value['end'] instanceof \DateTime) {
             $this->value['end']->setTime(23, 59, 59);
         }
     }
