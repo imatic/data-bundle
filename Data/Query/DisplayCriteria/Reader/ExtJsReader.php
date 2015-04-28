@@ -91,4 +91,9 @@ class ExtJsReader extends SessionReader
 
         return $extAttributeName;
     }
+
+    public function attributeName($name)
+    {
+        return $name === 'sorter' ? $sort : $name;
+    }
 }
