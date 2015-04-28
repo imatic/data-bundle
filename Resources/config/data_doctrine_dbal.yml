@@ -1,10 +1,19 @@
 services:
+    imatic_data.doctrine.dbal.query_executor_delegate:
+        class: Imatic\Bundle\DataBundle\Data\Query\QueryExecutorDelegate
+        arguments:
+            - @imatic_data.doctrine.dbal.query_executor_factory
+
+    imatic_data.doctrine.dbal.query_executor_factory:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory
+        arguments:
+            - @service_container
+
     imatic_data.doctrine.dbal.query_executor:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor
+        factory: [@imatic_data.doctrine.dbal.query_executor_factory, createWithConnection]
         arguments:
-            - @doctrine.dbal.default_connection
-            - @imatic_data.doctrine.display_criteria_query_builder
-            - @imatic_data.driver.doctrine_dbal.schema
+            - default
 
     imatic_data.driver.doctrine_dbal.command.create:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler
@@ -54,7 +63,7 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Driver\Driver
         arguments:
             - "doctrine.dbal"
-            - @imatic_data.doctrine.dbal.query_executor
+            - @imatic_data.doctrine.dbal.query_executor_delegate
             - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\QueryObjectInterface"
         tags:
             - { name: imatic_data.driver }
