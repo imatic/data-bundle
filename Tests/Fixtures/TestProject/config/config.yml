@@ -32,14 +32,30 @@ doctrine:
         connections:
             default:
                 wrapper_class: "Imatic\\Bundle\\TestingBundle\\Doctrine\\DBAL\\PersistedConnection"
+
+#               sqlite
                 driver:         pdo_sqlite
                 memory:         false
                 path:           %kernel.root_dir%/cache/test.db
+
+#                postgres
+#                driver:         pdo_pgsql
+#                host:           127.0.0.1
+#                dbname:         vsem_finance_test
+#                user:           postgres
+#                password:       postgres
+#                # server_version is needed in order make the project work with dbal 2.5
+#                # see: https://github.com/doctrine/DoctrineBundle/issues/351
+#                server_version: 9.3.6
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping:           true
         resolve_target_entities: []
+        dql:
+            string_functions:
+                ilike: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\ILike
+                not_ilike: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\NotILike
 
 monolog:
     handlers:
