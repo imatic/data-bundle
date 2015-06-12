@@ -54,7 +54,7 @@ class AjaxEntityChoiceRule extends FilterRule
 
     protected function validateValue($value)
     {
-        return null === $value || $value instanceof ArrayCollection;
+        return $value instanceof ArrayCollection;
     }
 
     public function getValue()

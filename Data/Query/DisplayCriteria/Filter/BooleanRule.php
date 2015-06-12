@@ -11,11 +11,6 @@ class BooleanRule extends FilterRule
 
     const NO = 'false';
 
-    public function setValue($value)
-    {
-        return parent::setValue($value);
-    }
-
     protected function getDefaultOperators()
     {
         return [
@@ -27,7 +22,7 @@ class BooleanRule extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_bool($value) || is_string($value) || is_null($value);
+        return is_bool($value) || is_string($value);
     }
 
     protected function getDefaultFormType()

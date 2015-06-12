@@ -6,6 +6,8 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class FilterRuleType extends AbstractType
 {
@@ -33,8 +35,21 @@ class FilterRuleType extends AbstractType
         $builder->add(
             'value',
             $rule->getFormType(),
-            array_merge($rule->getFormOptions(), ['required' => false])
+            array_merge($rule->getFormOptions(), ['required' => false, 'mapped' => false])
         );
+
+        // only map value to the rule if it is valid
+        $builder->get('value')->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+            $form = $event->getForm();
+
+            if ($form->isValid()) {
+                $rule = $form->getParent()->getData();
+
+                 if ($rule instanceof FilterRule) {
+                     $rule->setValue($form->getData());
+                 }
+            }
+        });
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
