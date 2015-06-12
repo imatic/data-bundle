@@ -23,13 +23,13 @@
     ],
     "require": {
         "php": ">=5.4",
-        "symfony/framework-bundle": "~2.4",
+        "symfony/framework-bundle": "~2.6",
         "doctrine/doctrine-bundle": "~1.2",
         "genemu/form-bundle": "~2.2.2"
     },
     "require-dev": {
-        "imatic/testing-bundle": "~2.4",
-        "imatic/form-bundle": "~2.4",
+        "imatic/testing-bundle": "~2.6",
+        "imatic/form-bundle": "~2.6",
         "doctrine/orm": "~2.2,>=2.2.3",
         "mikey179/vfsStream": "~1.4"
     },
@@ -48,7 +48,7 @@
     "target-dir": "Imatic/Bundle/DataBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.4.x-dev"
+            "dev-master": "2.6.x-dev"
         }
     }
 }
