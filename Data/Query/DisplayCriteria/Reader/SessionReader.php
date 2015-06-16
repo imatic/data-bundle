@@ -33,7 +33,7 @@ class SessionReader implements DisplayCriteriaReader
         }
     }
 
-    public function readAttribute($name, $default = null, $component = null, $persistent = true)
+    public function readAttribute($name, $default = null, $component = null, $persistent = false)
     {
         $request = $this->requestStack->getCurrentRequest();
         $value = $default;
