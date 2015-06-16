@@ -75,6 +75,14 @@ class QueryExecutor implements QueryExecutorInterface
         return $this->getResult($queryObject, $qb->getQuery());
     }
 
+    public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    {
+        return [
+            $this->execute($queryObject, $displayCriteria),
+            $this->count($queryObject, $displayCriteria)
+        ];
+    }
+
     public function beginTransaction()
     {
         $this->entityManager->beginTransaction();
