@@ -4,6 +4,8 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
+use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface as DoctrineORMQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
@@ -104,7 +106,21 @@ class QueryExecutor implements QueryExecutorInterface
         } elseif ($queryObject instanceof SingleResultQueryObjectInterface) {
             return $query->getOneOrNullResult();
         } else {
-            return $query->getResult();
+            try {
+                $paginator = new Paginator($query, true);
+
+                return iterator_to_array($paginator);
+            } catch (\Exception $ex) {
+                /**
+                 * This catch is here because of backwards compatibility.
+                 * (so that exception is not thrown for results that may not be correctly paginated)
+                 *
+                 * @see https://github.com/KnpLabs/KnpPaginatorBundle/blob/master/Resources/doc/manual_counting.md
+                 *
+                 * There is no workaround to this limitation. But new interface with method "getQueryHints" could be created
+                 */
+                return $query->getResult();
+            }
         }
     }
 }

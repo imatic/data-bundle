@@ -14,6 +14,7 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListWithOrderNumbersQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListWithOrdersQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
@@ -22,6 +23,17 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
  */
 class QueryExecutorTest extends WebTestCase
 {
+    public function testQueryExecutorShouldReturnCorrectNumberOfResultsForHasManyAssociation()
+    {
+        // guard
+        $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListWithOrdersQuery()));
+
+        $pageCriteria = new DisplayCriteria(new Pager(1, 2), new Sorter(), new Filter());
+        $result = $this->getQueryExecutor()->execute(new UserListWithOrdersQuery(), $pageCriteria);
+
+        $this->assertCount(2, $result);
+    }
+
     public function testQueryExecutorShouldReturnsCorrectPagesBasedOnDisplayCriteria()
     {
         // guard

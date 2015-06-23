@@ -21,7 +21,7 @@ class Order
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
      */
     private $user;
 
