@@ -106,21 +106,9 @@ class QueryExecutor implements QueryExecutorInterface
         } elseif ($queryObject instanceof SingleResultQueryObjectInterface) {
             return $query->getOneOrNullResult();
         } else {
-            try {
-                $paginator = new Paginator($query, true);
+            $paginator = new Paginator($query, true);
 
-                return iterator_to_array($paginator);
-            } catch (\Exception $ex) {
-                /**
-                 * This catch is here because of backwards compatibility.
-                 * (so that exception is not thrown for results that may not be correctly paginated)
-                 *
-                 * @see https://github.com/KnpLabs/KnpPaginatorBundle/blob/master/Resources/doc/manual_counting.md
-                 *
-                 * There is no workaround to this limitation. But new interface with method "getQueryHints" could be created
-                 */
-                return $query->getResult();
-            }
+            return iterator_to_array($paginator);
         }
     }
 }
