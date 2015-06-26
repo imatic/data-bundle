@@ -20,7 +20,7 @@ interface DisplayCriteriaReader
      *
      * @return mixed
      */
-    public function readAttribute($name, $default = null, $component = null, $persistent = true);
+    public function readAttribute($name, $default = null, $component = null, $persistent = false);
 
     /**
      * @param  string      $name

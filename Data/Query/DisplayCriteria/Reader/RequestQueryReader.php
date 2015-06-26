@@ -7,7 +7,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader;
  */
 class RequestQueryReader extends SessionReader
 {
-    public function readAttribute($name, $default = null, $component = null, $persistent = true)
+    public function readAttribute($name, $default = null, $component = null, $persistent = false)
     {
         $request = $this->requestStack->getCurrentRequest();
 

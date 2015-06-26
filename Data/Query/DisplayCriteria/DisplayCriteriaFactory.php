@@ -40,9 +40,10 @@ class DisplayCriteriaFactory
 
     /**
      * @param  array           $options
+     * @param  bool            $persistent
      * @return DisplayCriteria
      */
-    public function createCriteria(array $options = [])
+    public function createCriteria(array $options = [], $persistent = false)
     {
         $componentId = isset($options['componentId']) ? $options['componentId'] : null;
         $pager = isset($options['pager']) ? $options['pager'] : [];
@@ -50,17 +51,18 @@ class DisplayCriteriaFactory
         $sorter = isset($options['sorter']) ? $options['sorter'] : [];
 
         return new DisplayCriteria(
-            $this->createPager($componentId, $pager),
-            $this->createSorter($componentId, $sorter),
-            $this->createFilter($componentId, $filter)
+            $this->createPager($componentId, $pager, $persistent),
+            $this->createSorter($componentId, $sorter, $persistent),
+            $this->createFilter($componentId, $filter, $persistent)
         );
     }
 
     /**
      * @param  string|null    $componentId
+     * @param  bool           $persistent
      * @return PagerInterface
      */
-    public function createPager($componentId = null, array $pager = [])
+    public function createPager($componentId = null, array $pager = [], $persistent = false)
     {
         return $this->pagerFactory->createPager(
             $this->displayCriteriaReader->readAttribute(
@@ -68,14 +70,16 @@ class DisplayCriteriaFactory
                 isset($pager[DisplayCriteriaReader::PAGE])
                     ? $pager[DisplayCriteriaReader::PAGE]
                     : null,
-                $componentId
+                $componentId,
+                $persistent
             ),
             $this->displayCriteriaReader->readAttribute(
                 DisplayCriteriaReader::LIMIT,
                 isset($pager[DisplayCriteriaReader::LIMIT])
                     ? $pager[DisplayCriteriaReader::LIMIT]
                     : null,
-                $componentId
+                $componentId,
+                $persistent
             )
         );
     }
@@ -83,12 +87,16 @@ class DisplayCriteriaFactory
     /**
      * @param  string|null          $componentId
      * @param  FilterInterface|null $filter
+     * @param  bool                 $persistent
      * @return FilterInterface
      */
-    public function createFilter($componentId = null, FilterInterface $filter = null)
+    public function createFilter($componentId = null, FilterInterface $filter = null, $persistent = false)
     {
         if (!is_null($filter)) {
-            $filterData = $this->displayCriteriaReader->readAttribute(DisplayCriteriaReader::FILTER, null, $componentId, true);
+            $filterData = $this
+                ->displayCriteriaReader
+                ->readAttribute(DisplayCriteriaReader::FILTER, null, $componentId, $persistent)
+            ;
 
             $clearFilter = null !== $filterData && isset($filterData['clearFilter']);
             $defaultFilter = null !== $filterData && isset($filterData['defaultFilter']);
@@ -133,11 +141,15 @@ class DisplayCriteriaFactory
     /**
      * @param  string|null     $componentId
      * @param  array           $sorter
+     * @param  bool            $persistent
      * @return SorterInterface
      */
-    public function createSorter($componentId = null, array $sorter = [])
+    public function createSorter($componentId = null, array $sorter = [], $persistent = false)
     {
-        $sorterData = $this->displayCriteriaReader->readAttribute(DisplayCriteriaReader::SORTER, $sorter, $componentId);
+        $sorterData = $this
+            ->displayCriteriaReader
+            ->readAttribute(DisplayCriteriaReader::SORTER, $sorter, $componentId, $persistent)
+        ;
 
         $sorterRules = [];
         foreach ($sorterData as $fieldName => $direction) {

@@ -26,7 +26,7 @@ class ArrayReader implements DisplayCriteriaReader
         }
     }
 
-    public function readAttribute($name, $default = null, $component = null, $persistent = true)
+    public function readAttribute($name, $default = null, $component = null, $persistent = false)
     {
         return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : $default;
     }
