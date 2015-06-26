@@ -13,7 +13,7 @@ class Driver implements DriverInterface
     private $name;
 
     /**
-     * @var ObjectManagerInterface
+     * @var ObjectManagerInterface|null
      */
     private $objectManager;
 

@@ -18,7 +18,6 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Query\QueryExecutor
         arguments:
             - @imatic_data.driver_repository
-            - @event_dispatcher
 
     # display criteria
     imatic_data.pager_factory:

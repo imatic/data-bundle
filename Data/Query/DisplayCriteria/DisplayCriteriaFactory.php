@@ -45,11 +45,12 @@ class DisplayCriteriaFactory
     public function createCriteria(array $options = [])
     {
         $componentId = isset($options['componentId']) ? $options['componentId'] : null;
+        $pager = isset($options['pager']) ? $options['pager'] : [];
         $filter = isset($options['filter']) ? $options['filter'] : null;
         $sorter = isset($options['sorter']) ? $options['sorter'] : [];
 
         return new DisplayCriteria(
-            $this->createPager($componentId),
+            $this->createPager($componentId, $pager),
             $this->createSorter($componentId, $sorter),
             $this->createFilter($componentId, $filter)
         );
@@ -59,11 +60,23 @@ class DisplayCriteriaFactory
      * @param  string|null    $componentId
      * @return PagerInterface
      */
-    public function createPager($componentId = null)
+    public function createPager($componentId = null, array $pager = [])
     {
         return $this->pagerFactory->createPager(
-            $this->displayCriteriaReader->readAttribute(DisplayCriteriaReader::PAGE, null, $componentId),
-            $this->displayCriteriaReader->readAttribute(DisplayCriteriaReader::LIMIT, null, $componentId)
+            $this->displayCriteriaReader->readAttribute(
+                DisplayCriteriaReader::PAGE,
+                isset($pager[DisplayCriteriaReader::PAGE])
+                    ? $pager[DisplayCriteriaReader::PAGE]
+                    : null,
+                $componentId
+            ),
+            $this->displayCriteriaReader->readAttribute(
+                DisplayCriteriaReader::LIMIT,
+                isset($pager[DisplayCriteriaReader::LIMIT])
+                    ? $pager[DisplayCriteriaReader::LIMIT]
+                    : null,
+                $componentId
+            )
         );
     }
 

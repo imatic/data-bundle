@@ -24,6 +24,11 @@ class QueryExecutorDelegate implements QueryExecutorInterface
         return $this->getQueryExecutor($queryObject)->execute($queryObject, $displayCriteria);
     }
 
+    public function executeAndCount(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    {
+        return $this->getQueryExecutor($queryObject)->executeAndCount($queryObject, $displayCriteria);
+    }
+
     /**
      * @param QueryObjectInterface $queryObject
      *
