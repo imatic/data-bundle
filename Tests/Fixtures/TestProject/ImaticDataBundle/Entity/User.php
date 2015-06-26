@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity
@@ -53,6 +54,12 @@ class User
      * @ORM\Column(type="string")
      */
     private $hairs;
+
+    /**
+     * @var Order[]|Collection
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="user")
+     */
+    private $orders;
 
     /**
      * @return int
@@ -146,5 +153,13 @@ class User
     public function setHairs($hairs)
     {
         $this->hairs = $hairs;
+    }
+
+    /**
+     * @return Order[]|Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

@@ -9,13 +9,13 @@ abstract class RangeRule extends FilterRule
 {
     public function setValue($value)
     {
-        if ($this->validateValue($value)) {
-            if (is_null($value['start']) && is_null($value['end'])) {
-                return $this;
-            }
+        if (
+            null !== $value
+            && $this->validateValue($value)
+            && isset($value['start'], $value['end'])
+        ) {
+            return parent::setValue($value);
         }
-
-        return parent::setValue($value);
     }
 
     protected function getDefaultOperators()

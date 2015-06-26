@@ -11,11 +11,8 @@ class TimeRangeRule extends RangeRule
     {
         parent::setValue($value);
 
-        if ($this->value['start'] instanceof \DateTime) {
+        if ($this->bound) {
             $this->value['start']->setDate(1970, 1, 1);
-        }
-
-        if ($this->value['start'] instanceof \DateTime) {
             $this->value['end']->setDate(1970, 1, 1);
         }
     }
@@ -30,6 +27,7 @@ class TimeRangeRule extends RangeRule
         return [
             'translation_domain' => 'ImaticDataBundle',
             'field_options' => [
+                'timepicker' => true,
                 'widget' => 'single_text',
             ],
         ];

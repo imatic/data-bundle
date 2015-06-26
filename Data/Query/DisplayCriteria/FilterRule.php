@@ -119,11 +119,18 @@ abstract class FilterRule
      */
     public function setValue($value)
     {
-        if (!$this->validateValue($value)) {
+        if (null !== $value && !$this->validateValue($value)) {
             $type = is_object($value) ? get_class($value) : gettype($value);
-            throw new \InvalidArgumentException(sprintf('Binding invalid value (type "%s") into filter "%s"', $type, $this->name));
+            
+            throw new \InvalidArgumentException(sprintf(
+                'Binding invalid value (type "%s") into filter "%s" (%s)',
+                $type,
+                $this->name,
+                get_class($this)
+            ));
         }
-        $this->bound = is_null($value) ? false : true;
+        
+        $this->bound = null !== $value;
         $this->value = $value;
 
         return $this;
