@@ -34,24 +34,25 @@ doctrine:
                 wrapper_class: "Imatic\\Bundle\\TestingBundle\\Doctrine\\DBAL\\PersistedConnection"
 
 #               sqlite
-                driver:         pdo_sqlite
-                memory:         false
-                path:           %kernel.root_dir%/cache/test.db
+#                driver:         pdo_sqlite
+#                memory:         false
+#                path:           %kernel.root_dir%/cache/test.db
 
 #                postgres
-#                driver:         pdo_pgsql
-#                host:           127.0.0.1
-#                dbname:         vsem_finance_test
-#                user:           postgres
-#                password:       postgres
-#                # server_version is needed in order make the project work with dbal 2.5
-#                # see: https://github.com/doctrine/DoctrineBundle/issues/351
-#                server_version: 9.3.6
+                driver:         pdo_pgsql
+                host:           127.0.0.1
+                dbname:         data_bundle_test
+                user:           postgres
+                password:       postgres
+                # server_version is needed in order make the project work with dbal 2.5
+                # see: https://github.com/doctrine/DoctrineBundle/issues/351
+                server_version: 9.2.4
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping:           true
         resolve_target_entities: []
+        naming_strategy: doctrine.orm.naming_strategy.underscore
         dql:
             string_functions:
                 ilike: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\ILike
@@ -61,6 +62,9 @@ monolog:
     handlers:
         main:
           type:                 "null"
+
+mopa_bootstrap:
+    form: ~  # Adds twig form theme support
 
 security:
     encoders:

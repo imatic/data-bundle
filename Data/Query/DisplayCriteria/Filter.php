@@ -33,8 +33,7 @@ class Filter implements FilterInterface
     public function boundCount()
     {
         return array_reduce($this->rules, function ($count, FilterRule $rule) {
-            if ($rule->isBound()) $count++;
-            return $count;
+            return $rule->isBound() ? $count + 1 : $count;
         }, 0);
     }
 

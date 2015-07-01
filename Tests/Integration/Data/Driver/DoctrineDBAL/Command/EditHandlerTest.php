@@ -18,12 +18,12 @@ class EditHandlerTest extends WebTestCase
             'id' => 1,
             'name' => 'Adam',
             'activated' => true,
-            'birthDate' => '1990-01-01 00:00:00',
+            'birth_date' => '1990-01-01 00:00:00',
             'hairs' => 'short',
         ], $adam);
 
         $commandParrameters = [
-            'table' => 'user',
+            'table' => 'test_user',
             'id' => ['id' => 1],
             'data' => [
                 'name' => 'name-change',
@@ -38,7 +38,7 @@ class EditHandlerTest extends WebTestCase
             'id' => 1,
             'name' => 'name-change',
             'activated' => true,
-            'birthDate' => '1990-01-01 00:00:00',
+            'birth_date' => '1990-01-01 00:00:00',
             'hairs' => 'short',
         ], $adam);
     }
@@ -54,8 +54,8 @@ class EditHandlerTest extends WebTestCase
     private function findUserById($id)
     {
         return $this->getConnection()->createQueryBuilder()
-            ->select('u.id, u.name, u.activated, u.birthDate, u.hairs')
-            ->from('user', 'u')
+            ->select('u.id, u.name, u.activated, u.birth_date, u.hairs')
+            ->from('test_user', 'u')
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
             ->execute()

@@ -14,8 +14,8 @@ class TestKernel extends BaseTestKernel
 
         $bundles = [
             new \Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new \Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new \Imatic\Bundle\FormBundle\ImaticFormBundle(),
-
             new \Imatic\Bundle\DataBundle\ImaticDataBundle(),
             new \Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\AppImaticDataBundle(),
         ];

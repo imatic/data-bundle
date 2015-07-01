@@ -39,8 +39,9 @@ class Schema
         $allColumnTypes = $this->getColumnTypes($table);
         $columnTypes = [];
         foreach ($columns as $column) {
-            if (array_key_exists($column->getName(), $data)) {
-                $columnTypes[$this->connection->quoteIdentifier($column->getName())] = $allColumnTypes[$column->getName()];
+            $columnName = $column->getName();
+            if (array_key_exists($columnName, $data)) {
+                $columnTypes[$this->connection->quoteIdentifier($columnName)] = $allColumnTypes[$columnName];
             }
         }
 

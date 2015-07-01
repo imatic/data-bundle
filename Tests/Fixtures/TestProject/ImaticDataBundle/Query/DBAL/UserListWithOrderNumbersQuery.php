@@ -15,7 +15,7 @@ class UserListWithOrderNumbersQuery implements QueryObjectInterface, SortableQue
         return (new UserListQuery())
             ->build($connection)
             ->addSelect('COUNT(uo.id) order_num')
-            ->join('u', 'user_order', 'uo', 'uo.user_id = u.id')
+            ->join('u', 'test_user_order', 'uo', 'uo.user_id = u.id')
             ->groupBy('u.id')
         ;
     }

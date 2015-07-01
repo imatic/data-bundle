@@ -7,17 +7,6 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 abstract class RangeRule extends FilterRule
 {
-    public function setValue($value)
-    {
-        if (
-            null !== $value
-            && $this->validateValue($value)
-            && isset($value['start'], $value['end'])
-        ) {
-            return parent::setValue($value);
-        }
-    }
-
     protected function getDefaultOperators()
     {
         return [
@@ -28,13 +17,11 @@ abstract class RangeRule extends FilterRule
 
     protected function validateValue($value)
     {
-        if (!is_array($value) && 2 != count($value)) {
-            return false;
-        }
-        if (!array_key_exists('start', $value) || !array_key_exists('end', $value)) {
-            return false;
-        }
-
-        return true;
+        return
+            is_array($value)
+            && 2 === count($value)
+            && array_key_exists('start', $value)
+            && array_key_exists('end', $value)
+        ;
     }
 }

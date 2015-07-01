@@ -14,8 +14,8 @@ class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterf
     public function build(Connection $connection)
     {
         return $connection->createQueryBuilder()
-            ->select('u.id, u.name, u.activated, u.birthDate, u.hairs')
-            ->from('user', 'u')
+            ->select('u.id, u.name, u.activated, u.birth_date, u.hairs')
+            ->from('test_user', 'u')
         ;
     }
 
@@ -29,7 +29,7 @@ class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterf
             'name' => 'u.name',
             'id' => 'u.id',
             'activated' => 'u.activated',
-            'birthDate' => 'u.birthDate',
+            'birthDate' => 'u.birth_date',
             'hairs' => 'u.hairs',
         ];
     }

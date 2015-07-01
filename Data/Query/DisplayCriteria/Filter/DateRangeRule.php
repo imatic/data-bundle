@@ -9,8 +9,12 @@ class DateRangeRule extends RangeRule
         parent::setValue($value);
         
         if ($this->bound) {
-            $this->value['start']->setTime(0, 0, 0);
-            $this->value['end']->setTime(23, 59, 59);
+            if ($this->value['start']) {
+                $this->value['start']->setTime(0, 0, 0);
+            }
+            if ($this->value['end']) {
+                $this->value['end']->setTime(23, 59, 59);
+            }
         }
     }
 
@@ -28,5 +32,14 @@ class DateRangeRule extends RangeRule
                 'widget' => 'single_text',
             ],
         ];
+    }
+
+    protected function validateValue($value)
+    {
+        return
+            parent::validateValue($value)
+            && (null === $value['start'] || $value['start'] instanceof \DateTime)
+            && (null === $value['end'] || $value['end'] instanceof \DateTime)
+        ;
     }
 }

@@ -34,7 +34,7 @@ class DefaultRuleProcessorTest extends WebTestCase
         $qb = $this->getConnection()->createQueryBuilder();
         $qb
             ->select('*')
-            ->from($this->getConnection()->quoteIdentifier('user'))
+            ->from('test_user')
         ;
 
         $rule = new ChoiceRule('name', ['Adam' => 'Adam'], true);

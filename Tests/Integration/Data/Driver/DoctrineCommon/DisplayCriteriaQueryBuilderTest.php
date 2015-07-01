@@ -117,7 +117,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleRange2()
     {
         $filter = new UserFilter();
-        $activatedRule = new Filter\DateRangeRule('id');
+        $activatedRule = new Filter\NumberRangeRule('id');
         $activatedRule->setValue([
             'start' => 2,
             'end' => 10,
@@ -134,7 +134,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleRange1()
     {
         $filter = new UserFilter();
-        $activatedRule = new Filter\DateRangeRule('id');
+        $activatedRule = new Filter\NumberRangeRule('id');
         $activatedRule->setValue([
             'start' => -10,
             'end' => 1,

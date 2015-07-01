@@ -137,7 +137,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
     {
         return $this->getConnection()->createQueryBuilder()
             ->select('u.name')
-            ->from('"user"', 'u')
+            ->from('test_user', 'u')
         ;
     }
 

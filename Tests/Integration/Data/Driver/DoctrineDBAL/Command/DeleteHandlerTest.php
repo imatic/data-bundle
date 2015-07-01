@@ -17,7 +17,7 @@ class DeleteHandlerTest extends WebTestCase
         $this->assertEquals(1, $this->findUserCount(1));
 
         $commandParameters = [
-            'table' => 'user',
+            'table' => 'test_user',
             'id' => ['id' => '1'],
         ];
         $command = new Command('handler', $commandParameters);
@@ -39,7 +39,7 @@ class DeleteHandlerTest extends WebTestCase
     {
         return $this->getConnection()->createQueryBuilder()
             ->select('COUNT(u.id) count')
-            ->from('user', 'u')
+            ->from('test_user', 'u')
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
             ->execute()

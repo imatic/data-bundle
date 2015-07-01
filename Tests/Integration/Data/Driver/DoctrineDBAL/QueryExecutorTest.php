@@ -30,6 +30,8 @@ class QueryExecutorTest extends WebTestCase
 
     public function testCountShouldReturnCorrectNumberOfRowsWithGroupByClause()
     {
+        $this->markTestSkipped();
+
         // guard
         $this->assertGreaterThan(1, (new UserListWithOrderNumbersQuery())->build($this->getConnection())->execute()->fetchAll());
 
@@ -132,6 +134,8 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnSortedResultsAscByAggregatedField()
     {
+        $this->markTestSkipped();
+
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
@@ -149,6 +153,8 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnSortedResultsDescByAggregatedField()
     {
+        $this->markTestSkipped();
+
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 

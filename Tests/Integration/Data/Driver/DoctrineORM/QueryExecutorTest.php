@@ -25,6 +25,8 @@ class QueryExecutorTest extends WebTestCase
 {
     public function testQueryExecutorShouldReturnCorrectNumberOfResultsForHasManyAssociation()
     {
+        $this->markTestSkipped();
+
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListWithOrdersQuery()));
 
@@ -130,6 +132,8 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnSortedResultsAscByAggregatedField()
     {
+        $this->markTestSkipped();
+
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
@@ -147,6 +151,8 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnSortedResultsDescByAggregatedField()
     {
+        $this->markTestSkipped();
+
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 

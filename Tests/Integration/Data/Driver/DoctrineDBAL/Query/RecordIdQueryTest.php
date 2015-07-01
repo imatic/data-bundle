@@ -13,7 +13,7 @@ class RecordIdQueryTest extends WebTestCase
 {
     public function testRecordIdQueryShouldReturnEmptyResultIfRecordDoesNotExists()
     {
-        $recordQuery = new RecordIdQuery('user', [
+        $recordQuery = new RecordIdQuery('test_user', [
             'name' => 'non-existent',
         ]);
 
@@ -23,7 +23,7 @@ class RecordIdQueryTest extends WebTestCase
 
     public function testRecordIdQueryShouldReturnIdOfTheRecordIfRecordExists()
     {
-        $recordQuery = new RecordIdQuery('user', [
+        $recordQuery = new RecordIdQuery('test_user', [
             'name' => 'Adam',
         ]);
 
