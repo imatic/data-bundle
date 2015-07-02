@@ -1,21 +1,13 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class DefaultRuleProcessor extends AbstractRuleProcessor
+class DefaultRuleProcessor extends AbstractFilterRuleProcessor
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function supports(FilterRule $rule, $column)
-    {
-        return true;
-    }
-
     /**
      * {@inheritdoc}
      */

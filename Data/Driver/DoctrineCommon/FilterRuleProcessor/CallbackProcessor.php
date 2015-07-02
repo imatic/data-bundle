@@ -1,13 +1,13 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class CallbackProcessor extends AbstractRuleProcessor
+class CallbackProcessor extends AbstractFilterRuleProcessor
 {
     /**
      * {@inheritdoc}
@@ -20,8 +20,11 @@ class CallbackProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function supports(FilterRule $rule, $column)
+    public function supports($qb, FilterRule $rule, $column)
     {
-        return $column instanceof \Closure;
+        return
+            parent::supports($qb, $rule, $column)
+            && $column instanceof \Closure
+        ;
     }
 }

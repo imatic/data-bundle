@@ -22,3 +22,11 @@ services:
     # display criteria
     imatic_data.pager_factory:
         class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory
+
+    imatic_data.display_criteria_query_builder:
+        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate
+        arguments:
+            - @imatic_data.filter_rule_processor
+
+    imatic_data.filter_rule_processor:
+        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorDelegate

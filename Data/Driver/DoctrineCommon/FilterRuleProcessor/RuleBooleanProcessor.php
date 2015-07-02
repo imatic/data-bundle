@@ -1,12 +1,12 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\BooleanRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
-class RuleBooleanProcessor extends AbstractRuleProcessor
+class RuleBooleanProcessor extends AbstractFilterRuleProcessor
 {
     /**
      * {@inheritdoc}
@@ -30,9 +30,8 @@ class RuleBooleanProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function supports(FilterRule $rule, $column)
+    public function supports($qb, FilterRule $rule, $column)
     {
-        return $rule instanceof BooleanRule;
+        return parent::supports($qb, $rule, $column) && $rule instanceof BooleanRule;
     }
-
 }

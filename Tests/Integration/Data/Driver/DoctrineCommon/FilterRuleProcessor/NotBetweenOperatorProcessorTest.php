@@ -2,7 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\RuleProcessor;
 
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\NotBetweenOperatorProcessor;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\NotBetweenOperatorProcessor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateRangeRule;
 
 /**

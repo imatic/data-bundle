@@ -4,7 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\PDOStatement;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface as DoctrineDBALQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
@@ -28,10 +28,10 @@ class QueryExecutor implements QueryExecutorInterface
     /** @var Connection */
     private $connection;
 
-    /** @var DisplayCriteriaQueryBuilder */
+    /** @var DisplayCriteriaQueryBuilderDelegate */
     private $displayCriteriaQueryBuilder;
 
-    public function __construct(Connection $connection, DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder, Schema $schema)
+    public function __construct(Connection $connection, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder, Schema $schema)
     {
         $this->connection = $connection;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;

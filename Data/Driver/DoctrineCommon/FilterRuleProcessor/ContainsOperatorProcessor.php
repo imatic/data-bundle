@@ -1,6 +1,6 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
 use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
@@ -10,7 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class ContainsOperatorProcessor extends AbstractRuleProcessor
+class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
 {
     private $postgresOperators = [
         FilterOperatorMap::OPERATOR_CONTAINS => 'ILIKE',
@@ -48,12 +48,15 @@ class ContainsOperatorProcessor extends AbstractRuleProcessor
     /**
      * {@inheritdoc}
      */
-    public function supports(FilterRule $rule, $column)
+    public function supports($qb, FilterRule $rule, $column)
     {
-        return in_array($rule->getOperator(), [
-            FilterOperatorMap::OPERATOR_CONTAINS,
-            FilterOperatorMap::OPERATOR_NOT_CONTAINS
-        ]);
+        return
+            parent::supports($qb, $rule, $column)
+            && in_array($rule->getOperator(), [
+                FilterOperatorMap::OPERATOR_CONTAINS,
+                FilterOperatorMap::OPERATOR_NOT_CONTAINS
+            ])
+        ;
     }
 
     private function hasPostgresqlConnection($qb)
