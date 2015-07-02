@@ -2,8 +2,8 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
-use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorInterface;
 
@@ -19,7 +19,7 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
 
     /**
      * @param FilterRule $rule
-     *
+     * 
      * @return string
      */
     protected function getQueryParameter(FilterRule $rule)
@@ -32,7 +32,7 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
 
     /**
      * @param FilterRule $rule
-     *
+     * 
      * @return string
      */
     protected function getQueryParameterName(FilterRule $rule)

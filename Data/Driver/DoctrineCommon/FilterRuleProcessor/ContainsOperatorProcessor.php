@@ -17,9 +17,6 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
         FilterOperatorMap::OPERATOR_NOT_CONTAINS => 'NOT ILIKE',
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     public function process($qb, FilterRule $rule, $column)
     {
         if (!$this->hasPostgresqlConnection($qb)) {
@@ -45,9 +42,6 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
         $qb->setParameter($this->getQueryParameterName($rule), '%' . $rule->getValue() . '%', $rule->getType());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($qb, FilterRule $rule, $column)
     {
         return

@@ -7,5 +7,4 @@ namespace Imatic\Bundle\DataBundle\Data\Query;
  */
 class NonUniqueResultException extends UnexpectedResultException
 {
-
 }

@@ -2,9 +2,9 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
+use Doctrine\DBAL\Connection;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
-use Doctrine\DBAL\Connection;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
 
 /**

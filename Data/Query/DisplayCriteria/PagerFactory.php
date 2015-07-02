@@ -13,8 +13,8 @@ class PagerFactory
     protected $defaultLimit = 100;
 
     /**
-     * @param  int            $page
-     * @param  int|null       $limit
+     * @param int      $page
+     * @param int|null $limit
      * @return PagerInterface
      */
     public function createPager($page, $limit = null)

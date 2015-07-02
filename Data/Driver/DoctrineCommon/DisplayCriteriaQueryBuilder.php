@@ -1,8 +1,8 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon;
 
-use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
+use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterInterface;

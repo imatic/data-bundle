@@ -1,12 +1,12 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilder;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 class DisplayCriteriaQueryBuilderTest extends WebTestCase
 {

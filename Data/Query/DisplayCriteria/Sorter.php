@@ -23,7 +23,7 @@ class Sorter implements SorterInterface
     }
 
     /**
-     * @param  string $column
+     * @param string $column
      * @return bool
      */
     public function isSorted($column)
@@ -32,8 +32,8 @@ class Sorter implements SorterInterface
     }
 
     /**
-     * @param  string $column
-     * @param  bool   $lowercase
+     * @param string $column
+     * @param bool   $lowercase
      * @return string
      */
     public function getDirection($column, $lowercase = false)
@@ -46,8 +46,8 @@ class Sorter implements SorterInterface
     }
 
     /**
-     * @param  string $column
-     * @param  bool   $lowercase
+     * @param string $column
+     * @param bool   $lowercase
      * @return string
      */
     public function getReverseDirection($column, $lowercase = false)
@@ -94,7 +94,7 @@ class Sorter implements SorterInterface
 
     /**
      * @param SorterRule $sorterRule
-     *                               @return $this
+     * @return $this
      */
     protected function addSorterRule(SorterRule $sorterRule)
     {

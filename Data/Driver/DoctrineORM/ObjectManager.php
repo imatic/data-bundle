@@ -17,25 +17,16 @@ class ObjectManager implements ObjectManagerInterface
         $this->em = $em;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flush()
     {
         $this->em->flush();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function persist($object)
     {
         $this->em->persist($object);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function remove($object)
     {
         $this->em->remove($object);

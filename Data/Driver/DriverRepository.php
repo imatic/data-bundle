@@ -17,18 +17,12 @@ class DriverRepository implements DriverRepositoryInterface
     {
         $this->drivers = [];
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function add(DriverInterface $driver)
     {
         $this->drivers[$driver->getName()] = $driver;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function get($name)
     {
         if (!array_key_exists($name, $this->drivers)) {
@@ -37,10 +31,7 @@ class DriverRepository implements DriverRepositoryInterface
 
         return $this->drivers[$name];
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getQueryExecutorFor(QueryObjectInterface $queryObject)
     {
         foreach ($this->drivers as $driver) {

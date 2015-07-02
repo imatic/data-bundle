@@ -20,10 +20,7 @@ class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterfac
     {
         $this->id = $id;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function build(EntityManager $em)
     {
         return (new QueryBuilder($em))

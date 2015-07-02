@@ -2,9 +2,9 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Doctrine\Common\Collections\ArrayCollection;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 class AjaxEntityChoiceRule extends FilterRule
 {

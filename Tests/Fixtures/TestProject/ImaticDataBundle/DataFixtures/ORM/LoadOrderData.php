@@ -26,10 +26,7 @@ class LoadOrderData extends AbstractFixture implements DependentFixtureInterface
 
         $manager->flush();
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getDependencies()
     {
         return [

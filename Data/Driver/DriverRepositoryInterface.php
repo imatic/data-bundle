@@ -9,19 +9,18 @@ use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
 interface DriverRepositoryInterface
 {
     /**
-     * @param  DriverInterface $driver
-     * @return void
+     * @param DriverInterface $driver
      */
     public function add(DriverInterface $driver);
 
     /**
-     * @param  string          $name
+     * @param string $name
      * @return DriverInterface
      */
     public function get($name);
 
     /**
-     * @param  QueryObjectInterface            $queryObject
+     * @param QueryObjectInterface $queryObject
      * @return QueryExecutorInterface
      * @throws UnsupportedQueryObjectException
      */

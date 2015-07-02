@@ -10,7 +10,6 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 
 class DeleteHandler implements HandlerInterface
 {
-
     /**
      * @var ObjectManager
      */
@@ -28,7 +27,7 @@ class DeleteHandler implements HandlerInterface
     }
 
     /**
-     * @param  CommandInterface                 $command
+     * @param CommandInterface $command
      * @return CommandResultInterface|bool|void
      */
     public function handle(CommandInterface $command)

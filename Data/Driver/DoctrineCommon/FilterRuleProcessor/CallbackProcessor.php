@@ -9,17 +9,11 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
  */
 class CallbackProcessor extends AbstractFilterRuleProcessor
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process($qb, FilterRule $rule, $column)
     {
          $column($qb, $rule);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports($qb, FilterRule $rule, $column)
     {
         return

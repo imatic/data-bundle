@@ -38,34 +38,22 @@ class Driver implements DriverInterface
         $this->queryExecutor = $queryExecutor;
         $this->queryObjectClass = $queryObjectClass;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getName()
     {
         return $this->name;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getObjectManager()
     {
         return $this->objectManager;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getQueryExecutor()
     {
         return $this->queryExecutor;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getQueryObjectClass()
     {
         return $this->queryObjectClass;

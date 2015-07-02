@@ -44,10 +44,7 @@ class Filter implements FilterInterface
     {
         return $this->rules;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function get($index)
     {
         return $this->rules[$index];
@@ -80,7 +77,7 @@ class Filter implements FilterInterface
 
     /**
      * @param FilterRule $rule
-     *                         @return $this
+     * @return $this
      */
     public function add(FilterRule $rule)
     {
@@ -102,7 +99,7 @@ class Filter implements FilterInterface
     }
 
     /**
-     * @param  FormInterface   $form
+     * @param FormInterface $form
      * @throws \LogicException
      */
     public function setForm(FormInterface $form)
@@ -123,7 +120,7 @@ class Filter implements FilterInterface
 
     /**
      * @param string $translationDomain
-     *                                  @return $this
+     * @return $this
      */
     public function setTranslationDomain($translationDomain)
     {

@@ -31,7 +31,7 @@ class QueryExecutorDelegate implements QueryExecutorInterface
 
     /**
      * @param QueryObjectInterface $queryObject
-     *
+     * 
      * @return QueryExecutorInterface
      */
     protected function getQueryExecutor(QueryObjectInterface $queryObject)

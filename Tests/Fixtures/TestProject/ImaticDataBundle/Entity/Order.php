@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="test_user_order")
- *
+ * 
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class Order

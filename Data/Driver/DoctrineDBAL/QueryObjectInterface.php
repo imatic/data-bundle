@@ -3,8 +3,8 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
-use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>

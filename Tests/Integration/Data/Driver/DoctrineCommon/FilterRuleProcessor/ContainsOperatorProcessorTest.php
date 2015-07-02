@@ -4,8 +4,8 @@ namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\Rul
 
 use Doctrine\DBAL\Connection;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\ContainsOperatorProcessor;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 class ContainsOperatorProcessorTest extends WebTestCase

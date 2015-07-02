@@ -2,10 +2,10 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema;
 
-use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Sequence;
+use Doctrine\DBAL\Schema\Table;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -65,7 +65,7 @@ class Schema
 
     /**
      * @param string $table
-     *
+     * 
      * @return array Associative array with columns as keys and type as it's values
      */
     public function getColumnTypes($table)
@@ -126,7 +126,7 @@ class Schema
 
     /**
      * @param string $tableName
-     *
+     * 
      * @return Table
      * @throws \InvalidArgumentException
      */

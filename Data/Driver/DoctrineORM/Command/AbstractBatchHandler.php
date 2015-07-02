@@ -6,8 +6,8 @@ use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 
 /**
@@ -31,7 +31,7 @@ abstract class AbstractBatchHandler
     protected $filterFactory;
 
     /**
-     * @param  CommandInterface                 $command
+     * @param CommandInterface $command
      * @throws \Exception
      * @return CommandResultInterface|bool|void
      */
@@ -78,13 +78,13 @@ abstract class AbstractBatchHandler
     }
 
     /**
-     * @param  mixed                  $id
+     * @param mixed $id
      * @return CommandResultInterface
      */
     abstract protected function handleOne($id);
 
     /**
-     * @param  DisplayCriteriaInterface $displayCriteria
+     * @param DisplayCriteriaInterface $displayCriteria
      * @return CommandResultInterface
      */
     abstract protected function handleAll(DisplayCriteriaInterface $displayCriteria);

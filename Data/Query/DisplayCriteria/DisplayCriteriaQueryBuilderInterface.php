@@ -20,9 +20,9 @@ interface DisplayCriteriaQueryBuilderInterface
     public function applyPager($qb, PagerInterface $pager);
 
     /**
-     * @param  object          $qb
-     * @param  SorterInterface $sorter
-     * @param  array           $sorterMap
+     * @param object          $qb
+     * @param SorterInterface $sorter
+     * @param array           $sorterMap
      */
     public function applySorter($qb, SorterInterface $sorter, array $sorterMap);
 }

@@ -18,10 +18,7 @@ class HandlerRepository implements HandlerRepositoryInterface
         $this->handlers = [];
         $this->bundles = [];
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function addHandler($name, HandlerInterface $handler, $bundleName)
     {
         if ($this->hasHandler($name)) {
@@ -31,18 +28,12 @@ class HandlerRepository implements HandlerRepositoryInterface
         $this->handlers[$name] = $handler;
         $this->bundles[$name] = $bundleName;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getHandlers()
     {
         return $this->handlers;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHandler(CommandInterface $command)
     {
         $name = $command->getHandlerName();
@@ -53,7 +44,7 @@ class HandlerRepository implements HandlerRepositoryInterface
     }
 
     /**
-     * @param  CommandInterface|string $command
+     * @param CommandInterface|string $command
      * @return string
      */
     public function getBundleName($command)
@@ -66,7 +57,7 @@ class HandlerRepository implements HandlerRepositoryInterface
     }
 
     /**
-     * @param  string $name
+     * @param string $name
      * @return bool
      */
     private function hasHandler($name)

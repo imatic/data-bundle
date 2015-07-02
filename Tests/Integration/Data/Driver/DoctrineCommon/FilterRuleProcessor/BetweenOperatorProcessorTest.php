@@ -2,9 +2,9 @@
 
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\FilterRuleProcessor;
 
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateRangeRule;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\BetweenOperatorProcessor;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateRangeRule;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>

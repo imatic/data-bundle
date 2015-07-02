@@ -10,25 +10,18 @@ class CommandFactory implements CommandFactoryInterface
     {
         $this->factories = [
             'patch' => function (array $parameters) {
-
-                },
+            },
             'batch' => function (array $parameters) {
-
-                },
+            },
             'form' => function (array $parameters) {
-
-                }
+            },
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createCommand($name, $handlerName, array $parameters)
     {
         if (array_key_exists($name, $this->factories)) {
             return new Command($handlerName, $this->factories[$name]);
         }
-        // ex
     }
 }

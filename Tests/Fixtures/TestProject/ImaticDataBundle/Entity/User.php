@@ -1,13 +1,13 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="test_user")
- *
+ * 
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class User

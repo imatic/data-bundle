@@ -2,9 +2,9 @@
 
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL\Command;
 
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler;
 use Imatic\Bundle\DataBundle\Data\Command\Command;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>

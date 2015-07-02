@@ -5,9 +5,6 @@ use Imatic\Bundle\TestingBundle\Test\TestKernel as BaseTestKernel;
 
 class TestKernel extends BaseTestKernel
 {
-    /**
-     * {@inheritdoc}
-     */
     public function registerBundles()
     {
         $parentBundles = parent::registerBundles();
