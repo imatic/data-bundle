@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;

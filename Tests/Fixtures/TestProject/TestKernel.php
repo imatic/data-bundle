@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject;
 
 use Imatic\Bundle\TestingBundle\Test\TestKernel as BaseTestKernel;

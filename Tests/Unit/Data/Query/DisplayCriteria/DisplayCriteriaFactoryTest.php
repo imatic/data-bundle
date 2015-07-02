@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria;
 
 use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;

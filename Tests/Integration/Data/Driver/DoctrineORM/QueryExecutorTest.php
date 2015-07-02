@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;

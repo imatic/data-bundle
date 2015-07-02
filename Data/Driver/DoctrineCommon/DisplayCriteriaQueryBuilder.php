@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon;
 
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;

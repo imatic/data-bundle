@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
