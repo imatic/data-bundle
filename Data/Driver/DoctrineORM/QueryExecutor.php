@@ -116,7 +116,7 @@ class QueryExecutor implements QueryExecutorInterface
         } else {
             $paginator = new Paginator($query, true);
 
-            return iterator_to_array($paginator);
+            return $query->contains('SELECT') ? iterator_to_array($paginator) : $query->getResult();
         }
     }
 }
