@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Symfony\Component\Form\FormInterface;
@@ -33,8 +34,7 @@ class Filter implements FilterInterface
     public function boundCount()
     {
         return array_reduce($this->rules, function ($count, FilterRule $rule) {
-            if ($rule->isBound()) $count++;
-            return $count;
+            return $rule->isBound() ? $count + 1 : $count;
         }, 0);
     }
 
@@ -45,10 +45,7 @@ class Filter implements FilterInterface
     {
         return $this->rules;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function get($index)
     {
         return $this->rules[$index];
@@ -81,7 +78,7 @@ class Filter implements FilterInterface
 
     /**
      * @param FilterRule $rule
-     *                         @return $this
+     * @return $this
      */
     public function add(FilterRule $rule)
     {
@@ -103,7 +100,7 @@ class Filter implements FilterInterface
     }
 
     /**
-     * @param  FormInterface   $form
+     * @param FormInterface $form
      * @throws \LogicException
      */
     public function setForm(FormInterface $form)
@@ -124,7 +121,7 @@ class Filter implements FilterInterface
 
     /**
      * @param string $translationDomain
-     *                                  @return $this
+     * @return $this
      */
     public function setTranslationDomain($translationDomain)
     {

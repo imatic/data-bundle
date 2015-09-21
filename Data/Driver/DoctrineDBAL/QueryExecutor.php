@@ -4,18 +4,18 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\PDOStatement;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder;
+use Doctrine\DBAL\Types\Type;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface as DoctrineDBALQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
-use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\NoResultException;
+use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
-use Doctrine\DBAL\Types\Type;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -28,10 +28,10 @@ class QueryExecutor implements QueryExecutorInterface
     /** @var Connection */
     private $connection;
 
-    /** @var DisplayCriteriaQueryBuilder */
+    /** @var DisplayCriteriaQueryBuilderDelegate */
     private $displayCriteriaQueryBuilder;
 
-    public function __construct(Connection $connection, DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder, Schema $schema)
+    public function __construct(Connection $connection, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder, Schema $schema)
     {
         $this->connection = $connection;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
@@ -110,8 +110,8 @@ class QueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param  BaseQueryObjectInterface $queryObject
-     * @param  PDOStatement         $statement
+     * @param BaseQueryObjectInterface $queryObject
+     * @param PDOStatement             $statement
      * @return mixed
      */
     private function getResult(BaseQueryObjectInterface $queryObject, PDOStatement $statement)

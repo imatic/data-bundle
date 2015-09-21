@@ -10,7 +10,7 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor
         arguments:
             - @doctrine.orm.entity_manager
-            - @imatic_data.doctrine.display_criteria_query_builder
+            - @imatic_data.display_criteria_query_builder
 
     # driver
     imatic_data.driver.doctrine_orm:

@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
@@ -30,7 +31,7 @@ class UserDeactivateHandler implements HandlerInterface
     }
 
     /**
-     * @param  CommandInterface                                                        $pathCommand
+     * @param CommandInterface $pathCommand
      * @return \Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface|bool|void
      */
     public function handle(CommandInterface $pathCommand)
@@ -39,6 +40,5 @@ class UserDeactivateHandler implements HandlerInterface
         $user->deactivate();
 
         $this->objectManager->flush();
-
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Command;
 
 use Imatic\Bundle\DataBundle\Command\QueryObjectQueryCommand;
@@ -60,7 +61,8 @@ class QueryObjectQueryCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Not enough arguments
      */
     public function testCommandShouldThrowExceptionIfArgumentIsNotPassedToQueryObjectWithRequiredArguments()
     {

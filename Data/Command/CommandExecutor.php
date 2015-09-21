@@ -25,7 +25,7 @@ class CommandExecutor implements CommandExecutorInterface
     }
 
     /**
-     * @param  CommandInterface       $command
+     * @param CommandInterface $command
      * @throws \Exception
      * @return CommandResultInterface
      */

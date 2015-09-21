@@ -8,7 +8,7 @@ interface QueryExecutorFactoryInterface
 {
     /**
      * @param string $connectionName
-     *
+     * 
      * @return QueryExecutorInterface
      * @throws RuntimeException
      */

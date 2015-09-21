@@ -46,7 +46,13 @@ class ChoiceRule extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_scalar($value) || (is_array($value) && count(array_filter($value, 'is_scalar')) == count($value));
+        return
+            is_scalar($value)
+            || (
+                is_array($value)
+                && count(array_filter($value, 'is_scalar')) === count($value)
+            )
+        ;
     }
 
     protected function getDefaultFormType()

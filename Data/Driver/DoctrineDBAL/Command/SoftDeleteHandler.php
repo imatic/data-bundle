@@ -4,8 +4,8 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
-use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query\SoftDeleteQuery;
+use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>

@@ -29,14 +29,22 @@ class QueryObjectQueryCommand extends ContainerAwareCommand
         $args = $input->getOption(static::OPTION_ARGS);
 
         $classRef = new \ReflectionClass($class);
+        $constructorRef = $classRef->getConstructor();
+        $numRequiredArgs = $constructorRef ? $constructorRef->getNumberOfRequiredParameters() : 0;
+
+        if ($numRequiredArgs > sizeof($args)) {
+            throw new \InvalidArgumentException(sprintf(
+                'Not enough arguments - %d given, %d required',
+                sizeof($args),
+                $numRequiredArgs
+            ));
+        }
+
         $queryObject = $classRef->newInstanceArgs($args);
 
         $queryExecutor = $this->getContainer()->get('imatic_data.query_executor');
         $result = $queryExecutor->execute($queryObject);
 
-        ob_start();
-        Debug::dump($result);
-        $output->writeln(ob_get_contents());
-        ob_clean();
+        $output->writeln(Debug::dump($result, 2, false, false));
     }
 }

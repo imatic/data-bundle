@@ -29,7 +29,7 @@ class QueryExecutorFactory implements QueryExecutorFactoryInterface
 
             $this->queryExecutorCache[$connectionId] = new QueryExecutor(
                 $this->container->get($connectionId),
-                $this->container->get('imatic_data.doctrine.display_criteria_query_builder'),
+                $this->container->get('imatic_data.display_criteria_query_builder'),
                 $this->container->get('imatic_data.driver.doctrine_dbal.schema')
             );
         }

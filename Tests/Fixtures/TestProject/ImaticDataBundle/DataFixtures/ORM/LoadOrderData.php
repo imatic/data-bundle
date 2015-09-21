@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -26,10 +27,7 @@ class LoadOrderData extends AbstractFixture implements DependentFixtureInterface
 
         $manager->flush();
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function getDependencies()
     {
         return [

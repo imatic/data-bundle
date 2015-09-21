@@ -113,27 +113,51 @@ abstract class FilterRule
     }
 
     /**
-     * @param  mixed                     $value
-     *                                          @return $this
+     * @param mixed $value
+     * @return $this
      * @throws \InvalidArgumentException
      */
     public function setValue($value)
     {
-        if (null !== $value && !$this->validateValue($value)) {
-            $type = is_object($value) ? get_class($value) : gettype($value);
-            
-            throw new \InvalidArgumentException(sprintf(
-                'Binding invalid value (type "%s") into filter "%s" (%s)',
-                $type,
-                $this->name,
-                get_class($this)
-            ));
+        if (null !== $value) {
+            if (!$this->validateValue($value)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Binding invalid value (type "%s") into filter "%s" (%s)',
+                    is_object($value) ? get_class($value) : gettype($value),
+                    $this->name,
+                    get_class($this)
+                ));
+            }
+
+            $this->bound = true;
+            $this->value = $value;
         }
-        
-        $this->bound = null !== $value;
-        $this->value = $value;
 
         return $this;
+    }
+
+    /**
+     * Get or set the value
+     *
+     * Intended for use with property paths (e.g. inside form fields).
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+    public function ruleValue($value = null)
+    {
+        if (func_num_args() > 0) {
+            if (null !== $value && $this->validateValue($value)) {
+                $this->bound = true;
+                $this->value = $value;
+
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return $this->value;
+        }
     }
 
     /**
@@ -145,8 +169,8 @@ abstract class FilterRule
     }
 
     /**
-     * @param  string                    $operator
-     *                                             @return $this
+     * @param string $operator
+     * @return $this
      * @throws \InvalidArgumentException
      */
     public function setOperator($operator)
@@ -170,7 +194,7 @@ abstract class FilterRule
     }
 
     /**
-     * @param  array                     $operators
+     * @param array $operators
      * @throws \InvalidArgumentException
      */
     public function setOperators(array $operators)
@@ -212,7 +236,7 @@ abstract class FilterRule
 
     /**
      * @param string $type
-     *
+     * 
      * @return string
      */
     public function setType($type)
@@ -253,7 +277,7 @@ abstract class FilterRule
     }
 
     /**
-     * @param  mixed $value
+     * @param mixed $value
      * @return bool
      */
     abstract protected function validateValue($value);
@@ -285,7 +309,7 @@ abstract class FilterRule
     }
 
     /**
-     * @param  string $operator
+     * @param string $operator
      * @return bool
      */
     protected function validateOperator($operator)
@@ -294,8 +318,8 @@ abstract class FilterRule
     }
 
     /**
-     * @param  array $operators
-     * @param  array $invalid
+     * @param array $operators
+     * @param array $invalid
      * @return bool
      */
     protected function validateOperators($operators, array &$invalid = [])

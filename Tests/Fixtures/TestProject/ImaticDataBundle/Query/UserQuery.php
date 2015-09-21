@@ -1,4 +1,5 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query;
 
 use Doctrine\ORM\EntityManager;
@@ -20,10 +21,7 @@ class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterfac
     {
         $this->id = $id;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function build(EntityManager $em)
     {
         return (new QueryBuilder($em))

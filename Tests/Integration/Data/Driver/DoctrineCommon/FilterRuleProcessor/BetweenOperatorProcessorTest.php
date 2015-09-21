@@ -1,16 +1,17 @@
 <?php
-namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\RuleProcessor;
 
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor\NotBetweenOperatorProcessor;
+namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\FilterRuleProcessor;
+
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\BetweenOperatorProcessor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateRangeRule;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class NotBetweenOperatorProcessorTest extends WebTestCase
+class BetweenOperatorProcessorTest extends WebTestCase
 {
-    public function testProcessShouldReturnQbWhichReturnsResultsNotBetweenValue()
+    public function testProcessShouldReturnQbWhichReturnsResultsBetweenValue()
     {
         $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
 
@@ -20,16 +21,16 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
             'end' => new \DateTime('1992-01-02'),
         ]);
 
-        $processor = new NotBetweenOperatorProcessor();
+        $processor = new BetweenOperatorProcessor();
         $processor->process($qb, $rule, 'u.birthDate');
 
         $result = $qb->getQuery()->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('1995-03-05', $result[0]->getBirthDate()->format('Y-m-d'));
+        $this->assertEquals('1990-01-01', $result[0]->getBirthDate()->format('Y-m-d'));
     }
 
-    public function testProcessShouldReturnQbWhichReturnsResultsToValueIfEndIsNotSpecified()
+    public function testProcessShouldReturnQbWhichReturnsResultsFromValueIfEndIsNotSpecified()
     {
         $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
 
@@ -39,16 +40,16 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
             'end' => null,
         ]);
 
-        $processor = new NotBetweenOperatorProcessor();
+        $processor = new BetweenOperatorProcessor();
         $processor->process($qb, $rule, 'u.birthDate');
 
         $result = $qb->getQuery()->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('1990-01-01', $result[0]->getBirthDate()->format('Y-m-d'));
+        $this->assertEquals('1995-03-05', $result[0]->getBirthDate()->format('Y-m-d'));
     }
 
-    public function testProcessShouldReturnQbWhichReturnsResultsFromValueIfStartIsNotSpecified()
+    public function testProcessShouldReturnQbWhichReturnsResultsToValueIfStartIsNotSpecified()
     {
         $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
 
@@ -58,16 +59,16 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
             'end' => new \DateTime('1992-01-02'),
         ]);
 
-        $processor = new NotBetweenOperatorProcessor();
+        $processor = new BetweenOperatorProcessor();
         $processor->process($qb, $rule, 'u.birthDate');
 
         $result = $qb->getQuery()->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('1995-03-05', $result[0]->getBirthDate()->format('Y-m-d'));
+        $this->assertEquals('1990-01-01', $result[0]->getBirthDate()->format('Y-m-d'));
     }
 
-    public function testProcessShouldReturnQbWhichReturnsResultsNotBetweenValueIncludingStart()
+    public function testProcessShouldReturnQbWhichReturnsResultsBetweenValueIncludingStart()
     {
         $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
 
@@ -77,16 +78,16 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
             'end' => new \DateTime('1990-01-02'),
         ]);
 
-        $processor = new NotBetweenOperatorProcessor();
+        $processor = new BetweenOperatorProcessor();
         $processor->process($qb, $rule, 'u.birthDate');
 
         $result = $qb->getQuery()->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('1995-03-05', $result[0]->getBirthDate()->format('Y-m-d'));
+        $this->assertEquals('1990-01-01', $result[0]->getBirthDate()->format('Y-m-d'));
     }
 
-    public function testProcessShouldReturnQbWhichReturnsResultsNotBetweenValueIncludingEnd()
+    public function testProcessShouldReturnQbWhichReturnsResultsBetweenValueIncludingEndEvenIfTimeIsOver()
     {
         $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
 
@@ -96,12 +97,12 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
             'end' => new \DateTime('1990-01-01'),
         ]);
 
-        $processor = new NotBetweenOperatorProcessor();
+        $processor = new BetweenOperatorProcessor();
         $processor->process($qb, $rule, 'u.birthDate');
 
         $result = $qb->getQuery()->getResult();
 
         $this->assertCount(1, $result);
-        $this->assertEquals('1995-03-05', $result[0]->getBirthDate()->format('Y-m-d'));
+        $this->assertEquals('1990-01-01', $result[0]->getBirthDate()->format('Y-m-d'));
     }
 }

@@ -21,7 +21,7 @@ class CreateOrEditHandlerTest extends WebTestCase
         $this->assertEquals('short', $originalUser->getHairs());
 
         $command = new Command('imatic_data.doctrine_dbal.generic_create_or_edit', [
-            'table' => 'user',
+            'table' => 'test_user',
             'data' => [
                 'id' => 1,
                 'name' => 'new-one',
@@ -45,13 +45,13 @@ class CreateOrEditHandlerTest extends WebTestCase
         $this->assertNull($originalUser);
 
         $command = new Command('imatic_data.doctrine_dbal.generic_create_or_edit', [
-            'table' => 'user',
+            'table' => 'test_user',
             'data' => [
                 'id' => 100,
                 'name' => 'new-one',
             ],
             'columnValues' => [
-                'id' => 1,
+                'id' => 100,
             ],
         ]);
         $this->getCommandExecutor()->execute($command);

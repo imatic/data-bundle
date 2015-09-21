@@ -2,7 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Form\Type\Filter;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -21,8 +20,9 @@ class FilterType extends AbstractType
                 $rule->getName(),
                 new FilterRuleType(), [
                     'filter_rule' => $rule,
-                    'property_path' => sprintf('[%s]', $rule->getName()),
-                ]);
+                    'property_path' => "[{$rule->getName()}]",
+                ]
+            );
         }
         $builder->add('clearFilter', 'submit');
         $builder->add('defaultFilter', 'submit');

@@ -1,12 +1,13 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user_order")
- *
+ * @ORM\Table(name="test_user_order")
+ * 
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class Order
@@ -22,6 +23,7 @@ class Order
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $user;
 

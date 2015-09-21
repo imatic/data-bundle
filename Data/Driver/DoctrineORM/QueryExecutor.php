@@ -4,18 +4,16 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
-use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
-use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface as DoctrineORMQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\ScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder;
 
 class QueryExecutor implements QueryExecutorInterface
 {
@@ -25,23 +23,16 @@ class QueryExecutor implements QueryExecutorInterface
     private $entityManager;
 
     /**
-     * @var DisplayCriteriaQueryBuilder
+     * @var DisplayCriteriaQueryBuilderDelegate
      */
     private $displayCriteriaQueryBuilder;
 
-    /**
-     * @param EntityManager               $entityManager
-     * @param DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder
-     */
-    public function __construct(EntityManager $entityManager, DisplayCriteriaQueryBuilder $displayCriteriaQueryBuilder)
+    public function __construct(EntityManager $entityManager, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
     {
         $this->entityManager = $entityManager;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
@@ -58,10 +49,7 @@ class QueryExecutor implements QueryExecutorInterface
 
         return count($paginator);
     }
-
-    /**
-     * {@inheritdoc}
-     */
+    
     public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
@@ -101,8 +89,8 @@ class QueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param  BaseQueryObjectInterface $queryObject
-     * @param  Query                    $query
+     * @param BaseQueryObjectInterface $queryObject
+     * @param Query                    $query
      * @return mixed
      */
     private function getResult(BaseQueryObjectInterface $queryObject, Query $query)

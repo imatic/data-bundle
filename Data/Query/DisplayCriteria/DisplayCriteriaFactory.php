@@ -2,9 +2,9 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 use Imatic\Bundle\DataBundle\Form\Type\Filter\FilterType;
 use Symfony\Component\Form\FormFactoryInterface;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 
 class DisplayCriteriaFactory
 {
@@ -24,8 +24,8 @@ class DisplayCriteriaFactory
     protected $displayCriteriaReader;
 
     /**
-     * @param PagerFactory         $pagerFactory
-     * @param FormFactoryInterface $formFactory
+     * @param PagerFactory          $pagerFactory
+     * @param FormFactoryInterface  $formFactory
      * @param DisplayCriteriaReader $displayCriteriaReader
      */
     public function __construct(
@@ -39,8 +39,8 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param  array           $options
-     * @param  bool            $persistent
+     * @param array $options
+     * @param bool  $persistent
      * @return DisplayCriteria
      */
     public function createCriteria(array $options = [], $persistent = false)
@@ -58,8 +58,8 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param  string|null    $componentId
-     * @param  bool           $persistent
+     * @param string|null $componentId
+     * @param bool        $persistent
      * @return PagerInterface
      */
     public function createPager($componentId = null, array $pager = [], $persistent = false)
@@ -85,9 +85,9 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param  string|null          $componentId
-     * @param  FilterInterface|null $filter
-     * @param  bool                 $persistent
+     * @param string|null          $componentId
+     * @param FilterInterface|null $filter
+     * @param bool                 $persistent
      * @return FilterInterface
      */
     public function createFilter($componentId = null, FilterInterface $filter = null, $persistent = false)
@@ -139,9 +139,9 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param  string|null     $componentId
-     * @param  array           $sorter
-     * @param  bool            $persistent
+     * @param string|null $componentId
+     * @param array       $sorter
+     * @param bool        $persistent
      * @return SorterInterface
      */
     public function createSorter($componentId = null, array $sorter = [], $persistent = false)

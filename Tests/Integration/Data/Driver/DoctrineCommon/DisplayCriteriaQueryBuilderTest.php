@@ -1,12 +1,13 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 class DisplayCriteriaQueryBuilderTest extends WebTestCase
 {
@@ -117,7 +118,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleRange2()
     {
         $filter = new UserFilter();
-        $activatedRule = new Filter\DateRangeRule('id');
+        $activatedRule = new Filter\NumberRangeRule('id');
         $activatedRule->setValue([
             'start' => 2,
             'end' => 10,
@@ -134,7 +135,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
     public function testAddFilterRuleShouldFilterResultsByFilterRuleRange1()
     {
         $filter = new UserFilter();
-        $activatedRule = new Filter\DateRangeRule('id');
+        $activatedRule = new Filter\NumberRangeRule('id');
         $activatedRule->setValue([
             'start' => -10,
             'end' => 1,
@@ -167,6 +168,6 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
      */
     private function getDisplayCriteriaQueryBuilder()
     {
-        return $this->container->get('imatic_data.doctrine.display_criteria_query_builder');
+        return $this->container->get('imatic_data.display_criteria_query_builder');
     }
 }

@@ -1,13 +1,14 @@
 <?php
+
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
- *
+ * @ORM\Table(name="test_user")
+ * 
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class User
@@ -27,31 +28,31 @@ class User
 
     /**
      * @var bool
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default" = 0})
      */
     private $activated = true;
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $birthDate;
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $favoriteDay;
 
     /**
      * @var \Datetime
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="time", nullable=true)
      */
     private $favoriteTime;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $hairs;
 
@@ -114,7 +115,7 @@ class User
     /**
      * @param \DateTime $birthDate
      */
-    public function setBirthDate(\DateTime $birthDate)
+    public function setBirthDate(\DateTime $birthDate = null)
     {
         $this->birthDate = $birthDate;
     }
@@ -129,12 +130,12 @@ class User
         return $this->favoriteTime;
     }
 
-    public function setFavoriteDay(\DateTime $favoriteDay)
+    public function setFavoriteDay(\DateTime $favoriteDay = null)
     {
         $this->favoriteDay = $favoriteDay;
     }
 
-    public function setFavoriteTime(\Datetime $favoriteTime)
+    public function setFavoriteTime(\Datetime $favoriteTime = null)
     {
         $this->favoriteTime = $favoriteTime;
     }
@@ -148,7 +149,7 @@ class User
     }
 
     /**
-     * @param string $hairs
+     * @param string|null $hairs
      */
     public function setHairs($hairs)
     {

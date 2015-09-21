@@ -10,7 +10,6 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager;
 
 class EditHandler implements HandlerInterface
 {
-
     /**
      * @var ObjectManager
      */
@@ -22,7 +21,7 @@ class EditHandler implements HandlerInterface
     }
 
     /**
-     * @param  CommandInterface                 $command
+     * @param CommandInterface $command
      * @return CommandResultInterface|bool|void
      */
     public function handle(CommandInterface $command)

@@ -2,13 +2,13 @@
 
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Form\Type\Filter;
 
+use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\NumberRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
 use Imatic\Bundle\DataBundle\Form\Type\Filter\FilterType;
-use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Form\Forms;
-use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 class FilterTypeTest extends TypeTestCase
 {

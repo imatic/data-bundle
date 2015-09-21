@@ -118,7 +118,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * @throws \LogicException
+     * @throws LogicException
      * @return int
      */
     public function getTotal()
@@ -254,7 +254,7 @@ class Pager implements PagerInterface
     /**
      * Return pager navigation links
      *
-     * @param  int   $nb
+     * @param int $nb
      * @return array
      */
     public function getLinks($nb = 5)

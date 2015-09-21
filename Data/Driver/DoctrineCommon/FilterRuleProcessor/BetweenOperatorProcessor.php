@@ -1,18 +1,15 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class BetweenOperatorProcessor extends AbstractRuleProcessor
+class BetweenOperatorProcessor extends AbstractFilterRuleProcessor
 {
-    /**
-     * {@inheritdoc}
-     */
     public function process($qb, FilterRule $rule, $column)
     {
         $start = $rule->getValue()['start'];
@@ -32,11 +29,11 @@ class BetweenOperatorProcessor extends AbstractRuleProcessor
         $qb->andWhere(call_user_func_array([$qb->expr(), 'andX'], $conditions));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supports(FilterRule $rule, $column)
+    public function supports($qb, FilterRule $rule, $column)
     {
-        return  $rule->getOperator() === FilterOperatorMap::OPERATOR_BETWEEN;
+        return
+            parent::supports($qb, $rule, $column)
+            && $rule->getOperator() === FilterOperatorMap::OPERATOR_BETWEEN
+        ;
     }
 }

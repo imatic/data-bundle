@@ -2,10 +2,10 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
+use Doctrine\Common\Persistence\ObjectManager as DoctrineObjectManager;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Doctrine\Common\Persistence\ObjectManager as DoctrineObjectManager;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
