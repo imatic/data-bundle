@@ -16,9 +16,6 @@ class DateTimeRangeRule extends RangeRule
     {
         return [
             'translation_domain' => 'ImaticDataBundle',
-            'field_options' => [
-                'widget' => 'single_text',
-            ],
         ];
     }
 }

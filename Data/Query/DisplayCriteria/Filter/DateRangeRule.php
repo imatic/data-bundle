@@ -27,10 +27,6 @@ class DateRangeRule extends RangeRule
     {
         return [
             'translation_domain' => 'ImaticDataBundle',
-            'field_options' => [
-                'datepicker' => true,
-                'widget' => 'single_text',
-            ],
         ];
     }
 

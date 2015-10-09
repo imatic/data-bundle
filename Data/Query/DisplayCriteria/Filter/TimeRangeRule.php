@@ -26,10 +26,6 @@ class TimeRangeRule extends RangeRule
     {
         return [
             'translation_domain' => 'ImaticDataBundle',
-            'field_options' => [
-                'timepicker' => true,
-                'widget' => 'single_text',
-            ],
         ];
     }
 }

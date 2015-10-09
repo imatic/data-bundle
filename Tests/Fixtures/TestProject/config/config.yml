@@ -63,9 +63,6 @@ monolog:
         main:
           type:                 "null"
 
-mopa_bootstrap:
-    form: ~  # Adds twig form theme support
-
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
