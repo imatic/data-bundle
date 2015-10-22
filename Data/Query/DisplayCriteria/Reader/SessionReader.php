@@ -56,22 +56,14 @@ class SessionReader implements DisplayCriteriaReader
     }
 
     /**
-     * @param string $name
-     * @param string $component
-     * 
+     * @param string      $name
+     * @param string|null $component
      * @return string|null
      */
     protected function getAttributeSessionKey($name, $component = null)
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        if ($request->attributes->has('_route') && $request->attributes->has('_route_params')) {
-            return sprintf(
-                'imatic.data.display_criteria.%s(%s|%s)',
-                null !== $component ? "{$component}[{$name}]" : $name,
-                $request->attributes->get('_route'),
-                serialize($request->attributes->get('_route_params'))
-            );
+        if (null !== $component) {
+            return "imatic.data.display_criteria.{$component}.{$name}";
         }
     }
 
