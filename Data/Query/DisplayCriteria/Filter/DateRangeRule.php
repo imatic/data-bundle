@@ -8,7 +8,7 @@ class DateRangeRule extends RangeRule
     {
         parent::setValue($value);
         
-        if ($this->bound) {
+        if ($this->isBound()) {
             if ($this->value['start']) {
                 $this->value['start']->setTime(0, 0, 0);
             }

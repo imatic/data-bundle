@@ -21,6 +21,8 @@ abstract class FilterRule
 
     /**
      * @var bool
+     * @deprecated Use method isBound instead
+     * If you wanna set this value, you should override the method instead
      */
     protected $bound;
 
@@ -66,13 +68,13 @@ abstract class FilterRule
 
     public function __construct($name, array $options = [])
     {
-        $this->bound = false;
         $this->name = $name;
         $this->options = $this->processOptions($options);
         $this->formType = $this->getDefaultFormType();
         $this->formOptions = $this->getDefaultFormOptions();
         $this->setOperators($this->getDefaultOperators());
         $this->setOperator($this->getDefaultOperator());
+        $this->updateBound();
     }
 
     /**
@@ -129,8 +131,8 @@ abstract class FilterRule
                 ));
             }
 
-            $this->bound = true;
             $this->value = $value;
+            $this->updateBound();
         }
 
         return $this;
@@ -148,8 +150,8 @@ abstract class FilterRule
     {
         if (func_num_args() > 0) {
             if (null !== $value && $this->validateValue($value)) {
-                $this->bound = true;
                 $this->value = $value;
+                $this->updateBound();
 
                 return true;
             } else {
@@ -180,6 +182,7 @@ abstract class FilterRule
                 throw new \InvalidArgumentException(sprintf('Binding invalid operator "%s" into filter "%s"', $operator, $this->name));
             }
             $this->operator = $operator;
+            $this->updateBound();
         }
 
         return $this;
@@ -338,6 +341,12 @@ abstract class FilterRule
     public function reset()
     {
         $this->value = null;
-        $this->bound = false;
+        $this->updateBound();
+    }
+
+    private function updateBound()
+    {
+        $this->bound = $this->value !== null ||
+            in_array($this->operator, [FilterOperatorMap::OPERATOR_EMPTY, FilterOperatorMap::OPERATOR_NOT_EMPTY]);
     }
 }
