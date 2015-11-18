@@ -24,4 +24,15 @@ abstract class RangeRule extends FilterRule
             && array_key_exists('end', $value)
         ;
     }
+
+    public function isBound()
+    {
+        $this->bound = parent::isBound() &&
+            is_array($this->value) &&
+            array_filter($this->value, function ($val) {
+                return $val !== null;
+            });
+
+        return $this->bound;
+    }
 }

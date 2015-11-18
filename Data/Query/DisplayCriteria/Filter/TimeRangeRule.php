@@ -11,7 +11,7 @@ class TimeRangeRule extends RangeRule
     {
         parent::setValue($value);
 
-        if ($this->bound) {
+        if ($this->isBound()) {
             $this->value['start']->setDate(1970, 1, 1);
             $this->value['end']->setDate(1970, 1, 1);
         }

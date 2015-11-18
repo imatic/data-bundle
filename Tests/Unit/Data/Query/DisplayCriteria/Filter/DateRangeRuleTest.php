@@ -19,7 +19,19 @@ class DateRangeRuleTest extends \PHPUnit_Framework_TestCase
 
         $start = new \DateTime('2000-01-01 00:00:00');
         $end = new \DateTime('2000-01-05 23:59:59');
+        $this->assertTrue($dateRangeRule->isBound());
         $this->assertEquals($start->getTimestamp(), $dateRangeRule->getValue()['start']->getTimestamp());
         $this->assertEquals($end->getTimestamp(), $dateRangeRule->getValue()['end']->getTimestamp());
+    }
+
+    public function testRuleShouldBeUnboundWhenNoValueIsSet()
+    {
+        $dateRangeRule = new DateRangeRule('name');
+        $dateRangeRule->setValue([
+            'start' => null,
+            'end' => null,
+        ]);
+
+        $this->assertFalse($dateRangeRule->isBound());
     }
 }
