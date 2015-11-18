@@ -22,9 +22,17 @@ abstract class RangeRule extends FilterRule
             && 2 === count($value)
             && array_key_exists('start', $value)
             && array_key_exists('end', $value)
-            && array_filter($value, function ($val) {
-                return $val !== null;
-            })
         ;
+    }
+
+    public function isBound()
+    {
+        $this->bound = parent::isBound() &&
+            is_array($this->value) &&
+            array_filter($this->value, function ($val) {
+                return $val !== null;
+            });
+
+        return $this->bound;
     }
 }
