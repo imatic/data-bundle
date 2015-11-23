@@ -12,7 +12,7 @@ use Doctrine\DBAL\Schema\Table;
  */
 class Schema
 {
-    /** @var AbstractSchemaManager */
+    /** @var AbstractSchemaManager|null */
     private $schemaManager;
 
     /** @var Connection */
@@ -24,7 +24,6 @@ class Schema
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->schemaManager = $connection->getSchemaManager();
     }
 
     /**
@@ -34,7 +33,7 @@ class Schema
      */
     public function getQueryData($table, array $data)
     {
-        $columns = $this->schemaManager->listTableColumns($table);
+        $columns = $this->getSchemaManager()->listTableColumns($table);
 
         $allColumnTypes = $this->getColumnTypes($table);
         $columnTypes = [];
@@ -70,7 +69,7 @@ class Schema
      */
     public function getColumnTypes($table)
     {
-        $columns = $this->schemaManager->listTableColumns($table);
+        $columns = $this->getSchemaManager()->listTableColumns($table);
 
         $columnTypes = [];
         foreach ($columns as $column) {
@@ -92,7 +91,7 @@ class Schema
             return null;
         }
 
-        $sql = $this->connection->getSchemaManager()->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
+        $sql = $this->getSchemaManager()->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
         $statement = $this->connection->executeQuery($sql);
 
         return $statement->fetchColumn();
@@ -116,7 +115,7 @@ class Schema
         }
 
         $tableSequenceName = sprintf('%s_%s_seq', $table->getName(), $pkColumns[0]);
-        $sequences = $this->connection->getSchemaManager()->listSequences();
+        $sequences = $this->getSchemaManager()->listSequences();
         foreach ($sequences as $sequence) {
             if ($tableSequenceName === $sequence->getName()) {
                 return $sequence;
@@ -132,7 +131,7 @@ class Schema
      */
     private function findTableByName($tableName)
     {
-        $tables = $this->schemaManager->listTables();
+        $tables = $this->getSchemaManager()->listTables();
         foreach ($tables as $table) {
             if ($table->getName() === $tableName) {
                 return $table;
@@ -140,6 +139,18 @@ class Schema
         }
 
         throw new \InvalidArgumentException(sprintf('Table with name "%s" does not exists.', $tableName));
+    }
+
+    /**
+     * @return AbstractSchemaManager
+     */
+    private function getSchemaManager()
+    {
+        if (null === $this->schemaManager) {
+            $this->schemaManager = $this->connection->getSchemaManager();
+        }
+
+        return $this->schemaManager;
     }
 
     public function overwriteColumnTypes(array $overwrittenColumnTypes = [])
