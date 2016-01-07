@@ -18,3 +18,4 @@ batch_error:            Nastala chyba při provádění hromadné akce
 
 invalid_instance:       Neplatná data
 invalid_state:          Neplatný stav
+constraint_violation:   Položku nebylo možné smazat, jelikož na ní závisí jiná položka

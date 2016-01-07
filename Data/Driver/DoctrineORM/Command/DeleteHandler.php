@@ -3,10 +3,12 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
+use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 
 class DeleteHandler implements HandlerInterface
 {
@@ -32,14 +34,22 @@ class DeleteHandler implements HandlerInterface
      */
     public function handle(CommandInterface $command)
     {
-        $object = $command->getParameter('object');
         $class = $command->getParameter('class');
+        $object = $command->hasParameter('object') ? $command->getParameter('object') : null;
 
-        if (!($object instanceof $class)) {
+        // if no object has been given, try loading it using a query object
+        if (!$object) {
             $object = $this->queryExecutor->execute($command->getParameter('query_object'));
         }
 
-        $this->objectManager->remove($object);
-        $this->objectManager->flush();
+        // try removing the object if it is valid
+        if ($object instanceof $class) {
+            try {
+                $this->objectManager->remove($object);
+                $this->objectManager->flush();
+            } catch (ForeignKeyConstraintViolationException $e) {
+                return CommandResult::error('constraint_violation');
+            }
+        }
     }
 }

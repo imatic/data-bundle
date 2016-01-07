@@ -3,7 +3,9 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
+use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 
 /**
@@ -24,6 +26,10 @@ class DeleteHandler implements HandlerInterface
         $table = $command->getParameter('table');
         $id = $command->getParameter('id');
 
-        $this->connection->delete($table, $id);
+        try {
+            $this->connection->delete($table, $id);
+        } catch (ForeignKeyConstraintViolationException $e) {
+            return CommandResult::error('constraint_violation');
+        }
     }
 }
