@@ -60,6 +60,7 @@ Charakteristika handleru:
 - handler je registrován do DI kontejneru jako služba a může mít různé závislosti
 - každý způsob modifikace dat (form, batch, ...) má pro handler odlišné rozhraní
 - handler by měl mít minimální závislost na frameworku a jeho službách (výjimky: EventDispatcher, SecurityContext)
+- handler v produkčním prostředí nevyhazuje vyjímky, proto je potřeba hlídat CommandResult který vrací handler po svém vykonání
 
 Doménové služby
 """""""""""""""
