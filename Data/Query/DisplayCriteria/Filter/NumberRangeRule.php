@@ -6,7 +6,14 @@ class NumberRangeRule extends RangeRule
 {
     protected function getDefaultFormType()
     {
-        return 'number';
+        return 'imatic_type_range';
+    }
+
+    protected function getDefaultFormOptions()
+    {
+        return [
+            'translation_domain' => 'ImaticDataBundle',
+        ];
     }
 
     protected function validateValue($value)
