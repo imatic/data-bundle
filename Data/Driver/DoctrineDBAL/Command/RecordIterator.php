@@ -9,7 +9,7 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Symfony\Component\Serializer\Exception\Exception;
+use Exception;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -75,7 +75,7 @@ class RecordIterator
         } catch (Exception $e) {
             $this->queryExecutor->rollback();
 
-            $return = CommandResult::error('batch_error');
+            $return = CommandResult::error('batch_error', [], $e);
             if (isset($result)) {
                 $return->addMessages($result->getMessages());
             }

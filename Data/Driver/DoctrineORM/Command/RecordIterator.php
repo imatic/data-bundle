@@ -75,7 +75,7 @@ class RecordIterator
         } catch (Exception $e) {
             $this->queryExecutor->rollback();
 
-            $return = CommandResult::error('batch_error');
+            $return = CommandResult::error('batch_error', [], $e);
             if (isset($result)) {
                 $return->addMessages($result->getMessages());
             }
