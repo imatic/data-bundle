@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface as DoctrineORMQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
@@ -62,7 +63,7 @@ class QueryExecutor implements QueryExecutorInterface
             $this->displayCriteriaQueryBuilder->apply($qb, $queryObject, $displayCriteria);
         }
 
-        return $this->getResult($queryObject, $qb->getQuery());
+        return $this->getResult($queryObject, $qb->getQuery(), QueryBuilder::SELECT === $qb->getType());
     }
 
     public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -91,9 +92,10 @@ class QueryExecutor implements QueryExecutorInterface
     /**
      * @param BaseQueryObjectInterface $queryObject
      * @param Query                    $query
+     * @param bool                     $isSelect
      * @return mixed
      */
-    private function getResult(BaseQueryObjectInterface $queryObject, Query $query)
+    private function getResult(BaseQueryObjectInterface $queryObject, Query $query, $isSelect)
     {
         if ($queryObject instanceof SingleScalarResultQueryObjectInterface) {
             return $query->getSingleScalarResult();
@@ -101,10 +103,10 @@ class QueryExecutor implements QueryExecutorInterface
             return $query->getScalarResult();
         } elseif ($queryObject instanceof SingleResultQueryObjectInterface) {
             return $query->getOneOrNullResult();
+        } elseif ($isSelect && (null !== $query->getMaxResults() || null !== $query->getFirstResult())) {
+            return iterator_to_array(new Paginator($query, true));
         } else {
-            $paginator = new Paginator($query, true);
-
-            return $query->contains('SELECT') ? iterator_to_array($paginator) : $query->getResult();
+            return $query->getResult();
         }
     }
 }
