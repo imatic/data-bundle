@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="database.driver" type="constant">TEST_DATABASE_DRIVER</parameter>
+        <parameter key="database.host" type="constant">TEST_DATABASE_HOST</parameter>
+        <parameter key="database.name" type="constant">TEST_DATABASE_NAME</parameter>
+        <parameter key="database.user" type="constant">TEST_DATABASE_USER</parameter>
+        <parameter key="database.pass" type="constant">TEST_DATABASE_PASS</parameter>
+        <parameter key="database.port" type="constant">TEST_DATABASE_PORT</parameter>
+        <parameter key="database.server_version" type="constant">TEST_DATABASE_SERVER_VERSION</parameter>
+    </parameters>
+</container>

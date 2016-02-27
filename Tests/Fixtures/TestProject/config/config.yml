@@ -1,4 +1,5 @@
 imports:
+    - { resource: parameters.xml }
     - { resource: @ImaticDataBundle/Resources/config/data_doctrine.yml }
     - { resource: @ImaticDataBundle/Resources/config/data_doctrine_orm.yml }
     - { resource: @ImaticDataBundle/Resources/config/data_doctrine_dbal.yml }
@@ -39,14 +40,15 @@ doctrine:
 #                path:           %kernel.root_dir%/cache/test.db
 
 #                postgres
-                driver:         pdo_pgsql
-                host:           127.0.0.1
-                dbname:         data_bundle_test
-                user:           postgres
-                password:       postgres
+                driver:         '%database.driver%'
+                host:           '%database.host%'
+                dbname:         '%database.name%'
+                user:           '%database.user%'
+                password:       '%database.pass%'
+                port:           '%database.port%'
                 # server_version is needed in order make the project work with dbal 2.5
                 # see: https://github.com/doctrine/DoctrineBundle/issues/351
-                server_version: 9.2.4
+                server_version: '%database.server_version%'
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%

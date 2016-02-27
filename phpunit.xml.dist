@@ -17,6 +17,16 @@
         </testsuite>
     </testsuites>
 
+    <php>
+        <const name="TEST_DATABASE_DRIVER" value="pdo_pgsql"/>
+        <const name="TEST_DATABASE_HOST" value="127.0.0.1"/>
+        <const name="TEST_DATABASE_USER" value="postgres"/>
+        <const name="TEST_DATABASE_PASS" value="postgres"/>
+        <const name="TEST_DATABASE_PORT" value="5432"/>
+        <const name="TEST_DATABASE_NAME" value="data_bundle_test"/>
+        <const name="TEST_DATABASE_SERVER_VERSION" value="9.2.4"/>
+    </php>
+
     <filter>
         <whitelist>
             <directory>./</directory>
