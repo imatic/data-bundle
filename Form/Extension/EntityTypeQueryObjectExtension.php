@@ -7,7 +7,7 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractTypeExtension;
 
 /**
@@ -39,7 +39,7 @@ class EntityTypeQueryObjectExtension extends AbstractTypeExtension
         );
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'query_object' => null,
@@ -59,9 +59,9 @@ class EntityTypeQueryObjectExtension extends AbstractTypeExtension
             },
         ]);
 
-        $resolver->setAllowedTypes([
-            'query_object' => ['null', 'Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface'],
-        ]);
+        $resolver->setAllowedTypes(
+            'query_object', ['null', 'Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface']
+        );
     }
 
     public function getExtendedType()

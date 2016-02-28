@@ -3,23 +3,23 @@ services:
     imatic_data.doctrine.object_manager:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager
         arguments:
-            - @doctrine.orm.entity_manager
+            - '@doctrine.orm.entity_manager'
 
     # query executor
     imatic_data.doctrine.query_executor:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor
         arguments:
-            - @doctrine.orm.entity_manager
-            - @imatic_data.display_criteria_query_builder
+            - '@doctrine.orm.entity_manager'
+            - '@imatic_data.display_criteria_query_builder'
 
     # driver
     imatic_data.driver.doctrine_orm:
         class: Imatic\Bundle\DataBundle\Data\Driver\Driver
         arguments:
-            - "doctrine.orm"
-            - @imatic_data.doctrine.query_executor
-            - "Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\QueryObjectInterface"
-            - @imatic_data.doctrine.object_manager
+            - 'doctrine.orm'
+            - '@imatic_data.doctrine.query_executor'
+            - 'Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\QueryObjectInterface'
+            - '@imatic_data.doctrine.object_manager'
         tags:
             - { name: imatic_data.driver }
 
@@ -49,13 +49,13 @@ services:
     imatic_data.driver.doctrine_orm.record_iterator:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator
         arguments:
-            - @imatic_data.doctrine.query_executor
-            - @imatic_data.driver.doctrine_orm.result_iterator_factory
+            - '@imatic_data.doctrine.query_executor'
+            - '@imatic_data.driver.doctrine_orm.result_iterator_factory'
 
     imatic_data.driver.doctrine_orm.result_iterator_factory:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory
         arguments:
-            - @imatic_data.array_display_criteria_factory
-            - @imatic_data.filter_factory
-            - @imatic_data.doctrine.query_executor
-            - @doctrine.orm.entity_manager
+            - '@imatic_data.array_display_criteria_factory'
+            - '@imatic_data.filter_factory'
+            - '@imatic_data.doctrine.query_executor'
+            - '@doctrine.orm.entity_manager'

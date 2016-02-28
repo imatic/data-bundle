@@ -3,7 +3,7 @@ services:
     imatic_data.command_executor:
         class: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
         arguments:
-            - @imatic_data.command_handler_repository
+            - '@imatic_data.command_handler_repository'
             - %kernel.debug%
 
     imatic_data.command_handler_repository:
@@ -17,7 +17,7 @@ services:
     imatic_data.query_executor:
         class: Imatic\Bundle\DataBundle\Data\Query\QueryExecutor
         arguments:
-            - @imatic_data.driver_repository
+            - '@imatic_data.driver_repository'
 
     # display criteria
     imatic_data.pager_factory:
@@ -26,7 +26,7 @@ services:
     imatic_data.display_criteria_query_builder:
         class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate
         arguments:
-            - @imatic_data.filter_rule_processor
+            - '@imatic_data.filter_rule_processor'
 
     imatic_data.filter_rule_processor:
         class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorDelegate

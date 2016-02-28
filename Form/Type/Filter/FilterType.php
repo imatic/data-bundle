@@ -2,9 +2,10 @@
 
 namespace Imatic\Bundle\DataBundle\Form\Type\Filter;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FilterType extends AbstractType
 {
@@ -28,7 +29,7 @@ class FilterType extends AbstractType
         $builder->add('defaultFilter', 'submit');
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter',
