@@ -28,8 +28,8 @@
         "genemu/form-bundle": "~2.2.2"
     },
     "require-dev": {
-        "imatic/testing-bundle": "~2.7|~3.0",
-        "imatic/form-bundle": "~2.7|~3.0",
+        "imatic/testing-bundle": "~3.0",
+        "imatic/form-bundle": "~3.0",
         "doctrine/orm": "~2.3",
         "mikey179/vfsStream": "~1.4",
         "phpunit/phpunit": "~5.2"
