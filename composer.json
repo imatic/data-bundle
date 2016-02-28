@@ -25,7 +25,7 @@
         "php": ">=5.4",
         "symfony/framework-bundle": "~2.7|~3.0",
         "doctrine/doctrine-bundle": "~1.2",
-        "genemu/form-bundle": "~2.2.2"
+        "imatic/genemuform-bundle": "~3.0"
     },
     "require-dev": {
         "imatic/testing-bundle": "~3.0",
