@@ -4,6 +4,12 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 class DateRangeRule extends RangeRule
 {
+    public function __construct($name, array $options = array())
+    {
+        parent::__construct($name, $options);
+        $this->type = 'date';
+    }
+
     public function setValue($value)
     {
         parent::setValue($value);
