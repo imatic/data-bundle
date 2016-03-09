@@ -64,7 +64,7 @@ services:
         arguments:
             - 'doctrine.dbal'
             - '@imatic_data.doctrine.dbal.query_executor_delegate'
-            - 'Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\QueryObjectInterface'
+            - 'Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface'
         tags:
             - { name: imatic_data.driver }
 

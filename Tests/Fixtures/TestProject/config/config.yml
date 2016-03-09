@@ -1,9 +1,9 @@
 imports:
     - { resource: parameters.xml }
-    - { resource: @ImaticDataBundle/Resources/config/data_doctrine.yml }
-    - { resource: @ImaticDataBundle/Resources/config/data_doctrine_orm.yml }
-    - { resource: @ImaticDataBundle/Resources/config/data_doctrine_dbal.yml }
-    - { resource: @ImaticDataBundle/Resources/config/config.yml }
+    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine.yml' }
+    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine_orm.yml' }
+    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine_dbal.yml' }
+    - { resource: '@ImaticDataBundle/Resources/config/config.yml' }
 
 framework:
     secret:                     test
