@@ -7,6 +7,12 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
  */
 class DateTimeRangeRule extends RangeRule
 {
+    public function __construct($name, array $options = array())
+    {
+        parent::__construct($name, $options);
+        $this->type = 'datetime';
+    }
+
     protected function getDefaultFormType()
     {
         return 'imatic_type_datetime_range';
