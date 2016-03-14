@@ -2,14 +2,15 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
+use Exception;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Exception;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -117,7 +118,7 @@ class RecordIterator
                 'filter' => [
                     'id' => [
                         'value' => $ids,
-                        'operator' => \Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap::OPERATOR_IN,
+                        'operator' => FilterOperatorMap::OPERATOR_IN,
                     ],
                 ]
             ];
