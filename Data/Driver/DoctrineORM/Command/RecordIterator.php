@@ -2,14 +2,15 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
+use Exception;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Exception;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -46,9 +47,9 @@ class RecordIterator
 
     public function each(RecordIteratorArgs $recordIteratorArgs)
     {
-        $ids = $this->getRecords($recordIteratorArgs->getCommand(), $recordIteratorArgs->getQueryObject());
+        $records = $this->getRecords($recordIteratorArgs->getCommand(), $recordIteratorArgs->getQueryObject());
 
-        return $this->passValues($ids, $recordIteratorArgs->getCallback());
+        return $this->passValues($records, $recordIteratorArgs->getCallback());
     }
 
     public function eachIdentifier(RecordIteratorArgs $recordIteratorArgs)
@@ -105,11 +106,16 @@ class RecordIterator
     protected function getRecords(CommandInterface $command, QueryObjectInterface $queryObject)
     {
         $handleAll = $command->getParameter('selectedAll');
-        if (!$handleAll) {
-            return $command->getParameter('selected');
-        }
-
         $criteria = json_decode($command->getParameter('query'), true);
+
+        if (!$handleAll) {
+            $criteria['filter'] = [
+                'id' => [
+                    'value' => $command->getParameter('selected'),
+                    'operator' => FilterOperatorMap::OPERATOR_IN,
+                ]
+            ];
+        }
 
         return $this->resultIteratorFactory->create($queryObject, $criteria);
     }

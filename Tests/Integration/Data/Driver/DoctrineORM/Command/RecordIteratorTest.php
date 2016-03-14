@@ -6,6 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Command\Command;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIteratorArgs;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,6 +46,38 @@ class RecordIteratorTest extends WebTestCase
             return CommandResult::success();
         });
         $this->recordIterator->eachIdentifier($recordIteratorArgs);
+
+        $this->assertEquals($selected, $ids);
+    }
+
+    /**
+     * @dataProvider selectedProvider
+     */
+    public function testIteratorShouldIterateThroughAllRecordsGivenFromSelectedOption($selected)
+    {
+        $command = new Command('unusedHandler', [
+            'selectedAll' => false,
+            'selected' => $selected,
+            'query' => json_encode([
+                'filter' => null,
+                'filter_type' => 'app_imatic_data.user',
+            ]),
+        ]);
+
+        $users = [];
+        $recordIteratorArgs = new RecordIteratorArgs($command, new UserListQuery(), function (User $user) use (&$users) {
+            $users[] = $user;
+
+            return CommandResult::success();
+        });
+        $this->recordIterator->each($recordIteratorArgs);
+
+        $ids = array_map(
+            function (User $user) {
+                return $user->getId();
+            },
+            $users
+        );
 
         $this->assertEquals($selected, $ids);
     }
