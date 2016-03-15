@@ -21,6 +21,6 @@ class ArrayRule extends FilterRule
 
     protected function validateValue($value)
     {
-        return true;
+        return is_array($value);
     }
 }
