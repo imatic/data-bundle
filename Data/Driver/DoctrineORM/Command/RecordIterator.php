@@ -8,6 +8,7 @@ use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\ArrayRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
@@ -87,17 +88,18 @@ class RecordIterator
         return CommandResult::success('batch_success', ['%count%' => count($values)]);
     }
 
-    protected function getRecordIds(CommandInterface $command, QueryObjectInterface $queryObjectInterface)
+    protected function getRecordIds(CommandInterface $command, QueryObjectInterface $queryObject)
     {
-        $results = $this->getRecords($command, $queryObjectInterface);
-
-        if (is_array($results)) {
-            return $results;
+        $handleAll = $command->getParameter('selectedAll');
+        if (!$handleAll) {
+            return $command->getParameter('selected');
         }
 
+        $results = $this->getRecords($command, $queryObject);
+        $getter = sprintf('get%s', ucfirst($queryObject->getIdentifierFilterKey()));
         $ids = [];
         foreach ($results as $result) {
-            $ids[] = $result->getId();
+            $ids[] = $result->$getter();
         }
 
         return $ids;
@@ -107,16 +109,22 @@ class RecordIterator
     {
         $handleAll = $command->getParameter('selectedAll');
         $criteria = json_decode($command->getParameter('query'), true);
+        $filter = null;
 
         if (!$handleAll) {
+            $filter = $this->resultIteratorFactory->createFilter($criteria);
+            if (!$filter->has($queryObject->getIdentifierFilterKey())) {
+                $filter[$queryObject->getIdentifierFilterKey()] = new ArrayRule($queryObject->getIdentifierFilterKey());
+            }
+
             $criteria['filter'] = [
-                'id' => [
+                $queryObject->getIdentifierFilterKey() => [
                     'value' => $command->getParameter('selected'),
                     'operator' => FilterOperatorMap::OPERATOR_IN,
                 ]
             ];
         }
 
-        return $this->resultIteratorFactory->create($queryObject, $criteria);
+        return $this->resultIteratorFactory->create($queryObject, $criteria, $filter);
     }
 }

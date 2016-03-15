@@ -8,4 +8,9 @@ interface FilterableQueryObjectInterface
      * @return array
      */
     public function getFilterMap();
+
+    /**
+     * @return string
+     */
+    public function getIdentifierFilterKey();
 }

@@ -37,6 +37,10 @@ class RecordIteratorTest extends WebTestCase
         $command = new Command('unusedHandler', [
             'selectedAll' => false,
             'selected' => $selected,
+            'query' => json_encode([
+                'filter' => null,
+                'filter_type' => 'app_imatic_data.user',
+            ]),
         ]);
 
         $ids = [];

@@ -50,4 +50,9 @@ class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterf
     {
         return [];
     }
+
+    public function getIdentifierFilterKey()
+    {
+        return 'id';
+    }
 }

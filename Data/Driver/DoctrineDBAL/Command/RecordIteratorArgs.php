@@ -3,7 +3,9 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
+use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -32,6 +34,13 @@ class RecordIteratorArgs
 
     public function __construct(CommandInterface $command, QueryObjectInterface $queryObject, callable $callback)
     {
+        if (!$queryObject instanceof FilterableQueryObjectInterface) {
+            throw new InvalidArgumentException(sprintf(
+                '$queryObject have to be instance of "%s"',
+                'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface'
+            ));
+        }
+
         $this->command = $command;
         $this->queryObject = $queryObject;
         $this->callback = $callback;
