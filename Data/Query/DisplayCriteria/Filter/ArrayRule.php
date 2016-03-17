@@ -9,7 +9,7 @@ class ArrayRule extends FilterRule
 {
     protected function getDefaultFormType()
     {
-        return 'genemu_jqueryselect2_hidden';
+        return 'imatic_array_rule';
     }
 
     protected function getDefaultOperators()
