@@ -238,7 +238,7 @@ abstract class FilterRule
 
     /**
      * @param string $type
-     * 
+     *
      * @return string
      */
     public function setType($type)

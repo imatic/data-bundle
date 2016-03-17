@@ -46,7 +46,7 @@ class FileType extends Type
     /**
      * @param string $value
      * @param AbstractPlatform $platform
-     * 
+     *
      * @return File|null
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)

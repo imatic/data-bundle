@@ -33,7 +33,7 @@ class QueryExecutor implements QueryExecutorInterface
         $this->entityManager = $entityManager;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
     }
-    
+
     public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
@@ -50,7 +50,7 @@ class QueryExecutor implements QueryExecutorInterface
 
         return count($paginator);
     }
-    
+
     public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {

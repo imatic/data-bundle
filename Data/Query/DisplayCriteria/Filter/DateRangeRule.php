@@ -13,7 +13,7 @@ class DateRangeRule extends RangeRule
     public function setValue($value)
     {
         parent::setValue($value);
-        
+
         if ($this->isBound()) {
             if ($this->value['start']) {
                 $this->value['start']->setTime(0, 0, 0);

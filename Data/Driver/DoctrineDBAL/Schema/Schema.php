@@ -64,7 +64,7 @@ class Schema
 
     /**
      * @param string $table
-     * 
+     *
      * @return array Associative array with columns as keys and type as it's values
      */
     public function getColumnTypes($table)
@@ -125,7 +125,7 @@ class Schema
 
     /**
      * @param string $tableName
-     * 
+     *
      * @return Table
      * @throws \InvalidArgumentException
      */
