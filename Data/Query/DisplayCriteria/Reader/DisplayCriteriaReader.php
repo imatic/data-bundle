@@ -17,7 +17,7 @@ interface DisplayCriteriaReader
      * @param  mixed|null  $default
      * @param  string|null $component
      * @param  bool        $persistent
-     * 
+     *
      * @return mixed
      */
     public function readAttribute($name, $default = null, $component = null, $persistent = false);
@@ -31,7 +31,7 @@ interface DisplayCriteriaReader
 
     /**
      * @param string $name
-     * 
+     *
      * @return string
      */
     public function attributeName($name);

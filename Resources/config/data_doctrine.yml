@@ -40,6 +40,12 @@ services:
         tags:
             - { name: imatic_data.filter_rule_processor, priority: 1 }
 
+    imatic_data.doctrine.in_not_in_operator_processor:
+        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\InNotInOperatorProcessor
+        public: false
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 1 }
+
     imatic_data.doctrine.default_rule_processor:
         class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\DefaultRuleProcessor
         public: false

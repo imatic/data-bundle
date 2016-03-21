@@ -19,7 +19,7 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
 
     /**
      * @param FilterRule $rule
-     * 
+     *
      * @return string
      */
     protected function getQueryParameter(FilterRule $rule)
@@ -32,7 +32,7 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
 
     /**
      * @param FilterRule $rule
-     * 
+     *
      * @return string
      */
     protected function getQueryParameterName(FilterRule $rule)

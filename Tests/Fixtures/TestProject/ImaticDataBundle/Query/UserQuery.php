@@ -21,7 +21,7 @@ class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterfac
     {
         $this->id = $id;
     }
-    
+
     public function build(EntityManager $em)
     {
         return (new QueryBuilder($em))

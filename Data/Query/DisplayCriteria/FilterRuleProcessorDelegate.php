@@ -15,7 +15,7 @@ class FilterRuleProcessorDelegate
      * @param object     $qb
      * @param FilterRule $rule
      * @param string     $column
-     * 
+     *
      * @throws LogicException
      */
     public function process($qb, FilterRule $rule, $column)

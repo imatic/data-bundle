@@ -38,22 +38,22 @@ class Driver implements DriverInterface
         $this->queryExecutor = $queryExecutor;
         $this->queryObjectClass = $queryObjectClass;
     }
-    
+
     public function getName()
     {
         return $this->name;
     }
-    
+
     public function getObjectManager()
     {
         return $this->objectManager;
     }
-    
+
     public function getQueryExecutor()
     {
         return $this->queryExecutor;
     }
-    
+
     public function getQueryObjectClass()
     {
         return $this->queryObjectClass;

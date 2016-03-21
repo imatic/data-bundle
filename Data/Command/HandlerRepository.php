@@ -18,7 +18,7 @@ class HandlerRepository implements HandlerRepositoryInterface
         $this->handlers = [];
         $this->bundles = [];
     }
-    
+
     public function addHandler($name, HandlerInterface $handler, $bundleName)
     {
         if ($this->hasHandler($name)) {
@@ -28,7 +28,7 @@ class HandlerRepository implements HandlerRepositoryInterface
         $this->handlers[$name] = $handler;
         $this->bundles[$name] = $bundleName;
     }
-    
+
     public function getHandlers()
     {
         return $this->handlers;

@@ -4,8 +4,10 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\Common\Persistence\ObjectManager as DoctrineObjectManager;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
+use LogicException;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -44,19 +46,29 @@ class ResultIteratorFactory
         $this->om = $om;
     }
 
-    public function create(QueryObjectInterface $queryObject, array $criteria = [])
+    public function create(QueryObjectInterface $queryObject, array $criteria = [], Filter $filter = null)
     {
         if (!isset($criteria['filter_type'])) {
-            throw new \LogicException('Filter type has to be specified!');
+            throw new LogicException('Filter type has to be specified!');
         }
 
         return new ResultIterator(
             $queryObject,
             $this->displayCriteriaFactory,
-            $this->filterFactory->create($criteria['filter_type']),
+            $filter ?: $this->createFilter($criteria),
             $this->queryExecutor,
             $this->om,
             $criteria
         );
+    }
+
+    /**
+     * @param array $criteria
+     *
+     * @return Filter
+     */
+    public function createFilter(array $criteria = [])
+    {
+        return $this->filterFactory->create($criteria['filter_type']);
     }
 }
