@@ -25,17 +25,17 @@ class DisplayCriteria implements DisplayCriteriaInterface
         $this->sorter = $sorter;
         $this->filter = $filter;
     }
-    
+
     public function getPager()
     {
         return $this->pager;
     }
-    
+
     public function getSorter()
     {
         return $this->sorter;
     }
-    
+
     public function getFilter()
     {
         return $this->filter;

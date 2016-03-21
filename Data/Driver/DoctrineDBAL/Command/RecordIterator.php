@@ -2,14 +2,16 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
+use Exception;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\ArrayRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Exception;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -46,9 +48,9 @@ class RecordIterator
 
     public function each(RecordIteratorArgs $recordIteratorArgs)
     {
-        $ids = $this->getRecords($recordIteratorArgs->getCommand(), $recordIteratorArgs->getQueryObject());
+        $records = $this->getRecords($recordIteratorArgs->getCommand(), $recordIteratorArgs->getQueryObject());
 
-        return $this->passValues($ids, $recordIteratorArgs->getCallback());
+        return $this->passValues($records, $recordIteratorArgs->getCallback());
     }
 
     public function eachIdentifier(RecordIteratorArgs $recordIteratorArgs)
@@ -86,18 +88,18 @@ class RecordIterator
         return CommandResult::success('batch_success', ['%count%' => count($values)]);
     }
 
-    protected function getRecordIds(CommandInterface $command, QueryObjectInterface $queryObjectInterface)
+    protected function getRecordIds(CommandInterface $command, QueryObjectInterface $queryObject)
     {
         $handleAll = $command->getParameter('selectedAll');
         if (!$handleAll) {
             return $command->getParameter('selected');
         }
 
-        $results = $this->getRecords($command, $queryObjectInterface);
+        $results = $this->getRecords($command, $queryObject);
 
         $ids = [];
         foreach ($results as $result) {
-            $ids[] = $result['id'];
+            $ids[] = $result[$queryObject->getIdentifierFilterKey()];
         }
 
         return $ids;
@@ -106,25 +108,23 @@ class RecordIterator
     protected function getRecords(CommandInterface $command, QueryObjectInterface $queryObject)
     {
         $handleAll = $command->getParameter('selectedAll');
+        $criteria = json_decode($command->getParameter('query'), true);
+        $filter = null;
 
-        $queryCriteria = json_decode($command->getParameter('query'), true);
-
-        $criteria = [];
         if (!$handleAll) {
-            $ids = $command->getParameter('selected');
-            $criteria = [
-                'filter_type' => $queryCriteria['filter_type'],
-                'filter' => [
-                    'id' => [
-                        'value' => $ids,
-                        'operator' => \Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap::OPERATOR_IN,
-                    ],
-                ]
+            $filter = $this->resultIteratorFactory->createFilter($criteria);
+            if (!$filter->has($queryObject->getIdentifierFilterKey())) {
+                $filter[$queryObject->getIdentifierFilterKey()] = new ArrayRule($queryObject->getIdentifierFilterKey());
+            }
+
+            $criteria['filter'] = [
+                $queryObject->getIdentifierFilterKey() => [
+                    'value' => $command->getParameter('selected'),
+                    'operator' => FilterOperatorMap::OPERATOR_IN,
+                ],
             ];
-        } else {
-           $criteria = $queryCriteria;
         }
 
-        return $this->resultIteratorFactory->create($queryObject, $criteria);
+        return $this->resultIteratorFactory->create($queryObject, $criteria, $filter);
     }
 }

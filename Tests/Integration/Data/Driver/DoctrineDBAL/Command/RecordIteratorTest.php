@@ -49,6 +49,37 @@ class RecordIteratorTest extends WebTestCase
         $this->assertEquals($selected, $ids);
     }
 
+    /**
+     * @dataProvider selectedProvider
+     */
+    public function testIteratorShouldIterateThroughAllRecordsGivenFromSelectedOption($selected)
+    {
+        $command = new Command('unusedHandler', [
+            'selectedAll' => false,
+            'selected' => $selected,
+            'query' => json_encode([
+                'filter_type' => 'app_imatic_data.user',
+            ]),
+        ]);
+
+        $users = [];
+        $recordIteratorArgs = new RecordIteratorArgs($command, new UserListQuery(), function (array $user) use (&$users) {
+            $users[] = $user;
+
+            return CommandResult::success();
+        });
+        $this->recordIterator->each($recordIteratorArgs);
+
+        $ids = array_map(
+            function (array $user) {
+                return $user['id'];
+            },
+            $users
+        );
+
+        $this->assertEquals($selected, $ids);
+    }
+
     public function selectedProvider()
     {
         return [
@@ -89,31 +120,6 @@ class RecordIteratorTest extends WebTestCase
         $command = new Command('unusedHandler', [
             'selectedAll' => true,
             'selected' => [],
-            'query' => json_encode([
-                'filter_type' => 'app_imatic_data.user',
-            ]),
-        ]);
-
-        $users = [];
-        $recordIteratorArgs = new RecordIteratorArgs($command, new UserListQuery(), function ($user) use (&$users) {
-            $users[] = $user;
-
-            return CommandResult::success();
-        });
-        $this->recordIterator->each($recordIteratorArgs);
-
-        $this->assertCount(2, $users);
-        $this->assertEquals(1, $users[0]['id']);
-        $this->assertEquals(2, $users[1]['id']);
-    }
-
-    public function testIteratorShouldIterateThroughAllRecordsGivenFromSelectedOption()
-    {
-        $this->requestStack->push(new Request());
-
-        $command = new Command('unusedHandler', [
-            'selectedAll' => false,
-            'selected' => [1, 2],
             'query' => json_encode([
                 'filter_type' => 'app_imatic_data.user',
             ]),

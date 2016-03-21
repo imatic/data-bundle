@@ -45,7 +45,7 @@ class Filter implements FilterInterface
     {
         return $this->rules;
     }
-    
+
     public function get($index)
     {
         return $this->rules[$index];

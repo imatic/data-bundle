@@ -10,7 +10,6 @@ class UserFilter extends Filter
     protected function configure()
     {
         $this
-            ->add(new FilterRule\NumberRule('id'))
             ->add(new FilterRule\TextRule('name'))
             ->add(new FilterRule\BooleanRule('activated'))
             ->add(new FilterRule\DateRangeRule('birthDate'))

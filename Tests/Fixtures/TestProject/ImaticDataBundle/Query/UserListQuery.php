@@ -6,9 +6,10 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SelectableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
 
-class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterface, SortableQueryObjectInterface
+class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterface, SortableQueryObjectInterface, SelectableQueryObjectInterface
 {
     public function build(EntityManager $em)
     {
@@ -49,5 +50,10 @@ class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterf
     public function getDefaultSort()
     {
         return [];
+    }
+
+    public function getIdentifierFilterKey()
+    {
+        return 'id';
     }
 }
