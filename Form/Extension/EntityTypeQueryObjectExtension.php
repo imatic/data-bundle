@@ -2,10 +2,8 @@
 
 namespace Imatic\Bundle\DataBundle\Form\Extension;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
-use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Symfony\Bridge\Doctrine\Form\ChoiceList\EntityLoaderInterface;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -17,55 +15,24 @@ use Symfony\Component\Form\AbstractTypeExtension;
  */
 class EntityTypeQueryObjectExtension extends AbstractTypeExtension
 {
-    /** @var QueryExecutorInterface */
-    private $queryExecutor;
-
-    public function __construct(QueryExecutorInterface $queryExecutor)
-    {
-        $this->queryExecutor = $queryExecutor;
-    }
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param QueryObjectInterface   $queryObject
-     * @return EntityLoaderInterface
-     */
-    public function getLoader(EntityManagerInterface $em, QueryObjectInterface $queryObject)
-    {
-        return new EntityTypeQueryObjectLoader(
-            $em,
-            $this->queryExecutor,
-            $queryObject
-        );
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'query_object' => null,
-            'loader' => function (Options $options, $previousLoader) {
+            'query_builder' => function (Options $options) {
                 if (null !== $options['query_object']) {
-                    if (null !== $options['query_builder']) {
-                        throw new \LogicException('Cannot use both "query_object" and "query_builder" options');
-                    }
-
-                    return $this->getLoader(
-                        $options['em'],
-                        $options['query_object']
-                    );
-                } else {
-                    return $previousLoader;
+                    return $options['query_object']->build($options['em']);
                 }
             },
         ]);
 
         $resolver->setAllowedTypes(
-            'query_object', ['null', 'Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface']
+            'query_object', ['null', QueryObjectInterface::class]
         );
     }
 
     public function getExtendedType()
     {
-        return 'entity';
+        return EntityType::class;
     }
 }

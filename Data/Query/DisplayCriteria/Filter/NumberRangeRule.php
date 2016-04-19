@@ -2,11 +2,13 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
+use Imatic\Bundle\FormBundle\Form\Type\RangeType;
+
 class NumberRangeRule extends RangeRule
 {
     protected function getDefaultFormType()
     {
-        return 'imatic_type_range';
+        return RangeType::class;
     }
 
     protected function getDefaultFormOptions()

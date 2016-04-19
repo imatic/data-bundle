@@ -5,6 +5,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
+use Imatic\Bundle\FormBundle\Form\Type\AjaxEntityChoiceType;
 
 class AjaxEntityChoiceRule extends FilterRule
 {
@@ -31,7 +32,7 @@ class AjaxEntityChoiceRule extends FilterRule
 
     protected function getDefaultFormType()
     {
-        return 'imatic_type_ajax_entity_choice';
+        return AjaxEntityChoiceType::class;
     }
 
     protected function getDefaultFormOptions()

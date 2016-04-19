@@ -29,8 +29,6 @@ services:
     # Form extensions
     imatic_data.form.extension.query_object:
         class: Imatic\Bundle\DataBundle\Form\Extension\EntityTypeQueryObjectExtension
-        arguments:
-            - '@imatic_data.query_executor'
         tags:
             - { name: 'form.type_extension', extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 

@@ -1,0 +1,23 @@
+# Filter operators
+eq:             Equal
+neq:            Not equal
+like:           Contains
+notLike:        Does not contain
+isNull:         Empty
+isNotNull:      Not empty
+gt:             Greater than
+gte:            Greater than or equal to
+lt:             Less than
+lte:            Less than or equal to
+in:             In
+notIn:          Not in
+between:        Between
+notBetween:     Not between
+
+# Filter labels
+Start:          Since
+End:            Until
+
+# Boolean values
+'true':         Yes
+'false':        No
