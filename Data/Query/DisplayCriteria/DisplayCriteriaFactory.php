@@ -123,7 +123,7 @@ class DisplayCriteriaFactory
                 $this->displayCriteriaReader->clearAttribute(DisplayCriteriaReader::FILTER, $componentId, null);
             }
 
-            $form = $this->formFactory->createNamed('filter', new FilterType(), $filter, [
+            $form = $this->formFactory->createNamed('filter', FilterType::class, $filter, [
                 'filter' => $filter,
                 'translation_domain' => $filter->getTranslationDomain(),
             ]);

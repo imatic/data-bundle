@@ -2,10 +2,10 @@
 
 namespace Imatic\Bundle\DataBundle\Form\Type\Filter;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FilterType extends AbstractType
 {
@@ -19,14 +19,14 @@ class FilterType extends AbstractType
         foreach ($options['filter'] as $rule) {
             $builder->add(
                 $rule->getName(),
-                new FilterRuleType(), [
+                FilterRuleType::class, [
                     'filter_rule' => $rule,
                     'property_path' => "[{$rule->getName()}]",
                 ]
             );
         }
-        $builder->add('clearFilter', 'submit');
-        $builder->add('defaultFilter', 'submit');
+        $builder->add('clearFilter', SubmitType::class);
+        $builder->add('defaultFilter', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -36,10 +36,5 @@ class FilterType extends AbstractType
             'csrf_protection' => false,
             'filter' => null,
         ]);
-    }
-
-    public function getName()
-    {
-        return 'imatic_filter';
     }
 }

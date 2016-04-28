@@ -4,7 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
-use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ChoiceRule extends FilterRule
 {
@@ -57,7 +57,7 @@ class ChoiceRule extends FilterRule
 
     protected function getDefaultFormType()
     {
-        return 'genemu_jqueryselect2_choice';
+        return ChoiceType::class;
     }
 
     protected function getDefaultFormOptions()

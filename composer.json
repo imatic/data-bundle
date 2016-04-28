@@ -18,14 +18,13 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "http://composer.imatic.cz"
+            "url": "https://composer.imatic.cz"
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "symfony/framework-bundle": "~2.7|~3.0",
-        "doctrine/doctrine-bundle": "~1.2",
-        "imatic/genemuform-bundle": "~3.0"
+        "php": ">=5.5",
+        "symfony/framework-bundle": "~3.0",
+        "doctrine/doctrine-bundle": "~1.2"
     },
     "require-dev": {
         "imatic/testing-bundle": "~3.0",
@@ -35,7 +34,6 @@
         "phpunit/phpunit": "~5.2"
     },
     "suggest": {
-        "genemu/form-bundle": "*",
         "doctrine/dbal": "*",
         "doctrine/orm": "*"
     },
@@ -45,8 +43,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "config": {
-        "secure-http": false
-    }
+    "prefer-stable": true
 }

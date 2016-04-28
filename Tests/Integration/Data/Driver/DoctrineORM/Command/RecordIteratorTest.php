@@ -49,7 +49,7 @@ class RecordIteratorTest extends WebTestCase
 
             return CommandResult::success();
         });
-        $this->recordIterator->eachIdentifier($recordIteratorArgs);
+        $this->assertValidRecordIteratorResult($this->recordIterator->eachIdentifier($recordIteratorArgs));
 
         $this->assertEquals($selected, $ids);
     }
@@ -74,7 +74,7 @@ class RecordIteratorTest extends WebTestCase
 
             return CommandResult::success();
         });
-        $this->recordIterator->each($recordIteratorArgs);
+        $this->assertValidRecordIteratorResult($this->recordIterator->each($recordIteratorArgs));
 
         $ids = array_map(
             function (User $user) {
@@ -113,7 +113,7 @@ class RecordIteratorTest extends WebTestCase
 
             return CommandResult::success();
         });
-        $this->recordIterator->eachIdentifier($recordIteratorArgs);
+        $this->assertValidRecordIteratorResult($this->recordIterator->eachIdentifier($recordIteratorArgs));
 
         sort($ids);
         $this->assertEquals([1, 2], $ids);
@@ -137,7 +137,7 @@ class RecordIteratorTest extends WebTestCase
 
             return CommandResult::success();
         });
-        $this->recordIterator->each($recordIteratorArgs);
+        $this->assertValidRecordIteratorResult($this->recordIterator->each($recordIteratorArgs));
 
         $this->assertCount(2, $users);
         $this->assertEquals(1, $users[0]->getId());
@@ -168,9 +168,18 @@ class RecordIteratorTest extends WebTestCase
 
             return CommandResult::success();
         });
-        $this->recordIterator->each($recordIteratorArgs);
+        $this->assertValidRecordIteratorResult($this->recordIterator->each($recordIteratorArgs));
 
         $this->assertCount(1, $users);
         $this->assertEquals('Eva', $users[0]->getName());
+    }
+
+    private function assertValidRecordIteratorResult(CommandResult $result)
+    {
+        if ($result->getException()) {
+            throw $result->getException();
+        }
+
+        $this->assertTrue($result->isSuccessful());
     }
 }

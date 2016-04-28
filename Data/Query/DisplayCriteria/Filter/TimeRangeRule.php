@@ -2,6 +2,8 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
+use Imatic\Bundle\FormBundle\Form\Type\TimeRangeType;
+
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
@@ -19,7 +21,7 @@ class TimeRangeRule extends RangeRule
 
     protected function getDefaultFormType()
     {
-        return 'imatic_type_time_range';
+        return TimeRangeType::class;
     }
 
     protected function getDefaultFormOptions()

@@ -2,6 +2,8 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
+use Imatic\Bundle\FormBundle\Form\Type\DateRangeType;
+
 class DateRangeRule extends RangeRule
 {
     public function __construct($name, array $options = array())
@@ -26,7 +28,7 @@ class DateRangeRule extends RangeRule
 
     protected function getDefaultFormType()
     {
-        return 'imatic_type_date_range';
+        return DateRangeType::class;
     }
 
     protected function getDefaultFormOptions()

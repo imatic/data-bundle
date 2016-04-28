@@ -18,7 +18,6 @@ class TestKernel extends BaseTestKernel
         $parentBundles = parent::registerBundles();
 
         $bundles = [
-            new \Genemu\Bundle\FormBundle\GenemuFormBundle(),
             new \Imatic\Bundle\FormBundle\ImaticFormBundle(),
             new \Imatic\Bundle\DataBundle\ImaticDataBundle(),
             new \Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\AppImaticDataBundle(),

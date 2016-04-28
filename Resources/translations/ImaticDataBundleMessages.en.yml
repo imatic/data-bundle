@@ -1,0 +1,21 @@
+edit:
+    success:            Item has been modified
+    error:              Could not edit the item
+
+create:
+    success:            Item has been created
+    error:              Could not create the item
+
+delete:
+    success:            Item has been deleted
+    error:              Could not delete the item
+
+success:                Action successful
+error:                  Could not perform the action
+
+batch_success:          Batch action performed on %count% items
+batch_error:            An error has occuried while performing the batch action
+
+invalid_instance:       Invalid data
+invalid_state:          Invalid state
+constraint_violation:   Could not remove the item - one or more other items depend on this one

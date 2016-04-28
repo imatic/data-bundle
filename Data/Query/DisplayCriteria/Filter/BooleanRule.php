@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class BooleanRule extends FilterRule
 {
@@ -27,7 +28,7 @@ class BooleanRule extends FilterRule
 
     protected function getDefaultFormType()
     {
-        return 'choice';
+        return ChoiceType::class;
     }
 
     protected function getDefaultFormOptions()

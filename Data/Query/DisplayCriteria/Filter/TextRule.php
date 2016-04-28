@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class TextRule extends FilterRule
 {
@@ -31,6 +32,6 @@ class TextRule extends FilterRule
 
     protected function getDefaultFormType()
     {
-        return 'text';
+        return TextType::class;
     }
 }

@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class NumberRule extends FilterRule
 {
@@ -28,6 +29,6 @@ class NumberRule extends FilterRule
 
     protected function getDefaultFormType()
     {
-        return 'number';
+        return NumberType::class;
     }
 }

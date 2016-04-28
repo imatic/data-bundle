@@ -2,6 +2,8 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
+use Imatic\Bundle\FormBundle\Form\Type\DateTimeRangeType;
+
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
@@ -15,7 +17,7 @@ class DateTimeRangeRule extends RangeRule
 
     protected function getDefaultFormType()
     {
-        return 'imatic_type_datetime_range';
+        return DateTimeRangeType::class;
     }
 
     protected function getDefaultFormOptions()
