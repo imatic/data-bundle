@@ -2,7 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Form\Type\Filter;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,10 +36,5 @@ class FilterType extends AbstractType
             'csrf_protection' => false,
             'filter' => null,
         ]);
-    }
-
-    public function getName()
-    {
-        return 'imatic_filter';
     }
 }

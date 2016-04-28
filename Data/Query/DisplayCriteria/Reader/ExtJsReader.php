@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
+use Imatic\Bundle\DataBundle\Utils\ArrayPathResolver;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,7 +24,7 @@ class ExtJsReader extends SessionReader
         } elseif ($name === 'sorter') {
             $value = $this->readSorter($request, $component, $path);
         } else {
-            $value = $encodedExtSorter = $request->query->get($path, null, true);
+            $value = (new ArrayPathResolver($request->query->all()))->resolve($path);
         }
 
         $result = parent::readAttribute($name, $value, $component, $persistent);
@@ -36,7 +37,7 @@ class ExtJsReader extends SessionReader
 
     protected function readFilter(Request $request, $path)
     {
-        $encodedExtFilter = $request->query->get($path, '[]', true);
+        $encodedExtFilter = (new ArrayPathResolver($request->query->all()))->resolve($path, '[]');
         $decodedExtFilter = json_decode($encodedExtFilter, true);
         if (count($decodedExtFilter)) {
             $value = [];
@@ -53,9 +54,9 @@ class ExtJsReader extends SessionReader
         return null;
     }
 
-    protected function readSorter(Request $request, $component = null, $path)
+    protected function readSorter(Request $request, $component, $path)
     {
-        $encodedExtSorter = $request->query->get($path, '[]', true);
+        $encodedExtSorter = (new ArrayPathResolver($request->query->all()))->resolve($path, '[]');
         $decodedExtSorter = json_decode($encodedExtSorter, true);
 
         $value = [];

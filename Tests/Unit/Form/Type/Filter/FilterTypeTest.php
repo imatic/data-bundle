@@ -2,7 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Form\Type\Filter;
 
-use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\NumberRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
@@ -16,7 +15,6 @@ class FilterTypeTest extends TypeTestCase
     {
         $this->factory = Forms::createFormFactoryBuilder()
             ->addExtensions($this->getExtensions())
-            ->addType(new Select2Type('choice'))
             ->getFormFactory();
     }
 
@@ -29,8 +27,7 @@ class FilterTypeTest extends TypeTestCase
         $filter->add($filterRule1);
         $filter->add($filterRule2);
 
-        $type = new FilterType();
-        $form = $this->factory->create($type, $filter, ['filter' => $filter]);
+        $form = $this->factory->create(FilterType::class, $filter, ['filter' => $filter]);
 
         $form->submit([
             'field1' => [
@@ -62,8 +59,7 @@ class FilterTypeTest extends TypeTestCase
         $filter = new Filter();
         $filter->add($filterRule1);
 
-        $type = new FilterType();
-        $form = $this->factory->create($type, $filter, ['filter' => $filter]);
+        $form = $this->factory->create(FilterType::class, $filter, ['filter' => $filter]);
         $view = $form->createView();
         $this->assertEquals('default text', $form->get('field1')->get('value')->getData());
         $this->assertEquals('default text', $view->children['field1']->vars['form']->children['value']->vars['value']);

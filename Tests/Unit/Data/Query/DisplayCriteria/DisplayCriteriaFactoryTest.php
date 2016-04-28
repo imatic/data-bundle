@@ -2,7 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria;
 
-use Genemu\Bundle\FormBundle\Form\JQuery\Type\Select2Type;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
@@ -41,9 +40,7 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
                 return new Pager($page, $limit);
             }));
 
-        $formFactory = Forms::createFormFactoryBuilder()->addTypes([
-            'genemu_jqueryselect2_choice' => new Select2Type('choice'),
-        ])->getFormFactory();
+        $formFactory = Forms::createFormFactoryBuilder()->getFormFactory();
 
         $this->displayCriteriaFactory = new DisplayCriteriaFactory($pagerFactory, $formFactory, new RequestQueryReader($requestStack));
     }

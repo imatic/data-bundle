@@ -4,12 +4,13 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
+use Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType;
 
 class ArrayRule extends FilterRule
 {
     protected function getDefaultFormType()
     {
-        return 'imatic_array_rule';
+        return ArrayRuleType::class;
     }
 
     protected function getDefaultOperators()

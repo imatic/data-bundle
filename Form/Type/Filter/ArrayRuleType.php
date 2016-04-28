@@ -5,6 +5,7 @@ namespace Imatic\Bundle\DataBundle\Form\Type\Filter;
 use Imatic\Bundle\DataBundle\Form\DataTransformer\ArrayToStringTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class ArrayRuleType extends AbstractType
 {
@@ -15,11 +16,6 @@ class ArrayRuleType extends AbstractType
 
     public function getParent()
     {
-        return 'hidden';
-    }
-
-    public function getName()
-    {
-        return 'imatic_array_rule';
+        return HiddenType::class;
     }
 }

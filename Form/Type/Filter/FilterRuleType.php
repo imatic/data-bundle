@@ -54,9 +54,4 @@ class FilterRuleType extends AbstractType
             'filter_rule', 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule'
         );
     }
-
-    public function getName()
-    {
-        return 'imatic_filter_rule';
-    }
 }
