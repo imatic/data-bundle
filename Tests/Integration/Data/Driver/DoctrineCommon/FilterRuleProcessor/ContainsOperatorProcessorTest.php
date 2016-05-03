@@ -165,7 +165,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $rule->setValue('ádám');
 
         $processor = new ContainsOperatorProcessor();
-        $processor->setFunction('lower_unaccent');
+        $processor->setFunction('unaccent_lower');
         $this->assertTrue($processor->supports($qb, $rule, 'u.name'));
 
         $processor->process($qb, $rule, 'u.name');
