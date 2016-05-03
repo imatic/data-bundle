@@ -28,8 +28,21 @@ class ImaticDataExtension extends Extension
             $container->setParameter('imatic_data.base_file_path', realpath(sprintf('%s/..', $container->getParameter('kernel.root_dir'))));
         }
 
+        $this->processUnaccentLower($config['unaccent_lower'], $container);
         $this->processPager($config['pager'], $container);
         $this->processColumnTypes($config['column_types'], $container);
+    }
+
+    private function processUnaccentLower(array $unaccentLowerConfig, ContainerBuilder $container)
+    {
+        if (!$unaccentLowerConfig['enabled']) {
+            return;
+        }
+
+        $container->setParameter(
+            'imatic_data.doctrine.contains_operator_processor.function',
+            $unaccentLowerConfig['function_name']
+        );
     }
 
     /**

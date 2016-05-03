@@ -9,9 +9,10 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
  */
 class DefaultRuleProcessor extends AbstractFilterRuleProcessor
 {
-    public function process($qb, FilterRule $rule, $column)
+    protected function processOneColumn($qb, FilterRule $rule, $column)
     {
-        $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule)));
         $qb->setParameter($this->getQueryParameterName($rule), $rule->getValue(), $rule->getType());
+
+        return $qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule));
     }
 }

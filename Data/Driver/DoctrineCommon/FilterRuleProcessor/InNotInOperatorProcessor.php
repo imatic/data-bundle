@@ -8,10 +8,11 @@ use Doctrine\DBAL\Connection;
 
 class InNotInOperatorProcessor extends AbstractFilterRuleProcessor
 {
-    public function process($qb, FilterRule $rule, $column)
+    protected function processOneColumn($qb, FilterRule $rule, $column)
     {
-        $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule)));
         $qb->setParameter($this->getQueryParameterName($rule), $rule->getValue(), $this->getType($rule));
+
+        return $qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule));
     }
 
     public function supports($qb, FilterRule $rule, $column)

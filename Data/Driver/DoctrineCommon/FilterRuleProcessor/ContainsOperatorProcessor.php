@@ -12,34 +12,54 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
  */
 class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
 {
+    /** @var string */
+    private $dbalFunctionTemplate;
+
+    /** @var string */
+    private $ormFunctionTemplate;
+
     private $postgresOperators = [
         FilterOperatorMap::OPERATOR_CONTAINS => 'ILIKE',
         FilterOperatorMap::OPERATOR_NOT_CONTAINS => 'NOT ILIKE',
     ];
 
-    public function process($qb, FilterRule $rule, $column)
+    public function __construct()
     {
+        $this->setFunction();
+    }
+
+    public function setFunction($function = null)
+    {
+        $this->dbalFunctionTemplate = $function ? sprintf('%s(%%s)', $function) : '%s';
+        $this->ormFunctionTemplate = $function ? 'unaccent_lower(%s)' : '%s';
+    }
+
+    protected function processOneColumn($qb, FilterRule $rule, $column)
+    {
+        $qb->setParameter($this->getQueryParameterName($rule), '%' . $rule->getValue() . '%', $rule->getType());
+
         if (!$this->hasPostgresqlConnection($qb)) {
-            $qb->andWhere($qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule)));
-        } else {
-            if ($qb instanceof ORMQueryBuilder) {
-                $qb->andWhere(sprintf(
-                    '%s(%s, %s) = true',
-                    str_replace(' ', '_', $this->postgresOperators[$rule->getOperator()]),
-                    $column,
-                    $this->getQueryParameter($rule)
-                ));
-            } else {
-                $qb->andWhere(sprintf(
-                    '%s %s %s',
-                    $column,
-                    $this->postgresOperators[$rule->getOperator()],
-                    $this->getQueryParameter($rule)
-                ));
-            }
+            return $qb->expr()->{$rule->getOperator()}(
+                $this->wrapColumn($qb, $column),
+                $this->wrapColumn($qb, $this->getQueryParameter($rule))
+            );
         }
 
-        $qb->setParameter($this->getQueryParameterName($rule), '%' . $rule->getValue() . '%', $rule->getType());
+        if ($qb instanceof ORMQueryBuilder) {
+            return sprintf(
+                '%s(%s, %s) = true',
+                str_replace(' ', '_', $this->postgresOperators[$rule->getOperator()]),
+                $this->wrapColumn($qb, $column),
+                $this->wrapColumn($qb, $this->getQueryParameter($rule))
+            );
+        } else {
+            return sprintf(
+                '%s %s %s',
+                $this->wrapColumn($qb, $column),
+                $this->postgresOperators[$rule->getOperator()],
+                $this->wrapColumn($qb, $this->getQueryParameter($rule))
+            );
+        }
     }
 
     public function supports($qb, FilterRule $rule, $column)
@@ -51,6 +71,13 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
                 FilterOperatorMap::OPERATOR_NOT_CONTAINS
             ])
         ;
+    }
+
+    private function wrapColumn($qb, $column)
+    {
+        $template = $qb instanceof ORMQueryBuilder ? $this->ormFunctionTemplate : $this->dbalFunctionTemplate;
+
+        return sprintf($template, $column);
     }
 
     private function hasPostgresqlConnection($qb)

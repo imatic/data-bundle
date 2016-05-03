@@ -8,6 +8,7 @@ use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\DisplayCriteriaQueryBu
 use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\DriverCompilerPass;
 use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\FilterCompilerPass;
 use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\FilterRuleProcessorPass;
+use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\ContainsOperatorProcessorCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -18,6 +19,7 @@ class ImaticDataBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
+        $container->addCompilerPass(new ContainsOperatorProcessorCompilerPass());
         $container->addCompilerPass(new FilterCompilerPass());
         $container->addCompilerPass(new FilterRuleProcessorPass());
         $container->addCompilerPass(new DisplayCriteriaQueryBuilderPass());

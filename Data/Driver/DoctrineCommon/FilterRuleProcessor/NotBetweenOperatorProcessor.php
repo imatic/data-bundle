@@ -10,7 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
  */
 class NotBetweenOperatorProcessor extends AbstractFilterRuleProcessor
 {
-    public function process($qb, FilterRule $rule, $column)
+    protected function processOneColumn($qb, FilterRule $rule, $column)
     {
         $start = $rule->getValue()['start'];
         $end = $rule->getValue()['end'];
@@ -26,7 +26,7 @@ class NotBetweenOperatorProcessor extends AbstractFilterRuleProcessor
             $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end'], $rule->getType());
         }
 
-        $qb->andWhere(call_user_func_array([$qb->expr(), 'orX'], $conditions));
+        return call_user_func_array([$qb->expr(), 'orX'], $conditions);
     }
 
     public function supports($qb, FilterRule $rule, $column)
