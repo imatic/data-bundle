@@ -141,6 +141,40 @@ class ContainsOperatorProcessorTest extends WebTestCase
         ;
     }
 
+    public function testProcessShouldReturnQbWhichReturnsNoResultsWithoutFunction()
+    {
+        $qb = $this->createUserQueryBuilder();
+
+        $rule = new TextRule('name');
+        $rule->setValue('ádám');
+
+        $processor = new ContainsOperatorProcessor();
+        $this->assertTrue($processor->supports($qb, $rule, 'u.name'));
+
+        $processor->process($qb, $rule, 'u.name');
+        $result = $qb->execute()->fetchAll();
+
+        $this->assertCount(0, $result);
+    }
+
+    public function testProcessShouldReturnQbWhichReturnsOneResultWithLengthFunction()
+    {
+        $qb = $this->createUserQueryBuilder();
+
+        $rule = new TextRule('name');
+        $rule->setValue('ádám');
+
+        $processor = new ContainsOperatorProcessor();
+        $processor->setFunction('lower_unaccent');
+        $this->assertTrue($processor->supports($qb, $rule, 'u.name'));
+
+        $processor->process($qb, $rule, 'u.name');
+        $result = $qb->execute()->fetchAll();
+
+        $this->assertCount(1, $result);
+        $this->assertEquals('Adam', $result[0]['name']);
+    }
+
     /**
      * @return Connection
      */

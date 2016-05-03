@@ -6,6 +6,7 @@ use Doctrine\DBAL\Connection;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateRangeRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateTimeRangeRule;
@@ -175,17 +176,13 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals('Adam', $results[1]['name']);
     }
 
-    public function testQueryExecutorShouldReturnAdamBasedOnDateFilter()
+    /**
+     * @dataProvider adamFilterRulesProvider
+     */
+    public function testQueryExecutorshouldReturnAdamBasedOnFilterRule(FilterRule $rule)
     {
-        $birthdayRule = new DateRangeRule('birthDate');
-        $birthdayRule->setValue([
-            'start' => new \DateTime('1990-01-01'),
-            'end' => new \DateTime('1991-01-01'),
-        ]);
-        $birthdayRule->setOperator(FilterOperatorMap::OPERATOR_BETWEEN);
-
         $filter = new UserFilter();
-        $filter->add($birthdayRule);
+        $filter->add($rule);
 
         $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
         $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
@@ -194,55 +191,39 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals('Adam', $results[0]['name']);
     }
 
-    public function testQueryExecutorShouldReturnAdamBasedOnDateTimeFilter()
+    public function adamFilterRulesProvider()
     {
-        $birthdayRule = new DateTimeRangeRule('birthDate');
-        $birthdayRule->setValue([
+        $dateBirthdayRule = new DateRangeRule('birthDate');
+        $dateBirthdayRule->setValue([
             'start' => new \DateTime('1990-01-01'),
             'end' => new \DateTime('1991-01-01'),
         ]);
-        $birthdayRule->setOperator(FilterOperatorMap::OPERATOR_BETWEEN);
+        $dateBirthdayRule->setOperator(FilterOperatorMap::OPERATOR_BETWEEN);
 
-        $filter = new UserFilter();
-        $filter->add($birthdayRule);
+        $dateTimeBirthdayRule = new DateTimeRangeRule('birthDate');
+        $dateTimeBirthdayRule->setValue([
+            'start' => new \DateTime('1990-01-01'),
+            'end' => new \DateTime('1991-01-01'),
+        ]);
+        $dateTimeBirthdayRule->setOperator(FilterOperatorMap::OPERATOR_BETWEEN);
 
-        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
-
-        $this->assertCount(1, $results);
-        $this->assertEquals('Adam', $results[0]['name']);
-    }
-
-    public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteria()
-    {
         $nameRule = new TextRule('name');
         $nameRule->setValue('Adam');
         $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
 
-        $filter = new UserFilter();
-        $filter->add($nameRule);
+        $nameHairsRule = new TextRule('name_hairs');
+        $nameHairsRule->setValue('Adam');
 
-        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
+        $hairsNameRule = new TextRule('name_hairs');
+        $hairsNameRule->setValue('short');
 
-        $this->assertCount(1, $results);
-        $this->assertEquals('Adam', $results[0]['name']);
-    }
-
-    public function testQueryExecutorShouldReturnAdamBasedOnDisplayCriteriaWithoutSpecifyingAlias()
-    {
-        $nameRule = new TextRule('name');
-        $nameRule->setValue('Adam');
-        $nameRule->setOperator(FilterOperatorMap::OPERATOR_EQUAL);
-
-        $filter = new UserFilter();
-        $filter->add($nameRule);
-
-        $criteria = new DisplayCriteria(new Pager(), new Sorter(), $filter);
-        $results = $this->getQueryExecutor()->execute(new UserListQuery(), $criteria);
-
-        $this->assertCount(1, $results);
-        $this->assertEquals('Adam', $results[0]['name']);
+        return [
+            'date rule' => [$dateBirthdayRule],
+            'datetime rule' => [$dateTimeBirthdayRule],
+            'text rule' => [$nameRule],
+            'first column of composed rule' => [$nameHairsRule],
+            'second column of composed rule' => [$hairsNameRule],
+        ];
     }
 
     public function testQueryExecutorShouldReturnEvaBasedOnDisplayCriteriaWithoutSpecifyingAlias()

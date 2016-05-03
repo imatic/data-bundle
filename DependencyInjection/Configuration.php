@@ -33,6 +33,19 @@ class Configuration implements ConfigurationInterface
                     ->info('Array of table names pointing to array of their columns with specified types as their values')
                     ->defaultValue([])
                 ->end()
+                ->arrayNode('unaccent_lower')
+                    ->info(<<<INFO
+Configuration of SQL function name for contains, not contains operators (it's always unaccent_lower for DQL).
+See https://stackoverflow.com/questions/9243322/postgres-accent-insensitive-like-search-in-rails-3-1-on-heroku
+for example on how such function might look like.
+INFO
+                    )
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('enabled')->defaultValue(false)->end()
+                        ->scalarNode('function_name')->defaultValue('unaccent_lower')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

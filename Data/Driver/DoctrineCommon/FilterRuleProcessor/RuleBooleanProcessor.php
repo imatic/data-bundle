@@ -8,19 +8,18 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\BooleanRule;
 
 class RuleBooleanProcessor extends AbstractFilterRuleProcessor
 {
-    public function process($qb, FilterRule $rule, $column)
+    protected function processOneColumn($qb, FilterRule $rule, $column)
     {
         if (FilterOperatorMap::OPERATOR_EMPTY === $rule->getOperator()) {
-            $qb->andWhere($qb->expr()->isNull($column));
-        } else {
-            switch ($rule->getValue()) {
-                case BooleanRule::NO:
-                case false:
-                    $qb->andWhere($qb->expr()->eq($column, 'false'));
-                    break;
-                default:
-                    $qb->andWhere($qb->expr()->eq($column, 'true'));
-            }
+            return $qb->expr()->isNull($column);
+        }
+
+        switch ($rule->getValue()) {
+            case BooleanRule::NO:
+            case false:
+                return $qb->expr()->eq($column, 'false');
+            default:
+                return $qb->expr()->eq($column, 'true');
         }
     }
 
