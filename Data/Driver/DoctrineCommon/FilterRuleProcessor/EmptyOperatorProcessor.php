@@ -10,9 +10,9 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
  */
 class EmptyOperatorProcessor extends AbstractFilterRuleProcessor
 {
-    public function process($qb, FilterRule $rule, $column)
+    protected function processOneColumn($qb, FilterRule $rule, $column)
     {
-        $qb->andWhere($qb->expr()->{$rule->getOperator()}($column));
+        return $qb->expr()->{$rule->getOperator()}($column);
     }
 
     public function supports($qb, FilterRule $rule, $column)

@@ -17,6 +17,20 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
         return $qb instanceof ORMQueryBuilder || $qb instanceof DBALQueryBuilder;
     }
 
+    public function process($qb, FilterRule $rule, $column)
+    {
+        $fixedColumns = is_array($column) ? $column : [$column];
+
+        $exprs = [];
+        foreach ($fixedColumns as $oneColumn) {
+            $exprs[] = $this->processOneColumn($qb, $rule, $oneColumn);
+        }
+
+        $qb->andWhere(call_user_func_array([$qb->expr(), 'orX'], $exprs));
+    }
+
+    abstract protected function processOneColumn($qb, FilterRule $rule, $column);
+
     /**
      * @param FilterRule $rule
      *

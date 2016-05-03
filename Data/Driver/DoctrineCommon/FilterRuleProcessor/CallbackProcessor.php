@@ -21,4 +21,8 @@ class CallbackProcessor extends AbstractFilterRuleProcessor
             && $column instanceof \Closure
         ;
     }
+
+    protected function processOneColumn($qb, FilterRule $rule, $column)
+    {
+    }
 }
