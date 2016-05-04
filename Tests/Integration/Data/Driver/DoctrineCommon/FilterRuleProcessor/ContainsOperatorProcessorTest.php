@@ -141,7 +141,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         ;
     }
 
-    public function testProcessShouldReturnQbWhichReturnsNoResultsWithoutFunction()
+    public function testProcessShouldReturnQbWhichReturnsNoResultsWithoutFunctionForDBAL()
     {
         $qb = $this->createUserQueryBuilder();
 
@@ -157,7 +157,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $this->assertCount(0, $result);
     }
 
-    public function testProcessShouldReturnQbWhichReturnsOneResultWithLengthFunction()
+    public function testProcessShouldReturnQbWhichReturnsOneResultWithFunctionForDBAL()
     {
         $qb = $this->createUserQueryBuilder();
 
@@ -173,6 +173,40 @@ class ContainsOperatorProcessorTest extends WebTestCase
 
         $this->assertCount(1, $result);
         $this->assertEquals('Adam', $result[0]['name']);
+    }
+
+    public function testProcessShouldReturnQbWhichReturnsNoResultsWithoutFunctionForORM()
+    {
+        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+
+        $rule = new TextRule('name');
+        $rule->setValue('ádám');
+
+        $processor = new ContainsOperatorProcessor();
+        $this->assertTrue($processor->supports($qb, $rule, 'u.name'));
+
+        $processor->process($qb, $rule, 'u.name');
+        $result = $qb->getQuery()->getResult();
+
+        $this->assertCount(0, $result);
+    }
+
+    public function testProcessShouldReturnQbWhichReturnsOneResultWithFunctionForORM()
+    {
+        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+
+        $rule = new TextRule('name');
+        $rule->setValue('ádám');
+
+        $processor = new ContainsOperatorProcessor();
+        $processor->setFunction('unaccent_lower');
+        $this->assertTrue($processor->supports($qb, $rule, 'u.name'));
+
+        $processor->process($qb, $rule, 'u.name');
+        $result = $qb->getQuery()->getResult();
+
+        $this->assertCount(1, $result);
+        $this->assertEquals('Adam', $result[0]->getName());
     }
 
     /**
