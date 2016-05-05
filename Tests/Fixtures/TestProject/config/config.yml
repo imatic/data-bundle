@@ -59,6 +59,7 @@ doctrine:
             string_functions:
                 ilike: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\ILike
                 not_ilike: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\NotILike
+                unaccent_lower: Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST\UnaccentLower
 
 monolog:
     handlers:
