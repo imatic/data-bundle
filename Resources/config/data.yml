@@ -4,7 +4,7 @@ services:
         class: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
         arguments:
             - '@imatic_data.command_handler_repository'
-            - %kernel.debug%
+            - '%kernel.debug%'
 
     imatic_data.command_handler_repository:
         class: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository

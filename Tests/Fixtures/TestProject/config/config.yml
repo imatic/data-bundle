@@ -18,15 +18,15 @@ framework:
     translator:
         enabled:                true
     router:
-        resource:               %kernel.root_dir%/config/routing.yml
+        resource:               '%kernel.root_dir%/config/routing.yml'
     templating:
         engines:                [twig]
     default_locale:             cs_CZ
     profiler:                   { only_exceptions: false }
 
 twig:
-    debug:                      %kernel.debug%
-    strict_variables:           %kernel.debug%
+    debug:                      '%kernel.debug%'
+    strict_variables:           '%kernel.debug%'
 
 doctrine:
     dbal:
@@ -37,7 +37,7 @@ doctrine:
 #               sqlite
 #                driver:         pdo_sqlite
 #                memory:         false
-#                path:           %kernel.root_dir%/cache/test.db
+#                path:           '%kernel.root_dir%/cache/test.db'
 
 #                postgres
                 driver:         '%database.driver%'
@@ -51,7 +51,7 @@ doctrine:
                 server_version: '%database.server_version%'
 
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
+        auto_generate_proxy_classes: '%kernel.debug%'
         auto_mapping:           true
         resolve_target_entities: []
         naming_strategy: doctrine.orm.naming_strategy.underscore

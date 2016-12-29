@@ -13,7 +13,7 @@ delete:
 success:                Action successful
 error:                  Could not perform the action
 
-batch_success:          Batch action performed on %count% items
+batch_success:          "Batch action performed on %count% items"
 batch_error:            An error has occuried while performing the batch action
 
 invalid_instance:       Invalid data

@@ -13,7 +13,7 @@ delete:
 success:                Akce proběhla úspěšně
 error:                  Nastala chyba při provádění akce
 
-batch_success:          Hromadná akce byla provedena pro %count% položek
+batch_success:          "Hromadná akce byla provedena pro %count% položek"
 batch_error:            Nastala chyba při provádění hromadné akce
 
 invalid_instance:       Neplatná data
