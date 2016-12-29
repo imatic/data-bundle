@@ -16,6 +16,7 @@ class BundleNameFinder
 
     /**
      * @param string $class
+     *
      * @return string|null
      */
     public function find($class)

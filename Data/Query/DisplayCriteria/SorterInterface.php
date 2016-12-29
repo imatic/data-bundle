@@ -5,12 +5,13 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 interface SorterInterface extends \IteratorAggregate, \Countable
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasSorterRules();
 
     /**
      * @param string $column
+     *
      * @return bool
      */
     public function isSorted($column);
@@ -18,6 +19,7 @@ interface SorterInterface extends \IteratorAggregate, \Countable
     /**
      * @param string $column
      * @param bool   $lowercase
+     *
      * @return string
      */
     public function getDirection($column, $lowercase = false);
@@ -25,6 +27,7 @@ interface SorterInterface extends \IteratorAggregate, \Countable
     /**
      * @param string $column
      * @param bool   $lowercase
+     *
      * @return string
      */
     public function getReverseDirection($column, $lowercase = false);

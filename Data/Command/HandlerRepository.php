@@ -45,6 +45,7 @@ class HandlerRepository implements HandlerRepositoryInterface
 
     /**
      * @param CommandInterface|string $command
+     *
      * @return string
      */
     public function getBundleName($command)
@@ -58,6 +59,7 @@ class HandlerRepository implements HandlerRepositoryInterface
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     private function hasHandler($name)

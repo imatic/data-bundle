@@ -25,7 +25,7 @@ class ResultIteratorTest extends WebTestCase
 
     public function testResultIteratorShouldReturnAllResults()
     {
-        $resultIterator = $this->resultIteratorFactory->create(new UserListQuery, [
+        $resultIterator = $this->resultIteratorFactory->create(new UserListQuery(), [
             'filter_type' => 'app_imatic_data.user',
         ]);
 
@@ -41,7 +41,7 @@ class ResultIteratorTest extends WebTestCase
 
     public function testResultIteratorShouldReturnAllResultsUsingPagination()
     {
-        $resultIterator = $this->resultIteratorFactory->create(new UserListQuery, [
+        $resultIterator = $this->resultIteratorFactory->create(new UserListQuery(), [
             'filter_type' => 'app_imatic_data.user',
             'limit' => 1,
         ]);
@@ -58,14 +58,14 @@ class ResultIteratorTest extends WebTestCase
 
     public function testResultIteratorShouldReturnOneResult()
     {
-        $resultIterator = $this->resultIteratorFactory->create(new UserListQuery, [
+        $resultIterator = $this->resultIteratorFactory->create(new UserListQuery(), [
             'filter_type' => 'app_imatic_data.user',
             'filter' => [
                 'name' => [
                     'value' => 'Adam',
                     'operator' => FilterOperatorMap::OPERATOR_EQUAL,
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $results = [];

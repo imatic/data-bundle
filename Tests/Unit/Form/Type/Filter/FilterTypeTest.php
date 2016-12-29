@@ -31,10 +31,10 @@ class FilterTypeTest extends TypeTestCase
 
         $form->submit([
             'field1' => [
-                'value' => 'text'
+                'value' => 'text',
             ],
             'field2' => [
-                'value' => 100
+                'value' => 100,
             ],
         ]);
 

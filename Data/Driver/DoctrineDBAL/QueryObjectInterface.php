@@ -13,6 +13,7 @@ interface QueryObjectInterface extends BaseQueryObjectInterface
 {
     /**
      * @param Connection $connection
+     *
      * @return QueryBuilder
      */
     public function build(Connection $connection);

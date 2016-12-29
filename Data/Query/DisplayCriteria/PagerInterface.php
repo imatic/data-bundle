@@ -39,74 +39,76 @@ interface PagerInterface
     public function getTotal();
 
     /**
-     * Returns first indice
+     * Returns first indice.
      *
      * @return int
      */
     public function getFirstIndice();
 
     /**
-     * Returns last indice
+     * Returns last indice.
      *
      * @return int
      */
     public function getLastIndice();
 
     /**
-     * Returns first page
+     * Returns first page.
      *
      * @return int
      */
     public function getFirstPage();
 
     /**
-     * Returns last page
+     * Returns last page.
      *
      * @return int
      */
     public function getLastPage();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFirstPage();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isLastPage();
 
     /**
      * @param $page
-     * @return boolean
+     *
+     * @return bool
      */
     public function isCurrentPage($page);
 
     /**
-     * Returns next page
+     * Returns next page.
      *
      * @return int
      */
     public function getNextPage();
 
     /**
-     * Returns previous page
+     * Returns previous page.
      *
      * @return int
      */
     public function getPreviousPage();
 
     /**
-     * Returns true if total results more than page limit
+     * Returns true if total results more than page limit.
      *
      * @return bool
      */
     public function haveToPaginate();
 
     /**
-     * Return pager navigation links
+     * Return pager navigation links.
      *
      * @param int $nb
+     *
      * @return array
      */
     public function getLinks($nb = 5);

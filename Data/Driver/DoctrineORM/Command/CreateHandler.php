@@ -22,6 +22,7 @@ class CreateHandler implements HandlerInterface
 
     /**
      * @param CommandInterface $command
+     *
      * @return CommandResultInterface|bool|void
      */
     public function handle(CommandInterface $command)

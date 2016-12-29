@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractTypeExtension;
 
 /**
- * Form type theme extension
+ * Form type theme extension.
  *
  * @author Pavel Batecko <pavel.batecko@imatic.cz>
  */

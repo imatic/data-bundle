@@ -121,7 +121,7 @@ class RecordIterator
                 $queryObject->getIdentifierFilterKey() => [
                     'value' => $command->getParameter('selected'),
                     'operator' => FilterOperatorMap::OPERATOR_IN,
-                ]
+                ],
             ];
         }
 

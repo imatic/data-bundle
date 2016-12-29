@@ -38,7 +38,8 @@ class CreateOrEditHandler implements HandlerInterface, CommandExecutorAwareInter
         try {
             $query = new RecordIdQuery($tableName, $columnValues);
             $id = $this->queryExecutor->execute($query);
-        } catch (NoResultException $ex) {}
+        } catch (NoResultException $ex) {
+        }
 
         $command = null;
         if ($id) {

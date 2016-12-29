@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class FilterRule
 {
     /**
-     * Filer name for compare
+     * Filer name for compare.
      *
      * @var string
      */
@@ -20,41 +20,42 @@ abstract class FilterRule
 
     /**
      * @var bool
+     *
      * @deprecated Use method isBound instead
      * If you wanna set this value, you should override the method instead
      */
     protected $bound;
 
     /**
-     * Filer value for compare
+     * Filer value for compare.
      *
      * @var mixed
      */
     protected $value;
 
     /**
-     * Filer operator for compare
+     * Filer operator for compare.
      *
      * @var string
      */
     protected $operator;
 
     /**
-     * Allowed operators
+     * Allowed operators.
      *
      * @var string|null|array
      */
     protected $operators;
 
     /**
-     * Form type
+     * Form type.
      *
      * @var string
      */
     protected $formType;
 
     /**
-     * Form options
+     * Form options.
      *
      * @var array
      */
@@ -94,6 +95,7 @@ abstract class FilterRule
 
     /**
      * @throws \OutOfBoundsException
+     *
      * @return mixed
      */
     public function getOption($name)
@@ -115,7 +117,9 @@ abstract class FilterRule
 
     /**
      * @param mixed $value
+     *
      * @return $this
+     *
      * @throws \InvalidArgumentException
      */
     public function setValue($value)
@@ -138,11 +142,12 @@ abstract class FilterRule
     }
 
     /**
-     * Get or set the value
+     * Get or set the value.
      *
      * Intended for use with property paths (e.g. inside form fields).
      *
      * @param mixed $value
+     *
      * @return mixed
      */
     public function ruleValue($value = null)
@@ -171,7 +176,9 @@ abstract class FilterRule
 
     /**
      * @param string $operator
+     *
      * @return $this
+     *
      * @throws \InvalidArgumentException
      */
     public function setOperator($operator)
@@ -197,6 +204,7 @@ abstract class FilterRule
 
     /**
      * @param array $operators
+     *
      * @throws \InvalidArgumentException
      */
     public function setOperators(array $operators)
@@ -258,6 +266,7 @@ abstract class FilterRule
 
     /**
      * @param array $options
+     *
      * @return array
      */
     protected function processOptions(array $options)
@@ -280,6 +289,7 @@ abstract class FilterRule
 
     /**
      * @param mixed $value
+     *
      * @return bool
      */
     abstract protected function validateValue($value);
@@ -312,6 +322,7 @@ abstract class FilterRule
 
     /**
      * @param string $operator
+     *
      * @return bool
      */
     protected function validateOperator($operator)
@@ -322,6 +333,7 @@ abstract class FilterRule
     /**
      * @param array $operators
      * @param array $invalid
+     *
      * @return bool
      */
     protected function validateOperators($operators, array &$invalid = [])

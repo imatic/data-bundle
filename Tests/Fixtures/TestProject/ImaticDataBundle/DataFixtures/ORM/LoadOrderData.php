@@ -20,7 +20,7 @@ class LoadOrderData extends AbstractFixture implements DependentFixtureInterface
         ];
 
         foreach ($orders as $userRef => $orderCount) {
-            for ($i = 0; $i < $orderCount; $i++) {
+            for ($i = 0; $i < $orderCount; ++$i) {
                 $manager->persist(new Order($this->getReference($userRef)));
             }
         }

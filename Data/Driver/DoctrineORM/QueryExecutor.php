@@ -70,7 +70,7 @@ class QueryExecutor implements QueryExecutorInterface
     {
         return [
             $this->execute($queryObject, $displayCriteria),
-            $this->count($queryObject, $displayCriteria)
+            $this->count($queryObject, $displayCriteria),
         ];
     }
 
@@ -93,6 +93,7 @@ class QueryExecutor implements QueryExecutorInterface
      * @param BaseQueryObjectInterface $queryObject
      * @param Query                    $query
      * @param bool                     $isSelect
+     *
      * @return mixed
      */
     private function getResult(BaseQueryObjectInterface $queryObject, Query $query, $isSelect)

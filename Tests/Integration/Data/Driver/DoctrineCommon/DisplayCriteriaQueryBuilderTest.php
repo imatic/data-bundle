@@ -18,7 +18,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         $activatedRule->setValue(Filter\BooleanRule::YES);
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -32,7 +32,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         $activatedRule->setValue(Filter\BooleanRule::NO);
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -46,7 +46,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         $activatedRule->setValue('short');
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -60,7 +60,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         $activatedRule->setValue('long');
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -77,7 +77,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         ]);
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -94,7 +94,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         ]);
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -108,7 +108,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         $activatedRule->setValue(1);
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -125,7 +125,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         ]);
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -142,7 +142,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         ]);
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();
@@ -156,7 +156,7 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         $activatedRule->setValue('Adam');
         $filter->add($activatedRule);
 
-        $qb = (new UserListQuery)->build($this->getEntityManager());
+        $qb = (new UserListQuery())->build($this->getEntityManager());
         $this->getDisplayCriteriaQueryBuilder()->applyFilter($qb, $filter, new UserListQuery());
         /* @var $user User */
         $user = $qb->getQuery()->getSingleResult();

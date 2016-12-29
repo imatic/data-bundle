@@ -11,6 +11,7 @@ interface FilterRuleProcessorInterface
      * @param object          $qb
      * @param FilterRule      $rule
      * @param string|string[] $column
+     *
      * @return bool
      */
     public function supports($qb, FilterRule $rule, $column);

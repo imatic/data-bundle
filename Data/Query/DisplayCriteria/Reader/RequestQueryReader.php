@@ -26,7 +26,7 @@ class RequestQueryReader extends SessionReader
     protected function createAttributePath($attributeName, $component = null)
     {
         if ($component) {
-            return $component . '[' . $attributeName . ']';
+            return $component.'['.$attributeName.']';
         }
 
         return $attributeName;

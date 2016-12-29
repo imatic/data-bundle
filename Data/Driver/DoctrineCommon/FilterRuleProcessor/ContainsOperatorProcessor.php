@@ -36,7 +36,7 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
 
     protected function processOneColumn($qb, FilterRule $rule, $column)
     {
-        $qb->setParameter($this->getQueryParameterName($rule), '%' . $rule->getValue() . '%', $rule->getType());
+        $qb->setParameter($this->getQueryParameterName($rule), '%'.$rule->getValue().'%', $rule->getType());
 
         if (!$this->hasPostgresqlConnection($qb)) {
             return $qb->expr()->{$rule->getOperator()}(
@@ -68,7 +68,7 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
             parent::supports($qb, $rule, $column)
             && in_array($rule->getOperator(), [
                 FilterOperatorMap::OPERATOR_CONTAINS,
-                FilterOperatorMap::OPERATOR_NOT_CONTAINS
+                FilterOperatorMap::OPERATOR_NOT_CONTAINS,
             ])
         ;
     }

@@ -12,7 +12,7 @@ class FilterRuleType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -27,7 +27,7 @@ class FilterRuleType extends AbstractType
                 ChoiceType::class, [
                     'choices' => array_combine($operators, $operators),
                     'data' => $preferredOperator,
-                    'translation_domain' => 'ImaticDataBundle'
+                    'translation_domain' => 'ImaticDataBundle',
                 ]
             );
         }

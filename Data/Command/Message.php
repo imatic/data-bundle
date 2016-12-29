@@ -29,9 +29,9 @@ class Message implements MessageInterface
 
     public function getMessage()
     {
-        $prefix = $this->prefix ? $this->prefix . '.' : '';
+        $prefix = $this->prefix ? $this->prefix.'.' : '';
 
-        return $prefix . $this->text;
+        return $prefix.$this->text;
     }
 
     public function getText()

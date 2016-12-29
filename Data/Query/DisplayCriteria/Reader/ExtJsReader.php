@@ -87,7 +87,7 @@ class ExtJsReader extends SessionReader
         }
 
         if ($component) {
-            return $component . '[' . $extAttributeName . ']';
+            return $component.'['.$extAttributeName.']';
         }
 
         return $extAttributeName;

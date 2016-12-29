@@ -15,6 +15,7 @@ class PagerFactory
     /**
      * @param int      $page
      * @param int|null $limit
+     *
      * @return PagerInterface
      */
     public function createPager($page, $limit = null)

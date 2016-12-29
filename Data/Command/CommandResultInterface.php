@@ -10,17 +10,17 @@ interface CommandResultInterface
     public function getMessages();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasMessages();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSuccessful();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasException();
 
@@ -41,6 +41,7 @@ interface CommandResultInterface
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function has($name);
@@ -48,6 +49,7 @@ interface CommandResultInterface
     /**
      * @param string $name
      * @param mixed  $default
+     *
      * @return mixed
      */
     public function get($name, $default = null);

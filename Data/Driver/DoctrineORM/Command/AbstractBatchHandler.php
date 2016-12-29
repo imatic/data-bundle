@@ -32,7 +32,9 @@ abstract class AbstractBatchHandler
 
     /**
      * @param CommandInterface $command
+     *
      * @throws \Exception
+     *
      * @return CommandResultInterface|bool|void
      */
     public function handle(CommandInterface $command)
@@ -79,12 +81,14 @@ abstract class AbstractBatchHandler
 
     /**
      * @param mixed $id
+     *
      * @return CommandResultInterface
      */
     abstract protected function handleOne($id);
 
     /**
      * @param DisplayCriteriaInterface $displayCriteria
+     *
      * @return CommandResultInterface
      */
     abstract protected function handleAll(DisplayCriteriaInterface $displayCriteria);

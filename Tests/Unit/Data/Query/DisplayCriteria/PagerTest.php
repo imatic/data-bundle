@@ -107,7 +107,7 @@ class PagerTest extends \PHPUnit_Framework_TestCase
             10 => 10,
             11 => 11,
             12 => 12,
-            13 => 13
+            13 => 13,
         );
         $linkNb = 5;
 

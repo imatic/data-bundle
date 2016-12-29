@@ -119,6 +119,7 @@ class Pager implements PagerInterface
 
     /**
      * @throws LogicException
+     *
      * @return int
      */
     public function getTotal()
@@ -140,7 +141,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Returns first indice
+     * Returns first indice.
      *
      * @return int
      */
@@ -150,7 +151,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Returns last indice
+     * Returns last indice.
      *
      * @return int
      */
@@ -165,7 +166,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Returns first page
+     * Returns first page.
      *
      * @return int
      */
@@ -175,7 +176,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Returns last page
+     * Returns last page.
      *
      * @return int
      */
@@ -185,7 +186,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isFirstPage()
     {
@@ -193,7 +194,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isLastPage()
     {
@@ -202,7 +203,8 @@ class Pager implements PagerInterface
 
     /**
      * @param $page
-     * @return boolean
+     *
+     * @return bool
      */
     public function isCurrentPage($page)
     {
@@ -210,7 +212,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Returns next page
+     * Returns next page.
      *
      * @return int
      */
@@ -226,7 +228,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Returns previous page
+     * Returns previous page.
      *
      * @return int
      */
@@ -242,7 +244,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Returns true if total results more than page limit
+     * Returns true if total results more than page limit.
      *
      * @return bool
      */
@@ -252,9 +254,10 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Return pager navigation links
+     * Return pager navigation links.
      *
      * @param int $nb
+     *
      * @return array
      */
     public function getLinks($nb = 5)
@@ -274,7 +277,7 @@ class Pager implements PagerInterface
             $lastLink = $lastPage;
         }
 
-        for ($i = $firstLink; $i <= $lastLink; $i++) {
+        for ($i = $firstLink; $i <= $lastLink; ++$i) {
             $links[$i] = $i;
         }
 
@@ -318,7 +321,7 @@ class Pager implements PagerInterface
     }
 
     /**
-     * Fix current page so it is not past the last one
+     * Fix current page so it is not past the last one.
      */
     protected function fixPage()
     {

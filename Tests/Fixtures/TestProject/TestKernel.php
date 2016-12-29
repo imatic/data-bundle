@@ -33,7 +33,7 @@ class TestKernel extends BaseTestKernel
     {
         $files = ['phpunit.xml', 'phpunit.xml.dist'];
         array_map(function ($file) {
-            $file = __DIR__ . '/../../../' . $file;
+            $file = __DIR__.'/../../../'.$file;
             if (file_exists($file)) {
                 $element = simplexml_load_file($file);
                 foreach ($element->xpath('/phpunit/php/const') as $const) {

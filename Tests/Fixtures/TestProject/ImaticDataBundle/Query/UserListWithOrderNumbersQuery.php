@@ -27,7 +27,7 @@ class UserListWithOrderNumbersQuery implements QueryObjectInterface, SortableQue
     public function getSorterMap()
     {
         return [
-            'order_num' => 'order_num'
+            'order_num' => 'order_num',
         ];
     }
 

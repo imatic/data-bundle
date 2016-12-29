@@ -58,6 +58,7 @@ class SessionReader implements DisplayCriteriaReader
     /**
      * @param string      $name
      * @param string|null $component
+     *
      * @return string|null
      */
     protected function getAttributeSessionKey($name, $component = null)

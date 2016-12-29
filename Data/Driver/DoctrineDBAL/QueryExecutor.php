@@ -90,7 +90,7 @@ class QueryExecutor implements QueryExecutorInterface
     {
         return [
             $this->execute($queryObject, $displayCriteria),
-            $this->count($queryObject, $displayCriteria)
+            $this->count($queryObject, $displayCriteria),
         ];
     }
 
@@ -112,6 +112,7 @@ class QueryExecutor implements QueryExecutorInterface
     /**
      * @param BaseQueryObjectInterface $queryObject
      * @param PDOStatement             $statement
+     *
      * @return mixed
      */
     private function getResult(BaseQueryObjectInterface $queryObject, PDOStatement $statement)
@@ -169,7 +170,7 @@ class QueryExecutor implements QueryExecutorInterface
         $normalizedResult = [];
         $result = $statement->fetchAll();
         $resultCount = count($result);
-        for ($i = 0; $i < $resultCount; $i++) {
+        for ($i = 0; $i < $resultCount; ++$i) {
             foreach ($result[$i] as $column => $value) {
                 if (isset($columnTypes[$column])) {
                     $normalizedResult[$i][$column] = Type::getType($columnTypes[$column])->convertToPHPValue($value, $platform);

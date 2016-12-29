@@ -2,8 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory;
-
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */

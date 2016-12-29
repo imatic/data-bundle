@@ -29,6 +29,7 @@ class Schema
     /**
      * @param string $table
      * @param string $data
+     *
      * @return QueryData
      */
     public function getQueryData($table, array $data)
@@ -99,6 +100,7 @@ class Schema
 
     /**
      * @param string $tableName
+     *
      * @return Sequence|null
      */
     private function findAutoincrementSequence($tableName)
@@ -127,6 +129,7 @@ class Schema
      * @param string $tableName
      *
      * @return Table
+     *
      * @throws \InvalidArgumentException
      */
     private function findTableByName($tableName)

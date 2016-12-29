@@ -7,7 +7,7 @@ use Imatic\Bundle\DataBundle\Exception\ParameterNotFoundException;
 interface CommandInterface extends \Serializable
 {
     /**
-     * @return string The alias of a command handler service.
+     * @return string the alias of a command handler service
      */
     public function getHandlerName();
 
@@ -18,13 +18,16 @@ interface CommandInterface extends \Serializable
 
     /**
      * @param string $name
+     *
      * @throws ParameterNotFoundException
+     *
      * @return mixed
      */
     public function getParameter($name);
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function hasParameter($name);

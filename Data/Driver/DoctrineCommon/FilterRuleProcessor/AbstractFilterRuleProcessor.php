@@ -40,7 +40,7 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
     {
         return sprintf(
             $rule->getOption('query_parameter_format'),
-            ':' . $this->getQueryParameterName($rule)
+            ':'.$this->getQueryParameterName($rule)
         );
     }
 

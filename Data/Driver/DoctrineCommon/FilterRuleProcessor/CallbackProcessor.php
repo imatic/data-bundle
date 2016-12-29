@@ -11,7 +11,7 @@ class CallbackProcessor extends AbstractFilterRuleProcessor
 {
     public function process($qb, FilterRule $rule, $column)
     {
-         $column($qb, $rule);
+        $column($qb, $rule);
     }
 
     public function supports($qb, FilterRule $rule, $column)

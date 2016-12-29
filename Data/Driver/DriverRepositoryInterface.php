@@ -15,13 +15,16 @@ interface DriverRepositoryInterface
 
     /**
      * @param string $name
+     *
      * @return DriverInterface
      */
     public function get($name);
 
     /**
      * @param QueryObjectInterface $queryObject
+     *
      * @return QueryExecutorInterface
+     *
      * @throws UnsupportedQueryObjectException
      */
     public function getQueryExecutorFor(QueryObjectInterface $queryObject);

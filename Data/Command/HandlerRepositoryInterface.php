@@ -18,12 +18,14 @@ interface HandlerRepositoryInterface
 
     /**
      * @param CommandInterface $command
+     *
      * @return HandlerInterface
      */
     public function getHandler(CommandInterface $command);
 
     /**
      * @param CommandInterface|string $command
+     *
      * @return string
      */
     public function getBundleName($command);

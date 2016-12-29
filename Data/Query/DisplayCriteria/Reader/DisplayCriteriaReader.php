@@ -13,10 +13,10 @@ interface DisplayCriteriaReader
     const LIMIT = 'limit';
 
     /**
-     * @param  string      $name
-     * @param  mixed|null  $default
-     * @param  string|null $component
-     * @param  bool        $persistent
+     * @param string      $name
+     * @param mixed|null  $default
+     * @param string|null $component
+     * @param bool        $persistent
      *
      * @return mixed
      */

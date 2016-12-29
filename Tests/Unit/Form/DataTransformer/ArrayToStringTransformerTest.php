@@ -52,7 +52,7 @@ class ArrayToStringTransformerTest extends PHPUnit_Framework_TestCase
     public function testTransform($value, $expectedValue)
     {
         $transformer = new ArrayToStringTransformer();
-        $this->assertEquals($expectedValue,$transformer->transform($value));
+        $this->assertEquals($expectedValue, $transformer->transform($value));
     }
 
     public function transformDataProvider()

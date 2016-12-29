@@ -28,6 +28,7 @@ class FileType extends Type
     /**
      * @param File|null        $value
      * @param AbstractPlatform $platform
+     *
      * @return string|null
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
@@ -44,7 +45,7 @@ class FileType extends Type
     }
 
     /**
-     * @param string $value
+     * @param string           $value
      * @param AbstractPlatform $platform
      *
      * @return File|null
@@ -55,7 +56,7 @@ class FileType extends Type
             return null;
         }
 
-        return new File(static::$basePath . $value);
+        return new File(static::$basePath.$value);
     }
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)

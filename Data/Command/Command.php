@@ -44,7 +44,9 @@ class Command implements CommandInterface
 
     /**
      * @param string $name
+     *
      * @throws ParameterNotFoundException
+     *
      * @return mixed
      */
     public function getParameter($name)
@@ -58,6 +60,7 @@ class Command implements CommandInterface
 
     /**
      * @param string $name
+     *
      * @return bool
      */
     public function hasParameter($name)
@@ -66,7 +69,7 @@ class Command implements CommandInterface
     }
 
     /**
-     * String representation of object
+     * String representation of object.
      *
      * @return string
      */
@@ -76,7 +79,7 @@ class Command implements CommandInterface
     }
 
     /**
-     * Constructs the object
+     * Constructs the object.
      *
      * @param string $serialized
      */

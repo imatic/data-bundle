@@ -25,9 +25,10 @@ class CommandResult implements CommandResultInterface
     private $exception;
 
     /**
-     * @param boolean            $success
+     * @param bool               $success
      * @param MessageInterface[] $messages
      * @param \Exception         $exception
+     *
      * @throws \LogicException
      */
     public function __construct($success, array $messages = [], \Exception $exception = null)

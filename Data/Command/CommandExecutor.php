@@ -10,7 +10,7 @@ class CommandExecutor implements CommandExecutorInterface
     private $handlerRepository;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $debug;
 
@@ -26,7 +26,9 @@ class CommandExecutor implements CommandExecutorInterface
 
     /**
      * @param CommandInterface $command
+     *
      * @throws \Exception
+     *
      * @return CommandResultInterface
      */
     public function execute(CommandInterface $command)
@@ -60,14 +62,14 @@ class CommandExecutor implements CommandExecutorInterface
     }
 
     /**
-     * todo: mela by resit post-execute event
+     * todo: mela by resit post-execute event.
      *
      * @param CommandInterface       $command
      * @param CommandResultInterface $result
      */
     private function processMessages(CommandInterface $command, CommandResultInterface $result)
     {
-        $translationDomain = $this->handlerRepository->getBundleName($command) . 'Messages';
+        $translationDomain = $this->handlerRepository->getBundleName($command).'Messages';
 
         foreach ($result->getMessages() as $message) {
             if (!$message->getTranslationDomain()) {

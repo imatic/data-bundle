@@ -9,6 +9,7 @@ interface DisplayCriteriaQueryBuilderInterface
 {
     /**
      * @param object $qb
+     *
      * @return bool
      */
     public function supports($qb);

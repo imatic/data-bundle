@@ -132,10 +132,10 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
 
 class UserFilter extends Filter
 {
-     protected function configure()
-     {
-         $this
+    protected function configure()
+    {
+        $this
             ->add(new FilterRule\TextRule('name'))
         ;
-     }
+    }
 }

@@ -32,7 +32,9 @@ class DisplayCriteriaQueryBuilderDelegate
 
     /**
      * @param object $qb
+     *
      * @throws UnsupportedQueryBuilderException
+     *
      * @return DisplayCriteriaQueryBuilderInterface
      */
     private function getBuilderFor($qb)
@@ -75,6 +77,7 @@ class DisplayCriteriaQueryBuilderDelegate
      * @param object               $qb
      * @param FilterInterface      $filter
      * @param QueryObjectInterface $queryObject
+     *
      * @throws \InvalidArgumentException
      */
     public function applyFilter($qb, FilterInterface $filter, QueryObjectInterface $queryObject)
@@ -106,6 +109,7 @@ class DisplayCriteriaQueryBuilderDelegate
      * @param object               $qb
      * @param SorterInterface      $sorter
      * @param QueryObjectInterface $queryObject
+     *
      * @throws \InvalidArgumentException
      */
     public function applySorter($qb, SorterInterface $sorter, QueryObjectInterface $queryObject)

@@ -11,6 +11,7 @@ interface QueryExecutorInterface
      *
      * @param QueryObjectInterface                     $queryObject
      * @param DisplayCriteria\DisplayCriteriaInterface $displayCriteria
+     *
      * @return mixed
      */
     public function execute(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null);
@@ -20,7 +21,8 @@ interface QueryExecutorInterface
      *
      * @param QueryObjectInterface                     $queryObject
      * @param DisplayCriteria\DisplayCriteriaInterface $displayCriteria
-     * @return integer Affected rows
+     *
+     * @return int Affected rows
      */
     public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null);
 
@@ -31,6 +33,7 @@ interface QueryExecutorInterface
      *
      * @param QueryObjectInterface     $queryObject
      * @param DisplayCriteriaInterface $displayCriteria
+     *
      * @return array result, count
      */
     public function executeAndCount(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null);

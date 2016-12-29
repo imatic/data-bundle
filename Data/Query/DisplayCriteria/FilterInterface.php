@@ -8,12 +8,14 @@ interface FilterInterface extends \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
      * @param string $index
+     *
      * @return FilterRule
      */
     public function get($index);
 
     /**
      * @param string $index
+     *
      * @return bool
      */
     public function has($index);

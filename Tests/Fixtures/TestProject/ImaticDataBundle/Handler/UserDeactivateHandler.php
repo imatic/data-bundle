@@ -32,6 +32,7 @@ class UserDeactivateHandler implements HandlerInterface
 
     /**
      * @param CommandInterface $pathCommand
+     *
      * @return \Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface|bool|void
      */
     public function handle(CommandInterface $pathCommand)

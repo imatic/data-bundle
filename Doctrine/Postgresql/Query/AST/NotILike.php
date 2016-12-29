@@ -14,7 +14,7 @@ class NotILike extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return $this->field->dispatch($sqlWalker) . ' NOT ILIKE ' . $this->value->dispatch($sqlWalker);
+        return $this->field->dispatch($sqlWalker).' NOT ILIKE '.$this->value->dispatch($sqlWalker);
     }
 
     public function parse(Parser $parser)

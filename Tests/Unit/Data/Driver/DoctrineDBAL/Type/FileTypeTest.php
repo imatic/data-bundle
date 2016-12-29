@@ -62,7 +62,7 @@ class FileTypeTest extends PHPUnit_Framework_TestCase
         vfsStream::setup('root', null, [
             'uploads' => [
                 'uploaded.txt' => 'content of the file',
-            ]
+            ],
         ]);
 
         $file = $this->fileType->convertToPHPValue(vfsStream::url('root/uploads/uploaded.txt'), $this->platform);
@@ -87,7 +87,7 @@ class FileTypeTest extends PHPUnit_Framework_TestCase
         vfsStream::setup('root', null, [
             'uploads' => [
                 'uploaded.txt' => 'content of the file',
-            ]
+            ],
         ]);
 
         $file = $this->fileType->convertToPHPValue('/uploaded.txt', $this->platform);

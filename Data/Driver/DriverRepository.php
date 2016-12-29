@@ -39,7 +39,6 @@ class DriverRepository implements DriverRepositoryInterface
             if ($queryObject instanceof $queryObjectClass) {
                 return $driver->getQueryExecutor();
             }
-
         }
 
         throw new UnsupportedQueryObjectException($queryObject);

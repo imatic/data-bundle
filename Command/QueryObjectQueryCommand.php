@@ -32,10 +32,10 @@ class QueryObjectQueryCommand extends ContainerAwareCommand
         $constructorRef = $classRef->getConstructor();
         $numRequiredArgs = $constructorRef ? $constructorRef->getNumberOfRequiredParameters() : 0;
 
-        if ($numRequiredArgs > sizeof($args)) {
+        if ($numRequiredArgs > count($args)) {
             throw new \InvalidArgumentException(sprintf(
                 'Not enough arguments - %d given, %d required',
-                sizeof($args),
+                count($args),
                 $numRequiredArgs
             ));
         }

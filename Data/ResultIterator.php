@@ -81,7 +81,7 @@ class ResultIterator implements Iterator
 
     public function next()
     {
-        $this->position++;
+        ++$this->position;
         if (floor(($this->position + 1) / $this->getLimit()) > $this->criteria['page'] && $this->valid()) {
             $this->loadNextPage();
         }
@@ -107,7 +107,7 @@ class ResultIterator implements Iterator
 
     protected function loadNextPage()
     {
-        $this->criteria['page']++;
+        ++$this->criteria['page'];
         $this->cache = $this->queryExecutor->execute($this->queryObject, $this->createDisplayCriteria());
     }
 

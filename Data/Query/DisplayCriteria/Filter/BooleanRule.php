@@ -35,12 +35,12 @@ class BooleanRule extends FilterRule
     {
         $choices = [
             self::YES,
-            self::NO
+            self::NO,
         ];
 
         return [
             'translation_domain' => 'ImaticDataBundle',
-            'choices' => array_combine($choices, $choices)
+            'choices' => array_combine($choices, $choices),
         ];
     }
 }

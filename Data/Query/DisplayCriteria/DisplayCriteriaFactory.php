@@ -41,6 +41,7 @@ class DisplayCriteriaFactory
     /**
      * @param array $options
      * @param bool  $persistent
+     *
      * @return DisplayCriteria
      */
     public function createCriteria(array $options = [], $persistent = false)
@@ -60,6 +61,7 @@ class DisplayCriteriaFactory
     /**
      * @param string|null $componentId
      * @param bool        $persistent
+     *
      * @return PagerInterface
      */
     public function createPager($componentId = null, array $pager = [], $persistent = false)
@@ -88,6 +90,7 @@ class DisplayCriteriaFactory
      * @param string|null          $componentId
      * @param FilterInterface|null $filter
      * @param bool                 $persistent
+     *
      * @return FilterInterface
      */
     public function createFilter($componentId = null, FilterInterface $filter = null, $persistent = false)
@@ -142,6 +145,7 @@ class DisplayCriteriaFactory
      * @param string|null $componentId
      * @param array       $sorter
      * @param bool        $persistent
+     *
      * @return SorterInterface
      */
     public function createSorter($componentId = null, array $sorter = [], $persistent = false)

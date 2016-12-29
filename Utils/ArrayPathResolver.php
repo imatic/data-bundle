@@ -3,7 +3,7 @@
 namespace Imatic\Bundle\DataBundle\Utils;
 
 /**
- * Array path resolver
+ * Array path resolver.
  *
  * Code ported from pre-3.0 Symfony\Component\HttpFoundation\ParameterBag
  *
@@ -22,6 +22,7 @@ class ArrayPathResolver
     /**
      * @param string $path
      * @param mixed  $default
+     *
      * @return mixed
      */
     public function resolve($path, $default = null)

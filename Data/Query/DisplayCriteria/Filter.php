@@ -53,6 +53,7 @@ class Filter implements FilterInterface
 
     /**
      * @param $index
+     *
      * @return bool
      */
     public function has($index)
@@ -78,6 +79,7 @@ class Filter implements FilterInterface
 
     /**
      * @param FilterRule $rule
+     *
      * @return $this
      */
     public function add(FilterRule $rule)
@@ -101,6 +103,7 @@ class Filter implements FilterInterface
 
     /**
      * @param FormInterface $form
+     *
      * @throws \LogicException
      */
     public function setForm(FormInterface $form)
@@ -121,6 +124,7 @@ class Filter implements FilterInterface
 
     /**
      * @param string $translationDomain
+     *
      * @return $this
      */
     public function setTranslationDomain($translationDomain)
@@ -154,7 +158,7 @@ class Filter implements FilterInterface
     }
 
     /**
-     * Retrieve an external iterator
+     * Retrieve an external iterator.
      *
      * @return \Iterator
      */
