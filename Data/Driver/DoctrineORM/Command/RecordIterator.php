@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
-use Exception;
+use RuntimeException;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
@@ -69,12 +69,16 @@ class RecordIterator
                 $result = call_user_func($callback, $value);
 
                 if (!$result->isSuccessful()) {
-                    throw new Exception();
+                    throw new RuntimeException(
+                        'Unsuccessful batch processing',
+                        0,
+                        $result->hasException() ? $result->getException() : null
+                    );
                 }
             }
 
             $this->queryExecutor->commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->queryExecutor->rollback();
 
             $return = CommandResult::error('batch_error', [], $e);

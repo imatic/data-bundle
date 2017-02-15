@@ -12,7 +12,7 @@ use Iterator;
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class ResultIterator implements Iterator
+class ResultIterator implements Iterator, \Countable
 {
     /**
      * @var QueryObjectInterface
@@ -131,5 +131,10 @@ class ResultIterator implements Iterator
     protected function getPage()
     {
         return $this->criteria['page'];
+    }
+
+    public function count()
+    {
+        return $this->count;
     }
 }
