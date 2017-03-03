@@ -36,7 +36,7 @@ class QueryExecutorDelegate implements QueryExecutorInterface
      */
     protected function getQueryExecutor(QueryObjectInterface $queryObject)
     {
-        $connection = 'default';
+        $connection = null;
         if ($queryObject instanceof ConnectionQueryObjectInterface) {
             $connection = $queryObject->getConnectionName();
         }

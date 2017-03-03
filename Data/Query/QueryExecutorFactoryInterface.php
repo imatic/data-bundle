@@ -13,5 +13,5 @@ interface QueryExecutorFactoryInterface
      *
      * @throws RuntimeException
      */
-    public function createWithConnection($connectionName);
+    public function createWithConnection($connectionName = null);
 }

@@ -19,9 +19,14 @@ class QueryExecutorFactory implements QueryExecutorFactoryInterface
         $this->container = $container;
     }
 
-    public function createWithConnection($connectionName)
+    public function createWithConnection($connectionName = null)
     {
-        $connectionId = sprintf('doctrine.dbal.%s_connection', $connectionName);
+        if ($connectionName !== null) {
+            $connectionId = sprintf('doctrine.dbal.%s_connection', $connectionName);
+        } else {
+            $connectionId = 'database_connection';
+        }
+
         if (!isset($this->queryExecutorCache[$connectionId])) {
             if (!$this->container->has($connectionId)) {
                 throw new RuntimeException(sprintf('Cannot find service "%s".', $connectionId));
