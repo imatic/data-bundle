@@ -1,0 +1,21 @@
+edit:
+    success:            Položka bola upravená
+    error:              Nepodarilo sa upraviť položku
+
+create:
+    success:            Položka bola vytvorená
+    error:              Nepodarilo sa vytvoriť položku
+
+delete:
+    success:            Položka bola zmazaná
+    error:              Nepodarilo sa zmazať položku
+
+success:                Akcia prebehla úspešne
+error:                  Nastala chyba pri spracovaní akcie
+
+batch_success:          "Hromadná akcia prebehla úspešne pre %count% položiek"
+batch_error:            Pris spracovaní hromadnej akcia nastala chyba
+
+invalid_instance:       Neplatné dáta
+invalid_state:          Neplatný stav
+constraint_violation:   Položku nebolo možné zmazať, pretože na nej zavisí iná položka
