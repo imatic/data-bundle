@@ -43,4 +43,9 @@ interface MessageInterface
      * @return string
      */
     public function getPrefix();
+
+    /**
+     * @return string
+     */
+    public function __toString();
 }

@@ -5,6 +5,11 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 interface CommandResultInterface
 {
     /**
+     * @return string
+     */
+    public function getMessagesAsString();
+
+    /**
      * @return MessageInterface[]
      */
     public function getMessages();
@@ -30,6 +35,13 @@ interface CommandResultInterface
     public function getException();
 
     /**
+     * @param string|null $exceptionClass
+     * @return void
+     * @throws |\Exception
+     */
+    public function throwException($exceptionClass = null);
+
+    /**
      * @param MessageInterface $message
      */
     public function addMessage(MessageInterface $message);
@@ -48,7 +60,7 @@ interface CommandResultInterface
 
     /**
      * @param string $name
-     * @param mixed  $default
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -56,7 +68,7 @@ interface CommandResultInterface
 
     /**
      * @param string $name
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function set($name, $value);
 }

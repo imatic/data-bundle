@@ -25,9 +25,9 @@ class CommandResult implements CommandResultInterface
     private $exception;
 
     /**
-     * @param bool               $success
+     * @param bool $success
      * @param MessageInterface[] $messages
-     * @param \Exception         $exception
+     * @param \Exception $exception
      *
      * @throws \LogicException
      */
@@ -37,8 +37,8 @@ class CommandResult implements CommandResultInterface
             throw new \LogicException('Result cannot be successful with exception.');
         }
 
-        $this->success = (bool) $success;
-        $this->messages = (array) $messages;
+        $this->success = (bool)$success;
+        $this->messages = (array)$messages;
         $this->exception = $exception;
         $this->data = [];
     }
@@ -78,6 +78,11 @@ class CommandResult implements CommandResultInterface
         return $this->messages;
     }
 
+    public function getMessagesAsString()
+    {
+        return implode(', ', $this->messages);
+    }
+
     public function addMessage(MessageInterface $message)
     {
         $this->messages[] = $message;
@@ -98,6 +103,18 @@ class CommandResult implements CommandResultInterface
     public function getException()
     {
         return $this->exception;
+    }
+
+    public function throwException($exceptionClass = null)
+    {
+        if (!$this->isSuccessful()) {
+            if ($this->hasException()) {
+                throw $this->getException();
+            } else {
+                $exceptionClass = $exceptionClass ?: \RuntimeException::class;
+                throw new $exceptionClass($this->getMessagesAsString());
+            }
+        }
     }
 
     public function has($name)
