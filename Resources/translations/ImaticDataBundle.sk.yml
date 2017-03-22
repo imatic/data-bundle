@@ -1,0 +1,23 @@
+# Filter operators
+eq:             Je rovné
+neq:            Nie je rovné
+like:           Obsahuje
+notLike:        Neobsahuje
+isNull:         Je prázdne
+isNotNull:      Nie je prázdne
+gt:             Je väčšie
+gte:            Je väčšie alebo rovné
+lt:             Je menšie
+lte:            Je menšie alebo rovné
+in:             Je v
+notIn:          Nie je v
+between:        Je medzi
+notBetween:     Nie je medzi
+
+# Filter labels
+Start:          Od
+End:            Do
+
+# Boolean values
+'true':         Áno
+'false':        Nie
