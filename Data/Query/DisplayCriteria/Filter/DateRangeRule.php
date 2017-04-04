@@ -15,7 +15,22 @@ class DateRangeRule extends RangeRule
     public function setValue($value)
     {
         parent::setValue($value);
+        $this->updateValue();
 
+        return $this;
+    }
+
+    public function ruleValue($value = null)
+    {
+        $args = func_get_args();
+        $result = call_user_func_array('parent::ruleValue', $args);
+        $this->updateValue();
+
+        return $result;
+    }
+
+    private function updateValue()
+    {
         if ($this->isBound()) {
             if ($this->value['start']) {
                 $this->value['start']->setTime(0, 0, 0);
