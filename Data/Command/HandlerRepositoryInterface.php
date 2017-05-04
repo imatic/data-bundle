@@ -29,4 +29,11 @@ interface HandlerRepositoryInterface
      * @return string
      */
     public function getBundleName($command);
+
+    /**
+     * @param string $handlerName
+     *
+     * @return bool
+     */
+    public function hasHandler($handlerName);
 }

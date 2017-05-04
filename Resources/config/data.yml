@@ -6,8 +6,15 @@ services:
             - '@imatic_data.command_handler_repository'
             - '%kernel.debug%'
 
-    imatic_data.command_handler_repository:
+    imatic_data.decorated_command_handler_repository:
         class: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
+        public: false
+
+    imatic_data.command_handler_repository:
+        class: Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository
+        arguments:
+            - '@service_container'
+            - '@imatic_data.decorated_command_handler_repository'
 
     # driver
     imatic_data.driver_repository:

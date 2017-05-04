@@ -3,9 +3,8 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
-use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
-use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerRepository;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Command\Handler;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -38,11 +37,30 @@ class HandlerRepositoryTest extends \PHPUnit_Framework_TestCase
         $handlerRepository->addHandler('handler', new Handler(), 'AppImaticDataBundle');
         $handlerRepository->addHandler('handler', new Handler(), 'AppImaticDataBundle');
     }
-}
 
-class Handler implements HandlerInterface
-{
-    public function handle(CommandInterface $command)
+    public function testgetHandlers()
     {
+        $handler1 = new Handler();
+        $handler2 = new Handler();
+
+        $handlerRepository = new HandlerRepository();
+        $handlerRepository->addHandler('handler1', $handler1, 'AppImaticDataBundle');
+        $handlerRepository->addHandler('handler2', $handler2, 'AppImaticDataBundle');
+
+        $this->assertSame(
+            [
+                'handler1' => $handler1,
+                'handler2' => $handler2,
+            ],
+            $handlerRepository->getHandlers()
+        );
+    }
+
+    public function testGetBundleName()
+    {
+        $handlerRepository = new HandlerRepository();
+        $handlerRepository->addHandler('handler1', new Handler(), 'AppImaticDataBundle');
+
+        $this->assertSame('AppImaticDataBundle', $handlerRepository->getBundleName(new Command('handler1')));
     }
 }
