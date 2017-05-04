@@ -22,7 +22,7 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
 
         $requestStack
             ->expects($this->any())
@@ -31,7 +31,7 @@ class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
                 return $this->currentRequest;
             }));
 
-        $pagerFactory = $this->getMock('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory');
+        $pagerFactory = $this->createMock('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory');
 
         $pagerFactory
             ->expects($this->any())
