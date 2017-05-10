@@ -5,7 +5,6 @@ namespace Imatic\Bundle\DataBundle\DependencyInjection\Compiler;
 use Imatic\Bundle\DataBundle\Utils\BundleNameFinder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -25,9 +24,9 @@ class CommandHandlerCompilerPass implements CompilerPassInterface
         foreach ($handlers as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $definition = $container->getDefinition($id);
-                $handlerRepositoryDef->addMethodCall('addHandler', [
+                $handlerRepositoryDef->addMethodCall('addLazyHandler', [
                     $attributes['alias'],
-                    new Reference($id),
+                    $id,
                     $finder->find($definition->getClass()),
                 ]);
             }

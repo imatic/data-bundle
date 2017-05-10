@@ -17,7 +17,7 @@ class ExtJsReaderTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $requestStack = $this->getMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
 
         $requestStack
             ->expects($this->any())

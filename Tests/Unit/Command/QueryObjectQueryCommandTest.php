@@ -12,14 +12,14 @@ class QueryObjectQueryCommandTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->containerMock = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->containerMock = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $this->containerMock
             ->expects($this->any())
             ->method('get')
             ->will($this->returnCallback(function ($id) {
                 switch ($id) {
                     case 'imatic_data.query_executor':
-                        return $this->getMock('Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface');
+                        return $this->createMock('Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface');
                 }
             }))
         ;

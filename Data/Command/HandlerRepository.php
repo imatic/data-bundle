@@ -62,7 +62,7 @@ class HandlerRepository implements HandlerRepositoryInterface
      *
      * @return bool
      */
-    private function hasHandler($name)
+    public function hasHandler($name)
     {
         return array_key_exists($name, $this->handlers);
     }
