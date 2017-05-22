@@ -26,6 +26,9 @@ services:
         arguments:
             - '@imatic_data.driver_repository'
 
+    Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface:
+        alias: imatic_data.query_executor
+
     # display criteria
     imatic_data.pager_factory:
         class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory
