@@ -1,6 +1,6 @@
 <?php
 
-namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\RuleProcessor;
+namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Doctrine\DBAL\Connection;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\ContainsOperatorProcessor;
