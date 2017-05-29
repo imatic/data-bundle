@@ -2,13 +2,12 @@
 
 namespace Imatic\Bundle\DataBundle\Tests\Integration\DependencyInjection\Compiler;
 
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 class CommandHandlerCompilerPassTest extends WebTestCase
 {
 
-    public function testHandlersAreRegisteredWithClassNameAndAlias()
+    public function testHandlersAreRegisteredWithServiceIdAndAlias()
     {
         $repository = $this->container->get('imatic_data.command_handler_repository');
 
@@ -18,7 +17,7 @@ class CommandHandlerCompilerPassTest extends WebTestCase
         );
 
         $this->assertTrue(
-            $repository->hasHandler(UserDeactivateHandler::class),
+            $repository->hasHandler('app_imatic_data.handler.user_deactivate_handler'),
             'Handler is retrievable by class name.'
         );
     }

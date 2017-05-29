@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityRepository;
 use Imatic\Bundle\DataBundle\Data\Command\Command;
 use Imatic\Bundle\DataBundle\Data\Command\CommandExecutor;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
-use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
@@ -30,7 +29,7 @@ class CommandExecutorTest extends WebTestCase
         $this->assertFalse($user->isActivated());
     }
 
-    public function testGivenCommandShouldBeSuccessfullyExecutedUsingClassNameAsCommandName()
+    public function testGivenCommandShouldBeSuccessfullyExecutedUsingServiceIdAsCommandName()
     {
         /* @var $user User */
         $user = $this->getUserRepository()->findOneByName('Adam');
@@ -38,7 +37,7 @@ class CommandExecutorTest extends WebTestCase
         // guard
         $this->assertTrue($user->isActivated());
 
-        $command = new Command(UserDeactivateHandler::class, ['id' => $user->getId()]);
+        $command = new Command('app_imatic_data.handler.user_deactivate_handler', ['id' => $user->getId()]);
         $result = $this->getCommandExecutor()->execute($command);
         $this->assertTrue($result->isSuccessful());
 
