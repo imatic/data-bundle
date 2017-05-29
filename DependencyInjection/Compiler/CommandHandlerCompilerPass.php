@@ -27,6 +27,11 @@ class CommandHandlerCompilerPass implements CompilerPassInterface
                 $definition = $container->getDefinition($id);
 
                 if (array_key_exists('alias', $attributes)) {
+                    @trigger_error(
+                        'Alias attribute of "imatic_data.handler" tag is deprecated since version 3.1 and '
+                        . 'will be removed in 4.0. Use service id or service alias as handler name instead.',
+                        E_USER_DEPRECATED
+                    );
                     $handlerRepositoryDef->addMethodCall('addLazyHandler', [
                         $attributes['alias'],
                         $id,
