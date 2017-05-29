@@ -1,10 +1,10 @@
 {
     "name": "imatic/data-bundle",
     "type": "symfony-bundle",
-    "description": "Imatic Data Bundle",
-    "keywords": [],
-    "homepage": "http://imatic.cz",
-    "license": "proprietary",
+    "description": "Bundle to work with data",
+    "keywords": ["data", "symfony"],
+    "homepage": "https://www.imatic.cz",
+    "license": "MIT",
     "authors": [
         {
             "name": "Stepan Koci",
