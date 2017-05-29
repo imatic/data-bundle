@@ -26,9 +26,6 @@ class QueryExecutorTest extends WebTestCase
 {
     public function testQueryExecutorShouldReturnCorrectNumberOfResultsForHasManyAssociation()
     {
-        // @TODO: Doctrine's Paginator is not working with the query anymore
-        $this->markTestSkipped();
-
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListWithOrdersQuery()));
 
@@ -134,9 +131,6 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnSortedResultsAscByAggregatedField()
     {
-        // @TODO: Doctrine's Paginator is not working with the query anymore
-        $this->markTestSkipped();
-
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
@@ -154,9 +148,6 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnSortedResultsDescByAggregatedField()
     {
-        // @TODO: Doctrine's Paginator is not working with the query anymore
-        $this->markTestSkipped();
-
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 

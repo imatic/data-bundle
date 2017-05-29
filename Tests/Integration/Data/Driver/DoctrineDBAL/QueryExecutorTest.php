@@ -33,13 +33,12 @@ class QueryExecutorTest extends WebTestCase
 
     public function testCountShouldReturnCorrectNumberOfRowsWithGroupByClause()
     {
-        // @TODO: Doctrine's Paginator is not working with the query anymore
-        $this->markTestSkipped();
+        $result = (new UserListWithOrderNumbersQuery())->build($this->getConnection())->execute()->fetchAll();
 
         // guard
-        $this->assertGreaterThan(1, (new UserListWithOrderNumbersQuery())->build($this->getConnection())->execute()->fetchAll());
+        $this->assertGreaterThan(1, $result);
 
-        $this->assertEquals(1, $this->getQueryExecutor()->count(new UserListWithOrderNumbersQuery()));
+        $this->assertEquals(count($result), $this->getQueryExecutor()->count(new UserListWithOrderNumbersQuery()));
     }
 
     public function testQueryExecutorShouldReturnsCorrectPagesBasedOnDisplayCriteria()
@@ -138,9 +137,6 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnSortedResultsAscByAggregatedField()
     {
-        // @TODO: Doctrine's Paginator is not working with the query anymore
-        $this->markTestSkipped();
-
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
@@ -158,9 +154,6 @@ class QueryExecutorTest extends WebTestCase
 
     public function testQueryExecutorShouldReturnSortedResultsDescByAggregatedField()
     {
-        // @TODO: Doctrine's Paginator is not working with the query anymore
-        $this->markTestSkipped();
-
         // guard
         $this->assertEquals(2, $this->getQueryExecutor()->count(new UserListQuery()));
 
