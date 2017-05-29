@@ -186,13 +186,12 @@ Registrace command handleru
 .. sourcecode:: yaml
 
     services:
-        app_imatic_data.handler.user_deactivate_handler:
-            class: Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler
+        Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler:
             arguments:
                 - @imatic_data.query_executor
                 - @imatic_data.object_manager
             tags:
-                - { name: imatic_data.handler, alias: user.deactivate }
+                - { name: imatic_data.handler }
 
 Provedení commandu
 ------------------
@@ -200,11 +199,14 @@ Provedení commandu
 .. sourcecode:: php
 
     <?php
+
+    use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler;
+
     $id = 3;
 
-    // vytvoří se Command, kterému se jako první argument předá alias handler
+    // vytvoří se Command, kterému se jako první argument předá trida handleru
     // a jako druhý argument se pak předá pole parametrů
-    $command = new Command('user.deactivate', ['id' => $id]);
+    $command = new Command(UserDeactivateHandler::class, ['id' => $id]);
 
     // nakonec se získá CommandQueryExecutor který může vrátit CommandResultInterface
     $result = $this->get('imatic_data.command_executor')->execute($command);

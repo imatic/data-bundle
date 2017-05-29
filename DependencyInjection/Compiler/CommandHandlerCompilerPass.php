@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class CommandHandlerCompilerPass implements CompilerPassInterface
 {
+
     /**
      * @param ContainerBuilder $container
      */
@@ -24,6 +25,7 @@ class CommandHandlerCompilerPass implements CompilerPassInterface
         foreach ($handlers as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $definition = $container->getDefinition($id);
+
                 if (array_key_exists('alias', $attributes)) {
                     $handlerRepositoryDef->addMethodCall('addLazyHandler', [
                         $attributes['alias'],
@@ -33,7 +35,7 @@ class CommandHandlerCompilerPass implements CompilerPassInterface
                 }
 
                 $handlerRepositoryDef->addMethodCall('addLazyHandler', [
-                    $definition->getClass(),
+                    $id,
                     $id,
                     $finder->find($definition->getClass()),
                 ]);
