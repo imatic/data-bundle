@@ -5,26 +5,26 @@ RecordIterator
 .. _record_iterator_h:
 
 `RecordIterator </Driver/DoctrineORM/Command/RecordIterator.php>`__
---------------------------------------------------------------------
+-------------------------------------------------------------------
 
-- it allows easilly to iterate through selected records by users
-- service: ``imatic_data.driver.doctrine_orm.record_iterator``
-- methods
+- Allows easily to iterate over records selected by users.
+- Service id: ``imatic_data.driver.doctrine_orm.record_iterator``.
+- Methods:
 
   - ``each``
 
-    - iterates through records
+    - Iterates over records.
 
   - ``eachIdentifier``
 
-    - iterates through identifiers of records
+    - Iterates over identifiers of records.
 
-- each method takes  `RecordIteratorArgs <record_iterator_args_h_>`__ as argument
+- Each method takes  `RecordIteratorArgs <record_iterator_args_h_>`__ as argument
 
 .. _record_iterator_args_h:
 
 `RecordIteratorArgs </Data/Driver/DoctrineORM/Command/RecordIteratorArgs.php>`__
----------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 - argument to the methods of `RecordIterator <record_iterator_h_>`__
 - has 3 arguments
@@ -48,10 +48,10 @@ RecordIterator
 
   - ``setLimit``
 
-    - overwrites default limit per page
+    - Overwrites default limit per page.
 
-Example of handler deactivating all selected users selected by user
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Example of handler deactivating all user records selected by user
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. sourcecode:: php
 

@@ -21,14 +21,15 @@ Commands use 3 main interfaces
 .. _command_h:
 
 `Command </Data/Command/Command.php>`_
--------------------------------------
+--------------------------------------
 
 - accepts 2 arguments
 
   - ``$handlerName`` - alias of the command handler service
   - ``$parameters`` - parameters used by command handler
 
-Command is passed to the `command executor <command_executor_h_>`_ which executes `command handler <handler_>`_ based on ``$handlerName`` argument
+Command is passed to the `command executor <command_executor_h_>`_ which executes `command handler <handler_>`_ based
+on ``$handlerName`` argument
 
 
 Example of command removing recording files older than one month
@@ -49,27 +50,29 @@ Example of command removing recording files older than one month
 Handler
 -------
 
-- has 1 method ``handle`` which accepts `command <command_h_>`_, makes processing and optionally returns result
-- needs to be registered in container in order to be called by `command executor <CommandExecutor_>`_
+- Has 1 method ``handle``, which accepts `command <command_h_>`_, processes it and returns a result.
+- Needs to be registered in container in order to be called by `command executor <CommandExecutor_>`_
 
   - service needs to be tagged with tag ``imatic_data.handler`` having ``alias`` attribute
 
-- in case handler needs a `command executor <command_executor_h_>`_ to be able to execute other commands, it has to implement ``Imatic\Bundle\DataBundle\Data\Command\CommandExecutorAwareInterface`` to avoid circular reference exception in DI. It can also optionally use ``Imatic\Bundle\DataBundle\Data\Command\CommandExecutorAwareTrait`` trait.
-- result can be one of
+- In case handler needs a `command executor <command_executor_h_>`_ to be able to execute other commands,
+  it can implement ``Imatic\Bundle\DataBundle\Data\Command\CommandExecutorAwareInterface`` to avoid circular reference
+  exception in DI. It can also optionally use ``Imatic\Bundle\DataBundle\Data\Command\CommandExecutorAwareTrait`` trait.
+- Result can be one of
 
   - ``void`` - command was handled successfully
   - ``boolean``
 
     - if ``true`` - command was handled successfully
-    - if ``false`` - there was error during processing the command
+    - if ``false`` - there was error during processing of the command
 
   - ``Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface``
 
-    - see it's default implementation `CommandResult <command_result_h_>`_ for more details
+    - See it's default implementation `CommandResult <command_result_h_>`_ for more details.
 
 
-Example of handler removing specified type of files older than specified period
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Example of handler removing specified type of files older than given period
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. sourcecode:: php
 
@@ -102,17 +105,20 @@ Example of handler removing specified type of files older than specified period
 .. _command_result_h:
 
 `CommandResult </Data/Command/CommandResult.php>`_
--------------------------------------------------
+--------------------------------------------------
 
-- it's object can be optionally returned from `handler's <Handler_>`_ ``handle`` method.
+- An instance can be optionally returned from `handler's <Handler_>`_ ``handle`` method.
 - accepts 3 arguments
 
   - ``$success`` - boolean if handler processed command successfully
   - ``$messages`` - array of messages (messages can be shown to user, logged somewhere...)
   - ``Exception $exception`` - exception thrown when executing handler
 
-- handler has also 2 static methods ``success`` and ``error`` to create successful or unsuccessful result
-- in addition to parameters above, you can use method ``set`` to set additional data of the result (number of removed files, names of removed files, ...). Data set using ``set`` are meant for some additional processing and can be retrieved by calling ``get`` on the result object.
+- Implements 2 static factory methods ``success`` and ``error`` to conveniently create successful or unsuccessful
+  result.
+- In addition to parameters above, you can use method ``set`` to set additional data of the result (number of removed
+  files, names of removed files, etc.). Data set using ``set`` are meant for some additional processing and can be
+  retrieved by calling ``get`` on the result object.
 
 Example of creating successful result
 -------------------------------------
@@ -135,11 +141,11 @@ Example of creating unsuccessful result
 .. _command_executor_h:
 
 `CommandExecutor </Data/Command/CommandExecutor.php>`_
------------------------------------------------------
+------------------------------------------------------
 
-- has 1 method ``execute`` which executes given command and returns result
-- contains information about executed `command <command_h_>`_
-- returns `command result <command_result_h_>`_
+- Has 1 method ``execute`` which executes given command and returns result.
+- Contains information about executed `command <command_h_>`_
+- Returns `command result <command_result_h_>`_
 
 .. sourcecode:: php
 
@@ -151,7 +157,8 @@ Example of creating unsuccessful result
 Preimplemented handlers
 -----------------------
 
-This bundle comes with several preimplemented handlers so that you don't have to implement commands for very basic operations.
+This bundle comes with several preimplemented handlers so that you don't have to implement command handlers for common
+operations.
 
 Doctrine DBAL handlers
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -159,15 +166,16 @@ Doctrine DBAL handlers
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\CreateHandler
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to create new rows in db table
-- handler assumes that column in which primary key is stored is named ``id`` (if not passed, it's auto generated)
-- alias: ``imatic_data.doctrine_dbal.generic_create``
-- parameters
+- Used to create new rows in db table.
+- Handler assumes that name of the column containing the key is ``id`` (if not explicitly passed, it's auto generated).
+- Alias: ``imatic_data.doctrine_dbal.generic_create``
+- Parameters:
 
   - ``table`` - name of the table we want to insert data into
-  - ``data`` - data we want to insert into table. It's associative array where keys are column names and values are the actual data for the columns.
+  - ``data`` - data we want to insert into table. It's associative array where keys are column names and values are the
+    actual data for the columns.
 
-- result
+- Result:
 
   - ``result`` - contains id of the record
 
@@ -203,15 +211,17 @@ Example of inserting new user and echoing it's id
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\EditHandler
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to update existing rows in db table
-- alias: ``imatic_data.doctrine_dbal.generic_edit``
-- parameters
+- Used to update existing rows in db table.
+- Alias: ``imatic_data.doctrine_dbal.generic_edit``
+- Parameters:
 
-  - ``id`` - id of the row we want to update. It's associative array where keys are column names and values are their values.
+  - ``id`` - id of the row we want to update. It's associative array where keys are column names and values are their
+    values.
   - ``table`` - name of the table we want to update data in
-  - ``data`` - data we want to update in table. It's associative array where keys are column names and values are the actual data for the columns.
+  - ``data`` - data we want to update in table. It's associative array where keys are column names and values are the
+    actual data for the columns.
 
-- result
+- Result:
 
   - this handler doesn't return any result
 
@@ -247,29 +257,29 @@ Example of updating existing user with id equal to 1
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\CreateOrEditHandler
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to create new row in case one doesn't exist already (based on specified criteria) or edit existing one
-- handler assumes that column in which primary key is stored is named ``id``
-- alias: ``imatic_data.doctrine_dbal.generic_create_or_edit``
-- parameters
+- Used to create new row in case one doesn't already exist (based on specified criteria) or edit existing one.
+- Handler assumes that name of the column with primary key is ``id``.
+- Alias: ``imatic_data.doctrine_dbal.generic_create_or_edit``
+- Parameters:
 
   - ``columnValues`` - columns used to search existing record
   - ``table`` - table to search/update/insert records into
   - ``data`` - data to update in the new or existing row
 
-- result
+- Result:
 
   - based on if data were created or updated, result is same as the one for generic create and update handlers
 
 Example of creating or updating user with given email address
 *************************************************************
 
-- in the end we want to have user in our database with following columns
+- In the end we want to have user in our database with following columns
 
   - ``email`` - user@example.com
   - ``username`` - user
 
-- in case user with given email doesn't exist, we want to create him
-- in case user with given email does exist, we want his ``username`` to be ``user``
+- In case, user with given email doesn't exist, we want to create him
+- In case, user with given email does exist, we want his ``username`` to be ``user``
 
 .. sourcecode:: php
 
@@ -303,14 +313,15 @@ Example of creating or updating user with given email address
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\DeleteHandler
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to delete row from db
-- alias: ``imatic_data.doctrine_dbal.generic_delete``
-- parameters
+- Used to delete row from db
+- Alias: ``imatic_data.doctrine_dbal.generic_delete``
+- Parameters:
 
-  - ``id`` - id of the row we want to delete. It's associative array where keys are column names and values are their values.
+  - ``id`` - id of the row we want to delete. It's associative array where keys are column names and values are their
+    values.
   - ``table`` - name of the table we want to delete the row in
 
-- result
+- Result:
 
   - this handler doesn't return any result
 
@@ -343,19 +354,19 @@ Example of deleting user with id 3
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\SoftDeleteHandler
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to mark row in table as deleted
-- handler assumes that
+- Used to mark row in table as deleted.
+- Handler assumes that:
 
   - column in which primary key is stored is named ``id``
   - table has column ``deleted_at`` which stores time at which row was marked as deleted
 
-- alias: ``imatic_data.doctrine_dbal.generic_soft_delete``
-- parameters
+- Alias: ``imatic_data.doctrine_dbal.generic_soft_delete``
+- Parameters:
 
   - ``id`` - id of the row we want to mark as deleted
   - ``table`` - table the row is in
 
-- result
+- Result:
 
   - this handler doesn't return any result
 
@@ -391,14 +402,14 @@ Doctrine ORM handlers
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\CreateHandler
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to store new object in db
-- alias: ``imatic_data.generic_create``
-- parameters
+- Used to store new object in db.
+- Alias: ``imatic_data.generic_create``
+- Parameters:
 
   - ``class`` - class of the object we want to store into db
   - ``data`` - object of the class we want to store into db
 
-- result
+- Result:
 
   - this handler doesn't return any result
 
@@ -435,14 +446,14 @@ Example of storing new user in db
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\EditHandler
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to update db with edited data
-- alias: ``imatic_data.generic_edit``
-- parameters
+- Used to update db with edited data.
+- Alias: ``imatic_data.generic_edit``
+- Parameters:
 
   - ``class`` - class of the object we want to store into db
   - ``data`` - object of the class we want to store into db
 
-- result
+- Result:
 
   - this handler doesn't return any result
 
@@ -478,16 +489,16 @@ Example of updating db with updated user
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\DeleteHandler
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to delete existing object from db
-- at least one of ``data``, ``query_object`` parameters have to be specified
-- alias: ``imatic_data.generic_delete``
-- parameters
+- Used to delete existing object from db.
+- At least one of ``data`` and ``query_object`` parameters have to be specified.
+- Alias: ``imatic_data.generic_delete``
+- Parameters:
 
   - ``class`` - class of the object we want to store into db
   - ``data`` - object of the class we want to remove from db
   - ``query_object`` - query object returning the object of the class
 
-- result
+- Result:
 
   - this handler doesn't return any result
 
@@ -523,12 +534,13 @@ Example of deleting user
 Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\BatchHandler
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-- used to execute given command for each object returned by executing query builder
-- arguments:
+- Used to execute given command for each object returned by executing query builder.
+- Arguments:
 
   - ``RecordIterator``
 
-    - service: ``imatic_data.driver.doctrine_orm.record_iterator`` (used to iterate through records with use of pagination)
+    - service: ``imatic_data.driver.doctrine_orm.record_iterator`` (used to iterate through records with use of
+      pagination)
 
   - ``$commandName``
 
@@ -538,7 +550,7 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\BatchHandler
 
     - parameters for the command
 
-- parameters:
+- Parameters:
 
   - ``batch_query``
 
@@ -546,7 +558,8 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\BatchHandler
 
   - ``batch_command_parameters`` (optional)
 
-    - additional parameters for the command (parameters specified already in ``$commandParameters`` argument will be replaced by these). ``data`` parameter containing current object is first added to the list of parameters.
+    - additional parameters for the command (parameters specified already in ``$commandParameters`` argument will be
+      replaced by these). ``data`` parameter containing current object is first added to the list of parameters.
 
   - ``batch_command_parameters_callback`` (optional)
 
@@ -555,9 +568,11 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\BatchHandler
 Example of deleting all inactive users
 **************************************
 
-- we already have command for deleting objects ``imatic_data.generic_delete``. That command removes only single object though.
+- We already have command for deleting objects ``imatic_data.generic_delete``. That command removes only single object
+  though.
 
-First we register ``BatchHandler`` which will execute ``imatic_data.generic_delete`` command for each object returned by a query object
+First we register ``BatchHandler`` which will execute ``imatic_data.generic_delete`` command for each object returned
+by a query object.
 
 .. sourcecode:: yaml
 
@@ -570,7 +585,9 @@ First we register ``BatchHandler`` which will execute ``imatic_data.generic_dele
        tags:
            - { name: 'imatic.data_handler', alias: 'delete_inactive_users' }
 
-Then we can execute the command. As batch command passes the user object to the child command in ``data`` parameter, but our delete handler expects the user object in ``object`` parameter, we have to convert parameters using ``batch_command_parameters_callback``.
+Then we can execute the command. As batch command passes the user object to the child command in ``data`` parameter,
+but our delete handler expects the user object in ``object`` parameter, we have to convert parameters using
+``batch_command_parameters_callback``.
 
 .. sourcecode:: php
 

@@ -6,13 +6,19 @@ This `bundle <https://symfony.com/doc/current/bundles.html>`_ makes it easy to w
 Main goals of the bundle
 ------------------------
 
-- Accessing data in uniform way (no matter where they are stored) and possibility to have easy filtering, sorting, paging capabilities with small effort.
-- Executing arbitrary operations (activating users, making orders in eshop...) in uniform way (no matter if the operation was executed by user from a browser, via some message queues, console or something else).
+- Accessing data in uniform way (no matter where they are stored) and possibility to have filtering, sorting, paging
+  capabilities with small effort.
+- Executing arbitrary operations (activating users, making orders in eshop...) in uniform way (no matter if the
+  operation was executed by user from a browser, via some message queues, console or something else).
 
 Accessing data in uniform way
 -----------------------------
 
-This bundle uses query objects to retrieve/store data from arbitrary storage. Currently, we have drivers for `doctrine dbal <http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/introduction.html#introduction>`_ and `doctrine orm <http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/getting-started.html#what-is-doctrine>`_. Other drivers can be relatively easily implemented.
+This bundle uses query objects to retrieve/store data from arbitrary storage. Currently, we have drivers for
+`doctrine dbal <http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/introduction.html#introduction>`_
+and `doctrine orm <http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/tutorials/getting-started.html#what-is-doctrine>`_.
+Other drivers can be relatively easily implemented.
+
 All query objects have to implement ``QueryObjectInterface`` of specific driver in order to query data.
 
 Example of querying active users using doctrine orm driver
@@ -52,17 +58,20 @@ Now we can execute the query using `query executor <Data/Driver/DoctrineORM/Quer
 Variable ``$activeUsers`` now contains objects of active users.
 
 
-To learn more about query objects (how to do filtering, sorting, pagination, ...) see `query object documentation <Resources/doc/AccessingData/QueryObjects.rst>`_.
+To learn more about query objects (how to do filtering, sorting, pagination, etc.) see
+`query object documentation <Resources/doc/AccessingData/QueryObjects.rst>`_.
 
 Executing operations
 --------------------
 
-This bundle uses commands to execute operations. Created command is then passed to a command executor, which calls handler to do the actual work.
+This bundle uses commands to execute operations. Command instance is passed to a command executor, which calls command
+handler to do the actual work.
 
 Example of exporting all active users using command
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First we need to create command handler, which will export all active users in passed in format (note that used class ``UserExporter`` does not exist and it's responsibility is to export passed in users into passed in format).
+First we need to create command handler, which will export all active users in passed format (note that used class
+``UserExporter`` does not exist and its responsibility is to export passed users in given format).
 
 .. sourcecode:: php
 
@@ -96,13 +105,15 @@ Then we need to register the handler in the container.
 
    services:
        ExportActiveUsersHandler:
-           arguments:
+           arguments:s
                - '@app.user_exporter'
                - '@imatic_data.doctrine.query_executor'
            tags:
                - { name: 'imatic_data.handler', alias: 'export_active_users' }
 
-Then we can run the command via `command executor <Data/Command/CommandExecutor.php>`_. First argument of the command is handler alias (specified when registering handler in the container), second argument is optional and specifies options passed to the handler).
+Then we can run the command via `command executor <Data/Command/CommandExecutor.php>`_. First argument of the command
+is handler alias (specified when registering handler in the container), second argument is optional and specifies
+options passed to the handler).
 
 .. sourcecode:: php
 

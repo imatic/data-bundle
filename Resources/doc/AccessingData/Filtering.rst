@@ -48,15 +48,18 @@ The main method in this example is
 
 - ``getFilterMap``
 
-  - it specifies 2 named filters (fields we can filter by) ``username`` and ``age`` and tells us which fields should be used for each filter (``u.username`` for ``username`` filter and ``u.age`` for ``age`` filter)
+  - Specifies 2 named filters (fields we can filter by) ``username`` and ``age`` and tells us which fields should be
+    used for each filter (``u.username`` for ``username`` filter and ``u.age`` for ``age`` filter)
 
 
 `Filter </Data/Query/DisplayCriteria/Filter.php>`_
 --------------------------------------------------
 
 - used for specifying filtering
-- it has property ``$filterRules`` which you can fill by array of `FilterRules <filter_rules_h_>`_ to filter by. You can do that either by using ``add`` method or extending the main filter and use the ``add`` method inside of overriden ``configure`` method.
-- see `filter rules <filter_rules_h_>`_ to find out more about various types of them
+- it has property ``$filterRules`` which you can fill by array of `FilterRules <filter_rules_h_>`_ to filter by.
+  You can do that either by using ``add`` method or extending the main filter and use the ``add`` method inside of
+  overridden ``configure`` method.
+- See `filter rules <filter_rules_h_>`_ to find out more about various types of filters.
 
 .. _filter_usage_example:
 
@@ -158,7 +161,8 @@ Example
    $specificUsersRule = (new FilterRule\ArrayRule('username'))
        ->setValue(['john', 'eva']))
 
-when we use the rule above, we get only users having ``username`` value ``john`` or ``eva`` when used with our `query object <filtering_orm_example_>`_
+When we use the rule above, we get only users having ``username`` value ``john`` or ``eva`` when used with our
+`query object <filtering_orm_example_>`_
 
 `BooleanRule </Data/Query/DisplayCriteria/Filter/BooleanRule.php>`_
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -207,7 +211,8 @@ when we use the rule above, we get only users having ``username`` value ``john``
 ----------------------------------------------------------------
 
 - used to create filters
-- instead of building filter before executing query in our `filter example <filter_usage_example_>`_ we could create class for the filter like below
+- instead of building filter before executing query in our `filter example <filter_usage_example_>`_ we could create
+  class for the filter like below
 
   .. sourcecode:: php
 
@@ -254,7 +259,8 @@ when we use the rule above, we get only users having ``username`` value ``john``
 Custom filtering logic without implementing custom `FilterRule <filter_rules_h_>`__ and filter rule processor
 -------------------------------------------------------------------------------------------------------------
 
-- it's possible to pass callback as value in ``getFilterMap`` instead of column. Such callback then accepts 2 arguments: value returned by query object, existing filter rule specified for the filter.
+- it's possible to pass callback as value in ``getFilterMap`` instead of column.
+  Such callback then accepts 2 arguments: value returned by query object, existing filter rule specified for the filter.
 
 Example of implementing custom filtering logic using callback
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -2,7 +2,8 @@
 ResultIteratorFactory
 =====================
 
-Factory creating instance of `ResultIterator <../AccessingData/ResultIterator.rst>`_. It can be retrieved from the container using ``imatic_data.driver.doctrine_dbal.result_iterator_factory`` service.
+Factory creating instance of `ResultIterator <../AccessingData/ResultIterator.rst>`_. It can be retrieved from the
+container using ``imatic_data.driver.doctrine_dbal.result_iterator_factory`` service.
 
 It has 1 main method ``create`` which accepts following arguments
 

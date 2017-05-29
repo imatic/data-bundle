@@ -75,7 +75,8 @@ Display criteria uses 1 main interface
 
   - ``persistent``
 
-    - boolean if current filter/sorter/pager values should be persisted (so if user opens page next time without specifying any criteria, he will see the last used)
+    - boolean if current filter/sorter/pager values should be persisted (so if user opens page next time without
+      specifying any criteria, he will see the last used)
 
 .. _display_criteria_reader_h:
 
@@ -105,7 +106,8 @@ Display criteria uses 1 main interface
 
               - optional boolean which causes setting all filter values to their defaults
 
-            - other keys are programmer defined filters (associative arrays) where each item is indexed by filter name and it's value is associative array with following keys
+            - other keys are programmer defined filters (associative arrays) where each item is indexed by filter name
+              and it's value is associative array with following keys:
 
               - ``operator``
 

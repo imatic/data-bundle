@@ -16,7 +16,9 @@ Query objects use 2 main interfaces
 Querying data
 -------------
 
-First we need to create query object. Query object is object implementing ``Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface``. We won't implement this interface directly though. Instead, we will implement interface of some driver.
+First we need to create query object. Query object is object implementing
+``Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface``. We won't implement this interface directly though.
+Instead, we will implement interface of some driver.
 
 Query objects can implement additional interfaces to affect how result will look like
 
@@ -195,9 +197,12 @@ Example of using query executor
    $totalNumberOfActiveUsers = $queryExecutor->count(new ActiveUsersQuery());
 
 Using multiple storage connections
------------------------------------
+----------------------------------
 
-- in case application is using multiple storage connections (e.g. `doctrine connectinos <http://docs.doctrine-project.org/projects/doctrine1/en/latest/en/manual/connections.html#connections>`__ in case of doctrine), connection can be specified by implementing ``ConnectionQueryObjectInterface`` and returning name of the connection in ``getConnectionName`` method.
+- in case application is using multiple storage connections (e.g.
+  `doctrine connectinos <http://docs.doctrine-project.org/projects/doctrine1/en/latest/en/manual/connections.html#connections>`__
+  in case of doctrine), connection can be specified by implementing ``ConnectionQueryObjectInterface`` and returning
+  name of the connection in ``getConnectionName`` method.
 
 Example of getting configuration via ``config`` connection
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

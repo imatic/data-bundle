@@ -27,8 +27,8 @@ Utils
 
 - `QueryUtil <QueryUtil.rst>`_
 
-Driver specific stuff
-=====================
+Driver specific features
+========================
 
 DoctrineDBAL
 ------------

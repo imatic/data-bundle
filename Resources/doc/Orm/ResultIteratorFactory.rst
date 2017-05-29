@@ -2,25 +2,26 @@
 ResultIteratorFactory
 =====================
 
-Factory creating instance of `ResultIterator <../AccessingData/ResultIterator.rst>`_. It can be retrieved from the container using ``imatic_data.driver.orm.result_iterator_factory`` service.
+Factory creating instance of `ResultIterator <../AccessingData/ResultIterator.rst>`_.
+Available as a service under ``imatic_data.driver.orm.result_iterator_factory`` alias.
 
 It has 1 main method ``create`` which accepts following arguments
 
 - ``QueryObjectInterface $queryObject``
 
-  - query object of which results we want to iterate over
+  - Query object corresponding with results we want to iterate over.
 
 - ``array $criteria``
 
-  - criteria for filtering/sorting/pagination
-  - requires ``filter_type`` value to be alias of tagged ``Filter``
+  - Criteria for filtering/sorting/pagination.
+  - Requires ``filter_type`` value to be alias of tagged ``Filter``.
 
 - ``FilterInterface $filter``
 
-  - optional argument
+  - Optional argument
 
-Example of iterating through users with loading at most 50 users at once
-------------------------------------------------------------------------
+Example of iterating through users with loading at most 50 users at the time
+----------------------------------------------------------------------------
 
 .. sourcecode:: php
 

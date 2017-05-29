@@ -17,9 +17,9 @@ This bundle ships with several dql functions. To register all of them, add follo
                     unaccent_lower: Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST\UnaccentLower
 
 `ILike </Doctrine/Postgresql/Query/AST/ILike.php>`_
-----------------------------------------------------
+---------------------------------------------------
 
-- case insensitive version of ``LIKE``
+- Case insensitive version of ``LIKE``
 
 .. sourcecode:: text
 
@@ -30,7 +30,7 @@ This bundle ships with several dql functions. To register all of them, add follo
 `NotILike </Doctrine/Postgresql/Query/AST/NotILike.php>`_
 ---------------------------------------------------------
 
-- case insensitive version of ``NOT LIKE``
+- Case insensitive version of ``NOT LIKE``
 
 .. sourcecode:: text
 
@@ -52,9 +52,10 @@ https://www.postgresql.org/docs/9.6/static/functions-datetime.html
 `UnaccentLower </Doctrine/Common/Query/AST/UnaccentLower.php>`_
 ---------------------------------------------------------------
 
-- function to remove accent from given columns and make it lowercase
-- this function will call db function called ``unaccent_lower`` by default (this can be overriden by calling ``UnaccentLower::setFunction``
-- as ``unaccent_lower`` probably doesn't exist in your db, you have to create it using e.g. following query
+- Function to remove diacritics from given columns and make it lowercase.
+- This function calls db function called ``unaccent_lower`` by default (this can be overridden by calling
+  ``UnaccentLower::setFunction``)
+- As ``unaccent_lower`` probably doesn't exist in your db, create it using a query like this for example:
 
   .. sourcecode:: sql
 

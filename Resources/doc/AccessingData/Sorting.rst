@@ -57,12 +57,13 @@ As you can see we added 2 new methods
 
 - ``getSorterMap``
 
-  - it specifies 2 named sorterers (fields we can sort by) ``username`` and ``age`` and tells us which fields should be used for each sorter (``u.username`` for ``username`` sorter and ``u.age`` for ``age`` sorter)
+  - it specifies 2 named sorters (fields we can sort by) ``username`` and ``age`` and tells us which fields should be
+    used for each sorter (``u.username`` for ``username`` sorter and ``u.age`` for ``age`` sorter)
 
 - ``getDefaultSort``
 
-  - it specifies how result will be sorted in case we don't specify which sorter to use (data are sorted in ascending order by ``username`` sorter in our case)
-
+  - it specifies how result will be sorted in case we don't specify which sorter to use (data are sorted in ascending
+    order by ``username`` sorter in our case)
 
 
 `Sorter </Data/Query/DisplayCriteria/Sorter.php>`_

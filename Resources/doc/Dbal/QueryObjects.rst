@@ -15,7 +15,7 @@ Predefined query objects
 --------------------------------------------------------------------
 
 - used to retrieve ``id`` of row in a table which has specified column values
-- query assumes that column in which primary key is stored is named ``id``
+- query assumes that primary key column name is ``id``
 - 2 arguments
 
   - ``$table``
@@ -29,8 +29,8 @@ Predefined query objects
 - used to mark row as deleted
 - query assumes that
 
-  - column in which primary key is stored is named ``id``
-  - table has column ``deleted_at`` which stores time at which row was marked as deleted
+  - primary key column name is ``id``
+  - table has column ``deleted_at`` which stores time, at which row was marked as deleted
 
 - 2 arguments
 

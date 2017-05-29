@@ -6,9 +6,9 @@ DoctrineDBAL utils
 `Schema </Data/Driver/DoctrineDBAL/Schema/Schema.php>`_
 -------------------------------------------------------
 
-- helper to make it easier to work with doctrine dbal
-- automatic escaping of names of colums and tables (so it's possible to use reserved words)
-- uses correct type for each column, so DateTime is automatically converted to db value
+- Helper to make it easier to work with doctrine DBAL.
+- Automatic escaping of column names and table names (so it's possible to use reserved words)
+- Uses correct type for each column, so DateTime is automatically converted to database value.
 
 .. sourcecode:: php
 
@@ -24,17 +24,17 @@ DoctrineDBAL utils
 `Sql </Data/Driver/DoctrineDBAL/Sql/Sql.php>`_
 ----------------------------------------------
 
-- helper allowing to create queries independent of concrete db
+- Helper allowing to create queries independent on concrete database implementation.
 
 Sql::concat
 ^^^^^^^^^^^
 
-- method allowing to concatenate colums independent of concrete db
+- Method allowing to concatenate values independent on database implementation.
 
   - 2 arguments
 
     - ``$args`` - list of columns to concatenate
-    - ``$connection`` - doctrine dbal connection
+    - ``$connection`` - doctrine DBAL connection
 
 .. sourcecode:: php
 
