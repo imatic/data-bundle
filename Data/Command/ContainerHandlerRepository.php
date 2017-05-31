@@ -2,7 +2,6 @@
 
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
-use Imatic\Bundle\DataBundle\Exception\HandlerNotFoundException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ContainerHandlerRepository implements HandlerRepositoryInterface
