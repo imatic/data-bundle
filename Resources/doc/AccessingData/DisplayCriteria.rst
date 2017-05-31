@@ -16,8 +16,8 @@ Display criteria uses 1 main interface
 
 .. _display_criteria_h:
 
-`DisplayCriteria </Data/Query/DisplayCriteria.php>`_
-----------------------------------------------------
+`DisplayCriteria </Data/Query/DisplayCriteria.php>`__
+-----------------------------------------------------
 
 - display criteria is object which allows us to use filtering, sorting and pagination when using one of the 3 methods of `query executor <QueryObjects.rst>`_
 - can be created either manually or by  `DisplayCriteriaFactory <display_criteria_factory_h_>`_ from request
