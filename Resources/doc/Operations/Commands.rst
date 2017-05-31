@@ -40,7 +40,7 @@ Example of command removing recording files older than one month
    use Imatic\Bundle\DataBundle\Data\Command\Command;
 
    $removeObsoleteRecordingsCommand = new Command(
-       'ExportActiveUsersHandler',
+       'CleanupObsoleteFilesHandler',
        [
            'fileType' => 'recordings',
            'olderThan' => new \DateTime('-1 month'),
