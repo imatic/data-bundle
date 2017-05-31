@@ -81,7 +81,7 @@ Example of handler removing specified type of files older than given period
    use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
    use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 
-   ExportActiveUsersHandler implements HandlerInterface
+   CleanupObsoleteFilesHandler implements HandlerInterface
    {
        public function handle(CommandInterface $command)
        {
@@ -98,7 +98,7 @@ Example of handler removing specified type of files older than given period
 .. sourcecode:: yaml
 
    services:
-       ExportActiveUsersHandler:
+       CleanupObsoleteFilesHandler:
            tags:
                - { name: 'imatic_data.handler', alias: 'cleanup_obsolete_files' }
 

@@ -105,7 +105,7 @@ Then we need to register the handler in the container.
 
    services:
        ExportActiveUsersHandler:
-           arguments:s
+           arguments:
                - '@app.user_exporter'
                - '@imatic_data.doctrine.query_executor'
            tags:
