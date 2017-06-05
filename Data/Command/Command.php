@@ -17,8 +17,8 @@ class Command implements CommandInterface
     private $parameters;
 
     /**
-     * @param string $handlerName
-     * @param array  $parameters
+     * @param string $handlerName Alias of the command handler service.
+     * @param array  $parameters Parameters used by command handler.
      */
     public function __construct($handlerName, array $parameters = [])
     {
