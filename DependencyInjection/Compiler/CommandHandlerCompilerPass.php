@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class CommandHandlerCompilerPass implements CompilerPassInterface
 {
+
     /**
      * @param ContainerBuilder $container
      */
@@ -24,8 +25,22 @@ class CommandHandlerCompilerPass implements CompilerPassInterface
         foreach ($handlers as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
                 $definition = $container->getDefinition($id);
+
+                if (array_key_exists('alias', $attributes)) {
+                    @trigger_error(
+                        'Alias attribute of "imatic_data.handler" tag is deprecated since version 3.1 and '
+                        . 'will be removed in 4.0. Use service id or service alias as handler name instead.',
+                        E_USER_DEPRECATED
+                    );
+                    $handlerRepositoryDef->addMethodCall('addLazyHandler', [
+                        $attributes['alias'],
+                        $id,
+                        $finder->find($definition->getClass()),
+                    ]);
+                }
+
                 $handlerRepositoryDef->addMethodCall('addLazyHandler', [
-                    $attributes['alias'],
+                    $id,
                     $id,
                     $finder->find($definition->getClass()),
                 ]);

@@ -38,7 +38,7 @@ class HandlerRepositoryTest extends \PHPUnit_Framework_TestCase
         $handlerRepository->addHandler('handler', new Handler(), 'AppImaticDataBundle');
     }
 
-    public function testgetHandlers()
+    public function testGetHandlers()
     {
         $handler1 = new Handler();
         $handler2 = new Handler();

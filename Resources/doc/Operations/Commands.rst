@@ -40,7 +40,7 @@ Example of command removing recording files older than one month
    use Imatic\Bundle\DataBundle\Data\Command\Command;
 
    $removeObsoleteRecordingsCommand = new Command(
-       'cleanup_obsolete_files',
+       'CleanupObsoleteFilesHandler',
        [
            'fileType' => 'recordings',
            'olderThan' => new \DateTime('-1 month'),
@@ -53,7 +53,8 @@ Handler
 - Has 1 method ``handle``, which accepts `command <command_h_>`_, processes it and returns a result.
 - Needs to be registered in container in order to be called by `command executor <CommandExecutor_>`_
 
-  - service needs to be tagged with tag ``imatic_data.handler`` having ``alias`` attribute
+  - service needs to be tagged with tag ``imatic_data.handler`` which contains an optional ``alias`` attribute
+  - handler is then available under its service id and alias if provided.
 
 - In case handler needs a `command executor <command_executor_h_>`_ to be able to execute other commands,
   it can implement ``Imatic\Bundle\DataBundle\Data\Command\CommandExecutorAwareInterface`` to avoid circular reference
@@ -100,7 +101,7 @@ Example of handler removing specified type of files older than given period
    services:
        CleanupObsoleteFilesHandler:
            tags:
-               - { name: 'imatic_data.handler', alias: 'cleanup_obsolete_files' }
+               - { name: 'imatic_data.handler' }
 
 .. _command_result_h:
 

@@ -27,6 +27,10 @@
         <const name="TEST_DATABASE_SERVER_VERSION" value="9.2.4"/>
     </php>
 
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
     <filter>
         <whitelist>
             <directory>./</directory>

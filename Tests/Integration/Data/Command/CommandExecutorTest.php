@@ -29,6 +29,21 @@ class CommandExecutorTest extends WebTestCase
         $this->assertFalse($user->isActivated());
     }
 
+    public function testGivenCommandShouldBeSuccessfullyExecutedUsingServiceIdAsCommandName()
+    {
+        /* @var $user User */
+        $user = $this->getUserRepository()->findOneByName('Adam');
+
+        // guard
+        $this->assertTrue($user->isActivated());
+
+        $command = new Command('app_imatic_data.handler.user_deactivate_handler', ['id' => $user->getId()]);
+        $result = $this->getCommandExecutor()->execute($command);
+        $this->assertTrue($result->isSuccessful());
+
+        $this->assertFalse($user->isActivated());
+    }
+
     /**
      * @return EntityRepository
      */
