@@ -9,3 +9,7 @@
 ### Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler
 
 - Handler now supports removal of multiple records at once by using `ids` parameter.
+
+### Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler
+
+- Parameter `class` is now optional.
