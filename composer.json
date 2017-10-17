@@ -23,7 +23,7 @@
     ],
     "require": {
         "php": ">=5.5",
-        "symfony/framework-bundle": "~3.0",
+        "symfony/framework-bundle": "~3.3",
         "doctrine/doctrine-bundle": "~1.2"
     },
     "require-dev": {
