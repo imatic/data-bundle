@@ -25,8 +25,15 @@ class SoftDeleteHandler implements HandlerInterface
     public function handle(CommandInterface $command)
     {
         $table = $command->getParameter('table');
-        $id = $command->getParameter('id');
+        $ids = $command->hasParameter('ids') ? $command->getParameter('ids') : [];
+        if ($command->hasParameter('id')) {
+            $ids[] = $command->getParameter('id');
+        }
 
-        $this->queryExecutor->execute(new SoftDeleteQuery($table, $id));
+        if (count($ids) === 0) {
+            return;
+        }
+
+        $this->queryExecutor->execute(new SoftDeleteQuery($table, $ids));
     }
 }
