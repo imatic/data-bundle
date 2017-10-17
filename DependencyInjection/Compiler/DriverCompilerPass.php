@@ -16,12 +16,11 @@ class DriverCompilerPass implements CompilerPassInterface
         $drivers = $container->findTaggedServiceIds('imatic_data.driver');
         $driverRepositoryDef = $container->findDefinition('imatic_data.driver_repository');
 
-        foreach ($drivers as $id => $tagAttributes) {
-            foreach ($tagAttributes as $attributes) {
-                $driverRepositoryDef->addMethodCall('add', [
-                    new Reference($id),
-                ]);
-            }
+        $ids = array_keys($drivers);
+        foreach ($ids as $id) {
+            $driverRepositoryDef->addMethodCall('add', [
+                new Reference($id),
+            ]);
         }
     }
 }

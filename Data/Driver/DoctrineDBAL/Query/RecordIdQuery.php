@@ -27,7 +27,8 @@ class RecordIdQuery implements QueryObjectInterface, SingleResultQueryObjectInte
         $qb->from($connection->quoteIdentifier($this->table), $this->getAlias());
         $queryColumns = $this->getQueryColumns();
 
-        foreach ($queryColumns as $column => $value) {
+        $columnNames = array_keys($queryColumns);
+        foreach ($columnNames as $column) {
             $qb->andWhere($qb->expr()->eq($column, '?'));
         }
         $qb->setParameters(array_values($queryColumns));

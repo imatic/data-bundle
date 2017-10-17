@@ -13,6 +13,7 @@ pipelines:
           - composer install
 
           - ./vendor/bin/phpunit
+          - ./vendor/bin/phpmd $(find * -maxdepth 0 -not -name 'vendor' -not -name 'Tests' -type d | paste --delimiter , --serial) text phpmd.xml
           - ./vendor/bin/php-cs-fixer fix --dry-run
         services:
           - db

@@ -76,15 +76,7 @@ class ExtJsReader extends SessionReader
 
     protected function createAttributePath($attributeName, $component = null)
     {
-        $extAttributeName = null;
-        switch ($attributeName) {
-            case 'sorter':
-                $extAttributeName = 'sort';
-                break;
-            default:
-                $extAttributeName = $attributeName;
-                break;
-        }
+        $extAttributeName = $this->attributeName($attributeName);
 
         if ($component) {
             return $component.'['.$extAttributeName.']';
@@ -95,6 +87,6 @@ class ExtJsReader extends SessionReader
 
     public function attributeName($name)
     {
-        return $name === 'sorter' ? $sort : $name;
+        return $name === 'sorter' ? 'sort' : $name;
     }
 }
