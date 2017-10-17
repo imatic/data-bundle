@@ -13,6 +13,7 @@ pipelines:
           - composer install
 
           - ./vendor/bin/phpunit
+          - ./vendor/bin/php-cs-fixer fix --dry-run
         services:
           - db
 

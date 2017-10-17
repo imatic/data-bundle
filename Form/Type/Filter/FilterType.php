@@ -19,7 +19,8 @@ class FilterType extends AbstractType
         foreach ($options['filter'] as $rule) {
             $builder->add(
                 $rule->getName(),
-                FilterRuleType::class, [
+                FilterRuleType::class,
+                [
                     'filter_rule' => $rule,
                     'property_path' => "[{$rule->getName()}]",
                 ]

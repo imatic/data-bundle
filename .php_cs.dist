@@ -1,0 +1,12 @@
+<?php
+
+return PhpCsFixer\Config::create()
+    ->setFinder(
+        PhpCsFixer\Finder::create()
+            ->exclude([
+                'vendor',
+                'Tests/Fixtures/TestProject/cache',
+            ])
+            ->in(__DIR__)
+    )
+;

@@ -27,7 +27,8 @@ class EntityTypeQueryObjectExtension extends AbstractTypeExtension
         ]);
 
         $resolver->setAllowedTypes(
-            'query_object', ['null', QueryObjectInterface::class]
+            'query_object',
+            ['null', QueryObjectInterface::class]
         );
     }
 

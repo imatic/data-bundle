@@ -9,7 +9,8 @@ class LoadUnaccentLowerFunction implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $manager->getConnection()->executeQuery(<<<'SQL'
+        $manager->getConnection()->executeQuery(
+            <<<'SQL'
 CREATE OR REPLACE FUNCTION unaccent_lower(text)
   RETURNS text AS
 $func$

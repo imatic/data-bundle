@@ -24,7 +24,8 @@ class FilterRuleType extends AbstractType
         if (count($operators) > 1) {
             $builder->add(
                 'operator',
-                ChoiceType::class, [
+                ChoiceType::class,
+                [
                     'choices' => array_combine($operators, $operators),
                     'data' => $preferredOperator,
                     'translation_domain' => 'ImaticDataBundle',
@@ -51,7 +52,8 @@ class FilterRuleType extends AbstractType
             'data_class' => 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule',
         ]);
         $resolver->setAllowedTypes(
-            'filter_rule', 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule'
+            'filter_rule',
+            'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule'
         );
     }
 }

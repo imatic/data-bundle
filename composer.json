@@ -31,7 +31,8 @@
         "imatic/form-bundle": "~3.0",
         "doctrine/orm": "~2.3",
         "mikey179/vfsStream": "~1.4",
-        "symfony/phpunit-bridge": "~3.0"
+        "symfony/phpunit-bridge": "~3.0",
+        "friendsofphp/php-cs-fixer": "^2.7"
     },
     "suggest": {
         "doctrine/dbal": "*",

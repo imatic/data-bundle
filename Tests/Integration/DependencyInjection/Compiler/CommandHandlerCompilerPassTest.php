@@ -6,7 +6,6 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 class CommandHandlerCompilerPassTest extends WebTestCase
 {
-
     public function testHandlersAreRegisteredWithServiceIdAndAlias()
     {
         $repository = $this->container->get('imatic_data.command_handler_repository');
