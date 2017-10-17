@@ -45,7 +45,7 @@ class CreateHandlerTest extends WebTestCase
      */
     private function getCreateHandler()
     {
-        return $this->container->get('imatic_data.driver.doctrine_dbal.command.create');
+        return $this->container->get(CreateHandler::class);
     }
 
     private function findUserByName($name)

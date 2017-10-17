@@ -6,6 +6,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -22,7 +23,10 @@ class ImaticDataExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        // @deprecated Will be removed in 4.0
         $container->setAlias('imatic_data.display_criteria_reader', $config['display_criteria_reader']);
+
+        $container->setAlias(DisplayCriteriaReader::class, $config['display_criteria_reader']);
 
         if (!$container->hasParameter('imatic_data.base_file_path')) {
             $container->setParameter('imatic_data.base_file_path', realpath(sprintf('%s/..', $container->getParameter('kernel.root_dir'))));

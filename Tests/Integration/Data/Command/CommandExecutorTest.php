@@ -65,6 +65,6 @@ class CommandExecutorTest extends WebTestCase
      */
     private function getCommandExecutor()
     {
-        return $this->container->get('imatic_data.command_executor');
+        return $this->container->get(CommandExecutor::class);
     }
 }

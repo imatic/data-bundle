@@ -32,7 +32,7 @@ class DeleteHandlerTest extends WebTestCase
      */
     private function getDeleteHandler()
     {
-        return $this->container->get('imatic_data.driver.doctrine_dbal.command.delete');
+        return $this->container->get(DeleteHandler::class);
     }
 
     private function findUserCount($id)

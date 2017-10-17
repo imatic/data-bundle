@@ -36,6 +36,6 @@ class RecordIdQueryTest extends WebTestCase
      */
     private function getQueryExecutor()
     {
-        return $this->container->get('imatic_data.query_executor');
+        return $this->container->get(QueryExecutorInterface::class);
     }
 }

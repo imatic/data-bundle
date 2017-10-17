@@ -84,6 +84,6 @@ class SoftDeleteHandlerTest extends WebTestCase
      */
     private function getSoftDeleteHandler()
     {
-        return $this->container->get('imatic_data.driver.doctrine_dbal.command.soft_delete');
+        return $this->container->get(SoftDeleteHandler::class);
     }
 }

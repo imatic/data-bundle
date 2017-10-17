@@ -20,7 +20,7 @@ class ResultIteratorTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->resultIteratorFactory = $this->container->get('imatic_data.driver.doctrine_orm.result_iterator_factory');
+        $this->resultIteratorFactory = $this->container->get(ResultIteratorFactory::class);
     }
 
     public function testResultIteratorShouldReturnAllResults()

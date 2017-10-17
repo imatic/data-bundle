@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL\Co
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
 use Imatic\Bundle\DataBundle\Data\Command\CommandExecutorInterface;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateOrEditHandler;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
@@ -20,7 +21,7 @@ class CreateOrEditHandlerTest extends WebTestCase
         $this->assertEquals('Adam', $originalUser->getName());
         $this->assertEquals('short', $originalUser->getHairs());
 
-        $command = new Command('imatic_data.doctrine_dbal.generic_create_or_edit', [
+        $command = new Command(CreateOrEditHandler::class, [
             'table' => 'test_user',
             'data' => [
                 'id' => 1,
@@ -44,7 +45,7 @@ class CreateOrEditHandlerTest extends WebTestCase
         $originalUser = $this->getUser(100);
         $this->assertNull($originalUser);
 
-        $command = new Command('imatic_data.doctrine_dbal.generic_create_or_edit', [
+        $command = new Command(CreateOrEditHandler::class, [
             'table' => 'test_user',
             'data' => [
                 'id' => 100,
@@ -66,7 +67,7 @@ class CreateOrEditHandlerTest extends WebTestCase
      */
     private function getCommandExecutor()
     {
-        return $this->container->get('imatic_data.command_executor');
+        return $this->container->get(CommandExecutorInterface::class);
     }
 
     /**

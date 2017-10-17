@@ -60,6 +60,6 @@ class CreateHandlerTest extends WebTestCase
      */
     private function getCreateHandler()
     {
-        return $this->container->get('imatic_data.driver.command.create');
+        return $this->container->get(CreateHandler::class);
     }
 }
