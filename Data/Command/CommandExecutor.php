@@ -62,8 +62,6 @@ class CommandExecutor implements CommandExecutorInterface
     }
 
     /**
-     * todo: mela by resit post-execute event.
-     *
      * @param CommandInterface       $command
      * @param CommandResultInterface $result
      */

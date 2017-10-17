@@ -1,61 +1,75 @@
 services:
-    # object manager
-    imatic_data.doctrine.object_manager:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager:
         arguments:
             - '@doctrine.orm.entity_manager'
 
-    # query executor
-    imatic_data.doctrine.query_executor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor:
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@imatic_data.display_criteria_query_builder'
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate'
 
-    # driver
     imatic_data.driver.doctrine_orm:
         class: Imatic\Bundle\DataBundle\Data\Driver\Driver
         arguments:
             - 'doctrine.orm'
-            - '@imatic_data.doctrine.query_executor'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor'
             - 'Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface'
-            - '@imatic_data.doctrine.object_manager'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager'
         tags:
             - { name: imatic_data.driver }
 
-    # Generic command handlers
-    imatic_data.driver.command.edit:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\EditHandler
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\EditHandler:
         arguments:
-            - '@imatic_data.doctrine.object_manager'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.generic_edit }
 
-    imatic_data.driver.command.create:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler:
         arguments:
-            - '@imatic_data.doctrine.object_manager'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.generic_create }
 
-    imatic_data.driver.command.delete:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler:
         arguments:
-            - '@imatic_data.doctrine.object_manager'
-            - '@imatic_data.query_executor'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager'
+            - '@Imatic\Bundle\DataBundle\Data\Query\QueryExecutor'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.generic_delete }
 
-    imatic_data.driver.doctrine_orm.record_iterator:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator:
         arguments:
-            - '@imatic_data.doctrine.query_executor'
-            - '@imatic_data.driver.doctrine_orm.result_iterator_factory'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory'
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor'
+            - '@doctrine.orm.entity_manager'
+
+
+
+    ### DEPRECATED ALIASES ###
+
+    imatic_data.doctrine.object_manager:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager
+
+    imatic_data.doctrine.query_executor:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor
+
+    imatic_data.driver.command.edit:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\EditHandler
+
+    imatic_data.driver.command.create:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler
+
+    imatic_data.driver.command.delete:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler
+
+    imatic_data.driver.doctrine_orm.record_iterator:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator
 
     imatic_data.driver.doctrine_orm.result_iterator_factory:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory
-        arguments:
-            - '@imatic_data.array_display_criteria_factory'
-            - '@imatic_data.filter_factory'
-            - '@imatic_data.doctrine.query_executor'
-            - '@doctrine.orm.entity_manager'
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory

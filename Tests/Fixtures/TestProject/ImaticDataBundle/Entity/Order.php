@@ -28,6 +28,12 @@ class Order
     private $user;
 
     /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
      * @param User $user
      */
     public function __construct(User $user)

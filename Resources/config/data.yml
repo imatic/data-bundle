@@ -1,42 +1,64 @@
 services:
-    # command
-    imatic_data.command_executor:
-        class: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
+    Imatic\Bundle\DataBundle\Data\Command\CommandExecutor:
         arguments:
-            - '@imatic_data.command_handler_repository'
+            - '@Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository'
             - '%kernel.debug%'
 
-    imatic_data.decorated_command_handler_repository:
-        class: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
+    Imatic\Bundle\DataBundle\Data\Command\CommandExecutorInterface:
+        alias: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
+
+    Imatic\Bundle\DataBundle\Data\Command\HandlerRepository:
         public: false
 
-    imatic_data.command_handler_repository:
-        class: Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository
-        arguments:
-            - '@service_container'
-            - '@imatic_data.decorated_command_handler_repository'
+    Imatic\Bundle\DataBundle\Data\Command\HandlerRepositoryInterface:
+        alias: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
 
-    # driver
-    imatic_data.driver_repository:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DriverRepository
+    Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository:
+        autowire: true
 
-    # query executor
-    imatic_data.query_executor:
-        class: Imatic\Bundle\DataBundle\Data\Query\QueryExecutor
-        arguments:
-            - '@imatic_data.driver_repository'
+    Imatic\Bundle\DataBundle\Data\Driver\DriverRepository: ~
+
+    Imatic\Bundle\DataBundle\Data\Driver\DriverRepositoryInterface:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DriverRepository
+
+    Imatic\Bundle\DataBundle\Data\Query\QueryExecutor:
+        autowire: true
 
     Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface:
-        alias: imatic_data.query_executor
+        alias: Imatic\Bundle\DataBundle\Data\Query\QueryExecutor
 
-    # display criteria
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory: ~
+
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate:
+        autowire: true
+
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderInterface:
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate
+
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorDelegate: ~
+
+    ### DEPRECATED ALIASES ###
+
+    imatic_data.command_executor:
+        alias: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
+
+    imatic_data.decorated_command_handler_repository:
+        alias: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
+
+    imatic_data.command_handler_repository:
+        alias: Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository
+
+    imatic_data.driver_repository:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DriverRepository
+
+    imatic_data.query_executor:
+        alias: Imatic\Bundle\DataBundle\Data\Query\QueryExecutor
+
     imatic_data.pager_factory:
-        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory
 
     imatic_data.display_criteria_query_builder:
-        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate
-        arguments:
-            - '@imatic_data.filter_rule_processor'
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate
 
     imatic_data.filter_rule_processor:
-        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorDelegate
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorDelegate
