@@ -1,0 +1,25 @@
+image: php:7.1
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - composer
+        script:
+          - apt-get update
+          - apt-get install --yes git postgresql-server-dev-9.4
+          - docker-php-ext-install pdo_pgsql
+          - curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          - composer install
+
+          - ./vendor/bin/phpunit
+        services:
+          - db
+
+definitions:
+  services:
+    db:
+      image: postgres:9.4
+      environment:
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: data_bundle_test
