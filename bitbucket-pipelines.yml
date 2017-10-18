@@ -6,15 +6,9 @@ pipelines:
         caches:
           - composer
         script:
-          - apt-get update
-          - apt-get install --yes git postgresql-server-dev-9.4
-          - docker-php-ext-install pdo_pgsql
-          - curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-          - composer install
-
-          - ./vendor/bin/phpunit
-          - ./vendor/bin/phpmd $(find * -maxdepth 0 -not -name 'vendor' -not -name 'Tests' -type d | paste --delimiter , --serial) text phpmd.xml
-          - ./vendor/bin/php-cs-fixer fix --dry-run
+          - make configure-pipelines
+          - make update-test
+          - make test
         services:
           - db
 

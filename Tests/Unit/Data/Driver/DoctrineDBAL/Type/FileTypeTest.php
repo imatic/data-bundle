@@ -42,7 +42,7 @@ class FileTypeTest extends PHPUnit_Framework_TestCase
      */
     public function testPathsShouldBePreservedInDatabaseIfBasePathIsNotSpecified($givenPath)
     {
-        $file = new File($givenPath, $checkPath = false);
+        $file = new File($givenPath, false);
 
         $actual = $this->fileType->convertToDatabaseValue($file, $this->platform);
         $this->assertEquals($givenPath, $actual);
@@ -73,7 +73,7 @@ class FileTypeTest extends PHPUnit_Framework_TestCase
     {
         FileType::setBasePath('/srv/www/project');
 
-        $file = new File('/srv/www/project/file.txt', $checkPath = false);
+        $file = new File('/srv/www/project/file.txt', false);
 
         $actual = $this->fileType->convertToDatabaseValue($file, $this->platform);
         $this->assertEquals('/file.txt', $actual);

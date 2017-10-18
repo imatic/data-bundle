@@ -56,4 +56,12 @@ class Order
     {
         return $this->user;
     }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
 }
