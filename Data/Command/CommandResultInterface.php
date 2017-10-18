@@ -37,7 +37,7 @@ interface CommandResultInterface
     /**
      * @param string|null $exceptionClass
      * @return void
-     * @throws |\Exception
+     * @throws \Exception
      */
     public function throwException($exceptionClass = null);
 

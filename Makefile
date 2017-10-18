@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 .PHONY: test
-test: phpunit phpmd phpcs
+test: phpunit phpmd phpcs phpda
 
 .PHONY: phpcs
 phpcs:
@@ -29,5 +29,10 @@ update-test:
 .PHONY: configure-pipelines
 configure-pipelines: /usr/local/bin/composer
 	apt-get update
-	apt-get install --yes git postgresql-server-dev-9.4
+	apt-get install --yes git postgresql-server-dev-9.4 graphviz
 	docker-php-ext-install pdo_pgsql zip
+
+.PHONY: phpda
+phpda:
+	./vendor/bin/phpda analyze phpda.yml
+
