@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
@@ -36,17 +35,17 @@ class RecordIteratorArgs
     public function __construct(CommandInterface $command, QueryObjectInterface $queryObject, callable $callback)
     {
         if (!$queryObject instanceof FilterableQueryObjectInterface) {
-            throw new InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(\sprintf(
                 '%s have to be instance of "%s"',
-                get_class($queryObject),
+                \get_class($queryObject),
                 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface'
             ));
         }
 
         if (!$queryObject instanceof SelectableQueryObjectInterface) {
-            throw new InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(\sprintf(
                 '%s have to be instance of "%s"',
-                get_class($queryObject),
+                \get_class($queryObject),
                 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SelectableQueryObjectInterface'
             ));
         }

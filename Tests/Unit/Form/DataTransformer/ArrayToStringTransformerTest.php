@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Form\DataTransformer;
 
 use Imatic\Bundle\DataBundle\Form\DataTransformer\ArrayToStringTransformer;

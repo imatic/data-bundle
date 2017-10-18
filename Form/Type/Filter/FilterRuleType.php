@@ -1,12 +1,11 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Form\Type\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class FilterRuleType extends AbstractType
 {
@@ -21,12 +20,12 @@ class FilterRuleType extends AbstractType
         $operators = $rule->getOperators();
         $preferredOperator = $rule->getOperator();
 
-        if (count($operators) > 1) {
+        if (\count($operators) > 1) {
             $builder->add(
                 'operator',
                 ChoiceType::class,
                 [
-                    'choices' => array_combine($operators, $operators),
+                    'choices' => \array_combine($operators, $operators),
                     'data' => $preferredOperator,
                     'translation_domain' => 'ImaticDataBundle',
                 ]
@@ -35,7 +34,7 @@ class FilterRuleType extends AbstractType
         $builder->add(
             'value',
             $rule->getFormType(),
-            array_merge(
+            \array_merge(
                 $rule->getFormOptions(),
                 [
                     'required' => false,

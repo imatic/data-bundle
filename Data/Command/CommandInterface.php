@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 use Imatic\Bundle\DataBundle\Exception\ParameterNotFoundException;

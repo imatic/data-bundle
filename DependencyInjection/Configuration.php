@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -47,8 +46,7 @@ INFO
                         ->scalarNode('function_name')->defaultValue('unaccent_lower')->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -27,7 +26,7 @@ class TextRule extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_string($value);
+        return \is_string($value);
     }
 
     protected function getDefaultFormType()

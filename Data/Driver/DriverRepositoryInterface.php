@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver;
 
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;

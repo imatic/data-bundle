@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -17,23 +16,22 @@ class BetweenOperatorProcessor extends AbstractFilterRuleProcessor
 
         $conditions = [];
         if ($start) {
-            $conditions[] = $qb->expr()->gte($column, $this->getQueryParameter($rule).'Start');
-            $qb->setParameter($this->getQueryParameterName($rule).'Start', $rule->getValue()['start'], $rule->getType());
+            $conditions[] = $qb->expr()->gte($column, $this->getQueryParameter($rule) . 'Start');
+            $qb->setParameter($this->getQueryParameterName($rule) . 'Start', $rule->getValue()['start'], $rule->getType());
         }
 
         if ($end) {
-            $conditions[] = $qb->expr()->lte($column, $this->getQueryParameter($rule).'End');
-            $qb->setParameter($this->getQueryParameterName($rule).'End', $rule->getValue()['end'], $rule->getType());
+            $conditions[] = $qb->expr()->lte($column, $this->getQueryParameter($rule) . 'End');
+            $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end'], $rule->getType());
         }
 
-        return call_user_func_array([$qb->expr(), 'andX'], $conditions);
+        return \call_user_func_array([$qb->expr(), 'andX'], $conditions);
     }
 
     public function supports($qb, FilterRule $rule, $column)
     {
         return
             parent::supports($qb, $rule, $column)
-            && $rule->getOperator() === FilterOperatorMap::OPERATOR_BETWEEN
-        ;
+            && $rule->getOperator() === FilterOperatorMap::OPERATOR_BETWEEN;
     }
 }

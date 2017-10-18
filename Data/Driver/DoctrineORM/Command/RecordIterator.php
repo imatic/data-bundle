@@ -1,8 +1,6 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
-use RuntimeException;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
@@ -12,6 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\ArrayRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
+use RuntimeException;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -66,7 +65,7 @@ class RecordIterator
             $this->queryExecutor->beginTransaction();
 
             foreach ($values as $value) {
-                $result = call_user_func($callback, $value);
+                $result = \call_user_func($callback, $value);
 
                 if (!$result->isSuccessful()) {
                     throw new RuntimeException(
@@ -89,7 +88,7 @@ class RecordIterator
             return $return;
         }
 
-        return CommandResult::success('batch_success', ['%count%' => count($values)]);
+        return CommandResult::success('batch_success', ['%count%' => \count($values)]);
     }
 
     protected function getRecordIds(CommandInterface $command, QueryObjectInterface $queryObject)
@@ -100,7 +99,7 @@ class RecordIterator
         }
 
         $results = $this->getRecords($command, $queryObject);
-        $getter = sprintf('get%s', ucfirst($queryObject->getIdentifierFilterKey()));
+        $getter = \sprintf('get%s', \ucfirst($queryObject->getIdentifierFilterKey()));
         $ids = [];
         foreach ($results as $result) {
             $ids[] = $result->$getter();
@@ -112,7 +111,7 @@ class RecordIterator
     protected function getRecords(CommandInterface $command, QueryObjectInterface $queryObject)
     {
         $handleAll = $command->getParameter('selectedAll');
-        $criteria = json_decode($command->getParameter('query'), true);
+        $criteria = \json_decode($command->getParameter('query'), true);
         $filter = null;
 
         if (!$handleAll) {

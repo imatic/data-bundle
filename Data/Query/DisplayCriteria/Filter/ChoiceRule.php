@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -47,12 +46,11 @@ class ChoiceRule extends FilterRule
     protected function validateValue($value)
     {
         return
-            is_scalar($value)
+            \is_scalar($value)
             || (
-                is_array($value)
-                && count(array_filter($value, 'is_scalar')) === count($value)
-            )
-        ;
+                \is_array($value)
+                && \count(\array_filter($value, 'is_scalar')) === \count($value)
+            );
     }
 
     protected function getDefaultFormType()

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader;
 
 /**
@@ -28,7 +27,7 @@ class ArrayReader implements DisplayCriteriaReader
 
     public function readAttribute($name, $default = null, $component = null, $persistent = false)
     {
-        return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : $default;
+        return \array_key_exists($name, $this->attributes) ? $this->attributes[$name] : $default;
     }
 
     public function attributeName($name)

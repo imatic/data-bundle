@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
@@ -30,7 +29,7 @@ class SoftDeleteHandler implements HandlerInterface
             $ids[] = $command->getParameter('id');
         }
 
-        if (count($ids) === 0) {
+        if (\count($ids) === 0) {
             return;
         }
 

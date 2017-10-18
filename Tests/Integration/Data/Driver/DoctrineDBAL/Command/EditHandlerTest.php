@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;

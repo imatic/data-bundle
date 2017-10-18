@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Utils;
 
 /**
@@ -27,32 +26,32 @@ class ArrayPathResolver
      */
     public function resolve($path, $default = null)
     {
-        if (false === ($pos = strpos($path, '['))) {
-            return array_key_exists($path, $this->data) ? $this->data[$path] : $default;
+        if (false === ($pos = \strpos($path, '['))) {
+            return \array_key_exists($path, $this->data) ? $this->data[$path] : $default;
         }
 
-        $root = substr($path, 0, $pos);
-        if (!array_key_exists($root, $this->data)) {
+        $root = \substr($path, 0, $pos);
+        if (!\array_key_exists($root, $this->data)) {
             return $default;
         }
 
         $value = $this->data[$root];
         $currentKey = null;
-        for ($i = $pos, $c = strlen($path); $i < $c; ++$i) {
+        for ($i = $pos, $c = \strlen($path); $i < $c; ++$i) {
             $char = $path[$i];
 
             if ('[' === $char) {
                 if (null !== $currentKey) {
-                    throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "[" at position %d.', $i));
+                    throw new \InvalidArgumentException(\sprintf('Malformed path. Unexpected "[" at position %d.', $i));
                 }
 
                 $currentKey = '';
             } elseif (']' === $char) {
                 if (null === $currentKey) {
-                    throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "]" at position %d.', $i));
+                    throw new \InvalidArgumentException(\sprintf('Malformed path. Unexpected "]" at position %d.', $i));
                 }
 
-                if (!is_array($value) || !array_key_exists($currentKey, $value)) {
+                if (!\is_array($value) || !\array_key_exists($currentKey, $value)) {
                     return $default;
                 }
 
@@ -60,7 +59,7 @@ class ArrayPathResolver
                 $currentKey = null;
             } else {
                 if (null === $currentKey) {
-                    throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "%s" at position %d.', $char, $i));
+                    throw new \InvalidArgumentException(\sprintf('Malformed path. Unexpected "%s" at position %d.', $char, $i));
                 }
 
                 $currentKey .= $char;
@@ -68,7 +67,7 @@ class ArrayPathResolver
         }
 
         if (null !== $currentKey) {
-            throw new \InvalidArgumentException(sprintf('Malformed path. Path must end with "]".'));
+            throw new \InvalidArgumentException(\sprintf('Malformed path. Path must end with "]".'));
         }
 
         return $value;

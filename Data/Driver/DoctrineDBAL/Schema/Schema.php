@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema;
 
 use Doctrine\DBAL\Connection;
@@ -40,7 +39,7 @@ class Schema
         $columnTypes = [];
         foreach ($columns as $column) {
             $columnName = $column->getName();
-            if (array_key_exists($columnName, $data)) {
+            if (\array_key_exists($columnName, $data)) {
                 $columnTypes[$this->connection->quoteIdentifier($columnName)] = $allColumnTypes[$columnName];
             }
         }
@@ -48,18 +47,18 @@ class Schema
         $quotedData = [];
         foreach ($data as $column => $value) {
             $quotedColumn = $this->connection->quoteIdentifier($column);
-            if (array_key_exists($quotedColumn, $columnTypes)) {
+            if (\array_key_exists($quotedColumn, $columnTypes)) {
                 $quotedData[$quotedColumn] = $value;
             }
         }
 
-        ksort($quotedData);
-        ksort($columnTypes);
+        \ksort($quotedData);
+        \ksort($columnTypes);
 
         return new QueryData(
             $this->connection->quoteIdentifier($table),
             $quotedData,
-            array_values($columnTypes)
+            \array_values($columnTypes)
         );
     }
 
@@ -81,7 +80,7 @@ class Schema
             return $columnTypes;
         }
 
-        return array_merge($columnTypes, $this->overwrittenColumnTypes[$table]);
+        return \array_merge($columnTypes, $this->overwrittenColumnTypes[$table]);
     }
 
     public function getNextIdValue($tableName)
@@ -112,11 +111,11 @@ class Schema
         $table = $this->findTableByName($tableName);
         $pkColumns = $table->getPrimaryKey()->getColumns();
 
-        if (count($pkColumns) !== 1) {
+        if (\count($pkColumns) !== 1) {
             return;
         }
 
-        $tableSequenceName = sprintf('%s_%s_seq', $table->getName(), $pkColumns[0]);
+        $tableSequenceName = \sprintf('%s_%s_seq', $table->getName(), $pkColumns[0]);
         $sequences = $this->getSchemaManager()->listSequences();
         foreach ($sequences as $sequence) {
             if ($tableSequenceName === $sequence->getName()) {
@@ -141,7 +140,7 @@ class Schema
             }
         }
 
-        throw new \InvalidArgumentException(sprintf('Table with name "%s" does not exists.', $tableName));
+        throw new \InvalidArgumentException(\sprintf('Table with name "%s" does not exists.', $tableName));
     }
 
     /**

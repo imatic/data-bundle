@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -25,15 +24,14 @@ class FilterRuleProcessorPass implements CompilerPassInterface
             }
         }
 
-        usort($filterRuleProcessors, function ($a, $b) {
+        \usort($filterRuleProcessors, function ($a, $b) {
             return $a['priority'] > $b['priority']
                 ? -1
                 : (
                     $a['priority'] < $b['priority']
                     ? 1
                     : 0
-                )
-            ;
+                );
         });
 
         foreach ($filterRuleProcessors as &$filterRuleProcessor) {

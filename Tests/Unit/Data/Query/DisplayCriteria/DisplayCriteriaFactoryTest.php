@@ -1,14 +1,13 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
 use Symfony\Component\Form\Forms;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -135,7 +134,6 @@ class UserFilter extends Filter
     protected function configure()
     {
         $this
-            ->add(new FilterRule\TextRule('name'))
-        ;
+            ->add(new FilterRule\TextRule('name'));
     }
 }

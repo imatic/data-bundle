@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -20,11 +19,11 @@ class FilterFactory
     public function create($name)
     {
         if (!isset($this->filters[$name])) {
-            throw new \Exception(sprintf('Filter "%s" was not found.', $name));
+            throw new \Exception(\sprintf('Filter "%s" was not found.', $name));
         }
 
-        if (is_callable($this->filters[$name])) {
-            return call_user_func($this->filters[$name], $name);
+        if (\is_callable($this->filters[$name])) {
+            return \call_user_func($this->filters[$name], $name);
         }
 
         return $this->container->get($this->filters[$name]);
@@ -37,6 +36,6 @@ class FilterFactory
 
     public function addFilters(array $filters = [])
     {
-        $this->filters = array_merge($this->filters, $filters);
+        $this->filters = \array_merge($this->filters, $filters);
     }
 }

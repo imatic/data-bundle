@@ -1,11 +1,10 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Form\Type;
 
 use Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-class ArrayruleTypeTest extends TypeTestCase
+class ArrayRuleTypeTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -68,7 +67,7 @@ abstract class FilterRule
 
     public function __construct($name, array $options = [])
     {
-        $this->name = $name;
+        $this->name = (string) $name;
         $this->options = $this->processOptions($options);
         $this->formType = $this->getDefaultFormType();
         $this->formOptions = $this->getDefaultFormOptions();
@@ -100,8 +99,8 @@ abstract class FilterRule
      */
     public function getOption($name)
     {
-        if (!array_key_exists($name, $this->options)) {
-            throw new \OutOfBoundsException(sprintf('Unknown option "%s"', $name));
+        if (!\array_key_exists($name, $this->options)) {
+            throw new \OutOfBoundsException(\sprintf('Unknown option "%s"', $name));
         }
 
         return $this->options[$name];
@@ -126,11 +125,11 @@ abstract class FilterRule
     {
         if (null !== $value) {
             if (!$this->validateValue($value)) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new \InvalidArgumentException(\sprintf(
                     'Binding invalid value (type "%s") into filter "%s" (%s)',
-                    is_object($value) ? get_class($value) : gettype($value),
+                    \is_object($value) ? \get_class($value) : \gettype($value),
                     $this->name,
-                    get_class($this)
+                    \get_class($this)
                 ));
             }
 
@@ -152,18 +151,16 @@ abstract class FilterRule
      */
     public function ruleValue($value = null)
     {
-        if (func_num_args() > 0) {
+        if (\func_num_args() > 0) {
             if (null !== $value && $this->validateValue($value)) {
                 $this->value = $value;
                 $this->updateBound();
 
                 return true;
-            } else {
-                return false;
             }
-        } else {
-            return $this->value;
+            return false;
         }
+        return $this->value;
     }
 
     /**
@@ -185,7 +182,7 @@ abstract class FilterRule
     {
         if ($operator) {
             if (!$this->validateOperator($operator)) {
-                throw new \InvalidArgumentException(sprintf('Binding invalid operator "%s" into filter "%s"', $operator, $this->name));
+                throw new \InvalidArgumentException(\sprintf('Binding invalid operator "%s" into filter "%s"', $operator, $this->name));
             }
             $this->operator = $operator;
             $this->updateBound();
@@ -211,7 +208,7 @@ abstract class FilterRule
     {
         $invalid = [];
         if (!$this->validateOperators($operators, $invalid)) {
-            throw new \InvalidArgumentException(sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', implode(', ', $operators), $this->getName()));
+            throw new \InvalidArgumentException(\sprintf('Trying to set invalid operator(s) "%s" for filter "%s"', \implode(', ', $operators), $this->getName()));
         }
         $this->operators = $operators;
 
@@ -304,7 +301,7 @@ abstract class FilterRule
      */
     protected function getDefaultOperator()
     {
-        return reset($this->operators);
+        return \reset($this->operators);
     }
 
     /**
@@ -327,7 +324,7 @@ abstract class FilterRule
      */
     protected function validateOperator($operator)
     {
-        return in_array($operator, $this->getDefaultOperators());
+        return \in_array($operator, $this->getDefaultOperators(), true);
     }
 
     /**
@@ -341,12 +338,12 @@ abstract class FilterRule
         $defaultOperators = $this->getDefaultOperators();
 
         foreach ($operators as $operator) {
-            if (!in_array($operator, $defaultOperators)) {
+            if (!\in_array($operator, $defaultOperators, true)) {
                 $invalid[] = $operator;
             }
         }
 
-        return 0 === count($invalid);
+        return 0 === \count($invalid);
     }
 
     public function reset()
@@ -358,6 +355,6 @@ abstract class FilterRule
     private function updateBound()
     {
         $this->bound = $this->value !== null ||
-            in_array($this->operator, [FilterOperatorMap::OPERATOR_EMPTY, FilterOperatorMap::OPERATOR_NOT_EMPTY]);
+            \in_array($this->operator, [FilterOperatorMap::OPERATOR_EMPTY, FilterOperatorMap::OPERATOR_NOT_EMPTY], true);
     }
 }

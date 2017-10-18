@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 use Imatic\Bundle\DataBundle\Exception\HandlerNotFoundException;
@@ -22,7 +21,7 @@ class HandlerRepository implements HandlerRepositoryInterface
     public function addHandler($name, HandlerInterface $handler, $bundleName)
     {
         if ($this->hasHandler($name)) {
-            throw new \LogicException(sprintf('Cannot register 2nd handler with name "%s".', $name));
+            throw new \LogicException(\sprintf('Cannot register 2nd handler with name "%s".', $name));
         }
 
         $this->handlers[$name] = $handler;
@@ -64,6 +63,6 @@ class HandlerRepository implements HandlerRepositoryInterface
      */
     public function hasHandler($name)
     {
-        return array_key_exists($name, $this->handlers);
+        return \array_key_exists($name, $this->handlers);
     }
 }

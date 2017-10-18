@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -48,7 +47,7 @@ class ContainerHandlerRepository implements HandlerRepositoryInterface
     public function addLazyHandler($name, $handler, $bundleName)
     {
         if ($this->hasHandler($name)) {
-            throw new \LogicException(sprintf('Cannot register 2nd handler with name "%s".', $name));
+            throw new \LogicException(\sprintf('Cannot register 2nd handler with name "%s".', $name));
         }
 
         $this->handlers[$name] = $handler;
@@ -79,8 +78,7 @@ class ContainerHandlerRepository implements HandlerRepositoryInterface
                 $this->container->get($this->handlers[$name]),
                 $this->bundles[$name]
             );
-            unset($this->bundles[$name]);
-            unset($this->handlers[$name]);
+            unset($this->bundles[$name], $this->handlers[$name]);
         }
 
         return $this->handlerRepository->getHandler($command);
@@ -119,6 +117,6 @@ class ContainerHandlerRepository implements HandlerRepositoryInterface
      */
     private function hasUnresolvedHandler($name)
     {
-        return array_key_exists($name, $this->handlers);
+        return \array_key_exists($name, $this->handlers);
     }
 }

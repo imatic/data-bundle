@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Integration\DependencyInjection\Compiler;
 
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;

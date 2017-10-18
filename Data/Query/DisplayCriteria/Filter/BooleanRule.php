@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -23,7 +22,7 @@ class BooleanRule extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_bool($value) || is_string($value);
+        return \is_bool($value) || \is_string($value);
     }
 
     protected function getDefaultFormType()
@@ -40,7 +39,7 @@ class BooleanRule extends FilterRule
 
         return [
             'translation_domain' => 'ImaticDataBundle',
-            'choices' => array_combine($choices, $choices),
+            'choices' => \array_combine($choices, $choices),
         ];
     }
 }

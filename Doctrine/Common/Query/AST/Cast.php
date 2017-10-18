@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
@@ -14,7 +13,7 @@ class Cast extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return sprintf(
+        return \sprintf(
             '%s::%s',
             $this->valueExpression->dispatch($sqlWalker),
             $this->typeString

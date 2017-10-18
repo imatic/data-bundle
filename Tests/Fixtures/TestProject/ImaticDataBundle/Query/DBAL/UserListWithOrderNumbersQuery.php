@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL;
 
 use Doctrine\DBAL\Connection;
@@ -17,8 +16,7 @@ class UserListWithOrderNumbersQuery implements QueryObjectInterface, SortableQue
             ->build($connection)
             ->addSelect('COUNT(uo.id) order_num')
             ->join('u', 'test_user_order', 'uo', 'uo.user_id = u.id')
-            ->groupBy('u.id')
-        ;
+            ->groupBy('u.id');
     }
 
     /**

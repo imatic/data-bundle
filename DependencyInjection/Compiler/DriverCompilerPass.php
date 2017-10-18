@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -16,7 +15,7 @@ class DriverCompilerPass implements CompilerPassInterface
         $drivers = $container->findTaggedServiceIds('imatic_data.driver');
         $driverRepositoryDef = $container->findDefinition('imatic_data.driver_repository');
 
-        $ids = array_keys($drivers);
+        $ids = \array_keys($drivers);
         foreach ($ids as $id) {
             $driverRepositoryDef->addMethodCall('add', [
                 new Reference($id),

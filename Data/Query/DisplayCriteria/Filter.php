@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Symfony\Component\Form\FormInterface;
@@ -9,7 +8,7 @@ class Filter implements FilterInterface
     /**
      * @var FilterRule[]
      */
-    protected $rules = array();
+    protected $rules = [];
 
     /**
      * @var FormInterface
@@ -33,7 +32,7 @@ class Filter implements FilterInterface
 
     public function boundCount()
     {
-        return array_reduce($this->rules, function ($count, FilterRule $rule) {
+        return \array_reduce($this->rules, function ($count, FilterRule $rule) {
             return $rule->isBound() ? $count + 1 : $count;
         }, 0);
     }
@@ -86,7 +85,7 @@ class Filter implements FilterInterface
     {
         $this->rules[$rule->getName()] = $rule;
 
-        if (!is_null($rule->getValue())) {
+        if (!\is_null($rule->getValue())) {
             $this->hasDefaults = true;
         }
 
@@ -146,7 +145,7 @@ class Filter implements FilterInterface
 
     public function offsetSet($index, $value)
     {
-        if (!($value instanceof FilterRule) || $index != $value->getName()) {
+        if (!($value instanceof FilterRule) || $index !== $value->getName()) {
             throw new \InvalidArgumentException('Value must be a instance of FilterRule and index must be same as rule name');
         }
         $this->add($value);
@@ -172,7 +171,7 @@ class Filter implements FilterInterface
      */
     public function count()
     {
-        return count($this->rules);
+        return \count($this->rules);
     }
 
     protected function configure()

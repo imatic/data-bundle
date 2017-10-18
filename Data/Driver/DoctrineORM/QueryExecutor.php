@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
@@ -48,7 +47,7 @@ class QueryExecutor implements QueryExecutorInterface
         $query = $qb->getQuery();
         $paginator = new Paginator($query, true);
 
-        return count($paginator);
+        return \count($paginator);
     }
 
     public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -105,9 +104,8 @@ class QueryExecutor implements QueryExecutorInterface
         } elseif ($queryObject instanceof SingleResultQueryObjectInterface) {
             return $query->getOneOrNullResult();
         } elseif ($isSelect && (null !== $query->getMaxResults() || null !== $query->getFirstResult())) {
-            return iterator_to_array(new Paginator($query, true));
-        } else {
-            return $query->getResult();
+            return \iterator_to_array(new Paginator($query, true));
         }
+        return $query->getResult();
     }
 }

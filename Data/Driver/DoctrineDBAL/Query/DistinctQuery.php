@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query;
 
 use Doctrine\DBAL\Connection;
@@ -22,9 +21,8 @@ class DistinctQuery implements QueryObjectInterface
     public function build(Connection $connection)
     {
         return $connection->createQueryBuilder()
-            ->select(sprintf('DISTINCT(%s.%s)', $this->getAlias(), $this->column))
-            ->from($connection->quoteIdentifier($this->table), $this->getAlias())
-        ;
+            ->select(\sprintf('DISTINCT(%s.%s)', $this->getAlias(), $this->column))
+            ->from($connection->quoteIdentifier($this->table), $this->getAlias());
     }
 
     private function getAlias()

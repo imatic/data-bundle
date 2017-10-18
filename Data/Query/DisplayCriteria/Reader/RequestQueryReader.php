@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader;
 
 use Imatic\Bundle\DataBundle\Utils\ArrayPathResolver;
@@ -19,14 +18,13 @@ class RequestQueryReader extends SessionReader
 
         return null !== $value
             ? $value
-            : $default
-        ;
+            : $default;
     }
 
     protected function createAttributePath($attributeName, $component = null)
     {
         if ($component) {
-            return $component.'['.$attributeName.']';
+            return $component . '[' . $attributeName . ']';
         }
 
         return $attributeName;

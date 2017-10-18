@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver;
 
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
@@ -25,7 +24,7 @@ class DriverRepository implements DriverRepositoryInterface
 
     public function get($name)
     {
-        if (!array_key_exists($name, $this->drivers)) {
+        if (!\array_key_exists($name, $this->drivers)) {
             throw new DriverNotFoundException($name);
         }
 

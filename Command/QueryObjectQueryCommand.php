@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Command;
 
 use Doctrine\Common\Util\Debug;
@@ -19,8 +18,7 @@ class QueryObjectQueryCommand extends ContainerAwareCommand
             ->setName('imatic:data:query-object-query')
             ->setDescription('Execute query defined in query object')
             ->addArgument('class', InputArgument::REQUIRED, 'Query object class')
-            ->addOption(static::OPTION_ARGS, null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'List of arguments to pass into query object')
-        ;
+            ->addOption(static::OPTION_ARGS, null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'List of arguments to pass into query object');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -32,10 +30,10 @@ class QueryObjectQueryCommand extends ContainerAwareCommand
         $constructorRef = $classRef->getConstructor();
         $numRequiredArgs = $constructorRef ? $constructorRef->getNumberOfRequiredParameters() : 0;
 
-        if ($numRequiredArgs > count($args)) {
-            throw new \InvalidArgumentException(sprintf(
+        if ($numRequiredArgs > \count($args)) {
+            throw new \InvalidArgumentException(\sprintf(
                 'Not enough arguments - %d given, %d required',
-                count($args),
+                \count($args),
                 $numRequiredArgs
             ));
         }

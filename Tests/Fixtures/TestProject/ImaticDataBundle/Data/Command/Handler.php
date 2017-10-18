@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;

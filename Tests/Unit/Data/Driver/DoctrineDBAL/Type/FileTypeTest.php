@@ -1,13 +1,12 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Driver\DoctrineDBAL\Type;
 
 use Doctrine\DBAL\Types\Type;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Type\FileType;
-use PHPUnit_Framework_TestCase;
-use Symfony\Component\HttpFoundation\File\File;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamWrapper;
+use PHPUnit_Framework_TestCase;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -24,8 +23,7 @@ class FileTypeTest extends PHPUnit_Framework_TestCase
     {
         $this->platform = $this->getMockBuilder('Doctrine\DBAL\Platforms\AbstractPlatform')
             ->disableOriginalConstructor()
-            ->getMockForAbstractClass()
-        ;
+            ->getMockForAbstractClass();
 
         if (Type::hasType('file')) {
             Type::overrideType('file', 'Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Type\FileType');

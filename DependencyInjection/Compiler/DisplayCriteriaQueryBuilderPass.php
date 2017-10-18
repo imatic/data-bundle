@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -14,7 +13,7 @@ class DisplayCriteriaQueryBuilderPass implements CompilerPassInterface
         $displayCriteriaQueryBuilderServices = $container->findTaggedServiceIds('imatic_data.display_criteria_query_builder');
 
         $displayCriteriaQueryBuilders = [];
-        $ids = array_keys($displayCriteriaQueryBuilderServices);
+        $ids = \array_keys($displayCriteriaQueryBuilderServices);
         foreach ($ids as $id) {
             $displayCriteriaQueryBuilders[] = new Reference($id);
         }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle;
 
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Type\FileType;

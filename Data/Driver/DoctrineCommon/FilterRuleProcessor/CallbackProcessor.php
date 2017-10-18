@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
@@ -18,8 +17,7 @@ class CallbackProcessor extends AbstractFilterRuleProcessor
     {
         return
             parent::supports($qb, $rule, $column)
-            && $column instanceof \Closure
-        ;
+            && $column instanceof \Closure;
     }
 
     protected function processOneColumn($qb, FilterRule $rule, $column)

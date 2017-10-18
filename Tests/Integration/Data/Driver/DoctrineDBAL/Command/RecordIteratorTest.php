@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
@@ -58,7 +57,7 @@ class RecordIteratorTest extends WebTestCase
         $command = new Command('unusedHandler', [
             'selectedAll' => false,
             'selected' => $selected,
-            'query' => json_encode([
+            'query' => \json_encode([
                 'filter_type' => 'app_imatic_data.user',
             ]),
         ]);
@@ -71,7 +70,7 @@ class RecordIteratorTest extends WebTestCase
         });
         $this->assertValidRecordIteratorResult($this->recordIterator->each($recordIteratorArgs));
 
-        $ids = array_map(
+        $ids = \array_map(
             function (array $user) {
                 return $user['id'];
             },
@@ -97,7 +96,7 @@ class RecordIteratorTest extends WebTestCase
         $command = new Command('unusedHandler', [
             'selectedAll' => true,
             'selected' => [],
-            'query' => json_encode([
+            'query' => \json_encode([
                 'filter_type' => 'app_imatic_data.user',
             ]),
         ]);
@@ -110,7 +109,7 @@ class RecordIteratorTest extends WebTestCase
         });
         $this->assertValidRecordIteratorResult($this->recordIterator->eachIdentifier($recordIteratorArgs));
 
-        sort($ids);
+        \sort($ids);
         $this->assertEquals([1, 2], $ids);
     }
 
@@ -121,7 +120,7 @@ class RecordIteratorTest extends WebTestCase
         $command = new Command('unusedHandler', [
             'selectedAll' => true,
             'selected' => [],
-            'query' => json_encode([
+            'query' => \json_encode([
                 'filter_type' => 'app_imatic_data.user',
             ]),
         ]);
@@ -146,7 +145,7 @@ class RecordIteratorTest extends WebTestCase
         $command = new Command('unusedHandler', [
             'selectedAll' => true,
             'selected' => [],
-            'query' => json_encode([
+            'query' => \json_encode([
                 'filter_type' => 'app_imatic_data.user',
                 'filter' => [
                     'name' => [

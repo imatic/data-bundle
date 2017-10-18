@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 interface CommandResultInterface
@@ -36,7 +35,7 @@ interface CommandResultInterface
 
     /**
      * @param string|null $exceptionClass
-     * @return void
+     *
      * @throws \Exception
      */
     public function throwException($exceptionClass = null);

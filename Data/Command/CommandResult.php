@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 class CommandResult implements CommandResultInterface
@@ -37,8 +36,8 @@ class CommandResult implements CommandResultInterface
             throw new \LogicException('Result cannot be successful with exception.');
         }
 
-        $this->success = (bool)$success;
-        $this->messages = (array)$messages;
+        $this->success = (bool) $success;
+        $this->messages = (array) $messages;
         $this->exception = $exception;
         $this->data = [];
     }
@@ -80,7 +79,7 @@ class CommandResult implements CommandResultInterface
 
     public function getMessagesAsString()
     {
-        return implode(', ', $this->messages);
+        return \implode(', ', $this->messages);
     }
 
     public function addMessage(MessageInterface $message)
@@ -110,10 +109,9 @@ class CommandResult implements CommandResultInterface
         if (!$this->isSuccessful()) {
             if ($this->hasException()) {
                 throw $this->getException();
-            } else {
-                $exceptionClass = $exceptionClass ?: \RuntimeException::class;
-                throw new $exceptionClass($this->getMessagesAsString());
             }
+            $exceptionClass = $exceptionClass ?: \RuntimeException::class;
+            throw new $exceptionClass($this->getMessagesAsString());
         }
     }
 

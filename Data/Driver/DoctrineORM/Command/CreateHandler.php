@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
 use Doctrine\DBAL\Connection;
@@ -30,7 +29,7 @@ class CreateHandler implements HandlerInterface
         $data = $command->getParameter('data');
         $table = $command->getParameter('table');
 
-        if (!array_key_exists('id', $data)) {
+        if (!\array_key_exists('id', $data)) {
             $data['id'] = $this->schema->getNextIdValue($table);
         }
 

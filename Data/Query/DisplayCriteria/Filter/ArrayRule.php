@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -22,6 +21,6 @@ class ArrayRule extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_array($value);
+        return \is_array($value);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
@@ -94,7 +93,7 @@ class DisplayCriteriaQueryBuilderDelegate
 
                 // rule must be present in the filter map
                 if (!isset($filterMap[$filterRule->getName()])) {
-                    throw new \InvalidArgumentException(sprintf(
+                    throw new \InvalidArgumentException(\sprintf(
                         'Column "%s" is not present in the filter map',
                         $filterRule->getName()
                     ));
@@ -116,7 +115,7 @@ class DisplayCriteriaQueryBuilderDelegate
     {
         if ($queryObject instanceof SortableQueryObjectInterface) {
             // default sorting if no sorter rules exists
-            if (0 === $sorter->count() && 0 < count($queryObject->getDefaultSort())) {
+            if (0 === $sorter->count() && 0 < \count($queryObject->getDefaultSort())) {
                 $sorter->setSorterRules($queryObject->getDefaultSort());
             }
 
