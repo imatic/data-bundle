@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -34,7 +33,8 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue([])
                 ->end()
                 ->arrayNode('unaccent_lower')
-                    ->info(<<<'INFO'
+                    ->info(
+                        <<<'INFO'
 Configuration of SQL function name for contains, not contains operators (it's always unaccent_lower for DQL).
 See https://stackoverflow.com/questions/9243322/postgres-accent-insensitive-like-search-in-rails-3-1-on-heroku
 for example on how such function might look like.
@@ -46,8 +46,7 @@ INFO
                         ->scalarNode('function_name')->defaultValue('unaccent_lower')->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

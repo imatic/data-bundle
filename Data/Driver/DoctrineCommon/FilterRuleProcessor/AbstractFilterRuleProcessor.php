@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
@@ -19,14 +18,14 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
 
     public function process($qb, FilterRule $rule, $column)
     {
-        $fixedColumns = is_array($column) ? $column : [$column];
+        $fixedColumns = \is_array($column) ? $column : [$column];
 
         $exprs = [];
         foreach ($fixedColumns as $oneColumn) {
             $exprs[] = $this->processOneColumn($qb, $rule, $oneColumn);
         }
 
-        $qb->andWhere(call_user_func_array([$qb->expr(), 'orX'], $exprs));
+        $qb->andWhere(\call_user_func_array([$qb->expr(), 'orX'], $exprs));
     }
 
     abstract protected function processOneColumn($qb, FilterRule $rule, $column);
@@ -38,9 +37,9 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
      */
     protected function getQueryParameter(FilterRule $rule)
     {
-        return sprintf(
+        return \sprintf(
             $rule->getOption('query_parameter_format'),
-            ':'.$this->getQueryParameterName($rule)
+            ':' . $this->getQueryParameterName($rule)
         );
     }
 

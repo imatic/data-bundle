@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -19,10 +18,9 @@ class EmptyOperatorProcessor extends AbstractFilterRuleProcessor
     {
         return
             parent::supports($qb, $rule, $column)
-            && in_array($rule->getOperator(), [
+            && \in_array($rule->getOperator(), [
                 FilterOperatorMap::OPERATOR_EMPTY,
                 FilterOperatorMap::OPERATOR_NOT_EMPTY,
-            ])
-        ;
+            ], true);
     }
 }

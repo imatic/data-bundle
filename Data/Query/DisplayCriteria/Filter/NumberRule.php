@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -24,7 +23,7 @@ class NumberRule extends FilterRule
 
     protected function validateValue($value)
     {
-        return is_numeric($value);
+        return \is_numeric($value);
     }
 
     protected function getDefaultFormType()

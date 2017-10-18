@@ -1,12 +1,11 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\DependencyInjection;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -17,7 +16,7 @@ class ImaticDataExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         $configuration = new Configuration();
@@ -29,7 +28,7 @@ class ImaticDataExtension extends Extension
         $container->setAlias(DisplayCriteriaReader::class, $config['display_criteria_reader']);
 
         if (!$container->hasParameter('imatic_data.base_file_path')) {
-            $container->setParameter('imatic_data.base_file_path', realpath(sprintf('%s/..', $container->getParameter('kernel.root_dir'))));
+            $container->setParameter('imatic_data.base_file_path', \realpath(\sprintf('%s/..', $container->getParameter('kernel.root_dir'))));
         }
 
         $this->processUnaccentLower($config['unaccent_lower'], $container);

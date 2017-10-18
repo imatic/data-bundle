@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Test\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
@@ -42,7 +41,7 @@ class SorterTest extends \PHPUnit_Framework_TestCase
     public function testSorterGetters()
     {
         // Sort asc
-        $sorter = new Sorter(array(new SorterRule('column', 'ASC')));
+        $sorter = new Sorter([new SorterRule('column', 'ASC')]);
 
         $this->assertEquals('ASC', $sorter->getDirection('column'));
         $this->assertEquals('asc', $sorter->getDirection('column', true));
@@ -51,19 +50,19 @@ class SorterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(true, $sorter->isSorted('column'));
 
         // Sort desc
-        $sorter = new Sorter(array(new SorterRule('column', 'DESC')));
+        $sorter = new Sorter([new SorterRule('column', 'DESC')]);
 
         $this->assertEquals('DESC', $sorter->getDirection('column'));
         $this->assertEquals(true, $sorter->isSorted('column'));
 
         // Invalid sort direction
-        $sorter = new Sorter(array(new SorterRule('column', 'xxx')));
+        $sorter = new Sorter([new SorterRule('column', 'xxx')]);
 
         $this->assertEquals('ASC', $sorter->getDirection('column'));
         $this->assertEquals(true, $sorter->isSorted('column'));
 
         // Undefined column
-        $sorter = new Sorter(array(new SorterRule('column', 'asc')));
+        $sorter = new Sorter([new SorterRule('column', 'asc')]);
 
         $this->assertEquals('ASC', $sorter->getDirection('undefined'));
         $this->assertEquals('ASC', $sorter->getReverseDirection('undefined')); //!!!

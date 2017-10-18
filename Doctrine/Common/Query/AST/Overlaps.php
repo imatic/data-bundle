@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
@@ -16,7 +15,7 @@ class Overlaps extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return sprintf(
+        return \sprintf(
             '(%s, %s) OVERLAPS (%s, %s)',
             $this->firstDateExpression->dispatch($sqlWalker),
             $this->secondDateExpression->dispatch($sqlWalker),

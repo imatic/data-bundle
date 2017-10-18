@@ -1,11 +1,9 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineDBAL\Command;
 
 use Doctrine\DBAL\Connection;
 use Imatic\Bundle\DataBundle\Data\Command\Command;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query\SoftDeleteQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**

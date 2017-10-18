@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
@@ -14,7 +13,7 @@ class UnaccentLower extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker)
     {
-        return sprintf('%s(%s)', static::$function, $sqlWalker->walkSimpleArithmeticExpression($this->stringPrimary));
+        return \sprintf('%s(%s)', static::$function, $sqlWalker->walkSimpleArithmeticExpression($this->stringPrimary));
     }
 
     public function parse(Parser $parser)

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 class Message implements MessageInterface
@@ -66,6 +65,6 @@ class Message implements MessageInterface
 
     public function __toString()
     {
-        return (string)$this->getText();
+        return (string) $this->getText();
     }
 }

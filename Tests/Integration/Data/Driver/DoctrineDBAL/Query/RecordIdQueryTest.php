@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query\RecordIdQuery;

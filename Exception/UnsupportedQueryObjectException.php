@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Exception;
 
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
@@ -9,10 +8,10 @@ class UnsupportedQueryObjectException extends \InvalidArgumentException implemen
 {
     public function __construct(QueryObjectInterface $queryObject, QueryExecutorInterface $queryExecutor = null)
     {
-        $message = sprintf(
+        $message = \sprintf(
             '"%s" is not supported by "%s"',
-            get_class($queryObject),
-            is_null($queryExecutor) ? 'undefined' : get_class($queryExecutor)
+            \get_class($queryObject),
+            \is_null($queryExecutor) ? 'undefined' : \get_class($queryExecutor)
         );
         parent::__construct($message);
     }

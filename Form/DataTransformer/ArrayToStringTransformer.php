@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -12,11 +11,11 @@ class ArrayToStringTransformer implements DataTransformerInterface
             return [];
         }
 
-        if (is_array($value)) {
+        if (\is_array($value)) {
             return $value;
         }
 
-        return array_map('trim', explode(',', $value));
+        return \array_map('trim', \explode(',', $value));
     }
 
     public function transform($value)
@@ -25,6 +24,6 @@ class ArrayToStringTransformer implements DataTransformerInterface
             return '';
         }
 
-        return implode(',', array_map('trim', $value));
+        return \implode(',', \array_map('trim', $value));
     }
 }

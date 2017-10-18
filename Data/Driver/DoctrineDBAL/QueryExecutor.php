@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
@@ -9,8 +8,8 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface as Do
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
-use Imatic\Bundle\DataBundle\Data\Query\NoResultException;
 use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
+use Imatic\Bundle\DataBundle\Data\Query\NoResultException;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
@@ -53,15 +52,14 @@ class QueryExecutor implements QueryExecutorInterface
 
         $groupByPart = $qb->getQueryPart('groupBy');
         if ($groupByPart) {
-            $count = sprintf('DISTINCT(%s)', implode(', ', $groupByPart));
+            $count = \sprintf('DISTINCT(%s)', \implode(', ', $groupByPart));
             $qb->resetQueryPart('groupBy');
         }
 
         /* @var $statement PDOStatement */
         $statement = $qb
-            ->select(sprintf('COUNT(%s) count', $count))
-            ->execute()
-        ;
+            ->select(\sprintf('COUNT(%s) count', $count))
+            ->execute();
 
         return $statement->fetch()['count'];
     }
@@ -79,7 +77,7 @@ class QueryExecutor implements QueryExecutorInterface
 
         $statement = $qb->execute();
 
-        if (is_scalar($statement)) {
+        if (\is_scalar($statement)) {
             return $statement;
         }
 
@@ -130,11 +128,11 @@ class QueryExecutor implements QueryExecutorInterface
 
     private function getSingleScalarResult($result)
     {
-        if (count($result) === 1 && count($result[0]) === 1) {
-            return reset($result[0]);
+        if (\count($result) === 1 && \count($result[0]) === 1) {
+            return \reset($result[0]);
         }
 
-        if (!count($result)) {
+        if (!\count($result)) {
             throw new NoResultException();
         }
 
@@ -143,11 +141,11 @@ class QueryExecutor implements QueryExecutorInterface
 
     private function getSingleResult($result)
     {
-        if (count($result) === 1) {
+        if (\count($result) === 1) {
             return $result[0];
         }
 
-        if (!count($result)) {
+        if (!\count($result)) {
             return null;
         }
 
@@ -158,10 +156,10 @@ class QueryExecutor implements QueryExecutorInterface
     {
         $tables = [];
         $quoteCharacter = $this->connection->getDatabasePlatform()->getIdentifierQuoteCharacter();
-        preg_match(sprintf('/FROM *%1$s?(\w+)%1$s?/i', $quoteCharacter), $statement->queryString, $tables);
+        \preg_match(\sprintf('/FROM *%1$s?(\w+)%1$s?/i', $quoteCharacter), $statement->queryString, $tables);
 
-        if (count($tables) !== 2) {
-            throw new \LogicException(sprintf('Found %d tables in queryString "%s", but 1 expected.', max([0, count($tables) - 1]), $statement->queryString));
+        if (\count($tables) !== 2) {
+            throw new \LogicException(\sprintf('Found %d tables in queryString "%s", but 1 expected.', \max([0, \count($tables) - 1]), $statement->queryString));
         }
 
         $columnTypes = $this->schema->getColumnTypes($tables[1]);
@@ -169,7 +167,7 @@ class QueryExecutor implements QueryExecutorInterface
 
         $normalizedResult = [];
         $result = $statement->fetchAll();
-        $resultCount = count($result);
+        $resultCount = \count($result);
         for ($i = 0; $i < $resultCount; ++$i) {
             foreach ($result[$i] as $column => $value) {
                 if (isset($columnTypes[$column])) {

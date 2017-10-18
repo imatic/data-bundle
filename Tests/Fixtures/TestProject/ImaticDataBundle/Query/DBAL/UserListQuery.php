@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL;
 
 use Doctrine\DBAL\Connection;
@@ -17,8 +16,7 @@ class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterf
     {
         return $connection->createQueryBuilder()
             ->select('u.id, u.name, u.activated, u.birth_date, u.hairs')
-            ->from('test_user', 'u')
-        ;
+            ->from('test_user', 'u');
     }
 
     /**

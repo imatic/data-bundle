@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 class CommandExecutor implements CommandExecutorInterface
@@ -67,7 +66,7 @@ class CommandExecutor implements CommandExecutorInterface
      */
     private function processMessages(CommandInterface $command, CommandResultInterface $result)
     {
-        $translationDomain = $this->handlerRepository->getBundleName($command).'Messages';
+        $translationDomain = $this->handlerRepository->getBundleName($command) . 'Messages';
 
         foreach ($result->getMessages() as $message) {
             if (!$message->getTranslationDomain()) {

@@ -1,11 +1,10 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Form\Type\Filter;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FilterType extends AbstractType
 {
@@ -19,7 +18,8 @@ class FilterType extends AbstractType
         foreach ($options['filter'] as $rule) {
             $builder->add(
                 $rule->getName(),
-                FilterRuleType::class, [
+                FilterRuleType::class,
+                [
                     'filter_rule' => $rule,
                     'property_path' => "[{$rule->getName()}]",
                 ]

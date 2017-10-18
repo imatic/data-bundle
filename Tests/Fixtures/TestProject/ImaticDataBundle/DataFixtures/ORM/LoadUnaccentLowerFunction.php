@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -9,7 +8,8 @@ class LoadUnaccentLowerFunction implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $manager->getConnection()->executeQuery(<<<'SQL'
+        $manager->getConnection()->executeQuery(
+            <<<'SQL'
 CREATE OR REPLACE FUNCTION unaccent_lower(text)
   RETURNS text AS
 $func$

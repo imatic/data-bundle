@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\RuleProcessor;
 
 use Doctrine\DBAL\Connection;
@@ -34,8 +33,7 @@ class DefaultRuleProcessorTest extends WebTestCase
         $qb = $this->getConnection()->createQueryBuilder();
         $qb
             ->select('*')
-            ->from('test_user')
-        ;
+            ->from('test_user');
 
         $rule = new ChoiceRule('name', ['Adam' => 'Adam'], true);
         $rule->setType(Type::SIMPLE_ARRAY);

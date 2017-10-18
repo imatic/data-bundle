@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Test\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
@@ -96,7 +95,7 @@ class PagerTest extends \PHPUnit_Framework_TestCase
         $pager = new Pager(8, 10);
         $pager->setTotal(1001);
 
-        $links = array(
+        $links = [
             3 => 3,
             4 => 4,
             5 => 5,
@@ -108,7 +107,7 @@ class PagerTest extends \PHPUnit_Framework_TestCase
             11 => 11,
             12 => 12,
             13 => 13,
-        );
+        ];
         $linkNb = 5;
 
         $this->assertEquals($links, $pager->getLinks($linkNb));

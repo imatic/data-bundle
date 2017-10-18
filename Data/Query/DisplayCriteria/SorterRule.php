@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 class SorterRule
@@ -28,12 +27,12 @@ class SorterRule
      */
     public function __construct($column, $direction = self::ASC)
     {
-        if (!preg_match(self::COLUMN_PATTERN, $column)) {
-            throw new \InvalidArgumentException(sprintf('"%s" is not valid column name', $column));
+        if (!\preg_match(self::COLUMN_PATTERN, $column)) {
+            throw new \InvalidArgumentException(\sprintf('"%s" is not valid column name', $column));
         }
 
         $this->column = $column;
-        $this->direction = (strtoupper($direction) === self::DESC) ? self::DESC : self::ASC;
+        $this->direction = (\strtoupper($direction) === self::DESC) ? self::DESC : self::ASC;
     }
 
     /**
@@ -53,7 +52,7 @@ class SorterRule
     {
         $return = $this->direction;
         if ($lowercase) {
-            $return = strtolower($return);
+            $return = \strtolower($return);
         }
 
         return $return;
@@ -66,9 +65,9 @@ class SorterRule
      */
     public function getReverseDirection($lowercase = false)
     {
-        $return = $this->direction == self::DESC ? self::ASC : self::DESC;
+        $return = $this->direction === self::DESC ? self::ASC : self::DESC;
         if ($lowercase) {
-            $return = strtolower($return);
+            $return = \strtolower($return);
         }
 
         return $return;
@@ -81,6 +80,6 @@ class SorterRule
      */
     public function isDirection($direction)
     {
-        return $this->direction === strtoupper((string) $direction);
+        return $this->direction === \strtoupper((string) $direction);
     }
 }

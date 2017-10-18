@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -31,15 +30,14 @@ class ExtJsReader extends SessionReader
 
         return null !== $result
             ? $result
-            : $default
-        ;
+            : $default;
     }
 
     protected function readFilter(Request $request, $path)
     {
         $encodedExtFilter = (new ArrayPathResolver($request->query->all()))->resolve($path, '[]');
-        $decodedExtFilter = json_decode($encodedExtFilter, true);
-        if (count($decodedExtFilter)) {
+        $decodedExtFilter = \json_decode($encodedExtFilter, true);
+        if (\count($decodedExtFilter)) {
             $value = [];
             foreach ($decodedExtFilter as $filter) {
                 $value[$filter['property']] = [
@@ -57,11 +55,11 @@ class ExtJsReader extends SessionReader
     protected function readSorter(Request $request, $component, $path)
     {
         $encodedExtSorter = (new ArrayPathResolver($request->query->all()))->resolve($path, '[]');
-        $decodedExtSorter = json_decode($encodedExtSorter, true);
+        $decodedExtSorter = \json_decode($encodedExtSorter, true);
 
         $value = [];
-        if (is_array($decodedExtSorter)) {
-            if (count($decodedExtSorter)) {
+        if (\is_array($decodedExtSorter)) {
+            if (\count($decodedExtSorter)) {
                 foreach ($decodedExtSorter as $sorter) {
                     $value[$sorter['property']] = $sorter['direction'];
                 }
@@ -71,23 +69,15 @@ class ExtJsReader extends SessionReader
             $value[$encodedExtSorter] = $request->query->get($directionPath, SorterRule::ASC);
         }
 
-        return count($value) ? $value : null;
+        return \count($value) ? $value : null;
     }
 
     protected function createAttributePath($attributeName, $component = null)
     {
-        $extAttributeName = null;
-        switch ($attributeName) {
-            case 'sorter':
-                $extAttributeName = 'sort';
-                break;
-            default:
-                $extAttributeName = $attributeName;
-                break;
-        }
+        $extAttributeName = $this->attributeName($attributeName);
 
         if ($component) {
-            return $component.'['.$extAttributeName.']';
+            return $component . '[' . $extAttributeName . ']';
         }
 
         return $extAttributeName;
@@ -95,6 +85,6 @@ class ExtJsReader extends SessionReader
 
     public function attributeName($name)
     {
-        return $name === 'sorter' ? $sort : $name;
+        return $name === 'sorter' ? 'sort' : $name;
     }
 }

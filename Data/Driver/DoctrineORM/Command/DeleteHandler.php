@@ -1,14 +1,13 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 
 class DeleteHandler implements HandlerInterface
 {

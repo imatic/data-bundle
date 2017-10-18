@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use LogicException;
@@ -81,7 +80,7 @@ class Pager implements PagerInterface
      */
     protected function setLimit($limit)
     {
-        $limit = intval($limit);
+        $limit = (int) $limit;
         if ($limit < 1) {
             $limit = $this->getDefaultLimit();
         }
@@ -109,7 +108,7 @@ class Pager implements PagerInterface
      */
     protected function setPage($page)
     {
-        $page = intval($page);
+        $page = (int) $page;
         if ($page < self::MIN_PAGE) {
             $page = self::MIN_PAGE;
         }
@@ -136,7 +135,7 @@ class Pager implements PagerInterface
      */
     public function setTotal($total)
     {
-        $this->total = intval($total);
+        $this->total = (int) $total;
         $this->fixPage();
     }
 
@@ -182,7 +181,7 @@ class Pager implements PagerInterface
      */
     public function getLastPage()
     {
-        return max(self::MIN_PAGE, ceil($this->getTotal() / $this->getLimit()));
+        return (int) \max(self::MIN_PAGE, \ceil($this->getTotal() / $this->getLimit()));
     }
 
     /**
@@ -190,7 +189,7 @@ class Pager implements PagerInterface
      */
     public function isFirstPage()
     {
-        return $this->getPage() == $this->getFirstPage();
+        return $this->getPage() === $this->getFirstPage();
     }
 
     /**
@@ -198,7 +197,7 @@ class Pager implements PagerInterface
      */
     public function isLastPage()
     {
-        return $this->getPage() == $this->getLastPage();
+        return $this->getPage() === $this->getLastPage();
     }
 
     /**
@@ -208,7 +207,7 @@ class Pager implements PagerInterface
      */
     public function isCurrentPage($page)
     {
-        return $this->getPage() == $page;
+        return $this->getPage() === $page;
     }
 
     /**
@@ -262,7 +261,7 @@ class Pager implements PagerInterface
      */
     public function getLinks($nb = 5)
     {
-        $links = array();
+        $links = [];
         $fistPage = $this->getFirstPage();
         $lastPage = $this->getLastPage();
         $currentPage = $this->getPage();
@@ -297,7 +296,7 @@ class Pager implements PagerInterface
      */
     public function setDefaultLimit($defaultLimit)
     {
-        $this->defaultLimit = intval($defaultLimit);
+        $this->defaultLimit = (int) $defaultLimit;
     }
 
     /**
@@ -313,7 +312,7 @@ class Pager implements PagerInterface
      */
     public function setMaxLimit($maxLimit)
     {
-        $maxLimit = intval($maxLimit);
+        $maxLimit = (int) $maxLimit;
         if ($this->getLimit() > $maxLimit) {
             $this->setLimit($maxLimit);
         }
@@ -326,7 +325,7 @@ class Pager implements PagerInterface
     protected function fixPage()
     {
         if (null !== $this->total) {
-            $this->page = min($this->page, $this->getLastPage());
+            $this->page = \min($this->page, $this->getLastPage());
         }
     }
 }

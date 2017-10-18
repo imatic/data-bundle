@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
@@ -8,7 +7,7 @@ use Imatic\Bundle\DataBundle\Data\Command\HandlerRepository;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Command\Handler;
 use Symfony\Component\DependencyInjection\Container;
 
-class ContainerContainerHandlerRepositoryTest extends \PHPUnit_Framework_TestCase
+class ContainerHandlerRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testAddHandlerShouldRegisterVariousHandlers()
     {

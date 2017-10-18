@@ -1,10 +1,9 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\BooleanRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\BooleanRule;
 
 class RuleBooleanProcessor extends AbstractFilterRuleProcessor
 {

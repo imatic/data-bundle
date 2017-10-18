@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Command;
 
 use Imatic\Bundle\DataBundle\Command\QueryObjectQueryCommand;
@@ -21,8 +20,7 @@ class QueryObjectQueryCommandTest extends \PHPUnit_Framework_TestCase
                     case 'imatic_data.query_executor':
                         return $this->createMock('Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface');
                 }
-            }))
-        ;
+            }));
     }
 
     public function testCommandShouldShouldPrintResultOfQueryObject()

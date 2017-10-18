@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject;
 
 use Imatic\Bundle\TestingBundle\Test\TestKernel as BaseTestKernel;
@@ -23,7 +22,7 @@ class TestKernel extends BaseTestKernel
             new \Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\AppImaticDataBundle(),
         ];
 
-        return array_merge($parentBundles, $bundles);
+        return \array_merge($parentBundles, $bundles);
     }
 
     /**
@@ -32,13 +31,13 @@ class TestKernel extends BaseTestKernel
     public function loadConfigFromPhpUnit()
     {
         $files = ['phpunit.xml', 'phpunit.xml.dist'];
-        array_map(function ($file) {
-            $file = __DIR__.'/../../../'.$file;
-            if (file_exists($file)) {
-                $element = simplexml_load_file($file);
+        \array_map(function ($file) {
+            $file = __DIR__ . '/../../../' . $file;
+            if (\file_exists($file)) {
+                $element = \simplexml_load_file($file);
                 foreach ($element->xpath('/phpunit/php/const') as $const) {
-                    if (!defined($const['name'])) {
-                        define($const['name'], $const['value']);
+                    if (!\defined($const['name'])) {
+                        \define($const['name'], $const['value']);
                     }
                 }
             }

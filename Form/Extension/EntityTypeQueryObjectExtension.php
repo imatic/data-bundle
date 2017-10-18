@@ -1,12 +1,11 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Form\Extension;
 
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\AbstractTypeExtension;
 
 /**
  * Form type theme extension.
@@ -27,7 +26,8 @@ class EntityTypeQueryObjectExtension extends AbstractTypeExtension
         ]);
 
         $resolver->setAllowedTypes(
-            'query_object', ['null', QueryObjectInterface::class]
+            'query_object',
+            ['null', QueryObjectInterface::class]
         );
     }
 

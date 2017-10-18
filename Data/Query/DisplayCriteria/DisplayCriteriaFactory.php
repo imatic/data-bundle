@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
@@ -95,11 +94,10 @@ class DisplayCriteriaFactory
      */
     public function createFilter($componentId = null, FilterInterface $filter = null, $persistent = false)
     {
-        if (!is_null($filter)) {
+        if (!\is_null($filter)) {
             $filterData = $this
                 ->displayCriteriaReader
-                ->readAttribute(DisplayCriteriaReader::FILTER, null, $componentId, $persistent)
-            ;
+                ->readAttribute(DisplayCriteriaReader::FILTER, null, $componentId, $persistent);
 
             $clearFilter = null !== $filterData && isset($filterData['clearFilter']);
             $defaultFilter = null !== $filterData && isset($filterData['defaultFilter']);
@@ -152,8 +150,7 @@ class DisplayCriteriaFactory
     {
         $sorterData = $this
             ->displayCriteriaReader
-            ->readAttribute(DisplayCriteriaReader::SORTER, $sorter, $componentId, $persistent)
-        ;
+            ->readAttribute(DisplayCriteriaReader::SORTER, $sorter, $componentId, $persistent);
 
         $sorterRules = [];
         foreach ($sorterData as $fieldName => $direction) {

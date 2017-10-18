@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria\Reader;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -24,8 +23,7 @@ class ExtJsReaderTest extends \PHPUnit_Framework_TestCase
             ->method('getCurrentRequest')
             ->will($this->returnCallback(function () {
                 return $this->currentRequest;
-            }))
-        ;
+            }));
 
         $this->requestStack = $requestStack;
     }
@@ -34,13 +32,13 @@ class ExtJsReaderTest extends \PHPUnit_Framework_TestCase
     {
         $this->currentRequest = new Request([
             'componentFromRequest' => [
-                'filter' => json_encode([
+                'filter' => \json_encode([
                     [
                         'property' => 'name',
                         'value' => 'Lee',
                     ],
                 ]),
-                'sort' => json_encode([
+                'sort' => \json_encode([
                     [
                         'property' => 'name',
                         'direction' => 'ASC',
@@ -74,7 +72,7 @@ class ExtJsReaderTest extends \PHPUnit_Framework_TestCase
     {
         $this->currentRequest = new Request([
             'componentFromRequest' => [
-                'filter' => json_encode([
+                'filter' => \json_encode([
                     [
                         'property' => 'name',
                         'value' => 'Lee',

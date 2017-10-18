@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\FormBundle\Form\Type\DateTimeRangeType;
@@ -9,7 +8,7 @@ use Imatic\Bundle\FormBundle\Form\Type\DateTimeRangeType;
  */
 class DateTimeRangeRule extends RangeRule
 {
-    public function __construct($name, array $options = array())
+    public function __construct($name, array $options = [])
     {
         parent::__construct($name, $options);
         $this->type = 'datetime';

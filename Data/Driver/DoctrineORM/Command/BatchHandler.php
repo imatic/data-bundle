@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
@@ -57,11 +56,11 @@ class BatchHandler implements HandlerInterface, CommandExecutorAwareInterface
             ? $command->getParameter('batch_command_parameters')
             : [];
 
-        $parameters = array_replace($this->commandParameters, $parameters);
+        $parameters = \array_replace($this->commandParameters, $parameters);
         $parameters['data'] = $item;
 
         if ($command->hasParameter('batch_command_parameters_callback')) {
-            $parameters = call_user_func($command->getParameter('batch_command_parameters_callback'), $parameters);
+            $parameters = \call_user_func($command->getParameter('batch_command_parameters_callback'), $parameters);
         }
 
         return $parameters;

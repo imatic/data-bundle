@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 class Sorter implements SorterInterface
@@ -12,7 +11,7 @@ class Sorter implements SorterInterface
     /**
      * @param SorterRule[] $sorterRules
      */
-    public function __construct(array $sorterRules = array())
+    public function __construct(array $sorterRules = [])
     {
         $this->setSorterRules($sorterRules);
     }
@@ -29,7 +28,7 @@ class Sorter implements SorterInterface
      */
     public function isSorted($column)
     {
-        return array_key_exists((string) $column, $this->sorterRules);
+        return \array_key_exists((string) $column, $this->sorterRules);
     }
 
     /**
@@ -41,7 +40,7 @@ class Sorter implements SorterInterface
     public function getDirection($column, $lowercase = false)
     {
         if (!$this->isSorted($column)) {
-            return $lowercase ? strtolower(SorterRule::ASC) : SorterRule::ASC;
+            return $lowercase ? \strtolower(SorterRule::ASC) : SorterRule::ASC;
         }
 
         return $this->sorterRules[$column]->getDirection($lowercase);
@@ -56,7 +55,7 @@ class Sorter implements SorterInterface
     public function getReverseDirection($column, $lowercase = false)
     {
         if (!$this->isSorted($column)) {
-            return $lowercase ? strtolower(SorterRule::ASC) : SorterRule::ASC;
+            return $lowercase ? \strtolower(SorterRule::ASC) : SorterRule::ASC;
         }
 
         return $this->sorterRules[$column]->getReverseDirection($lowercase);
@@ -77,7 +76,7 @@ class Sorter implements SorterInterface
      */
     public function count()
     {
-        return count($this->sorterRules);
+        return \count($this->sorterRules);
     }
 
     /**

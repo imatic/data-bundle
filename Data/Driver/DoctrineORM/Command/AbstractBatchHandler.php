@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
@@ -46,7 +45,7 @@ abstract class AbstractBatchHandler
             $this->queryExecutor->beginTransaction();
 
             if ($handleAll) {
-                $criteria = json_decode($command->getParameter('query'), true);
+                $criteria = \json_decode($command->getParameter('query'), true);
                 $this->displayCriteriaFactory->setAttributes($criteria);
                 $displayCriteria = $this->displayCriteriaFactory->createCriteria([
                     'filter' => $this->filterFactory->create($criteria['filter_type']),
@@ -76,7 +75,7 @@ abstract class AbstractBatchHandler
             return $return;
         }
 
-        return CommandResult::success('batch_success', ['%count%' => count($ids)]);
+        return CommandResult::success('batch_success', ['%count%' => \count($ids)]);
     }
 
     /**

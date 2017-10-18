@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 /**
@@ -28,7 +27,7 @@ class FilterRuleProcessorDelegate
             }
         }
 
-        throw new LogicException(sprintf(
+        throw new LogicException(\sprintf(
             'Couldn\'t find any filter rule processor suitable to filter rule "%s" and column "%s"',
             $rule->getName(),
             $column

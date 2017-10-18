@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Sql;
 
 use Doctrine\DBAL\Connection;
@@ -13,9 +12,9 @@ class Sql
     {
         switch ($connection->getDatabasePlatform()->getName()) {
             case 'sqlite':
-                return implode(' || ', $args);
+                return \implode(' || ', $args);
             default:
-                return sprintf('CONCAT(%s)', implode(', ', $args));
+                return \sprintf('CONCAT(%s)', \implode(', ', $args));
         }
     }
 }

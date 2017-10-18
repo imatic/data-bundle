@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query;
 
 use Doctrine\DBAL\Connection;
@@ -16,12 +15,12 @@ class SoftDeleteQuery implements QueryObjectInterface
     public function __construct($table, $ids)
     {
         $this->table = $table;
-        $this->ids = is_array($ids) ? $ids : [$ids];
+        $this->ids = \is_array($ids) ? $ids : [$ids];
     }
 
     public function build(Connection $connection)
     {
-        $idsType = count(array_filter($this->ids, 'is_numeric')) === count($this->ids)
+        $idsType = \count(\array_filter($this->ids, 'is_numeric')) === \count($this->ids)
             ? Connection::PARAM_INT_ARRAY
             : Connection::PARAM_STR_ARRAY;
 
@@ -29,7 +28,6 @@ class SoftDeleteQuery implements QueryObjectInterface
             ->update($connection->quoteIdentifier($this->table), 't')
             ->set('deleted_at', 'NOW()')
             ->where('t.id IN(:id)')
-            ->setParameter('id', $this->ids, $idsType)
-        ;
+            ->setParameter('id', $this->ids, $idsType);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon;
 
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
@@ -25,8 +24,7 @@ class DisplayCriteriaQueryBuilder implements DisplayCriteriaQueryBuilderInterfac
     {
         $qb
             ->setFirstResult($pager->getOffset())
-            ->setMaxResults($pager->getLimit())
-        ;
+            ->setMaxResults($pager->getLimit());
     }
 
     public function applySorter($qb, SorterInterface $sorter, array $sorterMap)
@@ -34,7 +32,7 @@ class DisplayCriteriaQueryBuilder implements DisplayCriteriaQueryBuilderInterfac
         /* @var $sorterRule SorterRule */
         foreach ($sorter as $sorterRule) {
             if (!isset($sorterMap[$sorterRule->getColumn()])) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new \InvalidArgumentException(\sprintf(
                     'Column "%s" is not present in the sorter map',
                     $sorterRule->getColumn()
                 ));

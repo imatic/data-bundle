@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
@@ -39,7 +38,7 @@ class QueryExecutorTest extends WebTestCase
         // guard
         $this->assertGreaterThan(1, $result);
 
-        $this->assertEquals(count($result), $this->getQueryExecutor()->count(new UserListWithOrderNumbersQuery()));
+        $this->assertEquals(\count($result), $this->getQueryExecutor()->count(new UserListWithOrderNumbersQuery()));
     }
 
     public function testQueryExecutorShouldReturnsCorrectPagesBasedOnDisplayCriteria()

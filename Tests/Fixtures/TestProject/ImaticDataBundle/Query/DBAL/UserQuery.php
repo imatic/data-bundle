@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL;
 
 use Doctrine\DBAL\Connection;
@@ -23,7 +22,6 @@ class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterfac
         return (new UserListQuery())
             ->build($connection)
             ->andWhere('u.id = :id')
-            ->setParameter('id', $this->id)
-        ;
+            ->setParameter('id', $this->id);
     }
 }

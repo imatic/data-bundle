@@ -25,6 +25,7 @@
         <const name="TEST_DATABASE_PORT" value="5432"/>
         <const name="TEST_DATABASE_NAME" value="data_bundle_test"/>
         <const name="TEST_DATABASE_SERVER_VERSION" value="9.2.4"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
     </php>
 
     <listeners>

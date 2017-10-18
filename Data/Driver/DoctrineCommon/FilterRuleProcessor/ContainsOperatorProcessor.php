@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
@@ -30,13 +29,13 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
 
     public function setFunction($function = null)
     {
-        $this->dbalFunctionTemplate = $function ? sprintf('%s(%%s)', $function) : '%s';
+        $this->dbalFunctionTemplate = $function ? \sprintf('%s(%%s)', $function) : '%s';
         $this->ormFunctionTemplate = $function ? 'unaccent_lower(%s)' : '%s';
     }
 
     protected function processOneColumn($qb, FilterRule $rule, $column)
     {
-        $qb->setParameter($this->getQueryParameterName($rule), '%'.$rule->getValue().'%', $rule->getType());
+        $qb->setParameter($this->getQueryParameterName($rule), '%' . $rule->getValue() . '%', $rule->getType());
 
         if (!$this->hasPostgresqlConnection($qb)) {
             return $qb->expr()->{$rule->getOperator()}(
@@ -46,38 +45,36 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
         }
 
         if ($qb instanceof ORMQueryBuilder) {
-            return sprintf(
+            return \sprintf(
                 '%s(%s, %s) = true',
-                str_replace(' ', '_', $this->postgresOperators[$rule->getOperator()]),
+                \str_replace(' ', '_', $this->postgresOperators[$rule->getOperator()]),
                 $this->wrapColumn($qb, $column),
                 $this->wrapColumn($qb, $this->getQueryParameter($rule))
             );
-        } else {
-            return sprintf(
+        }
+        return \sprintf(
                 '%s %s %s',
                 $this->wrapColumn($qb, $column),
                 $this->postgresOperators[$rule->getOperator()],
                 $this->wrapColumn($qb, $this->getQueryParameter($rule))
             );
-        }
     }
 
     public function supports($qb, FilterRule $rule, $column)
     {
         return
             parent::supports($qb, $rule, $column)
-            && in_array($rule->getOperator(), [
+            && \in_array($rule->getOperator(), [
                 FilterOperatorMap::OPERATOR_CONTAINS,
                 FilterOperatorMap::OPERATOR_NOT_CONTAINS,
-            ])
-        ;
+            ], true);
     }
 
     private function wrapColumn($qb, $column)
     {
         $template = $qb instanceof ORMQueryBuilder ? $this->ormFunctionTemplate : $this->dbalFunctionTemplate;
 
-        return sprintf($template, $column);
+        return \sprintf($template, $column);
     }
 
     private function hasPostgresqlConnection($qb)

@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
@@ -37,11 +36,11 @@ class FileType extends Type
             return null;
         }
 
-        if (static::$basePath !== '' && strpos($value->getPathname(), static::$basePath) !== 0) {
-            throw new \LogicException(sprintf('Invalid path or "basePath" ("%s") configuration', static::$basePath));
+        if (static::$basePath !== '' && \strpos($value->getPathname(), static::$basePath) !== 0) {
+            throw new \LogicException(\sprintf('Invalid path or "basePath" ("%s") configuration', static::$basePath));
         }
 
-        return substr($value->getPathname(), strlen(static::$basePath));
+        return \substr($value->getPathname(), \strlen(static::$basePath));
     }
 
     /**
@@ -56,7 +55,7 @@ class FileType extends Type
             return null;
         }
 
-        return new File(static::$basePath.$value);
+        return new File(static::$basePath . $value);
     }
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)

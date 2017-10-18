@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory;
@@ -82,7 +81,7 @@ class ResultIterator implements Iterator, \Countable
     public function next()
     {
         ++$this->position;
-        if (floor(($this->position + 1) / $this->getLimit()) > $this->criteria['page'] && $this->valid()) {
+        if (\floor(($this->position + 1) / $this->getLimit()) > $this->criteria['page'] && $this->valid()) {
             $this->loadNextPage();
         }
     }

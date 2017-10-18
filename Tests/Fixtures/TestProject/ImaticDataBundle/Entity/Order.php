@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -55,5 +54,13 @@ class Order
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
     }
 }

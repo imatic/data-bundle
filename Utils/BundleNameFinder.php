@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Utils;
 
 class BundleNameFinder
@@ -26,8 +25,8 @@ class BundleNameFinder
         do {
             $classNamespace = $reflectionClass->getNamespaceName();
             foreach ($this->bundles as $bundleName => $bundleClass) {
-                $bundleNamespace = substr($bundleClass, 0, strrpos($bundleClass, '\\'));
-                if (0 === strpos($classNamespace, $bundleNamespace)) {
+                $bundleNamespace = \substr($bundleClass, 0, \strrpos($bundleClass, '\\'));
+                if (0 === \strpos($classNamespace, $bundleNamespace)) {
                     return $bundleName;
                 }
             }

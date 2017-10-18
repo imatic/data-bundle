@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorFactoryInterface;
@@ -22,14 +21,14 @@ class QueryExecutorFactory implements QueryExecutorFactoryInterface
     public function createWithConnection($connectionName = null)
     {
         if ($connectionName !== null) {
-            $connectionId = sprintf('doctrine.dbal.%s_connection', $connectionName);
+            $connectionId = \sprintf('doctrine.dbal.%s_connection', $connectionName);
         } else {
             $connectionId = 'database_connection';
         }
 
         if (!isset($this->queryExecutorCache[$connectionId])) {
             if (!$this->container->has($connectionId)) {
-                throw new RuntimeException(sprintf('Cannot find service "%s".', $connectionId));
+                throw new RuntimeException(\sprintf('Cannot find service "%s".', $connectionId));
             }
 
             $this->queryExecutorCache[$connectionId] = new QueryExecutor(

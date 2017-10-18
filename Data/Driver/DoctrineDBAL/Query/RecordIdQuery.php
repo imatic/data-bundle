@@ -1,5 +1,4 @@
 <?php
-
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query;
 
 use Doctrine\DBAL\Connection;
@@ -23,14 +22,15 @@ class RecordIdQuery implements QueryObjectInterface, SingleResultQueryObjectInte
     public function build(Connection $connection)
     {
         $qb = $connection->createQueryBuilder();
-        $qb->select(sprintf('%s.%s', $this->getAlias(), 'id'));
+        $qb->select(\sprintf('%s.%s', $this->getAlias(), 'id'));
         $qb->from($connection->quoteIdentifier($this->table), $this->getAlias());
         $queryColumns = $this->getQueryColumns();
 
-        foreach ($queryColumns as $column => $value) {
+        $columnNames = \array_keys($queryColumns);
+        foreach ($columnNames as $column) {
             $qb->andWhere($qb->expr()->eq($column, '?'));
         }
-        $qb->setParameters(array_values($queryColumns));
+        $qb->setParameters(\array_values($queryColumns));
 
         return $qb;
     }
@@ -39,7 +39,7 @@ class RecordIdQuery implements QueryObjectInterface, SingleResultQueryObjectInte
     {
         $queryColumns = [];
         foreach ($this->columnValues as $column => $value) {
-            $queryColumns[sprintf('%s.%s', $this->getAlias(), $column)] = $value;
+            $queryColumns[\sprintf('%s.%s', $this->getAlias(), $column)] = $value;
         }
 
         return $queryColumns;
