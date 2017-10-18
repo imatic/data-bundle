@@ -2,42 +2,50 @@ imports:
     - { resource: data.yml }
 
 services:
-    imatic_data.request_query_display_criteria_reader:
-        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader
-        arguments:
-            - '@request_stack'
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader:
+        autowire: true
 
-    imatic_data.extjs_display_criteria_reader:
-        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader
-        arguments:
-            - '@request_stack'
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader:
+        autowire: true
 
-    # Display criteria
-    imatic_data.display_criteria_factory:
-        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory
-        arguments:
-            - '@imatic_data.pager_factory'
-            - '@form.factory'
-            - '@imatic_data.display_criteria_reader'
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory:
+        autowire: true
 
-    imatic_data.array_display_criteria_factory:
-        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory
-        arguments:
-            - '@imatic_data.pager_factory'
-            - '@form.factory'
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory:
+        autowire: true
 
-    # Form extensions
-    imatic_data.form.extension.query_object:
-        class: Imatic\Bundle\DataBundle\Form\Extension\EntityTypeQueryObjectExtension
+    Imatic\Bundle\DataBundle\Form\Extension\EntityTypeQueryObjectExtension:
         tags:
             - { name: 'form.type_extension', extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 
-    imatic_data.filter_factory:
-        class: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory
-        arguments:
-            - '@service_container'
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory:
+        autowire: true
 
-    imatic_data.array_rule_type:
-        class: Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType
+    Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType:
         tags:
             - { name: form.type }
+
+
+
+    ### DEPRECATED ALIASES ###
+
+    imatic_data.request_query_display_criteria_reader:
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader
+
+    imatic_data.extjs_display_criteria_reader:
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader
+
+    imatic_data.display_criteria_factory:
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory
+
+    imatic_data.array_display_criteria_factory:
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory
+
+    imatic_data.form.extension.query_object:
+        alias: Imatic\Bundle\DataBundle\Form\Extension\EntityTypeQueryObjectExtension
+
+    imatic_data.filter_factory:
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory
+
+    imatic_data.array_rule_type:
+        alias: Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType

@@ -2,56 +2,47 @@ services:
     imatic_data.doctrine.dbal.query_executor_delegate:
         class: Imatic\Bundle\DataBundle\Data\Query\QueryExecutorDelegate
         arguments:
-            - '@imatic_data.doctrine.dbal.query_executor_factory'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory'
 
-    imatic_data.doctrine.dbal.query_executor_factory:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory
-        arguments:
-            - '@service_container'
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory:
+        autowire: true
 
-    imatic_data.doctrine.dbal.query_executor:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor
-        factory: ['@imatic_data.doctrine.dbal.query_executor_factory', createWithConnection]
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor:
+        factory: ['@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory', createWithConnection]
 
-    imatic_data.driver.doctrine_dbal.command.create:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler:
         arguments:
             - '@database_connection'
-            - '@imatic_data.driver.doctrine_dbal.schema'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_create }
 
-    imatic_data.driver.doctrine_dbal.command.edit:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler:
         arguments:
             - '@database_connection'
-            - '@imatic_data.driver.doctrine_dbal.schema'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_edit }
 
-    imatic_data.driver.doctrine_dbal.command.create_or_edit:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateOrEditHandler
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateOrEditHandler:
         arguments:
-            - '@imatic_data.doctrine.dbal.query_executor'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_create_or_edit }
 
-    imatic_data.driver.doctrine_dbal.command.delete:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\DeleteHandler
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\DeleteHandler:
         arguments:
             - '@database_connection'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_delete }
 
-    imatic_data.driver.doctrine_dbal.command.soft_delete:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler:
         arguments:
-            - '@imatic_data.doctrine.dbal.query_executor'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
         tags:
             - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_soft_delete }
 
-    imatic_data.driver.doctrine_dbal.schema:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema:
         arguments:
             - '@database_connection'
         calls:
@@ -66,15 +57,47 @@ services:
         tags:
             - { name: imatic_data.driver }
 
-    imatic_data.driver.doctrine_dbal.record_iterator:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator:
         arguments:
-            - '@imatic_data.doctrine.dbal.query_executor'
-            - '@imatic_data.driver.doctrine_dbal.result_iterator_factory'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory'
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
+
+
+
+    ### DEPRECATED ALIASES ###
+
+    imatic_data.driver.doctrine_dbal.command.create:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler
+
+    imatic_data.doctrine.dbal.query_executor_factory:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory
+
+    imatic_data.driver.doctrine_dbal.command.edit:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler
+
+    imatic_data.driver.doctrine_dbal.command.create_or_edit:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateOrEditHandler
+
+    imatic_data.driver.doctrine_dbal.command.delete:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\DeleteHandler
+
+    imatic_data.driver.doctrine_dbal.command.soft_delete:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler
+
+    imatic_data.driver.doctrine_dbal.schema:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema
+
+    imatic_data.driver.doctrine_dbal.record_iterator:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator
+
+    imatic_data.doctrine.dbal.query_executor:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor
 
     imatic_data.driver.doctrine_dbal.result_iterator_factory:
-        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory
-        arguments:
-            - '@imatic_data.array_display_criteria_factory'
-            - '@imatic_data.filter_factory'
-            - '@imatic_data.doctrine.dbal.query_executor'
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory

@@ -239,7 +239,7 @@ class QueryExecutorTest extends WebTestCase
      */
     public function getQueryExecutor()
     {
-        return $this->container->get('imatic_data.query_executor');
+        return $this->container->get(QueryExecutorInterface::class);
     }
 
     /**

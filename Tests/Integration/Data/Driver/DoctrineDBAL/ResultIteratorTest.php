@@ -2,7 +2,7 @@
 
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineDBAL;
 
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
@@ -20,7 +20,7 @@ class ResultIteratorTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->resultIteratorFactory = $this->container->get('imatic_data.driver.doctrine_dbal.result_iterator_factory');
+        $this->resultIteratorFactory = $this->container->get(ResultIteratorFactory::class);
     }
 
     public function testResultIteratorShouldReturnAllResults()

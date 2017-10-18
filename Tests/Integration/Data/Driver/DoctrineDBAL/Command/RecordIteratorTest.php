@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIteratorArgs;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserListQuery;
@@ -24,7 +25,7 @@ class RecordIteratorTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->recordIterator = $this->container->get('imatic_data.driver.doctrine_dbal.record_iterator');
+        $this->recordIterator = $this->container->get(RecordIterator::class);
         $this->requestStack = $this->container->get('request_stack');
     }
 

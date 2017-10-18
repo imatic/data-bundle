@@ -48,7 +48,7 @@ class EditHandlerTest extends WebTestCase
      */
     private function getEditHandler()
     {
-        return $this->container->get('imatic_data.driver.doctrine_dbal.command.edit');
+        return $this->container->get(EditHandler::class);
     }
 
     private function findUserById($id)

@@ -26,7 +26,7 @@ class DisplayCriteriaFactoryTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->displayCriteriaFactory = $this->container->get('imatic_data.display_criteria_factory');
+        $this->displayCriteriaFactory = $this->container->get(DisplayCriteriaFactory::class);
         $this->requestStack = $this->container->get('request_stack');
     }
 
