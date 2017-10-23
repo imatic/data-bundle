@@ -23,12 +23,12 @@ phpunit:
 update-test: | composer
 	rm -rf Tests/Fixtures/TestProject/cache/test/
 	git checkout -- ./composer.lock
-	composer install
+	./composer install
 
 .PHONY: update-test-min
 update-test-min: | composer
 	rm -rf Tests/Fixtures/TestProject/cache/test/ ./composer.lock
-	composer update --prefer-lowest
+	./composer update --prefer-lowest
 
 composer:
 	$(if $(shell which composer 2> /dev/null),\
