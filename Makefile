@@ -17,17 +17,26 @@ phpmd:
 
 .PHONY: phpunit
 phpunit:
-	php vendor/bin/simple-phpunit
+	./vendor/bin/phpunit
 
 .PHONY: update-test
-update-test:
-	composer install
+update-test: | composer
+	rm -rf Tests/Fixtures/TestProject/cache/test/
+	git checkout -- ./composer.lock
+	./composer install
 
-/usr/local/bin/composer:
-	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+.PHONY: update-test-min
+update-test-min: | composer
+	rm -rf Tests/Fixtures/TestProject/cache/test/ ./composer.lock
+	./composer update --prefer-lowest
+
+composer:
+	$(if $(shell which composer 2> /dev/null),\
+        ln --symbolic $$(which composer) composer,\
+		curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=$$(pwd) --filename=composer)
 
 .PHONY: configure-pipelines
-configure-pipelines: /usr/local/bin/composer
+configure-pipelines:
 	apt-get update
 	apt-get install --yes git postgresql-server-dev-9.4 graphviz
 	docker-php-ext-install pdo_pgsql zip
