@@ -15,19 +15,13 @@
             "homepage": "http://imatic.cz/"
         }
     ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://composer.imatic.cz"
-        }
-    ],
     "require": {
         "php": ">=5.5",
         "symfony/framework-bundle": "~3.3",
         "doctrine/doctrine-bundle": "~1.2"
     },
     "require-dev": {
-        "imatic/testing-bundle": "~3.0",
+        "imatic/testing": "~3.0",
         "imatic/form-bundle": "~3.0",
         "doctrine/orm": "~2.3",
         "mikey179/vfsStream": "~1.4",
