@@ -32,7 +32,7 @@ class CreateHandlerTest extends WebTestCase
 
         $newUser = $this->findUserByName('new-user');
         $this->assertEquals('new-user', $newUser['name']);
-        $this->assertEquals(true, $newUser['activated']);
+        $this->assertTrue($newUser['activated']);
         $this->assertEquals('1985-05-03 00:00:00', $newUser['birth_date']);
         $this->assertEquals('1890-09-03', $newUser['favorite_day']);
         $this->assertEquals('16:30:00', $newUser['favorite_time']);

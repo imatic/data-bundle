@@ -87,7 +87,7 @@ class PagerTest extends \PHPUnit_Framework_TestCase
         $pager = new Pager(1, 100);
         $pager->setTotal(90);
 
-        $this->assertEquals(false, $pager->haveToPaginate());
+        $this->assertFalse($pager->haveToPaginate());
     }
 
     public function testPagingLinks()
