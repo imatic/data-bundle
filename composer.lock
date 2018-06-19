@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "349a866e978f0ca77d6018738ed94cac",
+    "content-hash": "47e1d4eb99ea1a752e1aaebef97056aa",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2183,29 +2183,29 @@
         },
         {
             "name": "imatic/form-bundle",
-            "version": "v3.0.14",
+            "version": "dev-parklane",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imatic/form-bundle.git",
-                "reference": "7774f7e66b321cb6b8c10ffa07dafd65588162b0"
+                "reference": "aa7f8a3afe813cbb642c1e5f265f94d5d0cd0958"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imatic/form-bundle/zipball/7774f7e66b321cb6b8c10ffa07dafd65588162b0",
-                "reference": "7774f7e66b321cb6b8c10ffa07dafd65588162b0",
+                "url": "https://api.github.com/repos/imatic/form-bundle/zipball/aa7f8a3afe813cbb642c1e5f265f94d5d0cd0958",
+                "reference": "aa7f8a3afe813cbb642c1e5f265f94d5d0cd0958",
                 "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "~1.2",
                 "doctrine/orm": "~2.3",
                 "php": ">=5.5",
-                "symfony/form": "~3.0",
-                "symfony/framework-bundle": "~3.0",
-                "symfony/validator": "~3.0"
+                "symfony/form": "~3.0|~4.0",
+                "symfony/framework-bundle": "~3.0|~4.0",
+                "symfony/validator": "~3.0|~4.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.7",
-                "imatic/testing": "^4.0",
+                "imatic/testing": "dev-parklane",
                 "mamuz/php-dependency-analysis": "^1.3",
                 "phpdocumentor/reflection-docblock": "4.1.1 as 3.3.0",
                 "phpmd/phpmd": "^2.6",
@@ -2232,53 +2232,62 @@
                 }
             ],
             "description": "Bundle for working with Symfony forms",
-            "time": "2017-12-07T14:02:50+00:00"
+            "time": "2018-06-19T09:49:18+00:00"
         },
         {
             "name": "imatic/testing",
-            "version": "3.0",
+            "version": "dev-parklane",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imatic/testing.git",
-                "reference": "e1fa6cb1ac6abec0173639816b5ea7e39636bd4e"
+                "reference": "9da546d06cacff4a75479b58b6beda7445c65623"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imatic/testing/zipball/e1fa6cb1ac6abec0173639816b5ea7e39636bd4e",
-                "reference": "e1fa6cb1ac6abec0173639816b5ea7e39636bd4e",
+                "url": "https://api.github.com/repos/imatic/testing/zipball/9da546d06cacff4a75479b58b6beda7445c65623",
+                "reference": "9da546d06cacff4a75479b58b6beda7445c65623",
                 "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "~1.2",
-                "doctrine/doctrine-fixtures-bundle": "~2.2",
-                "doctrine/orm": "~2.3",
                 "php": ">=5.4",
                 "phpunit/phpunit": "~5.1",
                 "symfony/monolog-bundle": "~2.7|~3.0",
-                "symfony/symfony": "~2.7|~3.0"
+                "symfony/symfony": "~2.7|~3.0|~4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.7",
+                "mamuz/php-dependency-analysis": "^1.3",
+                "pds/skeleton": "~1.0",
+                "phpdocumentor/reflection-docblock": "4.1.1 as 3.1.1",
+                "phpmd/phpmd": "^2.6"
             },
             "bin": [
-                "init-testingbundle"
+                "bin/testingbundle-init"
             ],
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Imatic\\Bundle\\TestingBundle\\": ""
+                    "Imatic\\Testing\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Imatic"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Stepan Koci",
-                    "email": "stepan.koci@imatic.cz"
+                    "name": "Imatic Software s.r.o.",
+                    "homepage": "http://imatic.cz/"
                 }
             ],
-            "description": "Imatic Testing Bundle",
-            "homepage": "http://imatic.cz",
-            "time": "2016-02-27T20:17:54+00:00"
+            "description": "Library to make testing of Symfony bundles easier",
+            "homepage": "https://www.imatic.cz",
+            "keywords": [
+                "symfony",
+                "testing"
+            ],
+            "time": "2018-06-19T08:49:05+00:00"
         },
         {
             "name": "mamuz/php-dependency-analysis",
@@ -4182,7 +4191,10 @@
         }
     ],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "imatic/testing": 20,
+        "imatic/form-bundle": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

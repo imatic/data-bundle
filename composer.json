@@ -17,12 +17,12 @@
     ],
     "require": {
         "php": ">=5.5",
-        "symfony/framework-bundle": "~3.3",
+        "symfony/framework-bundle": "~3.3|~4.0",
         "doctrine/doctrine-bundle": "~1.2"
     },
     "require-dev": {
-        "imatic/testing": "~3.0",
-        "imatic/form-bundle": "~3.0",
+        "imatic/testing": "dev-parklane",
+        "imatic/form-bundle": "dev-parklane",
         "doctrine/orm": "~2.3",
         "mikey179/vfsStream": "~1.4",
         "symfony/phpunit-bridge": "~3.0",
