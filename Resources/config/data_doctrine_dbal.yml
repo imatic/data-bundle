@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: true
+
     imatic_data.doctrine.dbal.query_executor_delegate:
         class: Imatic\Bundle\DataBundle\Data\Query\QueryExecutorDelegate
         arguments:

@@ -27,10 +27,12 @@ class EditHandler implements HandlerInterface
     public function handle(CommandInterface $command)
     {
         $object = $command->getParameter('data');
-        $class = $command->getParameter('class');
 
-        if (!($object instanceof $class)) {
-            return CommandResult::error('invalid_instance');
+        if ($command->hasParameter('class')) {
+            $class = $command->getParameter('class');
+            if (!($object instanceof $class)) {
+                return CommandResult::error('invalid_instance');
+            }
         }
 
         $this->objectManager->flush();

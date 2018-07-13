@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: true
+
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder:
         tags:
             - { name: imatic_data.display_criteria_query_builder }

@@ -12,5 +12,5 @@ interface QueryObjectInterface extends BaseQueryObjectInterface
      *
      * @return QueryBuilder
      */
-    public function build(EntityManager $em);
+    public function build(EntityManager $em): QueryBuilder;
 }

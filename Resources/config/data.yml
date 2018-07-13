@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: true
+
     Imatic\Bundle\DataBundle\Data\Command\CommandExecutor:
         arguments:
             - '@Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository'

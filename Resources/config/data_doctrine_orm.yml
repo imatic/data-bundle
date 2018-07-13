@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: true
+
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager:
         arguments:
             - '@doctrine.orm.entity_manager'
