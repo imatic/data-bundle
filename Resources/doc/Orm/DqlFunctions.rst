@@ -15,6 +15,7 @@ This bundle ships with several dql functions. To register all of them, add follo
                     cast: Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST\Cast
                     overlaps: Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST\Overlaps
                     unaccent_lower: Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST\UnaccentLower
+                    jsonb_exists: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\JsonbExists
 
 `ILike </Doctrine/Postgresql/Query/AST/ILike.php>`_
 ---------------------------------------------------
@@ -73,3 +74,13 @@ https://www.postgresql.org/docs/9.6/static/functions-datetime.html
    SELECT UNACCENT_LOWER(u.username)
    FROM User u
 
+`JsonbExists </Doctrine/Postgresql/Query/AST/JsonbExists.php>`_
+---------------------------------------------------------
+
+- Support for jsonb operator ``?``
+
+.. sourcecode:: text
+
+   SELECT u
+   FROM User u
+   WHERE jsonb_exists(u.roles, 'ROLE_ADMIN')
