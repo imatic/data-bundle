@@ -1,6 +1,7 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
@@ -35,6 +36,10 @@ class EditHandler implements HandlerInterface
             }
         }
 
-        $this->objectManager->flush();
+        try {
+            $this->objectManager->flush();
+        } catch (ForeignKeyConstraintViolationException $e) {
+            return CommandResult::error('constraint_violation');
+        }
     }
 }
