@@ -1,16 +1,16 @@
 <?php
 namespace Imatic\Bundle\DataBundle\DependencyInjection;
 
+use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
+use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\CommandHandlerCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * This is the class that loads and manages your bundle configuration.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+ * ImaticDataExtension.
  */
 class ImaticDataExtension extends Extension
 {
@@ -30,6 +30,9 @@ class ImaticDataExtension extends Extension
         if (!$container->hasParameter('imatic_data.base_file_path')) {
             $container->setParameter('imatic_data.base_file_path', \realpath(\sprintf('%s/..', $container->getParameter('kernel.root_dir'))));
         }
+
+        $container->registerForAutoconfiguration(HandlerInterface::class)
+            ->addTag(CommandHandlerCompilerPass::HANDLER_TAG);
 
         $this->processUnaccentLower($config['unaccent_lower'], $container);
         $this->processPager($config['pager'], $container);

@@ -7,7 +7,7 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 
 class UserListWithOrdersQuery implements QueryObjectInterface
 {
-    public function build(EntityManager $em)
+    public function build(EntityManager $em): QueryBuilder
     {
         $qb = (new QueryBuilder($em))
             ->from('AppImaticDataBundle:User', 'u')

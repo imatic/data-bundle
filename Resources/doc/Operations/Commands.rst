@@ -25,7 +25,7 @@ Commands use 3 main interfaces
 
 - accepts 2 arguments
 
-  - ``$handlerName`` - alias of the command handler service
+  - ``$handlerName`` - ID of the command handler service
   - ``$parameters`` - parameters used by command handler
 
 Command is passed to the `command executor <command_executor_h_>`_ which executes `command handler <handler_>`_ based
@@ -53,8 +53,8 @@ Handler
 - Has 1 method ``handle``, which accepts `command <command_h_>`_, processes it and returns a result.
 - Needs to be registered in container in order to be called by `command executor <CommandExecutor_>`_
 
-  - service needs to be tagged with tag ``imatic_data.handler`` which contains an optional ``alias`` attribute
-  - handler is then available under its service id and alias if provided.
+  - service needs to be tagged with tag ``imatic_data.handler`` (done automatically when autoconfiguration is  enabled)
+  - handler is then available under its service id.
 
 - In case handler needs a `command executor <command_executor_h_>`_ to be able to execute other commands,
   it can implement ``Imatic\Bundle\DataBundle\Data\Command\CommandExecutorAwareInterface`` to avoid circular reference
@@ -169,7 +169,6 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\CreateHandler
 
 - Used to create new rows in db table.
 - Handler assumes that name of the column containing the key is ``id`` (if not explicitly passed, it's auto generated).
-- Alias: ``imatic_data.doctrine_dbal.generic_create``
 - Parameters:
 
   - ``table`` - name of the table we want to insert data into
@@ -188,9 +187,10 @@ Example of inserting new user and echoing it's id
    <?php
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
+   use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler;
 
    $createUserCommand = new Command(
-       'imatic_data.doctrine_dbal.generic_create',
+       CreateHandler::class,
        [
            'table' => 'user',
            'data' => [
@@ -213,7 +213,6 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\EditHandler
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 - Used to update existing rows in db table.
-- Alias: ``imatic_data.doctrine_dbal.generic_edit``
 - Parameters:
 
   - ``id`` - id of the row we want to update. It's associative array where keys are column names and values are their
@@ -234,9 +233,10 @@ Example of updating existing user with id equal to 1
    <?php
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
+   use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler;
 
    $updateUserCommand = new Command(
-       'imatic_data.doctrine_dbal.generic_edit',
+       EditHandler::class,
        [
            'id' => ['id' => 1],
            'table' => 'user',
@@ -260,7 +260,6 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\CreateOrEditHan
 
 - Used to create new row in case one doesn't already exist (based on specified criteria) or edit existing one.
 - Handler assumes that name of the column with primary key is ``id``.
-- Alias: ``imatic_data.doctrine_dbal.generic_create_or_edit``
 - Parameters:
 
   - ``columnValues`` - columns used to search existing record
@@ -287,9 +286,10 @@ Example of creating or updating user with given email address
    <?php
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
+   use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateOrEditHandler;
 
    $createOrUpdateUserCommand = new Command(
-       'imatic_data.doctrine_dbal.generic_create_or_edit',
+       CreateOrEditHandler::class,
        [
            'columnValues' => [
                'email' => 'user@example.com',
@@ -315,7 +315,6 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\DeleteHandler
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 - Used to delete row from db
-- Alias: ``imatic_data.doctrine_dbal.generic_delete``
 - Parameters:
 
   - ``id`` - id of the row we want to delete. It's associative array where keys are column names and values are their
@@ -334,9 +333,10 @@ Example of deleting user with id 3
    <?php
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
+   use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\DeleteHandler;
 
    $deleteUserCommand = new Command(
-       'imatic_data.doctrine_dbal.generic_delete',
+       DeleteHandler::class,
        [
            'id' => ['id' => 3],
            'table' => 'user',
@@ -361,7 +361,6 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineDBAL\\Command\\SoftDeleteHandl
   - column in which primary key is stored is named ``id``
   - table has column ``deleted_at`` which stores time at which row was marked as deleted
 
-- Alias: ``imatic_data.doctrine_dbal.generic_soft_delete``
 - Parameters:
 
   - ``id`` - id of the row we want to mark as deleted
@@ -379,9 +378,10 @@ Example of marking user with id 4 as deleted
    <?php
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
+   use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler;
 
    $softDeleteUserCommand = new Command(
-       'imatic_data.doctrine_dbal.generic_soft_delete',
+       SoftDeleteHandler::class,
        [
            'id' => ['id' => 4],
            'table' => 'user',
@@ -404,7 +404,6 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\CreateHandler
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 - Used to store new object in db.
-- Alias: ``imatic_data.generic_create``
 - Parameters:
 
   - ``class`` - class of the object we want to store into db
@@ -422,13 +421,14 @@ Example of storing new user in db
    <?php
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
+   use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler;
 
    $newUser = new User();
    $newUser->setEmail('new@example.com');
    $newUser->setUsername('newuser');
 
    $createUserCommand = new Command(
-       'imatic_data.generic_create',
+       CreateHandler::class,
        [
            'class' => User::class,
            'data' => $newUser,
@@ -448,7 +448,6 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\EditHandler
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 - Used to update db with edited data.
-- Alias: ``imatic_data.generic_edit``
 - Parameters:
 
   - ``class`` - class of the object we want to store into db
@@ -466,12 +465,13 @@ Example of updating db with updated user
    <?php
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
+   use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\EditHandler;
 
    $updatedUser = findUserById(3);
    $updatedUser->setUsername('updatedusername');
 
    $updateUserCommand = new Command(
-       'imatic_data.generic_edit',
+       EditHandler::class,
        [
            'class' => User::class,
            'data' => $updatedUser,
@@ -492,7 +492,6 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\DeleteHandler
 
 - Used to delete existing object from db.
 - At least one of ``data`` and ``query_object`` parameters have to be specified.
-- Alias: ``imatic_data.generic_delete``
 - Parameters:
 
   - ``class`` - class of the object we want to store into db
@@ -511,12 +510,12 @@ Example of deleting user
    <?php
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
-
+   use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler;
 
    $user = findUserById(5);
 
    $deleteUserCommand = new Command(
-       'imatic_data.generic_delete',
+       DeleteHandler::class,
        [
            'class' => User::class,
            'data' => $user,
@@ -545,7 +544,7 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\BatchHandler
 
   - ``$commandName``
 
-    - alias of the command to execute for each record
+    - ID of the command handler service to execute for each record
 
   - ``$commandParameters``
 
@@ -569,11 +568,10 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\BatchHandler
 Example of deleting all inactive users
 **************************************
 
-- We already have command for deleting objects ``imatic_data.generic_delete``. That command removes only single object
-  though.
+- We already have command for deleting objects ``DeleteHandler``. That command removes only single object though.
 
-First we register ``BatchHandler`` which will execute ``imatic_data.generic_delete`` command for each object returned
-by a query object.
+First we register ``BatchHandler`` which will execute ``DeleteHandler`` command for each object returned by a query
+object.
 
 .. sourcecode:: yaml
 
@@ -581,10 +579,10 @@ by a query object.
        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\BatchHandler
        arguments:
            - '@imatic_data.driver.doctrine_orm.record_iterator'
-           - '@imatic_data.generic_delete'
+           - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler'
            - { class: User }
        tags:
-           - { name: 'imatic.data_handler', alias: 'delete_inactive_users' }
+           - { name: 'imatic.data_handler' }
 
 Then we can execute the command. As batch command passes the user object to the child command in ``data`` parameter,
 but our delete handler expects the user object in ``object`` parameter, we have to convert parameters using
@@ -598,7 +596,7 @@ but our delete handler expects the user object in ``object`` parameter, we have 
 
    $commandExecutor = $container->get('imatic_data.command_executor');
    $commandExecutor->execute(new Command(
-       'delete_inactive_users',
+       'app.delete_inactive_users',
        [
            'batch_query' => new InactiveUsersQuery(),
            'batch_command_parameters_callback' => function (array $commandParameters) {

@@ -1,9 +1,9 @@
 services:
-    app_imatic_data.handler.user_deactivate_handler:
-        class: Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler
+    _defaults:
         autowire: true
-        tags:
-            - { name: imatic_data.handler, alias: user.deactivate }
+        autoconfigure: true
+
+    Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler: ~
 
     app_imatic_data.user_filter:
         class: Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter

@@ -1,48 +1,39 @@
 <?php
 namespace Imatic\Bundle\DataBundle\DependencyInjection\Compiler;
 
+use Imatic\Bundle\DataBundle\Data\Command\HandlerRepository;
 use Imatic\Bundle\DataBundle\Utils\BundleNameFinder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class CommandHandlerCompilerPass implements CompilerPassInterface
 {
+    public const HANDLER_TAG = 'imatic_data.handler';
+
     /**
      * @param ContainerBuilder $container
      */
     public function process(ContainerBuilder $container)
     {
-        $handlers = $container->findTaggedServiceIds('imatic_data.handler');
-        $handlerRepositoryDef = $container->findDefinition('imatic_data.command_handler_repository');
-
+        $repository = $container->getDefinition(HandlerRepository::class);
         $finder = new BundleNameFinder($container->getParameter('kernel.bundles'));
 
-        foreach ($handlers as $id => $tagAttributes) {
-            foreach ($tagAttributes as $attributes) {
-                $definition = $container->getDefinition($id);
+        $locatableServices = [];
 
-                if (\array_key_exists('alias', $attributes)) {
-                    @\trigger_error(
-                        'Alias attribute of "imatic_data.handler" tag is deprecated since version 3.1 and '
-                        . 'will be removed in 4.0. Use service id or service alias as handler name instead.',
-                        E_USER_DEPRECATED
-                    );
-                    $handlerRepositoryDef->addMethodCall('addLazyHandler', [
-                        $attributes['alias'],
-                        $id,
-                        $finder->find($definition->getClass()),
-                    ]);
-                }
+        foreach ($container->findTaggedServiceIds(self::HANDLER_TAG) as $id => $attributes) {
+            $repository->addMethodCall('addBundleName', [
+                $id,
+                $finder->find($container->getDefinition($id)->getClass())
+            ]);
 
-                $handlerRepositoryDef->addMethodCall('addLazyHandler', [
-                    $id,
-                    $id,
-                    $finder->find($definition->getClass()),
-                ]);
-            }
+            $locatableServices[$id] = new Reference($id);
         }
+
+        $repository->replaceArgument(0, ServiceLocatorTagPass::register($container, $locatableServices));
     }
 }

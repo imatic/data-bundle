@@ -11,7 +11,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInter
  */
 class UserListWithOrderNumbersQuery implements QueryObjectInterface, SortableQueryObjectInterface
 {
-    public function build(EntityManager $em)
+    public function build(EntityManager $em): QueryBuilder
     {
         return (new QueryBuilder($em))
             ->from('AppImaticDataBundle:User', 'u')

@@ -18,32 +18,32 @@ services:
             - '@database_connection'
             - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema'
         tags:
-            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_create }
+            - { name: imatic_data.handler }
 
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler:
         arguments:
             - '@database_connection'
             - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema'
         tags:
-            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_edit }
+            - { name: imatic_data.handler }
 
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateOrEditHandler:
         arguments:
             - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
         tags:
-            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_create_or_edit }
+            - { name: imatic_data.handler }
 
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\DeleteHandler:
         arguments:
             - '@database_connection'
         tags:
-            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_delete }
+            - { name: imatic_data.handler }
 
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler:
         arguments:
             - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
         tags:
-            - { name: imatic_data.handler, alias: imatic_data.doctrine_dbal.generic_soft_delete }
+            - { name: imatic_data.handler }
 
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema:
         arguments:

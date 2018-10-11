@@ -4,20 +4,18 @@ services:
 
     Imatic\Bundle\DataBundle\Data\Command\CommandExecutor:
         arguments:
-            - '@Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository'
+            - '@Imatic\Bundle\DataBundle\Data\Command\HandlerRepository'
             - '%kernel.debug%'
 
     Imatic\Bundle\DataBundle\Data\Command\CommandExecutorInterface:
         alias: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
 
     Imatic\Bundle\DataBundle\Data\Command\HandlerRepository:
-        public: false
+        arguments:
+            - '@service_container'
 
     Imatic\Bundle\DataBundle\Data\Command\HandlerRepositoryInterface:
         alias: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
-
-    Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository:
-        autowire: true
 
     Imatic\Bundle\DataBundle\Data\Driver\DriverRepository: ~
 
@@ -44,12 +42,6 @@ services:
 
     imatic_data.command_executor:
         alias: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
-
-    imatic_data.decorated_command_handler_repository:
-        alias: Imatic\Bundle\DataBundle\Data\Command\HandlerRepository
-
-    imatic_data.command_handler_repository:
-        alias: Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository
 
     imatic_data.driver_repository:
         alias: Imatic\Bundle\DataBundle\Data\Driver\DriverRepository

@@ -25,20 +25,20 @@ services:
         arguments:
             - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager'
         tags:
-            - { name: imatic_data.handler, alias: imatic_data.generic_edit }
+            - { name: imatic_data.handler }
 
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler:
         arguments:
             - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager'
         tags:
-            - { name: imatic_data.handler, alias: imatic_data.generic_create }
+            - { name: imatic_data.handler }
 
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler:
         arguments:
             - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager'
             - '@Imatic\Bundle\DataBundle\Data\Query\QueryExecutor'
         tags:
-            - { name: imatic_data.handler, alias: imatic_data.generic_delete }
+            - { name: imatic_data.handler }
 
     Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator:
         arguments:

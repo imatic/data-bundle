@@ -117,7 +117,7 @@ Then we need to register the handler in the container.
                - '@app.user_exporter'
                - '@imatic_data.doctrine.query_executor'
            tags:
-               - { name: 'imatic_data.handler', alias: 'export_active_users' }
+               - { name: 'imatic_data.handler' }
 
 Then we can run the command via `command executor <Data/Command/CommandExecutor.php>`_. First argument of the command
 is handler alias (specified when registering handler in the container), second argument is optional and specifies

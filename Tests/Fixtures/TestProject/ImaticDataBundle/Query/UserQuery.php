@@ -21,7 +21,7 @@ class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterfac
         $this->id = $id;
     }
 
-    public function build(EntityManager $em)
+    public function build(EntityManager $em): QueryBuilder
     {
         return (new QueryBuilder($em))
             ->from('AppImaticDataBundle:User', 'u')

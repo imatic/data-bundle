@@ -10,7 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInter
 
 class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterface, SortableQueryObjectInterface, SelectableQueryObjectInterface
 {
-    public function build(EntityManager $em)
+    public function build(EntityManager $em): QueryBuilder
     {
         return (new QueryBuilder($em))
             ->from('AppImaticDataBundle:User', 'u')

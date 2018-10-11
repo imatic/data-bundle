@@ -4,35 +4,22 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 interface HandlerRepositoryInterface
 {
     /**
-     * @param string           $handlerName
-     * @param HandlerInterface $handler
-     * @param string           $bundleName
-     */
-    public function addHandler($handlerName, HandlerInterface $handler, $bundleName);
-
-    /**
-     * @return HandlerInterface[]
-     */
-    public function getHandlers();
-
-    /**
      * @param CommandInterface $command
      *
      * @return HandlerInterface
      */
-    public function getHandler(CommandInterface $command);
+    public function getHandler(CommandInterface $command): HandlerInterface;
 
     /**
      * @param CommandInterface|string $command
      *
-     * @return string
+     * @return string|null
      */
-    public function getBundleName($command);
+    public function getBundleName($command): ?string;
 
     /**
-     * @param string $handlerName
-     *
-     * @return bool
+     * @param string      $handlerId
+     * @param string|null $bundleName
      */
-    public function hasHandler($handlerName);
+    public function addBundleName(string $handlerId, ?string $bundleName);
 }
