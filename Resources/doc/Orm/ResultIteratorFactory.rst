@@ -27,7 +27,7 @@ Example of iterating through users with loading at most 50 users at the time
 
    <?php
 
-   $resultIteratorFactory = $container->get('imatic_data.driver.doctrine_orm.result_iterator_factory');
+   $resultIteratorFactory = $container->get('Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory');
    $users = $resultIteratorFactory->create(
        new UserListQuery(),
        [

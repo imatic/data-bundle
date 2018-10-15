@@ -50,7 +50,7 @@ Display criteria uses 1 main interface
 ----------------------------------------------------------------------------------
 
 - creates `DisplayCriteria <display_criteria_h_>`_ from request (or whatever else using `DisplayCriteriaReader <display_criteria_reader_h_>`_)
-- service with ``imatic_data.display_criteria_factory`` id
+- service with ``Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory`` id
 - it has 1 main method ``createCriteria`` with 2 arguments
 
   - ``options``

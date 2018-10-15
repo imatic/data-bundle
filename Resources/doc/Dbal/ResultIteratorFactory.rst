@@ -3,7 +3,7 @@ ResultIteratorFactory
 =====================
 
 Factory creating instance of `ResultIterator <../AccessingData/ResultIterator.rst>`_. It can be retrieved from the
-container using ``imatic_data.driver.doctrine_dbal.result_iterator_factory`` service.
+container using ``Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory`` service.
 
 It has 1 main method ``create`` which accepts following arguments
 
@@ -27,7 +27,7 @@ Example of iterating through users with loading at most 50 users at once
 
    <?php
 
-   $resultIteratorFactory = $container->get('imatic_data.driver.doctrine_dbal.result_iterator_factory');
+   $resultIteratorFactory = $container->get('Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory');
    $users = $resultIteratorFactory->create(
        new UserListQuery(),
        [

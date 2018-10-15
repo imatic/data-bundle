@@ -152,7 +152,7 @@ Example of creating unsuccessful result
 
    <?php
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($removeObsoleteRecordingsCommand);
 
 Preimplemented handlers
@@ -200,7 +200,7 @@ Example of inserting new user and echoing it's id
        ]
    );
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($createUserCommand);
 
    if ($result->isSuccessful()) {
@@ -246,7 +246,7 @@ Example of updating existing user with id equal to 1
        ]
    );
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($updateUserCommand);
 
    if ($result->isSuccessful()) {
@@ -302,7 +302,7 @@ Example of creating or updating user with given email address
        ]
    );
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($createOrUpdateUserCommand);
 
    if ($result->isSuccessful()) {
@@ -343,7 +343,7 @@ Example of deleting user with id 3
        ]
    );
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($deleteUserCommand);
 
    if ($result->isSuccessful()) {
@@ -388,7 +388,7 @@ Example of marking user with id 4 as deleted
        ]
    );
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($softDeleteUserCommand);
 
    if ($result->isSuccessful()) {
@@ -435,7 +435,7 @@ Example of storing new user in db
        ]
    );
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($createUserCommand);
 
    if ($result->isSuccessful()) {
@@ -478,7 +478,7 @@ Example of updating db with updated user
        ]
    );
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($updateUserCommand);
 
    if ($result->isSuccessful()) {
@@ -522,7 +522,7 @@ Example of deleting user
        ]
    );
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $result = $commandExecutor->execute($deleteUserCommand);
 
    if ($result->isSuccessful()) {
@@ -539,8 +539,8 @@ Imatic\\Bundle\\DataBundle\\Data\\Driver\\DoctrineORM\\Command\\BatchHandler
 
   - ``RecordIterator``
 
-    - service: ``imatic_data.driver.doctrine_orm.record_iterator`` (used to iterate through records with use of
-      pagination)
+    - service: ``Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator`` (used to iterate through
+      records with use of pagination)
 
   - ``$commandName``
 
@@ -578,7 +578,7 @@ object.
    app.delete_inactive_users:
        class: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\BatchHandler
        arguments:
-           - '@imatic_data.driver.doctrine_orm.record_iterator'
+           - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator'
            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler'
            - { class: User }
        tags:
@@ -594,7 +594,7 @@ but our delete handler expects the user object in ``object`` parameter, we have 
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $commandExecutor->execute(new Command(
        'app.delete_inactive_users',
        [

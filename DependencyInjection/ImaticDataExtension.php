@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\DependencyInjection;
 
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\CommandHandlerCompilerPass;
 use Symfony\Component\Config\FileLocator;
@@ -57,7 +58,7 @@ class ImaticDataExtension extends Extension
      */
     private function processPager(array $pagerConfig, ContainerBuilder $container)
     {
-        $pagerFactoryDef = $container->findDefinition('imatic_data.pager_factory');
+        $pagerFactoryDef = $container->findDefinition(PagerFactory::class);
         $pagerFactoryDef->addMethodCall('setDefaultLimit', [$pagerConfig['default_limit']]);
     }
 

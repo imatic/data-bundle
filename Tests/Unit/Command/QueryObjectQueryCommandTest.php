@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Command;
 
 use Imatic\Bundle\DataBundle\Command\QueryObjectQueryCommand;
+use Imatic\Bundle\DataBundle\Data\Query\QueryExecutor;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -17,7 +18,7 @@ class QueryObjectQueryCommandTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->will($this->returnCallback(function ($id) {
                 switch ($id) {
-                    case 'imatic_data.query_executor':
+                    case QueryExecutor::class:
                         return $this->createMock('Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface');
                 }
             }));

@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Command;
 
 use Doctrine\Common\Util\Debug;
+use Imatic\Bundle\DataBundle\Data\Query\QueryExecutor;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,7 +41,7 @@ class QueryObjectQueryCommand extends ContainerAwareCommand
 
         $queryObject = $classRef->newInstanceArgs($args);
 
-        $queryExecutor = $this->getContainer()->get('imatic_data.query_executor');
+        $queryExecutor = $this->getContainer()->get(QueryExecutor::class);
         $result = $queryExecutor->execute($queryObject);
 
         $output->writeln(Debug::dump($result, 2, false, false));

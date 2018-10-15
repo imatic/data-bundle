@@ -27,28 +27,3 @@ services:
     Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType:
         tags:
             - { name: form.type }
-
-
-
-    ### DEPRECATED ALIASES ###
-
-    imatic_data.request_query_display_criteria_reader:
-        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader
-
-    imatic_data.extjs_display_criteria_reader:
-        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader
-
-    imatic_data.display_criteria_factory:
-        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory
-
-    imatic_data.array_display_criteria_factory:
-        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory
-
-    imatic_data.form.extension.query_object:
-        alias: Imatic\Bundle\DataBundle\Form\Extension\EntityTypeQueryObjectExtension
-
-    imatic_data.filter_factory:
-        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory
-
-    imatic_data.array_rule_type:
-        alias: Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType

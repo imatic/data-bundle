@@ -8,7 +8,7 @@ RecordIterator
 --------------------------------------------------------------------
 
 - it allows easilly to iterate through selected records by users
-- service: ``imatic_data.driver.doctrine_dbal.record_iterator``
+- service: ``Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator``
 - methods
 
   - ``each``

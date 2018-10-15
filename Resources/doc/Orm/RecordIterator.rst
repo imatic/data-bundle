@@ -8,7 +8,7 @@ RecordIterator
 -------------------------------------------------------------------
 
 - Allows easily to iterate over records selected by users.
-- Service id: ``imatic_data.driver.doctrine_orm.record_iterator``.
+- Service id: ``Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator``.
 - Methods:
 
   - ``each``

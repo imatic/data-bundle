@@ -158,7 +158,7 @@ Then we can execute it using `query executor <query_executor_h_>`_
 
     <?php
 
-    $queryExecutor = $container->get('imatic_data.query_executor');
+    $queryExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Query\QueryExecutor');
 
     $queryExecutor->execute(new DeleteUserByUsernameQuery('eva'));
 
@@ -191,7 +191,7 @@ Example of using query executor
 
    <?php
 
-   $queryExecutor = $container->get('imatic_data.query_executor');
+   $queryExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Query\QueryExecutor');
 
    $allActiveUsers = $queryExecutor->execute(new ActiveUsersQuery());
    $totalNumberOfActiveUsers = $queryExecutor->count(new ActiveUsersQuery());

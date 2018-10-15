@@ -84,7 +84,7 @@ Example of filtering object created in `filtering example <filtering_orm_example
    $filter = (new Filter())
        ->add($usernameRule);
 
-   $queryExecutor = $container->get('imatic_data.query_executor');
+   $queryExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Query\QueryExecutor');
 
    $usersHavingJohnInUsername = $queryExecutor->execute(
        new ActiveUsersQuery(),
@@ -253,7 +253,7 @@ When we use the rule above, we get only users having ``username`` value ``john``
        $userFilterDirectly = new UserFilter();
 
        // retrieving user filter via factory using the alias
-       $filterFactory = $container->get('imatic_data.filter_factory');
+       $filterFactory = $container->get('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory');
        $userFilterViaFactory = $filterFactory->create('user_filter');
 
 Custom filtering logic without implementing custom `FilterRule <filter_rules_h_>`__ and filter rule processor

@@ -1,8 +1,9 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorFactoryInterface;
-use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class QueryExecutorFactory implements QueryExecutorFactoryInterface
@@ -28,13 +29,13 @@ class QueryExecutorFactory implements QueryExecutorFactoryInterface
 
         if (!isset($this->queryExecutorCache[$connectionId])) {
             if (!$this->container->has($connectionId)) {
-                throw new RuntimeException(\sprintf('Cannot find service "%s".', $connectionId));
+                throw new \RuntimeException(\sprintf('Cannot find service "%s".', $connectionId));
             }
 
             $this->queryExecutorCache[$connectionId] = new QueryExecutor(
                 $this->container->get($connectionId),
-                $this->container->get('imatic_data.display_criteria_query_builder'),
-                $this->container->get('imatic_data.driver.doctrine_dbal.schema')
+                $this->container->get(DisplayCriteriaQueryBuilderDelegate::class),
+                $this->container->get(Schema::class)
             );
         }
 
