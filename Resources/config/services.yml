@@ -27,3 +27,9 @@ services:
     Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType:
         tags:
             - { name: form.type }
+
+    Imatic\Bundle\DataBundle\Command\QueryObjectQueryCommand:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface'
+        tags:
+            - { name: 'console.command', command: 'imatic:data:query-object-query' }

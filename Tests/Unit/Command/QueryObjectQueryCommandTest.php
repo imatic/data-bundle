@@ -2,32 +2,23 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Command;
 
 use Imatic\Bundle\DataBundle\Command\QueryObjectQueryCommand;
-use Imatic\Bundle\DataBundle\Data\Query\QueryExecutor;
+use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class QueryObjectQueryCommandTest extends \PHPUnit_Framework_TestCase
 {
-    private $containerMock;
+    private $queryExecutorMock;
 
     protected function setUp()
     {
-        $this->containerMock = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $this->containerMock
-            ->expects($this->any())
-            ->method('get')
-            ->will($this->returnCallback(function ($id) {
-                switch ($id) {
-                    case QueryExecutor::class:
-                        return $this->createMock('Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface');
-                }
-            }));
+        $this->queryExecutorMock = $this->createMock(QueryExecutorInterface::class);
     }
 
     public function testCommandShouldShouldPrintResultOfQueryObject()
     {
-        $queryObjectQueryCommand = new QueryObjectQueryCommand();
-        $queryObjectQueryCommand->setContainer($this->containerMock);
+        $queryObjectQueryCommand = new QueryObjectQueryCommand($this->queryExecutorMock);
+
         $application = new Application();
         $application->add($queryObjectQueryCommand);
 
@@ -43,8 +34,8 @@ class QueryObjectQueryCommandTest extends \PHPUnit_Framework_TestCase
 
     public function testCommandShouldShouldPrintResultOfQueryObjectWithRequiredArguments()
     {
-        $queryObjectQueryCommand = new QueryObjectQueryCommand();
-        $queryObjectQueryCommand->setContainer($this->containerMock);
+        $queryObjectQueryCommand = new QueryObjectQueryCommand($this->queryExecutorMock);
+
         $application = new Application();
         $application->add($queryObjectQueryCommand);
 
@@ -65,8 +56,8 @@ class QueryObjectQueryCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testCommandShouldThrowExceptionIfArgumentIsNotPassedToQueryObjectWithRequiredArguments()
     {
-        $queryObjectQueryCommand = new QueryObjectQueryCommand();
-        $queryObjectQueryCommand->setContainer($this->containerMock);
+        $queryObjectQueryCommand = new QueryObjectQueryCommand($this->queryExecutorMock);
+
         $application = new Application();
         $application->add($queryObjectQueryCommand);
 
