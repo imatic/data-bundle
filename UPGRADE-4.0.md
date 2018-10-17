@@ -1,10 +1,22 @@
 UPGRADE FROM 3.x to 4.0
 =======================
 
+Filters
+-------
+
+* The `FilterFactory::setFilters()` method was removed.
+
+* The `FilterFactory::addFilters()` method was removed.
+
+* Alias attribute of `imatic_data.filter` tag was removed. Use service id or service alias as filter name instead.
+
 Handlers
 --------
 
-* Alias attribute of "imatic_data.handler" was removed. Use service id or service alias as handler name instead.
+* Service `imatic_data.command_handler_repository` was removed. Use `HandlerRepositoryInterface` instead.
+
+* Alias attribute of `imatic_data.handler` tag was removed. Use service id or service alias as handler name instead.
+
 * The following handler tags have been removed; use their fully-qualified class name instead:
 
     - `imatic_data.generic_create` use `Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler`
@@ -18,13 +30,13 @@ Handlers
 
 Services
 --------
+
 * The following service aliases have been removed; use their fully-qualified class name instead:
     
     - `imatic_data.array_display_criteria_factory` use `Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory`
     - `imatic_data.array_rule_type` use `alias: Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType`
-    - `imatic_data.command_executor` use `Imatic\Bundle\DataBundle\Data\Command\CommandExecutor`
-    - `imatic_data.command_handler_repository` use `Imatic\Bundle\DataBundle\Data\Command\ContainerHandlerRepository`
-    - `imatic_data.decorated_command_handler_repository` use `Imatic\Bundle\DataBundle\Data\Command\HandlerRepository`
+    - `imatic_data.command_executor` use `Imatic\Bundle\DataBundle\Data\Command\CommandExecutorInterface`
+    - `imatic_data.decorated_command_handler_repository` use `Imatic\Bundle\DataBundle\Data\Command\HandlerRepositoryInterface`
     - `imatic_data.display_criteria_factory` use `Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory`
     - `imatic_data.display_criteria_query_builder` use `Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate`
     - `imatic_data.doctrine.between_operator_processor` use `Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\BetweenOperatorProcessor`

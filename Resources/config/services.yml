@@ -22,7 +22,8 @@ services:
             - { name: 'form.type_extension', extended_type: Symfony\Bridge\Doctrine\Form\Type\EntityType }
 
     Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory:
-        autowire: true
+        arguments:
+            - '@service_container'
 
     Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType:
         tags:

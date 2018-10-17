@@ -6,6 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIteratorArgs;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
@@ -39,7 +40,7 @@ class RecordIteratorTest extends WebTestCase
             'selected' => $selected,
             'query' => \json_encode([
                 'filter' => null,
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -64,7 +65,7 @@ class RecordIteratorTest extends WebTestCase
             'selected' => $selected,
             'query' => \json_encode([
                 'filter' => null,
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -103,7 +104,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -127,7 +128,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -152,7 +153,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
                 'filter' => [
                     'name' => [
                         'value' => 'Eva',

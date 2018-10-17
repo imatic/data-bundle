@@ -3,24 +3,24 @@ namespace Imatic\Bundle\DataBundle\DependencyInjection\Compiler;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 class FilterCompilerPass implements CompilerPassInterface
 {
+    public const FILTER_TAG = 'imatic_data.filter';
+
     public function process(ContainerBuilder $container)
     {
-        $filterServices = $container->findTaggedServiceIds('imatic_data.filter');
-        $filterFactoryDef = $container->findDefinition(FilterFactory::class);
+        $factory = $container->findDefinition(FilterFactory::class);
 
         $filters = [];
-        foreach ($filterServices as $id => $tagAttributes) {
-            foreach ($tagAttributes as $attribute) {
-                $filters[$attribute['alias']] = $id;
-            }
+
+        foreach ($container->findTaggedServiceIds(self::FILTER_TAG) as $id => $attributes) {
+            $filters[$id] = new Reference($id);
         }
 
-        $filterFactoryDef->addMethodCall('setFilters', [
-            $filters,
-        ]);
+        $factory->replaceArgument(0, ServiceLocatorTagPass::register($container, $filters));
     }
 }

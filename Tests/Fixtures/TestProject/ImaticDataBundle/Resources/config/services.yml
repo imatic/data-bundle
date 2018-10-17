@@ -3,9 +3,5 @@ services:
         autowire: true
         autoconfigure: true
 
+    Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter: ~
     Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler: ~
-
-    app_imatic_data.user_filter:
-        class: Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter
-        tags:
-            - { name: imatic_data.filter, alias: app_imatic_data.user }

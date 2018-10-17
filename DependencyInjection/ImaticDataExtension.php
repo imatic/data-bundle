@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\DependencyInjection;
 
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\CommandHandlerCompilerPass;
@@ -31,6 +32,9 @@ class ImaticDataExtension extends Extension
         if (!$container->hasParameter('imatic_data.base_file_path')) {
             $container->setParameter('imatic_data.base_file_path', \realpath(\sprintf('%s/..', $container->getParameter('kernel.root_dir'))));
         }
+
+        $container->registerForAutoconfiguration(FilterInterface::class)
+            ->addTag('imatic_data.filter');
 
         $container->registerForAutoconfiguration(HandlerInterface::class)
             ->addTag(CommandHandlerCompilerPass::HANDLER_TAG);

@@ -6,6 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIteratorArgs;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,7 +59,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => false,
             'selected' => $selected,
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -97,7 +98,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -121,7 +122,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -146,7 +147,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
                 'filter' => [
                     'name' => [
                         'value' => 'Eva',
