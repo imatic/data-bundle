@@ -8,14 +8,25 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class QueryExecutorFactory implements QueryExecutorFactoryInterface
 {
+    /** @var DisplayCriteriaQueryBuilderDelegate */
+    private $delegate;
+
+    /** @var Schema */
+    private $schema;
+
     /** @var ContainerInterface */
     private $container;
 
     /** @var array */
     private $queryExecutorCache = [];
 
-    public function __construct(ContainerInterface $container)
-    {
+    public function __construct(
+        DisplayCriteriaQueryBuilderDelegate $delegate,
+        Schema $schema,
+        ContainerInterface $container
+    ) {
+        $this->delegate = $delegate;
+        $this->schema = $schema;
         $this->container = $container;
     }
 
@@ -34,8 +45,8 @@ class QueryExecutorFactory implements QueryExecutorFactoryInterface
 
             $this->queryExecutorCache[$connectionId] = new QueryExecutor(
                 $this->container->get($connectionId),
-                $this->container->get(DisplayCriteriaQueryBuilderDelegate::class),
-                $this->container->get(Schema::class)
+                $this->delegate,
+                $this->schema
             );
         }
 
