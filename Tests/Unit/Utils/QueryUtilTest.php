@@ -2,8 +2,9 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Util;
 
 use Imatic\Bundle\DataBundle\Utils\QueryUtil;
+use PHPUnit\Framework\TestCase;
 
-class QueryUtilTest extends \PHPUnit_Framework_TestCase
+class QueryUtilTest extends TestCase
 {
     public function testGenerateParameterName()
     {

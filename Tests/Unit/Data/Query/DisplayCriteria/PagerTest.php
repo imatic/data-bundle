@@ -2,8 +2,9 @@
 namespace Imatic\Bundle\DataBundle\Test\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
+use PHPUnit\Framework\TestCase;
 
-class PagerTest extends \PHPUnit_Framework_TestCase
+class PagerTest extends TestCase
 {
     protected $page = 3;
 

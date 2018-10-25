@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 
 .PHONY: test
-test: phpunit phpmd phpcs phpda
+test: phpunit phpmd phpcs
 
 .PHONY: phpcs
 phpcs:
@@ -34,8 +34,3 @@ configure-pipelines:
 	apt-get update
 	apt-get install --yes git postgresql-server-dev-9.4 graphviz
 	docker-php-ext-install pdo_pgsql zip
-
-.PHONY: phpda
-phpda:
-	./vendor/bin/phpda analyze phpda.yml
-

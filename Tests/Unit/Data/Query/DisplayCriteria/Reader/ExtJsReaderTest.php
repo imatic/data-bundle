@@ -4,12 +4,13 @@ namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria\Reader;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class ExtJsReaderTest extends \PHPUnit_Framework_TestCase
+class ExtJsReaderTest extends TestCase
 {
     protected $requestStack;
     protected $currentRequest;

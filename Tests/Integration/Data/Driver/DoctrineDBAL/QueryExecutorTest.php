@@ -270,7 +270,7 @@ class QueryExecutorTest extends WebTestCase
      */
     private function getConnection()
     {
-        return $this->container->get('doctrine.dbal.default_connection');
+        return self::$container->get('doctrine.dbal.default_connection');
     }
 
     /**
@@ -278,6 +278,6 @@ class QueryExecutorTest extends WebTestCase
      */
     public function getQueryExecutor()
     {
-        return $this->container->get(QueryExecutor::class);
+        return self::$container->get(QueryExecutor::class);
     }
 }

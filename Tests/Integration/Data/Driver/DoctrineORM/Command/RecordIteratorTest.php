@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class RecordIteratorTest extends WebTestCase
 {
+    /** @var RecordIterator */
     protected $recordIterator;
 
     /** @var RequestStack */
@@ -26,8 +27,8 @@ class RecordIteratorTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->recordIterator = $this->container->get(RecordIterator::class);
-        $this->requestStack = $this->container->get('request_stack');
+        $this->recordIterator = self::$container->get(RecordIterator::class);
+        $this->requestStack = self::$container->get('request_stack');
     }
 
     /**

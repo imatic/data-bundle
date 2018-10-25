@@ -25,8 +25,8 @@ class DisplayCriteriaFactoryTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->displayCriteriaFactory = $this->container->get(DisplayCriteriaFactory::class);
-        $this->requestStack = $this->container->get('request_stack');
+        $this->displayCriteriaFactory = self::$container->get(DisplayCriteriaFactory::class);
+        $this->requestStack = self::$container->get(RequestStack::class);
     }
 
     public function testCreateFilterShouldCreateFilterAndPassFormInside()

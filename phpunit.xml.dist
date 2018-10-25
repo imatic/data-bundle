@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
 <phpunit backupGlobals="false"
-         backupStaticAttributes="false"
          colors="true"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
          bootstrap="Tests/bootstrap.php"
-        >
+>
     <testsuites>
         <testsuite name="ImaticDataBundle test suite">
             <directory>./Tests/</directory>
@@ -18,14 +13,11 @@
     </testsuites>
 
     <php>
-        <const name="TEST_DATABASE_DRIVER" value="pdo_pgsql"/>
-        <const name="TEST_DATABASE_HOST" value="127.0.0.1"/>
-        <const name="TEST_DATABASE_USER" value="postgres"/>
-        <const name="TEST_DATABASE_PASS" value="postgres"/>
-        <const name="TEST_DATABASE_PORT" value="5432"/>
-        <const name="TEST_DATABASE_NAME" value="data_bundle_test"/>
-        <const name="TEST_DATABASE_SERVER_VERSION" value="9.2.4"/>
+        <env name="KERNEL_CLASS" value="Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\TestKernel" />
+        <env name="DATABASE_URL" value="pgsql://postgres:postgres@127.0.0.1:5432/data_bundle_test" />
+        <env name="DATABASE_VERSION" value="9.2.4" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+        <env name="TESTING_DATA_INIT" value="1" />
     </php>
 
     <listeners>

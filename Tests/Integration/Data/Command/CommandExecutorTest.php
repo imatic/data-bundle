@@ -41,6 +41,6 @@ class CommandExecutorTest extends WebTestCase
      */
     private function getCommandExecutor()
     {
-        return $this->container->get(CommandExecutor::class);
+        return self::$container->get(CommandExecutor::class);
     }
 }

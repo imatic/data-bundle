@@ -82,6 +82,6 @@ class SoftDeleteHandlerTest extends WebTestCase
      */
     private function getSoftDeleteHandler()
     {
-        return $this->container->get(SoftDeleteHandler::class);
+        return self::$container->get(SoftDeleteHandler::class);
     }
 }

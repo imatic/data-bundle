@@ -66,7 +66,7 @@ class CreateOrEditHandlerTest extends WebTestCase
      */
     private function getCommandExecutor()
     {
-        return $this->container->get(CommandExecutorInterface::class);
+        return self::$container->get(CommandExecutorInterface::class);
     }
 
     /**

@@ -17,6 +17,8 @@ class CommandHandlerCompilerPass implements CompilerPassInterface
 
     /**
      * @param ContainerBuilder $container
+     *
+     * @SuppressWarnings(PHPMD.UnusedLocalVariables)
      */
     public function process(ContainerBuilder $container)
     {
@@ -28,7 +30,7 @@ class CommandHandlerCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds(self::HANDLER_TAG) as $id => $attributes) {
             $repository->addMethodCall('addBundleName', [
                 $id,
-                $finder->find($container->getDefinition($id)->getClass())
+                $finder->find($container->getDefinition($id)->getClass()),
             ]);
 
             $locatableServices[$id] = new Reference($id);

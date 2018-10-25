@@ -1,10 +1,12 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class PagerFactoryTest extends \PHPUnit_Framework_TestCase
+class PagerFactoryTest extends TestCase
 {
     private $pagerFactory;
 

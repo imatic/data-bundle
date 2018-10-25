@@ -12,24 +12,24 @@
         },
         {
             "name": "Imatic Software s.r.o.",
-            "homepage": "http://imatic.cz/"
+            "homepage": "https://www.imatic.cz"
         }
     ],
     "require": {
-        "php": ">=5.5",
-        "symfony/framework-bundle": "~3.3|~4.0",
-        "doctrine/doctrine-bundle": "~1.2"
+        "php": "^7.1",
+        "symfony/framework-bundle": "^3.4|^4.0",
+        "doctrine/doctrine-bundle": "^1.2"
     },
     "require-dev": {
         "imatic/testing": "dev-parklane",
         "imatic/form-bundle": "dev-parklane",
-        "doctrine/orm": "~2.3",
-        "mikey179/vfsStream": "~1.4",
-        "symfony/phpunit-bridge": "~3.0",
+        "doctrine/orm": "^2.3",
+        "mikey179/vfsStream": "^1.4",
+        "symfony/phpunit-bridge": "^4.1",
         "friendsofphp/php-cs-fixer": "^2.7",
         "phpmd/phpmd": "^2.6",
         "phpdocumentor/reflection-docblock": "4.1.1 as 3.3.0",
-        "mamuz/php-dependency-analysis": "^1.3"
+        "doctrine/doctrine-fixtures-bundle": "^3.0"
     },
     "suggest": {
         "doctrine/dbal": "*",

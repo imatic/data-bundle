@@ -15,7 +15,7 @@ class FilterRuleProcessorDelegate
      * @param FilterRule $rule
      * @param string     $column
      *
-     * @throws LogicException
+     * @throws \LogicException
      */
     public function process($qb, FilterRule $rule, $column)
     {
@@ -27,7 +27,7 @@ class FilterRuleProcessorDelegate
             }
         }
 
-        throw new LogicException(\sprintf(
+        throw new \LogicException(\sprintf(
             'Couldn\'t find any filter rule processor suitable to filter rule "%s" and column "%s"',
             $rule->getName(),
             $column

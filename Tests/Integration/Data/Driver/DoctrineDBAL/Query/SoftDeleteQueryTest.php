@@ -49,6 +49,6 @@ class SoftDeleteQueryTest extends WebTestCase
      */
     private function getQueryExecutor()
     {
-        return $this->container->get(QueryExecutorInterface::class);
+        return self::$container->get(QueryExecutorInterface::class);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\Order;
@@ -9,7 +9,7 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class LoadOrderData extends AbstractFixture implements DependentFixtureInterface
+class LoadOrderData extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {

@@ -2,6 +2,8 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        public: false
 
-    Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter: ~
-    Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler: ~
+    Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity}'

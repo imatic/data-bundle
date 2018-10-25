@@ -2,9 +2,9 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Form\DataTransformer;
 
 use Imatic\Bundle\DataBundle\Form\DataTransformer\ArrayToStringTransformer;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ArrayToStringTransformerTest extends PHPUnit_Framework_TestCase
+class ArrayToStringTransformerTest extends TestCase
 {
     /**
      * @dataProvider reverseTransformDataProvider

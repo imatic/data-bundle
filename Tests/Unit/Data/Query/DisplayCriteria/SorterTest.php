@@ -3,8 +3,9 @@ namespace Imatic\Bundle\DataBundle\Test\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
+use PHPUnit\Framework\TestCase;
 
-class SorterTest extends \PHPUnit_Framework_TestCase
+class SorterTest extends TestCase
 {
     public function testSorterRuleColumn()
     {

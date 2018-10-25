@@ -3,10 +3,11 @@ namespace Imatic\Bundle\DataBundle\Tests\Unit\Command;
 
 use Imatic\Bundle\DataBundle\Command\QueryObjectQueryCommand;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class QueryObjectQueryCommandTest extends \PHPUnit_Framework_TestCase
+class QueryObjectQueryCommandTest extends TestCase
 {
     private $queryExecutorMock;
 
