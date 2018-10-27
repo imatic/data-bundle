@@ -27,9 +27,9 @@ class Driver implements DriverInterface
     private $queryObjectClass;
 
     public function __construct(
-        $name,
+        string $name,
         QueryExecutorInterface $queryExecutor,
-        $queryObjectClass,
+        string $queryObjectClass,
         ObjectManagerInterface $objectManager = null
     ) {
         $this->name = $name;

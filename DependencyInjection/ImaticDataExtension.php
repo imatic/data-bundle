@@ -6,6 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
 use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\CommandHandlerCompilerPass;
+use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\FilterCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -18,14 +19,11 @@ class ImaticDataExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.xml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
-        // @deprecated Will be removed in 4.0
-        $container->setAlias('imatic_data.display_criteria_reader', $config['display_criteria_reader']);
 
         $container->setAlias(DisplayCriteriaReader::class, $config['display_criteria_reader']);
 
@@ -34,7 +32,7 @@ class ImaticDataExtension extends Extension
         }
 
         $container->registerForAutoconfiguration(FilterInterface::class)
-            ->addTag('imatic_data.filter');
+            ->addTag(FilterCompilerPass::FILTER_TAG);
 
         $container->registerForAutoconfiguration(HandlerInterface::class)
             ->addTag(CommandHandlerCompilerPass::HANDLER_TAG);

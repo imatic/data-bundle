@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder">
+            <tag name="imatic_data.display_criteria_query_builder" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\CallbackProcessor">
+            <tag name="imatic_data.filter_rule_processor" priority="6" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\RuleBooleanProcessor">
+            <tag name="imatic_data.filter_rule_processor" priority="5" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\BetweenOperatorProcessor">
+            <tag name="imatic_data.filter_rule_processor" priority="4" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\NotBetweenOperatorProcessor">
+            <tag name="imatic_data.filter_rule_processor" priority="3" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\ContainsOperatorProcessor">
+            <tag name="imatic_data.filter_rule_processor" priority="2" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\EmptyOperatorProcessor">
+            <tag name="imatic_data.filter_rule_processor" priority="1" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\InNotInOperatorProcessor">
+            <tag name="imatic_data.filter_rule_processor" priority="1" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\DefaultRuleProcessor">
+            <tag name="imatic_data.filter_rule_processor" priority="0" />
+        </service>
+    </services>
+</container>

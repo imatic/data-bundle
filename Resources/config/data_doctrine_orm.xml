@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+        <service id="Imatic\Bundle\DataBundle\Data\ObjectManagerInterface" alias="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate" />
+        </service>
+
+        <service id="imatic_data.driver.doctrine_orm" class="Imatic\Bundle\DataBundle\Data\Driver\Driver">
+            <tag name="imatic_data.driver" />
+            <argument type="string">doctrine.orm</argument>
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor" />
+            <argument type="string">Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface</argument>
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory">
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory" />
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory" />
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator">
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor" />
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory" />
+        </service>
+
+        <!-- Handlers -->
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\EditHandler">
+            <tag name="imatic_data.handler" />
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\CreateHandler">
+            <tag name="imatic_data.handler" />
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager" />
+        </service>
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\DeleteHandler">
+            <tag name="imatic_data.handler" />
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager" />
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Query\QueryExecutor" />
+        </service>
+    </services>
+</container>

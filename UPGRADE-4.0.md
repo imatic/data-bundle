@@ -74,3 +74,4 @@ Services
     - `imatic_data.pager_factory` use `Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory`
     - `imatic_data.query_executor` use `Imatic\Bundle\DataBundle\Data\Query\QueryExecutor`
     - `imatic_data.request_query_display_criteria_reader` use `Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader`
+    - `imatic_data.display_criteria_reader` use `Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader`
