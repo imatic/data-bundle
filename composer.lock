@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bcf38594561cfe05e6e2f40097b811d1",
+    "content-hash": "9561e995784dc5db170bd476fd43efd8",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2154,12 +2154,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/imatic/form-bundle.git",
-                "reference": "bd63a599ce93829c9fb0aa403032096d5543ece5"
+                "reference": "1ac90d40457808015bfb8bdb438e8d812fa7c070"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imatic/form-bundle/zipball/bd63a599ce93829c9fb0aa403032096d5543ece5",
-                "reference": "bd63a599ce93829c9fb0aa403032096d5543ece5",
+                "url": "https://api.github.com/repos/imatic/form-bundle/zipball/1ac90d40457808015bfb8bdb438e8d812fa7c070",
+                "reference": "1ac90d40457808015bfb8bdb438e8d812fa7c070",
                 "shasum": ""
             },
             "require": {
@@ -2189,16 +2189,16 @@
             ],
             "authors": [
                 {
-                    "name": "Imatic Software s.r.o.",
-                    "homepage": "http://imatic.cz/"
-                },
-                {
                     "name": "Viliam Husár",
                     "email": "viliam.husar@imatic.cz"
+                },
+                {
+                    "name": "Imatic Software s.r.o.",
+                    "homepage": "https://www.imatic.cz"
                 }
             ],
             "description": "Bundle for working with Symfony forms",
-            "time": "2018-10-25T13:09:05+00:00"
+            "time": "2018-10-29T12:59:12+00:00"
         },
         {
             "name": "imatic/testing",

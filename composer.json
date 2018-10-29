@@ -18,7 +18,7 @@
     "require": {
         "php": "^7.1",
         "doctrine/doctrine-bundle": "^1.2",
-        "symfony/symfony": "^3.4|^4.0"
+        "symfony/framework-bundle": "^3.4|^4.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
