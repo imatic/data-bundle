@@ -17,19 +17,19 @@
     ],
     "require": {
         "php": "^7.1",
-        "symfony/framework-bundle": "^3.4|^4.0",
-        "doctrine/doctrine-bundle": "^1.2"
+        "doctrine/doctrine-bundle": "^1.2",
+        "symfony/symfony": "^3.4|^4.0"
     },
     "require-dev": {
-        "imatic/testing": "dev-parklane",
-        "imatic/form-bundle": "dev-parklane",
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
         "doctrine/orm": "^2.3",
-        "mikey179/vfsStream": "^1.4",
-        "symfony/phpunit-bridge": "^4.1",
         "friendsofphp/php-cs-fixer": "^2.7",
-        "phpmd/phpmd": "^2.6",
+        "imatic/form-bundle": "dev-parklane",
+        "imatic/testing": "dev-parklane",
+        "mikey179/vfsStream": "^1.4",
         "phpdocumentor/reflection-docblock": "4.1.1 as 3.3.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.0"
+        "phpmd/phpmd": "^2.6",
+        "symfony/phpunit-bridge": "^4.1"
     },
     "suggest": {
         "doctrine/dbal": "*",
@@ -39,6 +39,9 @@
         "psr-4": {
             "Imatic\\Bundle\\DataBundle\\": ""
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true
