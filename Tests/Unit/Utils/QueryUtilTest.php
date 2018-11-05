@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Util;
 
 use Imatic\Bundle\DataBundle\Utils\QueryUtil;

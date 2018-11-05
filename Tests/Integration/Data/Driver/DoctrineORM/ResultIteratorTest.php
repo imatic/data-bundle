@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineORM;
 
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory;
