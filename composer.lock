@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "84be80374e7526a0ac1682aa462bd965",
+    "content-hash": "9dfb8adea5220e4e559c3ef853c77049",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2150,16 +2150,16 @@
         },
         {
             "name": "imatic/form-bundle",
-            "version": "dev-parklane",
+            "version": "v4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imatic/form-bundle.git",
-                "reference": "548c49d6cbdfd29d114fd5ec055f6e87429c5c27"
+                "reference": "eac215a99fe6ff525ecaf97fcfd6f5b7f41d60e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imatic/form-bundle/zipball/548c49d6cbdfd29d114fd5ec055f6e87429c5c27",
-                "reference": "548c49d6cbdfd29d114fd5ec055f6e87429c5c27",
+                "url": "https://api.github.com/repos/imatic/form-bundle/zipball/eac215a99fe6ff525ecaf97fcfd6f5b7f41d60e8",
+                "reference": "eac215a99fe6ff525ecaf97fcfd6f5b7f41d60e8",
                 "shasum": ""
             },
             "require": {
@@ -2198,7 +2198,7 @@
                 }
             ],
             "description": "Bundle for working with Symfony forms",
-            "time": "2018-11-05T15:57:34+00:00"
+            "time": "2018-11-07T15:45:12+00:00"
         },
         {
             "name": "imatic/testing",
@@ -4129,9 +4129,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "imatic/form-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
