@@ -1,17 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Driver\DoctrineDBAL\Type;
 
 use Doctrine\DBAL\Types\Type;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Type\FileType;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamWrapper;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class FileTypeTest extends PHPUnit_Framework_TestCase
+class FileTypeTest extends TestCase
 {
     /**
      * @var FileType

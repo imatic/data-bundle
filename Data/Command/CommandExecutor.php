@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 class CommandExecutor implements CommandExecutorInterface
@@ -33,6 +33,7 @@ class CommandExecutor implements CommandExecutorInterface
     public function execute(CommandInterface $command)
     {
         $commandHandler = $this->handlerRepository->getHandler($command);
+
         if ($commandHandler instanceof CommandExecutorAwareInterface) {
             $commandHandler->setCommandExecutor($this);
         }

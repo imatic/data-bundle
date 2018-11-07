@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Exception;
 
 class DriverNotFoundException extends \InvalidArgumentException implements DataExceptionInterface

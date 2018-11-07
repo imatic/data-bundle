@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
@@ -270,7 +270,7 @@ class QueryExecutorTest extends WebTestCase
      */
     private function getConnection()
     {
-        return $this->container->get('doctrine.dbal.default_connection');
+        return self::$container->get('doctrine.dbal.default_connection');
     }
 
     /**
@@ -278,6 +278,6 @@ class QueryExecutorTest extends WebTestCase
      */
     public function getQueryExecutor()
     {
-        return $this->container->get(QueryExecutor::class);
+        return self::$container->get(QueryExecutor::class);
     }
 }

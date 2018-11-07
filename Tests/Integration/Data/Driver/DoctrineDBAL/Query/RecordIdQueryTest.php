@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query\RecordIdQuery;
@@ -35,6 +35,6 @@ class RecordIdQueryTest extends WebTestCase
      */
     private function getQueryExecutor()
     {
-        return $this->container->get(QueryExecutorInterface::class);
+        return self::$container->get(QueryExecutorInterface::class);
     }
 }

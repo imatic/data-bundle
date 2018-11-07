@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
@@ -7,13 +7,14 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class DisplayCriteriaFactoryTest extends \PHPUnit_Framework_TestCase
+class DisplayCriteriaFactoryTest extends TestCase
 {
     private $displayCriteriaFactory;
 

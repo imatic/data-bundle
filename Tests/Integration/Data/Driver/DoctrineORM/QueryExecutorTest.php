@@ -1,7 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineORM;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteria;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
@@ -238,7 +237,7 @@ class QueryExecutorTest extends WebTestCase
      */
     public function getQueryExecutor()
     {
-        return $this->container->get(QueryExecutorInterface::class);
+        return self::$container->get(QueryExecutorInterface::class);
     }
 
     /**
@@ -247,13 +246,5 @@ class QueryExecutorTest extends WebTestCase
     public function getUserRepository()
     {
         return $this->getEntityManager()->getRepository('AppImaticDataBundle:User');
-    }
-
-    /**
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->container->get('doctrine.orm.entity_manager');
     }
 }

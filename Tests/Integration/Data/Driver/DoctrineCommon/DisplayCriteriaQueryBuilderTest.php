@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineCommon;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderInterface;
@@ -167,6 +167,6 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
      */
     private function getDisplayCriteriaQueryBuilder()
     {
-        return $this->container->get(DisplayCriteriaQueryBuilderInterface::class);
+        return self::$container->get(DisplayCriteriaQueryBuilderInterface::class);
     }
 }

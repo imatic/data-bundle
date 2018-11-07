@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL\Command;
 
 use Doctrine\DBAL\Connection;
@@ -44,7 +44,7 @@ class CreateHandlerTest extends WebTestCase
      */
     private function getCreateHandler()
     {
-        return $this->container->get(CreateHandler::class);
+        return self::$container->get(CreateHandler::class);
     }
 
     private function findUserByName($name)
@@ -63,6 +63,6 @@ class CreateHandlerTest extends WebTestCase
      */
     private function getConnection()
     {
-        return $this->container->get('doctrine.dbal.default_connection');
+        return self::$container->get('doctrine.dbal.default_connection');
     }
 }

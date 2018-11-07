@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
@@ -42,13 +42,13 @@ class CreateOrEditHandler implements HandlerInterface, CommandExecutorAwareInter
 
         $command = null;
         if ($id) {
-            $command = new Command('imatic_data.doctrine_dbal.generic_edit', [
+            $command = new Command(EditHandler::class, [
                 'table' => $tableName,
                 'data' => $data,
                 'id' => $id,
             ]);
         } else {
-            $command = new Command('imatic_data.doctrine_dbal.generic_create', [
+            $command = new Command(CreateHandler::class, [
                 'table' => $tableName,
                 'data' => $data,
             ]);

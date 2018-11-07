@@ -1,9 +1,14 @@
 imports:
-    - { resource: parameters.xml }
-    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine.yml' }
-    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine_orm.yml' }
-    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine_dbal.yml' }
-    - { resource: '@ImaticDataBundle/Resources/config/config.yml' }
+    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine.xml' }
+    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine_orm.xml' }
+    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine_dbal.xml' }
+
+parameters:
+    env(DATABASE_URL): ''
+    env(DATABASE_VERSION): '9.2.4'
+    env(TESTING_DATA_INIT): '1'
+
+    testing.data_init: '%env(TESTING_DATA_INIT)%'
 
 framework:
     secret:                     test
@@ -32,23 +37,12 @@ doctrine:
     dbal:
         connections:
             default:
-                wrapper_class: "Imatic\\Bundle\\TestingBundle\\Doctrine\\DBAL\\PersistedConnection"
+                wrapper_class: "Imatic\\Testing\\Doctrine\\DBAL\\PersistedConnection"
+                url: '%env(resolve:DATABASE_URL)%'
 
-#               sqlite
-#                driver:         pdo_sqlite
-#                memory:         false
-#                path:           '%kernel.root_dir%/cache/test.db'
-
-#                postgres
-                driver:         '%database.driver%'
-                host:           '%database.host%'
-                dbname:         '%database.name%'
-                user:           '%database.user%'
-                password:       '%database.pass%'
-                port:           '%database.port%'
                 # server_version is needed in order make the project work with dbal 2.5
                 # see: https://github.com/doctrine/DoctrineBundle/issues/351
-                server_version: '%database.server_version%'
+                server_version: '%env(DATABASE_VERSION)%'
 
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'

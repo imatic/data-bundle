@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Command\HandlerRepository">
+            <argument type="service" id="service_container" />
+        </service>
+        <service id="Imatic\Bundle\DataBundle\Data\Command\HandlerRepositoryInterface" alias="Imatic\Bundle\DataBundle\Data\Command\HandlerRepository" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Command\CommandExecutor">
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Command\HandlerRepository" />
+            <argument>%kernel.debug%</argument>
+        </service>
+        <service id="Imatic\Bundle\DataBundle\Data\Command\CommandExecutorInterface" alias="Imatic\Bundle\DataBundle\Data\Command\CommandExecutor" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DriverRepository" />
+        <service id="Imatic\Bundle\DataBundle\Data\Driver\DriverRepositoryInterface" alias="Imatic\Bundle\DataBundle\Data\Driver\DriverRepository" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Query\QueryExecutor">
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DriverRepository" />
+        </service>
+        <service id="Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface" alias="Imatic\Bundle\DataBundle\Data\Query\QueryExecutor" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorDelegate" />
+
+        <service id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate">
+            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorDelegate" />
+        </service>
+        <service id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderInterface" alias="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate" />
+    </services>
+</container>

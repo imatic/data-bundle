@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineDBAL;
 
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
@@ -19,13 +20,13 @@ class ResultIteratorTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->resultIteratorFactory = $this->container->get(ResultIteratorFactory::class);
+        $this->resultIteratorFactory = self::$container->get(ResultIteratorFactory::class);
     }
 
     public function testResultIteratorShouldReturnAllResults()
     {
         $resultIterator = $this->resultIteratorFactory->create(new UserListQuery(), [
-            'filter_type' => 'app_imatic_data.user',
+            'filter_type' => UserFilter::class,
         ]);
 
         $results = [];
@@ -41,7 +42,7 @@ class ResultIteratorTest extends WebTestCase
     public function testResultIteratorShouldReturnAllResultsUsingPagination()
     {
         $resultIterator = $this->resultIteratorFactory->create(new UserListQuery(), [
-            'filter_type' => 'app_imatic_data.user',
+            'filter_type' => UserFilter::class,
             'limit' => 1,
         ]);
 
@@ -58,7 +59,7 @@ class ResultIteratorTest extends WebTestCase
     public function testResultIteratorShouldReturnOneResult()
     {
         $resultIterator = $this->resultIteratorFactory->create(new UserListQuery(), [
-            'filter_type' => 'app_imatic_data.user',
+            'filter_type' => UserFilter::class,
             'filter' => [
                 'name' => [
                     'value' => 'Adam',

@@ -59,7 +59,7 @@ Now we can execute the query using `query executor <Data/Driver/DoctrineORM/Quer
 
    <?php
 
-   $queryExecutor = $container->get('imatic_data.doctrine.query_executor');
+   $queryExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor');
    /** @var User[] */
    $activeUsers = $queryExecutor->execute(new ActiveUsersQuery());
 
@@ -115,9 +115,9 @@ Then we need to register the handler in the container.
        ExportActiveUsersHandler:
            arguments:
                - '@app.user_exporter'
-               - '@imatic_data.doctrine.query_executor'
+               - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor'
            tags:
-               - { name: 'imatic_data.handler', alias: 'export_active_users' }
+               - { name: 'imatic_data.handler' }
 
 Then we can run the command via `command executor <Data/Command/CommandExecutor.php>`_. First argument of the command
 is handler alias (specified when registering handler in the container), second argument is optional and specifies
@@ -129,7 +129,7 @@ options passed to the handler).
 
    use Imatic\Bundle\DataBundle\Data\Command\Command;
 
-   $commandExecutor = $container->get('imatic_data.command_executor');
+   $commandExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Command\CommandExecutor');
    $commandExecutor->execute(new Command('export_active_users', ['format' => 'json']));
 
 

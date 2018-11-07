@@ -95,7 +95,7 @@ Example of sorting object created in `sorting example <sorting_orm_example_>`_ b
    use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
    use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 
-   $queryExecutor = $container->get('imatic_data.query_executor');
+   $queryExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Query\QueryExecutor');
 
    $sortedActiveUsers = $queryExecutor->execute(
        new ActiveUsersQuery(),

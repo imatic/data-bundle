@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Query\DisplayCriteria;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
@@ -25,8 +25,8 @@ class DisplayCriteriaFactoryTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->displayCriteriaFactory = $this->container->get(DisplayCriteriaFactory::class);
-        $this->requestStack = $this->container->get('request_stack');
+        $this->displayCriteriaFactory = self::$container->get(DisplayCriteriaFactory::class);
+        $this->requestStack = self::$container->get(RequestStack::class);
     }
 
     public function testCreateFilterShouldCreateFilterAndPassFormInside()

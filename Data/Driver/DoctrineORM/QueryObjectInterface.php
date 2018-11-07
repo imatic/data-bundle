@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManager;
@@ -12,5 +12,5 @@ interface QueryObjectInterface extends BaseQueryObjectInterface
      *
      * @return QueryBuilder
      */
-    public function build(EntityManager $em);
+    public function build(EntityManager $em): QueryBuilder;
 }

@@ -1,12 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateRangeRule;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class DateRangeRuleTest extends \PHPUnit_Framework_TestCase
+class DateRangeRuleTest extends TestCase
 {
     public function testTimeShouldBeUpdatedSoStartIsAtStartOfTheDayAndEndIsAtEndOfTheDay()
     {

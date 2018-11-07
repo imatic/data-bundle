@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Form\Type;
 
 use Imatic\Bundle\DataBundle\Form\Type\Filter\FilterType;

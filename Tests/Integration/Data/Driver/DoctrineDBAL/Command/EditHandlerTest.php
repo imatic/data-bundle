@@ -1,6 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL\Command;
 
+use Doctrine\DBAL\Connection;
 use Imatic\Bundle\DataBundle\Data\Command\Command;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
@@ -47,7 +48,7 @@ class EditHandlerTest extends WebTestCase
      */
     private function getEditHandler()
     {
-        return $this->container->get(EditHandler::class);
+        return self::$container->get(EditHandler::class);
     }
 
     private function findUserById($id)
@@ -66,6 +67,6 @@ class EditHandlerTest extends WebTestCase
      */
     private function getConnection()
     {
-        return $this->container->get('doctrine.dbal.default_connection');
+        return self::$container->get('doctrine.dbal.default_connection');
     }
 }

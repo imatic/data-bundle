@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Imatic\Bundle\DataBundle\Data\Command\Command;
 use Imatic\Bundle\DataBundle\Data\Command\CommandExecutor;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Handler\UserDeactivateHandler;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
@@ -16,27 +16,12 @@ class CommandExecutorTest extends WebTestCase
     public function testGivenCommandShouldBeSuccessfullyExecuted()
     {
         /* @var $user User */
-        $user = $this->getUserRepository()->findOneByName('Adam');
+        $user = $this->getUserRepository()->findOneBy(['name' => 'Adam']);
 
         // guard
         $this->assertTrue($user->isActivated());
 
-        $command = new Command('user.deactivate', ['id' => $user->getId()]);
-        $result = $this->getCommandExecutor()->execute($command);
-        $this->assertTrue($result->isSuccessful());
-
-        $this->assertFalse($user->isActivated());
-    }
-
-    public function testGivenCommandShouldBeSuccessfullyExecutedUsingServiceIdAsCommandName()
-    {
-        /* @var $user User */
-        $user = $this->getUserRepository()->findOneByName('Adam');
-
-        // guard
-        $this->assertTrue($user->isActivated());
-
-        $command = new Command('app_imatic_data.handler.user_deactivate_handler', ['id' => $user->getId()]);
+        $command = new Command(UserDeactivateHandler::class, ['id' => $user->getId()]);
         $result = $this->getCommandExecutor()->execute($command);
         $this->assertTrue($result->isSuccessful());
 
@@ -52,18 +37,10 @@ class CommandExecutorTest extends WebTestCase
     }
 
     /**
-     * @return EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->container->get('doctrine.orm.entity_manager');
-    }
-
-    /**
      * @return CommandExecutor
      */
     private function getCommandExecutor()
     {
-        return $this->container->get(CommandExecutor::class);
+        return self::$container->get(CommandExecutor::class);
     }
 }

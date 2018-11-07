@@ -1,41 +1,44 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
 
-class FilterFactory
+class FilterFactory implements ServiceSubscriberInterface
 {
     /** @var ContainerInterface */
-    protected $container;
+    protected $locator;
 
     /** @var string[] */
-    protected $filters = [];
+    protected $filters;
 
-    public function __construct(ContainerInterface $container)
+    /**
+     * @param ContainerInterface $locator
+     */
+    public function __construct(ContainerInterface $locator)
     {
-        $this->container = $container;
+        $this->locator = $locator;
+        $this->filters = [];
     }
 
-    public function create($name)
+    public static function getSubscribedServices()
     {
-        if (!isset($this->filters[$name])) {
-            throw new \Exception(\sprintf('Filter "%s" was not found.', $name));
+        return [];
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return object
+     *
+     * @throws \Exception
+     */
+    public function create(string $name)
+    {
+        if ($this->locator->has($name)) {
+            return $this->locator->get($name);
         }
 
-        if (\is_callable($this->filters[$name])) {
-            return \call_user_func($this->filters[$name], $name);
-        }
-
-        return $this->container->get($this->filters[$name]);
-    }
-
-    public function setFilters(array $filters = [])
-    {
-        $this->filters = $filters;
-    }
-
-    public function addFilters(array $filters = [])
-    {
-        $this->filters = \array_merge($this->filters, $filters);
+        throw new \Exception(\sprintf('Filter "%s" was not found.', $name));
     }
 }

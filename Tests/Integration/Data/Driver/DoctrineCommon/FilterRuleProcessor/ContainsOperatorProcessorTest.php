@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Doctrine\DBAL\Connection;

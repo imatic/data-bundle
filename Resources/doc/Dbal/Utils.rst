@@ -24,7 +24,7 @@ getQueryData
 
    <?php
 
-   $schema = $container->get('imatic_data.driver.doctrine_dbal.schema');
+   $schema = $container->get('Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema');
 
    $queryData = $schema->getQueryData('user', [
        'name' => 'John Doe',
@@ -46,7 +46,7 @@ getColumnTypes
 
    <?php
 
-   $schema = $container->get('imatic_data.driver.doctrine_dbal.schema');
+   $schema = $container->get('Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema');
 
    $schema->getColumnTypes('user');
 
@@ -63,7 +63,7 @@ getNextIdValue
 
    <?php
 
-   $schema = $container->get('imatic_data.driver.doctrine_dbal.schema');
+   $schema = $container->get('Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema');
 
    $schema->getNextIdValue('user');
 

@@ -1,53 +1,47 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
 use Imatic\Bundle\DataBundle\Exception\HandlerNotFoundException;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
 
-class HandlerRepository implements HandlerRepositoryInterface
+class HandlerRepository implements HandlerRepositoryInterface, ServiceSubscriberInterface
 {
     /**
-     * @var HandlerInterface[]
+     * @var ContainerInterface
      */
-    private $handlers;
+    private $locator;
 
+    /**
+     * @var string[]
+     * [
+     *     handlerName => bundleName,
+     *     ...
+     * ]
+     */
     private $bundles;
 
-    public function __construct()
+    /**
+     * @param ContainerInterface $locator
+     */
+    public function __construct(ContainerInterface $locator)
     {
-        $this->handlers = [];
+        $this->locator = $locator;
         $this->bundles = [];
     }
 
-    public function addHandler($name, HandlerInterface $handler, $bundleName)
+    public function getHandler(CommandInterface $command): HandlerInterface
     {
-        if ($this->hasHandler($name)) {
-            throw new \LogicException(\sprintf('Cannot register 2nd handler with name "%s".', $name));
+        $handlerName = $command->getHandlerName();
+
+        if ($this->locator->has($handlerName)) {
+            return $this->locator->get($handlerName);
         }
 
-        $this->handlers[$name] = $handler;
-        $this->bundles[$name] = $bundleName;
+        throw new HandlerNotFoundException($handlerName);
     }
 
-    public function getHandlers()
-    {
-        return $this->handlers;
-    }
-
-    public function getHandler(CommandInterface $command)
-    {
-        $name = $command->getHandlerName();
-        if ($this->hasHandler($name)) {
-            return $this->handlers[$name];
-        }
-        throw new HandlerNotFoundException($name);
-    }
-
-    /**
-     * @param CommandInterface|string $command
-     *
-     * @return string
-     */
-    public function getBundleName($command)
+    public function getBundleName($command): ?string
     {
         if ($command instanceof CommandInterface) {
             $command = $command->getHandlerName();
@@ -56,13 +50,13 @@ class HandlerRepository implements HandlerRepositoryInterface
         return $this->bundles[$command];
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function hasHandler($name)
+    public function addBundleName(string $handlerId, ?string $bundleName)
     {
-        return \array_key_exists($name, $this->handlers);
+        $this->bundles[$handlerId] = $bundleName;
+    }
+
+    public static function getSubscribedServices()
+    {
+        return [];
     }
 }

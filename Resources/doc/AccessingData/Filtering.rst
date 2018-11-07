@@ -84,7 +84,7 @@ Example of filtering object created in `filtering example <filtering_orm_example
    $filter = (new Filter())
        ->add($usernameRule);
 
-   $queryExecutor = $container->get('imatic_data.query_executor');
+   $queryExecutor = $container->get('Imatic\Bundle\DataBundle\Data\Query\QueryExecutor');
 
    $usersHavingJohnInUsername = $queryExecutor->execute(
        new ActiveUsersQuery(),
@@ -212,7 +212,7 @@ When we use the rule above, we get only users having ``username`` value ``john``
 
 - used to create filters
 - instead of building filter before executing query in our `filter example <filter_usage_example_>`_ we could create
-  class for the filter like below
+  service for the filter like below
 
   .. sourcecode:: php
 
@@ -234,16 +234,17 @@ When we use the rule above, we get only users having ``username`` value ``john``
          }
      }
 
-  - such class can be then tagged with some alias
+  - filter must be registered as services and tagged with the ``imatic_data.filter`` tag
+  - if you're using the default services.yaml configuration, this is already done for you, thanks to autoconfiguration.
 
     .. sourcecode:: yaml
 
        services:
            Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter:
                tags:
-                   - { name: imatic_data.filter, alias: user_filter }
+                   - { name: imatic_data.filter }
 
-  - and then used either directly or via filter factory by using the alias
+  - and then used either directly or via filter factory by using the filter service id
 
     .. sourcecode:: php
 
@@ -253,8 +254,8 @@ When we use the rule above, we get only users having ``username`` value ``john``
        $userFilterDirectly = new UserFilter();
 
        // retrieving user filter via factory using the alias
-       $filterFactory = $container->get('imatic_data.filter_factory');
-       $userFilterViaFactory = $filterFactory->create('user_filter');
+       $filterFactory = $container->get('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory');
+       $userFilterViaFactory = $filterFactory->create(UserFilter::class);
 
 Custom filtering logic without implementing custom `FilterRule <filter_rules_h_>`__ and filter rule processor
 -------------------------------------------------------------------------------------------------------------

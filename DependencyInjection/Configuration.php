@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -19,8 +19,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('display_criteria_reader')
-                    ->info('Id of the service (e.g. "imatic_data.extjs_display_criteria_reader")')
-                    ->defaultValue('imatic_data.request_query_display_criteria_reader')
+                    ->info('Id of the service (e.g. "Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader")')
+                    ->defaultValue('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader')
                 ->end()
                 ->arrayNode('pager')
                     ->addDefaultsIfNotSet()

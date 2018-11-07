@@ -1,6 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\DependencyInjection\Compiler;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorDelegate;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -9,7 +10,7 @@ class FilterRuleProcessorPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $filterRuleProcessorDef = $container->findDefinition('imatic_data.filter_rule_processor');
+        $filterRuleProcessorDef = $container->findDefinition(FilterRuleProcessorDelegate::class);
         $filterRuleProcessorServices = $container->findTaggedServiceIds('imatic_data.filter_rule_processor');
 
         $filterRuleProcessors = [];

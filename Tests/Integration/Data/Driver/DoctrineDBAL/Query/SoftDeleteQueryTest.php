@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
@@ -49,6 +49,6 @@ class SoftDeleteQueryTest extends WebTestCase
      */
     private function getQueryExecutor()
     {
-        return $this->container->get(QueryExecutorInterface::class);
+        return self::$container->get(QueryExecutorInterface::class);
     }
 }

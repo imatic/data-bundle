@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query;
 
 use Doctrine\ORM\EntityManager;
@@ -10,7 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInter
 
 class UserListQuery implements QueryObjectInterface, FilterableQueryObjectInterface, SortableQueryObjectInterface, SelectableQueryObjectInterface
 {
-    public function build(EntityManager $em)
+    public function build(EntityManager $em): QueryBuilder
     {
         return (new QueryBuilder($em))
             ->from('AppImaticDataBundle:User', 'u')

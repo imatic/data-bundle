@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
@@ -66,7 +66,7 @@ class CreateOrEditHandlerTest extends WebTestCase
      */
     private function getCommandExecutor()
     {
-        return $this->container->get(CommandExecutorInterface::class);
+        return self::$container->get(CommandExecutorInterface::class);
     }
 
     /**

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineDBAL\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
@@ -6,6 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIteratorArgs;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class RecordIteratorTest extends WebTestCase
 {
+    /** @var RecordIterator */
     protected $recordIterator;
 
     /** @var RequestStack */
@@ -24,8 +26,9 @@ class RecordIteratorTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->recordIterator = $this->container->get(RecordIterator::class);
-        $this->requestStack = $this->container->get('request_stack');
+
+        $this->recordIterator = self::$container->get(RecordIterator::class);
+        $this->requestStack = self::$container->get('request_stack');
     }
 
     /**
@@ -58,7 +61,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => false,
             'selected' => $selected,
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -97,7 +100,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -121,7 +124,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
             ]),
         ]);
 
@@ -146,7 +149,7 @@ class RecordIteratorTest extends WebTestCase
             'selectedAll' => true,
             'selected' => [],
             'query' => \json_encode([
-                'filter_type' => 'app_imatic_data.user',
+                'filter_type' => UserFilter::class,
                 'filter' => [
                     'name' => [
                         'value' => 'Eva',

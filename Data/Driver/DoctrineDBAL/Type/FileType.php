@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;

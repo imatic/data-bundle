@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Data\Driver\DoctrineORM\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\Command;
@@ -59,6 +59,6 @@ class CreateHandlerTest extends WebTestCase
      */
     private function getCreateHandler()
     {
-        return $this->container->get(CreateHandler::class);
+        return self::$container->get(CreateHandler::class);
     }
 }

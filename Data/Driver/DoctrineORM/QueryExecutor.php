@@ -1,7 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -18,7 +18,7 @@ use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
 class QueryExecutor implements QueryExecutorInterface
 {
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $entityManager;
 
@@ -27,7 +27,7 @@ class QueryExecutor implements QueryExecutorInterface
      */
     private $displayCriteriaQueryBuilder;
 
-    public function __construct(EntityManager $entityManager, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
+    public function __construct(EntityManagerInterface $entityManager, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
     {
         $this->entityManager = $entityManager;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;

@@ -1,35 +1,41 @@
-<?php
+<?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\DependencyInjection;
 
+use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader;
+use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\CommandHandlerCompilerPass;
+use Imatic\Bundle\DataBundle\DependencyInjection\Compiler\FilterCompilerPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * This is the class that loads and manages your bundle configuration.
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+ * ImaticDataExtension.
  */
 class ImaticDataExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yml');
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.xml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
-        // @deprecated Will be removed in 4.0
-        $container->setAlias('imatic_data.display_criteria_reader', $config['display_criteria_reader']);
 
         $container->setAlias(DisplayCriteriaReader::class, $config['display_criteria_reader']);
 
         if (!$container->hasParameter('imatic_data.base_file_path')) {
             $container->setParameter('imatic_data.base_file_path', \realpath(\sprintf('%s/..', $container->getParameter('kernel.root_dir'))));
         }
+
+        $container->registerForAutoconfiguration(FilterInterface::class)
+            ->addTag(FilterCompilerPass::FILTER_TAG);
+
+        $container->registerForAutoconfiguration(HandlerInterface::class)
+            ->addTag(CommandHandlerCompilerPass::HANDLER_TAG);
 
         $this->processUnaccentLower($config['unaccent_lower'], $container);
         $this->processPager($config['pager'], $container);
@@ -54,7 +60,7 @@ class ImaticDataExtension extends Extension
      */
     private function processPager(array $pagerConfig, ContainerBuilder $container)
     {
-        $pagerFactoryDef = $container->findDefinition('imatic_data.pager_factory');
+        $pagerFactoryDef = $container->findDefinition(PagerFactory::class);
         $pagerFactoryDef->addMethodCall('setDefaultLimit', [$pagerConfig['default_limit']]);
     }
 
