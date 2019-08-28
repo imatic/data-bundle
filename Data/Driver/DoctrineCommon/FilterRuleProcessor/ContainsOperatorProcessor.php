@@ -53,11 +53,11 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
             );
         }
         return \sprintf(
-                '%s %s %s',
-                $this->wrapColumn($qb, $column),
-                $this->postgresOperators[$rule->getOperator()],
-                $this->wrapColumn($qb, $this->getQueryParameter($rule))
-            );
+            '%s %s %s',
+            $this->wrapColumn($qb, $column),
+            $this->postgresOperators[$rule->getOperator()],
+            $this->wrapColumn($qb, $this->getQueryParameter($rule))
+        );
     }
 
     public function supports($qb, FilterRule $rule, $column)

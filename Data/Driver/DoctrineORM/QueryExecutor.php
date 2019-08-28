@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator as ImaticPaginator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface as DoctrineORMQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
@@ -33,6 +34,15 @@ class QueryExecutor implements QueryExecutorInterface
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
     }
 
+    private function createPaginator(DoctrineORMQueryObjectInterface $queryObject, Query $query)
+    {
+        if ($queryObject instanceof ExperimentalOptimizationQueryObjectInterface) {
+            return new ImaticPaginator($query, true);
+        }
+
+        return new Paginator($query, true);
+    }
+
     public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
@@ -45,7 +55,7 @@ class QueryExecutor implements QueryExecutorInterface
         }
 
         $query = $qb->getQuery();
-        $paginator = new Paginator($query, true);
+        $paginator = $this->createPaginator($queryObject, $query);
 
         return \count($paginator);
     }
@@ -104,7 +114,7 @@ class QueryExecutor implements QueryExecutorInterface
         } elseif ($queryObject instanceof SingleResultQueryObjectInterface) {
             return $query->getOneOrNullResult();
         } elseif ($isSelect && (null !== $query->getMaxResults() || null !== $query->getFirstResult())) {
-            return \iterator_to_array(new Paginator($query, true));
+            return \iterator_to_array($this->createPaginator($queryObject, $query));
         }
         return $query->getResult();
     }
