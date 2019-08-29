@@ -1,11 +1,14 @@
 language: php
 
-php: 7.1
+php: 7.3
 
 addons:
     apt:
         packages:
             - graphviz
+
+services:
+    - postgresql
 
 before_script:
     - phpenv config-rm xdebug.ini

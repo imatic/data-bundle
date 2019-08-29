@@ -8,8 +8,8 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class NotILike extends FunctionNode
 {
-    protected $field;
-    protected $value;
+    public $field;
+    public $value;
 
     public function getSql(SqlWalker $sqlWalker)
     {
