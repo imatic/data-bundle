@@ -81,7 +81,8 @@ class ResultIterator implements Iterator, \Countable
     public function next()
     {
         ++$this->position;
-        if (\floor(($this->position + 1) / $this->getLimit()) > $this->criteria['page'] && $this->valid()) {
+
+        if ((($this->position + 1) / $this->getLimit()) > $this->criteria['page'] && $this->valid()) {
             $this->loadNextPage();
         }
     }
