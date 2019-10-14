@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dfb8adea5220e4e559c3ef853c77049",
+    "content-hash": "8881c82ef5da495db5d53c2ec6eab1d0",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2199,16 +2199,16 @@
         },
         {
             "name": "imatic/testing",
-            "version": "v5.0",
+            "version": "v5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/imatic/testing.git",
-                "reference": "cc65d2d10f0afab2ae3bb36be8250f5acc180c62"
+                "reference": "9803d23c0607c54bf4277758af295c15c1390cfe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/imatic/testing/zipball/cc65d2d10f0afab2ae3bb36be8250f5acc180c62",
-                "reference": "cc65d2d10f0afab2ae3bb36be8250f5acc180c62",
+                "url": "https://api.github.com/repos/imatic/testing/zipball/9803d23c0607c54bf4277758af295c15c1390cfe",
+                "reference": "9803d23c0607c54bf4277758af295c15c1390cfe",
                 "shasum": ""
             },
             "require": {
@@ -2252,7 +2252,7 @@
                 "symfony",
                 "testing"
             ],
-            "time": "2018-11-05T14:51:04+00:00"
+            "time": "2019-10-14T06:58:47+00:00"
         },
         {
             "name": "mikey179/vfsStream",
