@@ -16,6 +16,7 @@ This bundle ships with several dql functions. To register all of them, add follo
                     overlaps: Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST\Overlaps
                     unaccent_lower: Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST\UnaccentLower
                     jsonb_exists: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\JsonbExists
+                    jsonb_exists_any: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\JsonbExistsAny
 
 `ILike </Doctrine/Postgresql/Query/AST/ILike.php>`_
 ---------------------------------------------------
