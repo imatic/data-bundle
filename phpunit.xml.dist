@@ -15,7 +15,7 @@
     <php>
         <env name="KERNEL_CLASS" value="Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\TestKernel" />
         <env name="DATABASE_URL" value="pgsql://postgres:postgres@127.0.0.1:5432/data_bundle_test" />
-        <env name="DATABASE_VERSION" value="9.2.4" />
+        <env name="DATABASE_VERSION" value="11.5" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
         <env name="TESTING_DATA_INIT" value="1" />
     </php>
