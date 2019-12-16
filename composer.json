@@ -24,10 +24,9 @@
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "doctrine/orm": "^2.3",
         "friendsofphp/php-cs-fixer": "^2.7",
-        "imatic/form-bundle": "dev-update_deps",
-        "imatic/testing": "dev-update_deps",
+        "imatic/form-bundle": "^5.0.0",
+        "imatic/testing": "^6.0.0",
         "mikey179/vfsstream": "^1.4",
-        "phpdocumentor/reflection-docblock": "4.1.1 as 3.3.0",
         "symfony/phpunit-bridge": "^4.1"
     },
     "suggest": {
