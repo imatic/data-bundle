@@ -31,8 +31,8 @@ class EntityTypeQueryObjectExtension extends AbstractTypeExtension
         );
     }
 
-    public function getExtendedType()
+    public static function getExtendedTypes(): iterable
     {
-        return EntityType::class;
+        return [EntityType::class];
     }
 }

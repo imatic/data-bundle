@@ -10,7 +10,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 
 class FilterTypeTest extends TypeTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = Forms::createFormFactoryBuilder()
             ->addExtensions($this->getExtensions())

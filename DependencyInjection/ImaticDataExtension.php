@@ -28,7 +28,7 @@ class ImaticDataExtension extends Extension
         $container->setAlias(DisplayCriteriaReader::class, $config['display_criteria_reader']);
 
         if (!$container->hasParameter('imatic_data.base_file_path')) {
-            $container->setParameter('imatic_data.base_file_path', \realpath(\sprintf('%s/..', $container->getParameter('kernel.root_dir'))));
+            $container->setParameter('imatic_data.base_file_path', \realpath($container->getParameter('kernel.project_dir')));
         }
 
         $container->registerForAutoconfiguration(FilterInterface::class)

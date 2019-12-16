@@ -54,5 +54,7 @@ class QueryObjectQueryCommand extends Command
         $result = $this->queryExecutor->execute($queryObject);
 
         $output->writeln(Debug::dump($result, 2, false, false));
+
+        return 0;
     }
 }

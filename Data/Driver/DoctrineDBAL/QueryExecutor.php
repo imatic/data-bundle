@@ -56,6 +56,8 @@ class QueryExecutor implements QueryExecutorInterface
             $qb->resetQueryPart('groupBy');
         }
 
+        $qb->resetQueryPart('orderBy');
+
         /* @var $statement PDOStatement */
         $statement = $qb
             ->select(\sprintf('COUNT(%s) count', $count))

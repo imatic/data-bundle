@@ -23,9 +23,7 @@ framework:
     translator:
         enabled:                true
     router:
-        resource:               '%kernel.root_dir%/config/routing.yml'
-    templating:
-        engines:                [twig]
+        resource:               '%kernel.project_dir%/Tests/Fixtures/TestProject/config/routing.yml'
     default_locale:             cs_CZ
     profiler:                   { only_exceptions: false }
 
@@ -58,7 +56,8 @@ doctrine:
 monolog:
     handlers:
         main:
-          type:                 "null"
+          # null type doesn't work with Symfony 5: https://github.com/symfony/monolog-bundle/issues/335
+          type: 'test'
 
 security:
     encoders:
