@@ -3,9 +3,8 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\PDOStatement;
-use Doctrine\DBAL\Types\Type;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface as DoctrineDBALQueryObjectInterface;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizer;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
@@ -21,20 +20,20 @@ use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
  */
 class QueryExecutor implements QueryExecutorInterface
 {
-    /** @var Schema */
-    private $schema;
-
     /** @var Connection */
     private $connection;
 
     /** @var DisplayCriteriaQueryBuilderDelegate */
     private $displayCriteriaQueryBuilder;
 
-    public function __construct(Connection $connection, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder, Schema $schema)
+    /** @var ResultNormalizer */
+    private $resultNormalizer;
+
+    public function __construct(Connection $connection, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder, ResultNormalizer $resultNormalizer)
     {
         $this->connection = $connection;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
-        $this->schema = $schema;
+        $this->resultNormalizer = $resultNormalizer;
     }
 
     public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -117,7 +116,7 @@ class QueryExecutor implements QueryExecutorInterface
      */
     private function getResult(BaseQueryObjectInterface $queryObject, PDOStatement $statement)
     {
-        $result = $this->getNormalizedResult($statement);
+        $result = $this->resultNormalizer->normalize($statement);
 
         if ($queryObject instanceof SingleScalarResultQueryObjectInterface) {
             return $this->getSingleScalarResult($result);
@@ -152,34 +151,5 @@ class QueryExecutor implements QueryExecutorInterface
         }
 
         throw new NonUniqueResultException();
-    }
-
-    private function getNormalizedResult(PDOStatement $statement)
-    {
-        $tables = [];
-        $quoteCharacter = $this->connection->getDatabasePlatform()->getIdentifierQuoteCharacter();
-        \preg_match(\sprintf('/FROM *%1$s?(\w+)%1$s?/i', $quoteCharacter), $statement->queryString, $tables);
-
-        if (\count($tables) !== 2) {
-            throw new \LogicException(\sprintf('Found %d tables in queryString "%s", but 1 expected.', \max([0, \count($tables) - 1]), $statement->queryString));
-        }
-
-        $columnTypes = $this->schema->getColumnTypes($tables[1]);
-        $platform = $this->connection->getSchemaManager()->getDatabasePlatform();
-
-        $normalizedResult = [];
-        $result = $statement->fetchAll();
-        $resultCount = \count($result);
-        for ($i = 0; $i < $resultCount; ++$i) {
-            foreach ($result[$i] as $column => $value) {
-                if (isset($columnTypes[$column])) {
-                    $normalizedResult[$i][$column] = Type::getType($columnTypes[$column])->convertToPHPValue($value, $platform);
-                } else {
-                    $normalizedResult[$i][$column] = $value;
-                }
-            }
-        }
-
-        return $normalizedResult;
     }
 }
