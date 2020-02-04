@@ -3,7 +3,7 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 
 use Imatic\Bundle\DataBundle\Exception\HandlerNotFoundException;
 use Psr\Container\ContainerInterface;
-use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class HandlerRepository implements HandlerRepositoryInterface, ServiceSubscriberInterface
 {

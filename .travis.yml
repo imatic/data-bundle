@@ -2,11 +2,6 @@ language: php
 
 php: 7.3
 
-addons:
-    apt:
-        packages:
-            - graphviz
-
 services:
     - postgresql
 

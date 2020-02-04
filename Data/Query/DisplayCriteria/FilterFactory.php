@@ -2,7 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Psr\Container\ContainerInterface;
-use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class FilterFactory implements ServiceSubscriberInterface
 {
