@@ -23,7 +23,7 @@ framework:
     translator:
         enabled:                true
     router:
-        resource:               '%kernel.project_dir%/Tests/Fixtures/TestProject/config/routing.yml'
+        resource:               '%kernel.project_dir%/config/routing.yml'
     default_locale:             cs_CZ
     profiler:                   { only_exceptions: false }
 
