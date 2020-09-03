@@ -23,6 +23,7 @@ framework:
     translator:
         enabled:                true
     router:
+        utf8:                   true
         resource:               '%kernel.project_dir%/config/routing.yml'
     default_locale:             cs_CZ
     profiler:                   { only_exceptions: false }
@@ -46,7 +47,7 @@ doctrine:
         auto_generate_proxy_classes: '%kernel.debug%'
         auto_mapping:           true
         resolve_target_entities: []
-        naming_strategy: doctrine.orm.naming_strategy.underscore
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         dql:
             string_functions:
                 ilike: Imatic\Bundle\DataBundle\Doctrine\Postgresql\Query\AST\ILike
@@ -56,8 +57,8 @@ doctrine:
 monolog:
     handlers:
         main:
-          # null type doesn't work with Symfony 5: https://github.com/symfony/monolog-bundle/issues/335
-          type: 'test'
+            type: 'null'
+            process_psr_3_messages: false
 
 security:
     encoders:
