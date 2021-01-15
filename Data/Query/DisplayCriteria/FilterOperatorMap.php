@@ -30,30 +30,4 @@ class FilterOperatorMap
     const OPERATOR_IN = 'in';
 
     const OPERATOR_NOT_IN = 'notIn';
-
-    protected static $filterOperators = [
-        self::FILTER_BOOL => [
-            self::OPERATOR_EQUAL,
-            self::OPERATOR_EMPTY,
-            self::OPERATOR_NOT_EMPTY,
-        ],
-        self::FILTER_DATE => [
-            self::OPERATOR_EQUAL,
-            self::OPERATOR_NOT_EQUAL,
-            self::OPERATOR_GREATER,
-            self::OPERATOR_GREATER_EQUAL,
-            self::OPERATOR_LESSER,
-            self::OPERATOR_LESSER_EQUAL,
-            self::OPERATOR_EMPTY,
-            self::OPERATOR_NOT_EMPTY,
-        ],
-        self::FILTER_RANGE => [
-            self::OPERATOR_BETWEEN,
-            self::OPERATOR_NOT_BETWEEN,
-        ],
-        self::FILTER_CHOICE => [
-            self::OPERATOR_IN,
-            self::OPERATOR_NOT_IN,
-        ],
-    ];
 }
