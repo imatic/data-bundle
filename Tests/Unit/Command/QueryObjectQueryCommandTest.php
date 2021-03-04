@@ -11,7 +11,7 @@ class QueryObjectQueryCommandTest extends TestCase
 {
     private $queryExecutorMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->queryExecutorMock = $this->createMock(QueryExecutorInterface::class);
     }
@@ -30,7 +30,7 @@ class QueryObjectQueryCommandTest extends TestCase
             'class' => 'Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery',
         ]);
 
-        $this->assertRegExp('/^NULL/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/^NULL/', $commandTester->getDisplay());
     }
 
     public function testCommandShouldShouldPrintResultOfQueryObjectWithRequiredArguments()
@@ -48,15 +48,14 @@ class QueryObjectQueryCommandTest extends TestCase
             '--args' => [1],
         ]);
 
-        $this->assertRegExp('/^NULL/', $commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/^NULL/', $commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Not enough arguments
-     */
     public function testCommandShouldThrowExceptionIfArgumentIsNotPassedToQueryObjectWithRequiredArguments()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Not enough arguments');
+
         $queryObjectQueryCommand = new QueryObjectQueryCommand($this->queryExecutorMock);
 
         $application = new Application();

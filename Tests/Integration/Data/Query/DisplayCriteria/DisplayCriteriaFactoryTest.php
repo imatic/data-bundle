@@ -22,7 +22,7 @@ class DisplayCriteriaFactoryTest extends WebTestCase
      */
     private $requestStack;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->displayCriteriaFactory = self::$container->get(DisplayCriteriaFactory::class);

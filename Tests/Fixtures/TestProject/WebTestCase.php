@@ -7,7 +7,7 @@ use Imatic\Testing\Test\WebTestCase as BaseWebTestCase;
 
 class WebTestCase extends BaseWebTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         static::createClient();
     }
