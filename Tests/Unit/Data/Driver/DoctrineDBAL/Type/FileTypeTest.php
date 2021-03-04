@@ -19,7 +19,7 @@ class FileTypeTest extends TestCase
     private $fileType;
     private $platform;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->platform = $this->getMockBuilder('Doctrine\DBAL\Platforms\AbstractPlatform')
             ->disableOriginalConstructor()

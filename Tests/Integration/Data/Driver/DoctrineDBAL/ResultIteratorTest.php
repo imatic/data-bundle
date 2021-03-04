@@ -17,7 +17,7 @@ class ResultIteratorTest extends WebTestCase
      */
     protected $resultIteratorFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->resultIteratorFactory = self::$container->get(ResultIteratorFactory::class);

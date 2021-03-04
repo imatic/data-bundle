@@ -23,7 +23,7 @@ class RecordIteratorTest extends WebTestCase
     /** @var RequestStack */
     private $requestStack;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

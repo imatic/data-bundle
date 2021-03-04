@@ -20,7 +20,7 @@ class DisplayCriteriaFactoryTest extends TestCase
 
     private $currentRequest;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
 

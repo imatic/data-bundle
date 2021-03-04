@@ -10,7 +10,7 @@ class PagerFactoryTest extends TestCase
 {
     private $pagerFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->pagerFactory = new PagerFactory();
     }

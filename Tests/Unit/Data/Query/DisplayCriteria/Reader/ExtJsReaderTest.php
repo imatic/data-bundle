@@ -15,7 +15,7 @@ class ExtJsReaderTest extends TestCase
     protected $requestStack;
     protected $currentRequest;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
 
