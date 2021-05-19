@@ -31,7 +31,7 @@ jobs:
       - run: make test
       - name: 'Push changes'
         run: |
-          git config --global user.email "update-workflow@example.com"
+          git config --global user.email "github-update-workflow@imatic.cz"
           git config --global user.name "Github update workflow"
           git add .
           git commit -m "Auto update" || true
