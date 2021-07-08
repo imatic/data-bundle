@@ -27,6 +27,7 @@ framework:
         resource:               '%kernel.project_dir%/config/routing.yml'
     default_locale:             cs_CZ
     profiler:                   { only_exceptions: false }
+    property_access: ~
 
 twig:
     debug:                      '%kernel.debug%'
