@@ -24,7 +24,7 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "doctrine/orm": "^2.7",
-        "friendsofphp/php-cs-fixer": "^2.7",
+        "friendsofphp/php-cs-fixer": "^3.2.1",
         "imatic/form-bundle": "^5.0.0",
         "imatic/testing": "^6.0.0",
         "mikey179/vfsstream": "^1.4",
