@@ -26,7 +26,7 @@ SELECT
 FROM test_user u
 WHERE id = 1
 SQL
-        );
+        )->getIterator();
 
         $result = $resultNormalizer->normalize($statement);
 
@@ -64,7 +64,7 @@ SELECT
 FROM test_user u
 WHERE id = 1
 SQL
-        );
+        )->getIterator();
 
         $result = $resultNormalizer->normalize($statement);
 
