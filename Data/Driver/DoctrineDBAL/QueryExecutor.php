@@ -82,7 +82,7 @@ class QueryExecutor implements QueryExecutorInterface
             return $statement;
         }
 
-        return $this->getResult($queryObject, $statement);
+        return $this->getResult($queryObject, $statement->getIterator());
     }
 
     public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
