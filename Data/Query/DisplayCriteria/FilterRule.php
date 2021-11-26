@@ -65,6 +65,11 @@ abstract class FilterRule
      */
     protected $type;
 
+    /**
+     * @var FilterInterface|null
+     */
+    private $filter = null;
+
     public function __construct($name, array $options = [])
     {
         $this->name = (string) $name;
@@ -356,5 +361,15 @@ abstract class FilterRule
     {
         $this->bound = $this->value !== null ||
             \in_array($this->operator, [FilterOperatorMap::OPERATOR_EMPTY, FilterOperatorMap::OPERATOR_NOT_EMPTY], true);
+    }
+
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    public function setFilter(FilterInterface $filter)
+    {
+        $this->filter = $filter;
     }
 }

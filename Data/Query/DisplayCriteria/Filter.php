@@ -84,6 +84,7 @@ class Filter implements FilterInterface
     public function add(FilterRule $rule)
     {
         $this->rules[$rule->getName()] = $rule;
+        $rule->setFilter($this);
 
         if (!\is_null($rule->getValue())) {
             $this->hasDefaults = true;
