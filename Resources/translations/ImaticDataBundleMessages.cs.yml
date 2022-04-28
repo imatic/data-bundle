@@ -11,7 +11,7 @@ delete:
     error:              Nepodařilo se smazat položku
 
 success:                Akce proběhla úspěšně
-error:                  Nastala chyba při provádění akce
+error:                  Během zpracování požadavku došlo k neočekávané chybě.
 
 batch_success:          "Hromadná akce byla provedena pro %count% položek"
 batch_error:            Nastala chyba při provádění hromadné akce

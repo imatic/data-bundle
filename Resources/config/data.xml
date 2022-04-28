@@ -14,6 +14,7 @@
 
         <service id="Imatic\Bundle\DataBundle\Data\Command\CommandExecutor">
             <argument type="service" id="Imatic\Bundle\DataBundle\Data\Command\HandlerRepository" />
+            <argument type="service" id="logger" on-invalid="null" />
             <argument>%kernel.debug%</argument>
         </service>
         <service id="Imatic\Bundle\DataBundle\Data\Command\CommandExecutorInterface" alias="Imatic\Bundle\DataBundle\Data\Command\CommandExecutor" />

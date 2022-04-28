@@ -11,7 +11,7 @@ delete:
     error:              Nepodarilo sa zmazať položku
 
 success:                Akcia prebehla úspešne
-error:                  Nastala chyba pri spracovaní akcie
+error:                  Počas spracovania požiadavky došlo k neočakávanej chybe.
 
 batch_success:          "Hromadná akcia prebehla úspešne pre %count% položiek"
 batch_error:            Pris spracovaní hromadnej akcia nastala chyba

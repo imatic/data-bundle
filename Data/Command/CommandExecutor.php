@@ -1,12 +1,19 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
+use Psr\Log\LoggerInterface;
+
 class CommandExecutor implements CommandExecutorInterface
 {
     /**
      * @var HandlerRepositoryInterface
      */
     private $handlerRepository;
+
+    /**
+     * @var LoggerInterface|null
+     */
+    private $logger;
 
     /**
      * @var bool
@@ -17,9 +24,10 @@ class CommandExecutor implements CommandExecutorInterface
      * @param HandlerRepositoryInterface $handlerRepository
      * @param bool                       $debug
      */
-    public function __construct(HandlerRepositoryInterface $handlerRepository, $debug = false)
+    public function __construct(HandlerRepositoryInterface $handlerRepository, LoggerInterface $logger = null, bool $debug = false)
     {
         $this->handlerRepository = $handlerRepository;
+        $this->logger = $logger;
         $this->debug = $debug;
     }
 
@@ -53,7 +61,11 @@ class CommandExecutor implements CommandExecutorInterface
                 throw $e;
             }
 
-            $result = CommandResult::error(null, [], $e);
+            if (null !== $this->logger) {
+                $this->logger->error('An exception was thrown when handling an Command.', ['exception' => $e]);
+            }
+
+            $result = CommandResult::error('error', [], $e);
         }
 
         $this->processMessages($command, $result);

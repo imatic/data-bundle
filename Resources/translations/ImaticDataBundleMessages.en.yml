@@ -11,7 +11,7 @@ delete:
     error:              Could not delete the item
 
 success:                Action successful
-error:                  Could not perform the action
+error:                  An unexpected error occurred during the processing of the request.
 
 batch_success:          "Batch action performed on %count% items"
 batch_error:            An error has occuried while performing the batch action
