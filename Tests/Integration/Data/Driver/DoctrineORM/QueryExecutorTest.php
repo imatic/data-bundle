@@ -11,6 +11,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Sorter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListWithOrderNumbersQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListWithOrdersQuery;
@@ -237,7 +238,7 @@ class QueryExecutorTest extends WebTestCase
      */
     public function getQueryExecutor()
     {
-        return self::$container->get(QueryExecutorInterface::class);
+        return self::getContainer()->get(QueryExecutorInterface::class);
     }
 
     /**
@@ -245,6 +246,6 @@ class QueryExecutorTest extends WebTestCase
      */
     public function getUserRepository()
     {
-        return $this->getEntityManager()->getRepository('AppImaticDataBundle:User');
+        return $this->getEntityManager()->getRepository(User::class);
     }
 }

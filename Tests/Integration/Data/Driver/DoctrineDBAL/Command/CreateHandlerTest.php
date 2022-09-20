@@ -44,7 +44,7 @@ class CreateHandlerTest extends WebTestCase
      */
     private function getCreateHandler()
     {
-        return self::$container->get(CreateHandler::class);
+        return self::getContainer()->get(CreateHandler::class);
     }
 
     private function findUserByName($name)
@@ -54,8 +54,8 @@ class CreateHandlerTest extends WebTestCase
             ->from('test_user', 'u')
             ->andWhere('u.name = :name')
             ->setParameter('name', $name)
-            ->execute()
-            ->fetch();
+            ->executeQuery()
+            ->fetchAssociative();
     }
 
     /**
@@ -63,6 +63,6 @@ class CreateHandlerTest extends WebTestCase
      */
     private function getConnection()
     {
-        return self::$container->get('doctrine.dbal.default_connection');
+        return self::getContainer()->get('doctrine.dbal.default_connection');
     }
 }

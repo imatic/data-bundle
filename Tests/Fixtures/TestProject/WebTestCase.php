@@ -17,6 +17,6 @@ class WebTestCase extends BaseWebTestCase
      */
     public function getEntityManager()
     {
-        return self::$container->get(EntityManagerInterface::class);
+        return self::getContainer()->get(EntityManagerInterface::class);
     }
 }

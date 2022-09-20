@@ -48,7 +48,7 @@ class EditHandlerTest extends WebTestCase
      */
     private function getEditHandler()
     {
-        return self::$container->get(EditHandler::class);
+        return self::getContainer()->get(EditHandler::class);
     }
 
     private function findUserById($id)
@@ -58,8 +58,8 @@ class EditHandlerTest extends WebTestCase
             ->from('test_user', 'u')
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
-            ->execute()
-            ->fetch();
+            ->executeQuery()
+            ->fetchAssociative();
     }
 
     /**
@@ -67,6 +67,6 @@ class EditHandlerTest extends WebTestCase
      */
     private function getConnection()
     {
-        return self::$container->get('doctrine.dbal.default_connection');
+        return self::getContainer()->get('doctrine.dbal.default_connection');
     }
 }

@@ -2,9 +2,11 @@
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\ContainsOperatorProcessor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 class ContainsOperatorProcessorTest extends WebTestCase
@@ -20,7 +22,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $processor = new ContainsOperatorProcessor();
         $processor->process($qb, $rule, 'u.name');
 
-        $result = $qb->execute()->fetchAll();
+        $result = $qb->executeQuery()->fetchAllAssociative();
 
         $this->assertCount(1, $result);
         $this->assertEquals('Adam', $result[0]['name']);
@@ -37,7 +39,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $processor = new ContainsOperatorProcessor();
         $processor->process($qb, $rule, 'u.name');
 
-        $result = $qb->execute()->fetchAll();
+        $result = $qb->executeQuery()->fetchAllAssociative();
 
         $this->assertCount(1, $result);
         $this->assertEquals('Eva', $result[0]['name']);
@@ -58,7 +60,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $processor = new ContainsOperatorProcessor();
         $processor->process($qb, $rule, 'u.name');
 
-        $result = $qb->execute()->fetchAll();
+        $result = $qb->executeQuery()->fetchAllAssociative();
 
         $this->assertCount(1, $result);
         $this->assertEquals('Adam', $result[0]['name']);
@@ -79,7 +81,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $processor = new ContainsOperatorProcessor();
         $processor->process($qb, $rule, 'u.name');
 
-        $result = $qb->execute()->fetchAll();
+        $result = $qb->executeQuery()->fetchAllAssociative();
 
         $this->assertCount(1, $result);
         $this->assertEquals('Eva', $result[0]['name']);
@@ -91,7 +93,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
             $this->markTestSkipped('Test is enabled for postgresql only.');
         }
 
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new TextRule('name');
         $rule->setOperator(FilterOperatorMap::OPERATOR_CONTAINS);
@@ -112,7 +114,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
             $this->markTestSkipped('Test is enabled for postgresql only.');
         }
 
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new TextRule('name');
         $rule->setOperator(FilterOperatorMap::OPERATOR_NOT_CONTAINS);
@@ -127,9 +129,9 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $this->assertEquals('Eva', $result[0]->getName());
     }
 
-    private function isRunningOnPostgresql()
+    private function isRunningOnPostgresql(): bool
     {
-        return $this->getConnection()->getDatabasePlatform()->getName() === 'postgresql';
+        return $this->getConnection()->getDatabasePlatform() instanceof PostgreSQLPlatform;
     }
 
     private function createUserQueryBuilder()
@@ -150,7 +152,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $this->assertTrue($processor->supports($qb, $rule, 'u.name'));
 
         $processor->process($qb, $rule, 'u.name');
-        $result = $qb->execute()->fetchAll();
+        $result = $qb->executeQuery()->fetchAllAssociative();
 
         $this->assertCount(0, $result);
     }
@@ -167,7 +169,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
         $this->assertTrue($processor->supports($qb, $rule, 'u.name'));
 
         $processor->process($qb, $rule, 'u.name');
-        $result = $qb->execute()->fetchAll();
+        $result = $qb->executeQuery()->fetchAllAssociative();
 
         $this->assertCount(1, $result);
         $this->assertEquals('Adam', $result[0]['name']);
@@ -175,7 +177,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
 
     public function testProcessShouldReturnQbWhichReturnsNoResultsWithoutFunctionForORM()
     {
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new TextRule('name');
         $rule->setValue('ádám');
@@ -191,7 +193,7 @@ class ContainsOperatorProcessorTest extends WebTestCase
 
     public function testProcessShouldReturnQbWhichReturnsOneResultWithFunctionForORM()
     {
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new TextRule('name');
         $rule->setValue('ádám');

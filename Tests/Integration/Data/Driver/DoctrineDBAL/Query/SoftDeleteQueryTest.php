@@ -40,8 +40,8 @@ class SoftDeleteQueryTest extends WebTestCase
             ->where('r.id IN (:ids)')
             ->andWhere('r.deleted_at IS NULL')
             ->setParameter('ids', $ids, Connection::PARAM_INT_ARRAY)
-            ->execute()
-            ->fetchAll(\PDO::FETCH_ASSOC);
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 
     /**
@@ -49,6 +49,6 @@ class SoftDeleteQueryTest extends WebTestCase
      */
     private function getQueryExecutor()
     {
-        return self::$container->get(QueryExecutorInterface::class);
+        return self::getContainer()->get(QueryExecutorInterface::class);
     }
 }

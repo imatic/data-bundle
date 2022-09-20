@@ -73,6 +73,7 @@ class Paginator extends DoctrinePaginator
      * Returns whether the query joins a collection.
      *
      * @return bool Whether the query joins a collection.
+     *
      * @SuppressWarnings(PHPMD)
      */
     public function getFetchJoinCollection()

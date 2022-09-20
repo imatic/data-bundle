@@ -31,7 +31,7 @@ class DeleteHandlerTest extends WebTestCase
      */
     private function getDeleteHandler()
     {
-        return self::$container->get(DeleteHandler::class);
+        return self::getContainer()->get(DeleteHandler::class);
     }
 
     private function findUserCount($id)
@@ -50,6 +50,6 @@ class DeleteHandlerTest extends WebTestCase
      */
     private function getConnection()
     {
-        return self::$container->get('doctrine.dbal.default_connection');
+        return self::getContainer()->get('doctrine.dbal.default_connection');
     }
 }

@@ -24,11 +24,3 @@ services:
     imatic_data.tests.doctrine_orm.record_iterator:
         public: true
         alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator
-
-    imatic_data.tests.Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\DeprecatedResultNormalizer:
-        public: true
-        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\DeprecatedResultNormalizer
-
-    imatic_data.tests.Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerImpl:
-        public: true
-        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerImpl

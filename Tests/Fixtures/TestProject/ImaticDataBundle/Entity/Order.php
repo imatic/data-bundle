@@ -13,6 +13,7 @@ class Order
 {
     /**
      * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -21,6 +22,7 @@ class Order
 
     /**
      * @var User
+     *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
@@ -28,6 +30,7 @@ class Order
 
     /**
      * @var \DateTime|null
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $deletedAt;

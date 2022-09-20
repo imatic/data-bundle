@@ -14,6 +14,7 @@ class User
 {
     /**
      * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -27,36 +28,42 @@ class User
 
     /**
      * @var bool
+     *
      * @ORM\Column(type="boolean", options={"default" = 0})
      */
     private $activated = true;
 
     /**
      * @var \DateTime
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $birthDate;
 
     /**
      * @var \DateTime
+     *
      * @ORM\Column(type="date", nullable=true)
      */
     private $favoriteDay;
 
     /**
      * @var \Datetime
+     *
      * @ORM\Column(type="time", nullable=true)
      */
     private $favoriteTime;
 
     /**
      * @var string
+     *
      * @ORM\Column(type="string", nullable=true)
      */
     private $hairs;
 
     /**
      * @var Order[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="Order", mappedBy="user")
      */
     private $orders;

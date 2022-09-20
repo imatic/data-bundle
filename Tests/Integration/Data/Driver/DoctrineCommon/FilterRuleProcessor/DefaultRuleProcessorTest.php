@@ -2,9 +2,10 @@
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\RuleProcessor;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Types\Type;
+use Doctrine\DBAL\Types\Types;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\DefaultRuleProcessor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\ChoiceRule;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
@@ -14,7 +15,7 @@ class DefaultRuleProcessorTest extends WebTestCase
 {
     public function testDefaultRuleProcessorWithMultipleChoiceRuleOnORMQueryBuilder()
     {
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new ChoiceRule('name', ['Adam' => 'Adam'], true);
         $rule->setValue(['Adam']);
@@ -36,13 +37,13 @@ class DefaultRuleProcessorTest extends WebTestCase
             ->from('test_user');
 
         $rule = new ChoiceRule('name', ['Adam' => 'Adam'], true);
-        $rule->setType(Type::SIMPLE_ARRAY);
+        $rule->setType(Types::SIMPLE_ARRAY);
         $rule->setValue(['Adam']);
 
         $processor = new DefaultRuleProcessor();
         $processor->process($qb, $rule, 'name');
 
-        $result = $qb->execute()->fetchAll();
+        $result = $qb->executeQuery()->fetchAllAssociative();
 
         $this->assertCount(1, $result);
         $this->assertEquals('Adam', $result[0]['name']);

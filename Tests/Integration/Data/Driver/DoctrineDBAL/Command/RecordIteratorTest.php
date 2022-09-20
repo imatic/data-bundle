@@ -27,8 +27,8 @@ class RecordIteratorTest extends WebTestCase
     {
         parent::setUp();
 
-        $this->recordIterator = self::$container->get(RecordIterator::class);
-        $this->requestStack = self::$container->get('request_stack');
+        $this->recordIterator = self::getContainer()->get(RecordIterator::class);
+        $this->requestStack = self::getContainer()->get('request_stack');
     }
 
     /**

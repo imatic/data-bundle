@@ -4,13 +4,14 @@ namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Q
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 
 class UserListWithOrdersQuery implements QueryObjectInterface
 {
     public function build(EntityManager $em): QueryBuilder
     {
         $qb = (new QueryBuilder($em))
-            ->from('AppImaticDataBundle:User', 'u')
+            ->from(User::class, 'u')
             ->select('u, o')
             ->join('u.orders', 'o');
 

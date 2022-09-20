@@ -73,8 +73,8 @@ class SoftDeleteHandlerTest extends WebTestCase
             ->where('r.id IN (:ids)')
             ->andWhere('r.deleted_at IS NULL')
             ->setParameter('ids', $ids, Connection::PARAM_INT_ARRAY)
-            ->execute()
-            ->fetchAll(\PDO::FETCH_ASSOC);
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 
     /**
@@ -82,6 +82,6 @@ class SoftDeleteHandlerTest extends WebTestCase
      */
     private function getSoftDeleteHandler()
     {
-        return self::$container->get(SoftDeleteHandler::class);
+        return self::getContainer()->get(SoftDeleteHandler::class);
     }
 }

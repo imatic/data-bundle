@@ -91,10 +91,10 @@ class Schema
             return null;
         }
 
-        $sql = $this->getSchemaManager()->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
+        $sql = $this->connection->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
         $statement = $this->connection->executeQuery($sql);
 
-        return $statement->fetchColumn();
+        return $statement->fetchOne();
     }
 
     /**
@@ -112,7 +112,7 @@ class Schema
         $pkColumns = $table->getPrimaryKey()->getColumns();
 
         if (\count($pkColumns) !== 1) {
-            return;
+            return null;
         }
 
         $tableSequenceName = \sprintf('%s_%s_seq', $table->getName(), $pkColumns[0]);
@@ -122,6 +122,8 @@ class Schema
                 return $sequence;
             }
         }
+
+        return null;
     }
 
     /**
@@ -149,7 +151,7 @@ class Schema
     private function getSchemaManager()
     {
         if (null === $this->schemaManager) {
-            $this->schemaManager = $this->connection->getSchemaManager();
+            $this->schemaManager = $this->connection->createSchemaManager();
         }
 
         return $this->schemaManager;

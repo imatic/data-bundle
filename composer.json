@@ -16,10 +16,10 @@
         }
     ],
     "require": {
-        "php": "^7.1 || ^8.0",
+        "php": "^7.4 || ^8.0",
+        "doctrine/dbal": "^3.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "doctrine/dbal": "^2.13.4",
-        "symfony/framework-bundle": "^4.4|^5.0"
+        "symfony/framework-bundle": "^4.4|^5.4"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

@@ -167,6 +167,6 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
      */
     private function getDisplayCriteriaQueryBuilder()
     {
-        return self::$container->get(DisplayCriteriaQueryBuilderInterface::class);
+        return self::getContainer()->get(DisplayCriteriaQueryBuilderInterface::class);
     }
 }

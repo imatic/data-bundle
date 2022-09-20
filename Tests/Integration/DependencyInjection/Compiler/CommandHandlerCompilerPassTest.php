@@ -10,7 +10,7 @@ class CommandHandlerCompilerPassTest extends WebTestCase
 {
     public function testHandlersAreRegistered()
     {
-        $repository = self::$container->get(HandlerRepositoryInterface::class);
+        $repository = self::getContainer()->get(HandlerRepositoryInterface::class);
         $handler = $repository->getHandler(new Command(UserDeactivateHandler::class));
 
         $this->assertEquals(UserDeactivateHandler::class, \get_class($handler));

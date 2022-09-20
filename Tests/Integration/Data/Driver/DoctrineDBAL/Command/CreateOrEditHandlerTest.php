@@ -66,7 +66,7 @@ class CreateOrEditHandlerTest extends WebTestCase
      */
     private function getCommandExecutor()
     {
-        return self::$container->get(CommandExecutorInterface::class);
+        return self::getContainer()->get(CommandExecutorInterface::class);
     }
 
     /**
@@ -76,6 +76,6 @@ class CreateOrEditHandlerTest extends WebTestCase
     {
         $this->getEntityManager()->clear();
 
-        return $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->find($id);
+        return $this->getEntityManager()->getRepository(User::class)->find($id);
     }
 }

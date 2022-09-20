@@ -3,6 +3,7 @@ namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineORM\Rul
 
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\NotBetweenOperatorProcessor;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\DateRangeRule;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
 
 /**
@@ -12,7 +13,7 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
 {
     public function testProcessShouldReturnQbWhichReturnsResultsNotBetweenValue()
     {
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new DateRangeRule('birthDate');
         $rule->setValue([
@@ -31,7 +32,7 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
 
     public function testProcessShouldReturnQbWhichReturnsResultsToValueIfEndIsNotSpecified()
     {
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new DateRangeRule('birthDate');
         $rule->setValue([
@@ -50,7 +51,7 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
 
     public function testProcessShouldReturnQbWhichReturnsResultsFromValueIfStartIsNotSpecified()
     {
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new DateRangeRule('birthDate');
         $rule->setValue([
@@ -69,7 +70,7 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
 
     public function testProcessShouldReturnQbWhichReturnsResultsNotBetweenValueIncludingStart()
     {
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new DateRangeRule('birthDate');
         $rule->setValue([
@@ -88,7 +89,7 @@ class NotBetweenOperatorProcessorTest extends WebTestCase
 
     public function testProcessShouldReturnQbWhichReturnsResultsNotBetweenValueIncludingEnd()
     {
-        $qb = $this->getEntityManager()->getRepository('AppImaticDataBundle:User')->createQueryBuilder('u');
+        $qb = $this->getEntityManager()->getRepository(User::class)->createQueryBuilder('u');
 
         $rule = new DateRangeRule('birthDate');
         $rule->setValue([

@@ -33,7 +33,7 @@ class QueryExecutorTest extends WebTestCase
 
     public function testCountShouldReturnCorrectNumberOfRowsWithGroupByClause()
     {
-        $result = (new UserListWithOrderNumbersQuery())->build($this->getConnection())->execute()->fetchAll();
+        $result = (new UserListWithOrderNumbersQuery())->build($this->getConnection())->executeQuery()->fetchAllAssociative();
 
         // guard
         $this->assertGreaterThan(1, $result);
@@ -270,7 +270,7 @@ class QueryExecutorTest extends WebTestCase
      */
     private function getConnection()
     {
-        return self::$container->get('doctrine.dbal.default_connection');
+        return self::getContainer()->get('doctrine.dbal.default_connection');
     }
 
     /**
@@ -278,6 +278,6 @@ class QueryExecutorTest extends WebTestCase
      */
     public function getQueryExecutor()
     {
-        return self::$container->get(QueryExecutor::class);
+        return self::getContainer()->get(QueryExecutor::class);
     }
 }

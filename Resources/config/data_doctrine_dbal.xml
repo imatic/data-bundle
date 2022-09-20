@@ -16,7 +16,6 @@
 
         <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory">
             <argument type="service" id="Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate" />
-            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizer"/>
             <argument type="service" id="service_container" />
         </service>
 
@@ -73,16 +72,5 @@
             <tag name="imatic_data.handler" />
             <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor" />
         </service>
-
-        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\DeprecatedResultNormalizer">
-            <argument type="service" id="database_connection" />
-            <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema" />
-        </service>
-
-        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerImpl">
-            <argument type="service" id="database_connection" />
-        </service>
-        
-        <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizer" alias="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerImpl"/>
     </services>
 </container>

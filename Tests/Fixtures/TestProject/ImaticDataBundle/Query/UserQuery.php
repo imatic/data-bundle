@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 
 class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterface
 {
@@ -24,7 +25,7 @@ class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterfac
     public function build(EntityManager $em): QueryBuilder
     {
         return (new QueryBuilder($em))
-            ->from('AppImaticDataBundle:User', 'u')
+            ->from(User::class, 'u')
             ->select('u')
             ->where('u = :id')
             ->setParameter(':id', $this->id);

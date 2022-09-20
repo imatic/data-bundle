@@ -2,9 +2,8 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\PDOStatement;
+use Doctrine\DBAL\Result;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface as DoctrineDBALQueryObjectInterface;
-use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizer;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
@@ -26,14 +25,10 @@ class QueryExecutor implements QueryExecutorInterface
     /** @var DisplayCriteriaQueryBuilderDelegate */
     private $displayCriteriaQueryBuilder;
 
-    /** @var ResultNormalizer */
-    private $resultNormalizer;
-
-    public function __construct(Connection $connection, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder, ResultNormalizer $resultNormalizer)
+    public function __construct(Connection $connection, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
     {
         $this->connection = $connection;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
-        $this->resultNormalizer = $resultNormalizer;
     }
 
     public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -43,6 +38,7 @@ class QueryExecutor implements QueryExecutorInterface
         }
 
         $qb = $queryObject->build($this->connection);
+
         if ($displayCriteria) {
             $this->displayCriteriaQueryBuilder->applyFilter($qb, $displayCriteria->getFilter(), $queryObject);
         }
@@ -57,12 +53,7 @@ class QueryExecutor implements QueryExecutorInterface
 
         $qb->resetQueryPart('orderBy');
 
-        /* @var $statement PDOStatement */
-        $statement = $qb
-            ->select(\sprintf('COUNT(%s) count', $count))
-            ->execute();
-
-        return $statement->fetch()['count'];
+        return $qb->select(\sprintf('COUNT(%s)', $count))->executeQuery()->fetchOne();
     }
 
     public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -72,17 +63,18 @@ class QueryExecutor implements QueryExecutorInterface
         }
 
         $qb = $queryObject->build($this->connection);
+
         if ($displayCriteria) {
             $this->displayCriteriaQueryBuilder->apply($qb, $queryObject, $displayCriteria);
         }
 
-        $statement = $qb->execute();
+        $result = $qb->execute();
 
-        if (\is_scalar($statement)) {
-            return $statement;
+        if (\is_scalar($result)) {
+            return $result;
         }
 
-        return $this->getResult($queryObject, $statement->getIterator());
+        return $this->getResult($queryObject, $result);
     }
 
     public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -109,14 +101,11 @@ class QueryExecutor implements QueryExecutorInterface
     }
 
     /**
-     * @param BaseQueryObjectInterface $queryObject
-     * @param PDOStatement             $statement
-     *
      * @return mixed
      */
-    private function getResult(BaseQueryObjectInterface $queryObject, PDOStatement $statement)
+    private function getResult(BaseQueryObjectInterface $queryObject, Result $result)
     {
-        $result = $this->resultNormalizer->normalize($statement);
+        $result = $result->fetchAllAssociative();
 
         if ($queryObject instanceof SingleScalarResultQueryObjectInterface) {
             return $this->getSingleScalarResult($result);

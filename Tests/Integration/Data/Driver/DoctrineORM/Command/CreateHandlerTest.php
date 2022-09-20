@@ -59,6 +59,6 @@ class CreateHandlerTest extends WebTestCase
      */
     private function getCreateHandler()
     {
-        return self::$container->get(CreateHandler::class);
+        return self::getContainer()->get(CreateHandler::class);
     }
 }

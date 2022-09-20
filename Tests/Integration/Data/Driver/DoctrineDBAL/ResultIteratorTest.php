@@ -20,7 +20,7 @@ class ResultIteratorTest extends WebTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->resultIteratorFactory = self::$container->get(ResultIteratorFactory::class);
+        $this->resultIteratorFactory = self::getContainer()->get(ResultIteratorFactory::class);
     }
 
     public function testResultIteratorShouldReturnAllResults()

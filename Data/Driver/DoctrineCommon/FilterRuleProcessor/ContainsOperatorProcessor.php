@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
+use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
 use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
@@ -79,7 +80,6 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
 
     private function hasPostgresqlConnection($qb)
     {
-        $connection = null;
         if ($qb instanceof DBALQueryBuilder) {
             $connection = $qb->getConnection();
         } elseif ($qb instanceof ORMQueryBuilder) {
@@ -88,6 +88,6 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
             throw new \RuntimeException('Cannot retrieve db connection.');
         }
 
-        return $connection->getDatabasePlatform()->getName() === 'postgresql';
+        return $connection->getDatabasePlatform() instanceof PostgreSQLPlatform;
     }
 }

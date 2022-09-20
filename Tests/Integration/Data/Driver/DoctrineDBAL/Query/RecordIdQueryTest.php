@@ -35,6 +35,6 @@ class RecordIdQueryTest extends WebTestCase
      */
     private function getQueryExecutor()
     {
-        return self::$container->get(QueryExecutorInterface::class);
+        return self::getContainer()->get(QueryExecutorInterface::class);
     }
 }

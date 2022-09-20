@@ -33,7 +33,7 @@ class CommandExecutorTest extends WebTestCase
      */
     public function getUserRepository()
     {
-        return $this->getEntityManager()->getRepository('AppImaticDataBundle:User');
+        return $this->getEntityManager()->getRepository(User::class);
     }
 
     /**
@@ -41,6 +41,6 @@ class CommandExecutorTest extends WebTestCase
      */
     private function getCommandExecutor()
     {
-        return self::$container->get(CommandExecutor::class);
+        return self::getContainer()->get(CommandExecutor::class);
     }
 }
