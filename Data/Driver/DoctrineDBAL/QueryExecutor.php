@@ -10,6 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
 use Imatic\Bundle\DataBundle\Data\Query\NoResultException;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
@@ -68,13 +69,11 @@ class QueryExecutor implements QueryExecutorInterface
             $this->displayCriteriaQueryBuilder->apply($qb, $queryObject, $displayCriteria);
         }
 
-        $result = $qb->execute();
-
-        if (\is_scalar($result)) {
-            return $result;
+        if ($queryObject instanceof ResultQueryObjectInterface) {
+            return $this->getResult($queryObject, $qb->executeQuery());
         }
 
-        return $this->getResult($queryObject, $result);
+        return $qb->executeStatement();
     }
 
     public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)

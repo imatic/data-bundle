@@ -3,7 +3,6 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator as ImaticPaginator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface as DoctrineORMQueryObjectInterface;
@@ -11,6 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\ScalarResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleScalarResultQueryObjectInterface;
@@ -72,7 +72,7 @@ class QueryExecutor implements QueryExecutorInterface
             $this->displayCriteriaQueryBuilder->apply($qb, $queryObject, $displayCriteria);
         }
 
-        return $this->getResult($queryObject, $qb->getQuery(), QueryBuilder::SELECT === $qb->getType());
+        return $this->getResult($queryObject, $qb->getQuery());
     }
 
     public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -101,11 +101,10 @@ class QueryExecutor implements QueryExecutorInterface
     /**
      * @param BaseQueryObjectInterface $queryObject
      * @param Query                    $query
-     * @param bool                     $isSelect
      *
      * @return mixed
      */
-    private function getResult(BaseQueryObjectInterface $queryObject, Query $query, $isSelect)
+    private function getResult(BaseQueryObjectInterface $queryObject, Query $query)
     {
         if ($queryObject instanceof SingleScalarResultQueryObjectInterface) {
             return $query->getSingleScalarResult();
@@ -113,9 +112,10 @@ class QueryExecutor implements QueryExecutorInterface
             return $query->getScalarResult();
         } elseif ($queryObject instanceof SingleResultQueryObjectInterface) {
             return $query->getOneOrNullResult();
-        } elseif ($isSelect && (null !== $query->getMaxResults() || null !== $query->getFirstResult())) {
+        } elseif ($queryObject instanceof ResultQueryObjectInterface && (null !== $query->getMaxResults() || null !== $query->getFirstResult())) {
             return \iterator_to_array($this->createPaginator($queryObject, $query));
         }
+
         return $query->getResult();
     }
 }

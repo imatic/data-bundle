@@ -4,11 +4,12 @@ namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Q
 use Doctrine\DBAL\Connection;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class UserListWithOrderNumbersQuery implements QueryObjectInterface, SortableQueryObjectInterface
+class UserListWithOrderNumbersQuery implements QueryObjectInterface, ResultQueryObjectInterface, SortableQueryObjectInterface
 {
     public function build(Connection $connection)
     {
