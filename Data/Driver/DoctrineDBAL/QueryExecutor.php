@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Result;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface as DoctrineDBALQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\NonUniqueResultException;
@@ -20,16 +21,15 @@ use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
  */
 class QueryExecutor implements QueryExecutorInterface
 {
-    /** @var Connection */
-    private $connection;
+    private Connection $connection;
+    private DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder;
+    private ResultNormalizerInterface $resultNormalizer;
 
-    /** @var DisplayCriteriaQueryBuilderDelegate */
-    private $displayCriteriaQueryBuilder;
-
-    public function __construct(Connection $connection, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
+    public function __construct(Connection $connection, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder, ResultNormalizerInterface $resultNormalizer)
     {
         $this->connection = $connection;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
+        $this->resultNormalizer = $resultNormalizer;
     }
 
     public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
@@ -104,7 +104,7 @@ class QueryExecutor implements QueryExecutorInterface
      */
     private function getResult(BaseQueryObjectInterface $queryObject, Result $result)
     {
-        $result = $result->fetchAllAssociative();
+        $result = $this->resultNormalizer->normalize($queryObject, $result);
 
         if ($queryObject instanceof SingleScalarResultQueryObjectInterface) {
             return $this->getSingleScalarResult($result);

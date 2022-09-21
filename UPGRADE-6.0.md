@@ -27,3 +27,24 @@ After:
        }
    }
    ```
+
+ResultNormalizer
+----------------
+
+The previous versions tried to automatically normalize DBAL query result e.g. convert database datetime value to PHP 
+DateTime object. This is no longer available, use `Imatic\Bundle\DataBundle\Data\Query\NormalizeResultQueryObjectInterface`
+to define normalized values and their [types](https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/types.html).
+
+   ```php
+   use use Doctrine\DBAL\Types\Types;
+
+   class UserQuery implements QueryObjectInterface, NormalizeResultQueryObjectInterface
+   {
+       public function getNormalizerMap(): array
+       {
+           return [
+               'birth_date' => Types::DATETIME_MUTABLE,
+           ];
+       }
+   }
+   ```

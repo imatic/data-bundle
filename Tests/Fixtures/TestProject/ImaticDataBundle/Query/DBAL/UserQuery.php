@@ -2,17 +2,19 @@
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Types\Types;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\NormalizeResultQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterface
+class UserQuery implements QueryObjectInterface, NormalizeResultQueryObjectInterface, SingleResultQueryObjectInterface
 {
-    private $id;
+    private int $id;
 
-    public function __construct($id)
+    public function __construct(int $id)
     {
         $this->id = $id;
     }
@@ -22,6 +24,14 @@ class UserQuery implements QueryObjectInterface, SingleResultQueryObjectInterfac
         return (new UserListQuery())
             ->build($connection)
             ->andWhere('u.id = :id')
-            ->setParameter('id', $this->id);
+            ->setParameter('id', $this->id)
+        ;
+    }
+
+    public function getNormalizerMap(): array
+    {
+        return [
+            'birth_date' => Types::DATETIME_MUTABLE,
+        ];
     }
 }

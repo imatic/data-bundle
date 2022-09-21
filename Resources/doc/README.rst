@@ -33,6 +33,7 @@ Driver specific features
 DoctrineDBAL
 ------------
 
+- `ResultNormalizer <Dbal/ResultNormalizer.rst>`__
 - `ResultIteratorFactory <Dbal/ResultIteratorFactory.rst>`__
 - `Utils <Dbal/Utils.rst>`_
 - `Types <Dbal/Types.rst>`_

@@ -265,6 +265,16 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals('Adam', $adamUsername);
     }
 
+    public function testQueryExecutorShouldReturnNormalizeResultWhenObjectImplementsNormalizeResultQueryObjectInterface()
+    {
+        $user = $this->getQueryExecutor()->execute(new UserQuery(1));
+
+        $this->assertIsInt($user['id']);
+        $this->assertIsString($user['name']);
+        $this->assertIsBool($user['activated']);
+        $this->assertInstanceOf(\DateTime::class, $user['birth_date']);
+    }
+
     /**
      * @return Connection
      */
