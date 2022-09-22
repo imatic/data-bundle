@@ -1,7 +1,7 @@
 Introduction
 ============
 
-- `This repo's README <../../README.rst>`_
+- `This repo's README <../README.rst>`_
 
 Accessing data
 ==============
