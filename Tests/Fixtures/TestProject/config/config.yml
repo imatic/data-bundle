@@ -1,7 +1,7 @@
 imports:
-    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine.xml' }
-    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine_orm.xml' }
-    - { resource: '@ImaticDataBundle/Resources/config/data_doctrine_dbal.xml' }
+    - { resource: '@ImaticDataBundle/config/data_doctrine.xml' }
+    - { resource: '@ImaticDataBundle/config/data_doctrine_orm.xml' }
+    - { resource: '@ImaticDataBundle/config/data_doctrine_dbal.xml' }
 
 parameters:
     env(DATABASE_URL): ''

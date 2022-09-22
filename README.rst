@@ -67,7 +67,7 @@ Variable ``$activeUsers`` now contains objects of active users.
 
 
 To learn more about query objects (how to do filtering, sorting, pagination, etc.) see
-`query object documentation <Resources/doc/AccessingData/QueryObjects.rst>`_.
+`query object documentation <Resources/docs/AccessingData/QueryObjects.rst>`_.
 
 Executing operations
 --------------------
@@ -133,10 +133,10 @@ options passed to the handler).
    $commandExecutor->execute(new Command('export_active_users', ['format' => 'json']));
 
 
-To learn more about commands, see `command documentation <Resources/doc/Operations/Commands.rst>`_.
+To learn more about commands, see `command documentation <Resources/docs/Operations/Commands.rst>`_.
 
 Further reading
 ---------------
 
-Visit our `documentation <Resources/doc/README.rst>`_ to learn about all features of this bundle.
+Visit our `documentation <Resources/docs/README.rst>`_ to learn about all features of this bundle.
 

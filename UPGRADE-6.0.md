@@ -1,6 +1,11 @@
 UPGRADE FROM 5.x to 6.0
 =======================
 
+Configuration
+-------------
+
+* default configuration directory changed from `Resources/config/` to `config/`.
+
 QueryObject
 -----------
 
