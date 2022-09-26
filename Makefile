@@ -8,7 +8,7 @@ phpcs:
 	./vendor/bin/php-cs-fixer fix --dry-run
 
 .PHONY: phpstan
-phpunit:
+phpstan:
 	./vendor/bin/phpstan
 
 .PHONY: phpunit
