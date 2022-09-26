@@ -13,20 +13,9 @@ use LogicException;
  */
 class ResultIteratorFactory
 {
-    /**
-     * @var ArrayDisplayCriteriaFactory
-     */
-    protected $displayCriteriaFactory;
-
-    /**
-     * @var FilterFactory
-     */
-    protected $filterFactory;
-
-    /**
-     * @var QueryExecutorInterface
-     */
-    protected $queryExecutor;
+    protected ArrayDisplayCriteriaFactory $displayCriteriaFactory;
+    protected FilterFactory $filterFactory;
+    protected QueryExecutorInterface $queryExecutor;
 
     public function __construct(
         ArrayDisplayCriteriaFactory $displayCriteriaFactory,
@@ -38,7 +27,10 @@ class ResultIteratorFactory
         $this->queryExecutor = $queryExecutor;
     }
 
-    public function create(QueryObjectInterface $queryObject, array $criteria, FilterInterface $filter = null)
+    /**
+     * @param mixed[] $criteria
+     */
+    public function create(QueryObjectInterface $queryObject, array $criteria, FilterInterface $filter = null): ResultIterator
     {
         if (!isset($criteria['filter_type'])) {
             throw new LogicException('Filter type has to be specified!');
@@ -54,11 +46,9 @@ class ResultIteratorFactory
     }
 
     /**
-     * @param array $criteria
-     *
-     * @return FilterInterface
+     * @param mixed[] $criteria
      */
-    public function createFilter(array $criteria)
+    public function createFilter(array $criteria): FilterInterface
     {
         return $this->filterFactory->create($criteria['filter_type']);
     }

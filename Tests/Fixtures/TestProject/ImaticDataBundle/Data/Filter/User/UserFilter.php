@@ -6,7 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
 
 class UserFilter extends Filter
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->add(new FilterRule\TextRule('name'))
@@ -14,6 +14,7 @@ class UserFilter extends Filter
             ->add(new FilterRule\DateRangeRule('birthDate'))
             ->add(new FilterRule\DateRangeRule('favoriteDay'))
             ->add(new FilterRule\TimeRangeRule('favoriteTime'))
-            ->add(new FilterRule\ChoiceRule('hairs', ['long', 'short']));
+            ->add(new FilterRule\ChoiceRule('hairs', ['long', 'short']))
+        ;
     }
 }

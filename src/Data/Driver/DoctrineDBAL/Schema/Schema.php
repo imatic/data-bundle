@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\DBAL\Schema\Table;
@@ -11,14 +12,13 @@ use Doctrine\DBAL\Schema\Table;
  */
 class Schema
 {
-    /** @var AbstractSchemaManager|null */
-    private $schemaManager;
+    private ?AbstractSchemaManager $schemaManager = null;
+    private Connection $connection;
 
-    /** @var Connection */
-    private $connection;
-
-    /** @var array */
-    private $overwrittenColumnTypes = [];
+    /**
+     * @var mixed[]
+     */
+    private array $overwrittenColumnTypes = [];
 
     public function __construct(Connection $connection)
     {
@@ -26,12 +26,11 @@ class Schema
     }
 
     /**
-     * @param string $table
-     * @param string $data
+     * @param mixed[] $data
      *
-     * @return QueryData
+     * @throws Exception
      */
-    public function getQueryData($table, array $data)
+    public function getQueryData(string $table, array $data): QueryData
     {
         $columns = $this->getSchemaManager()->listTableColumns($table);
 
@@ -63,11 +62,11 @@ class Schema
     }
 
     /**
-     * @param string $table
+     * @return mixed[] Associative array with columns as keys and type as it's values
      *
-     * @return array Associative array with columns as keys and type as it's values
+     * @throws \Exception
      */
-    public function getColumnTypes($table)
+    public function getColumnTypes(string $table): array
     {
         $columns = $this->getSchemaManager()->listTableColumns($table);
 
@@ -83,7 +82,10 @@ class Schema
         return \array_merge($columnTypes, $this->overwrittenColumnTypes[$table]);
     }
 
-    public function getNextIdValue($tableName)
+    /**
+     * @throws Exception
+     */
+    public function getNextIdValue(string $tableName): ?int
     {
         $sequence = $this->findAutoincrementSequence($tableName);
 
@@ -94,15 +96,13 @@ class Schema
         $sql = $this->connection->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
         $statement = $this->connection->executeQuery($sql);
 
-        return $statement->fetchOne();
+        return (int) $statement->fetchOne();
     }
 
     /**
-     * @param string $tableName
-     *
-     * @return Sequence|null
+     * @throws Exception
      */
-    private function findAutoincrementSequence($tableName)
+    private function findAutoincrementSequence(string $tableName): ?Sequence
     {
         if (!$this->connection->getDatabasePlatform()->supportsSequences()) {
             return null;
@@ -127,13 +127,10 @@ class Schema
     }
 
     /**
-     * @param string $tableName
-     *
-     * @return Table
-     *
+     * @throws Exception
      * @throws \InvalidArgumentException
      */
-    private function findTableByName($tableName)
+    private function findTableByName(string $tableName): Table
     {
         $tables = $this->getSchemaManager()->listTables();
         foreach ($tables as $table) {
@@ -145,10 +142,7 @@ class Schema
         throw new \InvalidArgumentException(\sprintf('Table with name "%s" does not exists.', $tableName));
     }
 
-    /**
-     * @return AbstractSchemaManager
-     */
-    private function getSchemaManager()
+    private function getSchemaManager(): AbstractSchemaManager
     {
         if (null === $this->schemaManager) {
             $this->schemaManager = $this->connection->createSchemaManager();
@@ -157,7 +151,10 @@ class Schema
         return $this->schemaManager;
     }
 
-    public function overwriteColumnTypes(array $overwrittenColumnTypes = [])
+    /**
+     * @param mixed[] $overwrittenColumnTypes
+     */
+    public function overwriteColumnTypes(array $overwrittenColumnTypes = []): void
     {
         $this->overwrittenColumnTypes = $overwrittenColumnTypes;
     }

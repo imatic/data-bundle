@@ -6,23 +6,12 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
  */
 interface DisplayCriteriaQueryBuilderInterface
 {
-    /**
-     * @param object $qb
-     *
-     * @return bool
-     */
-    public function supports($qb);
+    public function supports(object $qb): bool;
+
+    public function applyPager(object $qb, PagerInterface $pager): void;
 
     /**
-     * @param object         $qb
-     * @param PagerInterface $pager
+     * @param array<string,string> $sorterMap
      */
-    public function applyPager($qb, PagerInterface $pager);
-
-    /**
-     * @param object          $qb
-     * @param SorterInterface $sorter
-     * @param array           $sorterMap
-     */
-    public function applySorter($qb, SorterInterface $sorter, array $sorterMap);
+    public function applySorter(object $qb, SorterInterface $sorter, array $sorterMap): void;
 }

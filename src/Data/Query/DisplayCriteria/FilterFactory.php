@@ -6,11 +6,12 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class FilterFactory implements ServiceSubscriberInterface
 {
-    /** @var ContainerInterface */
-    protected $locator;
+    protected ContainerInterface $locator;
 
-    /** @var string[] */
-    protected $filters;
+    /**
+     * @var string[]
+     */
+    protected array $filters;
 
     /**
      * @param ContainerInterface $locator
@@ -21,19 +22,15 @@ class FilterFactory implements ServiceSubscriberInterface
         $this->filters = [];
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [];
     }
 
     /**
-     * @param string $name
-     *
-     * @return object
-     *
-     * @throws \Exception
+     * @throws \Throwable
      */
-    public function create(string $name)
+    public function create(string $name): FilterInterface
     {
         if ($this->locator->has($name)) {
             return $this->locator->get($name);

@@ -6,11 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UserFilterType extends FilterType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', 'imatic_data_text_filter', ['required' => false, 'mapped' => false]);
@@ -18,7 +14,7 @@ class UserFilterType extends FilterType
         parent::buildForm($builder, $options);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'user_filter';
     }

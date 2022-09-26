@@ -4,62 +4,48 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 use Exception;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\ArrayRule;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
-use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SelectableQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\ResultIterator;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class RecordIterator
 {
-    /**
-     * @var QueryExecutorInterface
-     */
-    protected $queryExecutor;
-
-    /**
-     * @var DisplayCriteriaFactory
-     */
-    protected $displayCriteriaFactory;
-
-    /**
-     * @var FilterFactory
-     */
-    protected $filterFactory;
-
-    /**
-     * @var ResultIteratorFactory
-     */
-    protected $resultIteratorFactory;
+    protected QueryExecutor $queryExecutor;
+    protected ResultIteratorFactory $resultIteratorFactory;
 
     public function __construct(
-        QueryExecutorInterface $queryExecutor,
+        QueryExecutor $queryExecutor,
         ResultIteratorFactory $resultIteratorFactory
     ) {
         $this->queryExecutor = $queryExecutor;
         $this->resultIteratorFactory = $resultIteratorFactory;
     }
 
-    public function each(RecordIteratorArgs $recordIteratorArgs)
+    public function each(RecordIteratorArgs $recordIteratorArgs): CommandResult
     {
         $records = $this->getRecords($recordIteratorArgs->getCommand(), $recordIteratorArgs->getQueryObject());
 
         return $this->passValues($records, $recordIteratorArgs->getCallback());
     }
 
-    public function eachIdentifier(RecordIteratorArgs $recordIteratorArgs)
+    public function eachIdentifier(RecordIteratorArgs $recordIteratorArgs): CommandResult
     {
         $ids = $this->getRecordIds($recordIteratorArgs->getCommand(), $recordIteratorArgs->getQueryObject());
 
         return $this->passValues($ids, $recordIteratorArgs->getCallback());
     }
 
-    protected function passValues($values, callable $callback)
+    /**
+     * @param mixed $values
+     */
+    protected function passValues($values, callable $callback): CommandResult
     {
         try {
             $this->queryExecutor->beginTransaction();
@@ -87,8 +73,19 @@ class RecordIterator
         return CommandResult::success('batch_success', ['%count%' => \count($values)]);
     }
 
-    protected function getRecordIds(CommandInterface $command, QueryObjectInterface $queryObject)
+    /**
+     * @return mixed[]
+     */
+    protected function getRecordIds(CommandInterface $command, QueryObjectInterface $queryObject): array
     {
+        if (!$queryObject instanceof SelectableQueryObjectInterface) {
+            throw new \InvalidArgumentException(\sprintf(
+                '%s have to be instance of "%s"',
+                \get_class($queryObject),
+                SelectableQueryObjectInterface::class
+            ));
+        }
+
         $handleAll = $command->getParameter('selectedAll');
         if (!$handleAll) {
             return $command->getParameter('selected');
@@ -104,8 +101,16 @@ class RecordIterator
         return $ids;
     }
 
-    protected function getRecords(CommandInterface $command, QueryObjectInterface $queryObject)
+    protected function getRecords(CommandInterface $command, QueryObjectInterface $queryObject): ResultIterator
     {
+        if (!$queryObject instanceof SelectableQueryObjectInterface) {
+            throw new \InvalidArgumentException(\sprintf(
+                '%s have to be instance of "%s"',
+                \get_class($queryObject),
+                SelectableQueryObjectInterface::class
+            ));
+        }
+
         $handleAll = $command->getParameter('selectedAll');
         $criteria = \json_decode($command->getParameter('query'), true);
         $filter = null;

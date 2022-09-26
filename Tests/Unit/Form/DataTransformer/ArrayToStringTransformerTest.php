@@ -15,7 +15,7 @@ class ArrayToStringTransformerTest extends TestCase
         $this->assertEquals($expectedValue, $transformer->reverseTransform($value));
     }
 
-    public function reverseTransformDataProvider()
+    public function reverseTransformDataProvider(): array
     {
         return [
             [
@@ -54,7 +54,7 @@ class ArrayToStringTransformerTest extends TestCase
         $this->assertEquals($expectedValue, $transformer->transform($value));
     }
 
-    public function transformDataProvider()
+    public function transformDataProvider(): array
     {
         return [
             [

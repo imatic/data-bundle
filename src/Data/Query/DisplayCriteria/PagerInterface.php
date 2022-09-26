@@ -3,132 +3,75 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 interface PagerInterface
 {
-    public function disable();
+    public function disable(): void;
 
-    public function enable();
+    public function enable(): void;
 
-    /**
-     * @return bool
-     */
-    public function isEnabled();
+    public function isEnabled(): bool;
 
-    /**
-     * @return int
-     */
-    public function getLimit();
+    public function getLimit(): int;
 
-    /**
-     * @return int
-     */
-    public function getOffset();
+    public function getOffset(): int;
 
-    /**
-     * @return int
-     */
-    public function getPage();
+    public function getPage(): int;
 
-    /**
-     * @param int $total
-     */
-    public function setTotal($total);
+    public function setTotal(int $total): void;
 
-    /**
-     * @return int
-     */
-    public function getTotal();
+    public function getTotal(): int;
 
     /**
      * Returns first indice.
-     *
-     * @return int
      */
-    public function getFirstIndice();
+    public function getFirstIndice(): int;
 
     /**
      * Returns last indice.
-     *
-     * @return int
      */
-    public function getLastIndice();
+    public function getLastIndice(): int;
 
     /**
      * Returns first page.
-     *
-     * @return int
      */
-    public function getFirstPage();
+    public function getFirstPage(): int;
 
     /**
      * Returns last page.
-     *
-     * @return int
      */
-    public function getLastPage();
+    public function getLastPage(): int;
 
-    /**
-     * @return bool
-     */
-    public function isFirstPage();
+    public function isFirstPage(): bool;
 
-    /**
-     * @return bool
-     */
-    public function isLastPage();
+    public function isLastPage(): bool;
 
-    /**
-     * @param $page
-     *
-     * @return bool
-     */
-    public function isCurrentPage($page);
+    public function isCurrentPage(int $page): bool;
 
     /**
      * Returns next page.
-     *
-     * @return int
      */
-    public function getNextPage();
+    public function getNextPage(): int;
 
     /**
      * Returns previous page.
-     *
-     * @return int
      */
-    public function getPreviousPage();
+    public function getPreviousPage(): int;
 
     /**
      * Returns true if total results more than page limit.
-     *
-     * @return bool
      */
-    public function haveToPaginate();
+    public function haveToPaginate(): bool;
 
     /**
      * Return pager navigation links.
      *
-     * @param int $nb
-     *
-     * @return array
+     * @return array<int,int>
      */
-    public function getLinks($nb = 5);
+    public function getLinks(int $nb = 5): array;
 
-    /**
-     * @param int $defaultLimit
-     */
-    public function setDefaultLimit($defaultLimit);
+    public function setDefaultLimit(int $defaultLimit): void;
 
-    /**
-     * @return int
-     */
-    public function getDefaultLimit();
+    public function getDefaultLimit(): int;
 
-    /**
-     * @param int $maxLimit
-     */
-    public function setMaxLimit($maxLimit);
+    public function setMaxLimit(int $maxLimit): void;
 
-    /**
-     * @return int
-     */
-    public function getMaxLimit();
+    public function getMaxLimit(): int;
 }

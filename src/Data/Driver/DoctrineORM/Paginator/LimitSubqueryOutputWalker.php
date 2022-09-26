@@ -7,7 +7,10 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\Impl\AstUtil;
 
 class LimitSubqueryOutputWalker extends DoctrineWalker
 {
-    private $queryComponents;
+    /**
+     * @var mixed[]
+     */
+    private array $queryComponents;
 
     public function __construct($query, $parserResult, array $queryComponents)
     {
@@ -15,10 +18,10 @@ class LimitSubqueryOutputWalker extends DoctrineWalker
         parent::__construct($query, $parserResult, $queryComponents);
     }
 
-    public function walkSelectStatementWithRowNumber(SelectStatement $ast)
+    public function walkSelectStatementWithRowNumber(SelectStatement $AST): string
     {
-        AstUtil::trim($ast, $this->queryComponents);
+        AstUtil::trim($AST, $this->queryComponents);
 
-        return parent::walkSelectStatementWithRowNumber($ast);
+        return parent::walkSelectStatementWithRowNumber($AST);
     }
 }

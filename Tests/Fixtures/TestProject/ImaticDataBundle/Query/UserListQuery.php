@@ -19,10 +19,7 @@ class UserListQuery implements QueryObjectInterface, ResultQueryObjectInterface,
             ->select('u');
     }
 
-    /**
-     * @return array
-     */
-    public function getFilterMap()
+    public function getFilterMap(): array
     {
         return [
             'user_name' => 'u.name',
@@ -34,10 +31,7 @@ class UserListQuery implements QueryObjectInterface, ResultQueryObjectInterface,
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getSorterMap()
+    public function getSorterMap(): array
     {
         return [
             'user_name' => 'u.name',
@@ -45,15 +39,12 @@ class UserListQuery implements QueryObjectInterface, ResultQueryObjectInterface,
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getDefaultSort()
+    public function getDefaultSort(): array
     {
         return [];
     }
 
-    public function getIdentifierFilterKey()
+    public function getIdentifierFilterKey(): string
     {
         return 'id';
     }

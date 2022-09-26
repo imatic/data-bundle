@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class FilterRuleProcessorPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $filterRuleProcessorDef = $container->findDefinition(FilterRuleProcessorDelegate::class);
         $filterRuleProcessorServices = $container->findTaggedServiceIds('imatic_data.filter_rule_processor');
@@ -18,9 +18,7 @@ class FilterRuleProcessorPass implements CompilerPassInterface
             foreach ($tags as $tag) {
                 $filterRuleProcessors[] = [
                     'id' => $id,
-                    'priority' => isset($tag['priority'])
-                        ? $tag['priority']
-                        : 0,
+                    'priority' => $tag['priority'] ?? 0,
                 ];
             }
         }

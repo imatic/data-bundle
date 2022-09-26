@@ -6,25 +6,10 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 
 class Driver implements DriverInterface
 {
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var ObjectManagerInterface|null
-     */
-    private $objectManager;
-
-    /**
-     * @var QueryExecutorInterface
-     */
-    private $queryExecutor;
-
-    /**
-     * @var string
-     */
-    private $queryObjectClass;
+    private string $name;
+    private string $queryObjectClass;
+    private QueryExecutorInterface $queryExecutor;
+    private ?ObjectManagerInterface $objectManager;
 
     public function __construct(
         string $name,
@@ -38,22 +23,22 @@ class Driver implements DriverInterface
         $this->queryObjectClass = $queryObjectClass;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getObjectManager()
+    public function getObjectManager(): ?ObjectManagerInterface
     {
         return $this->objectManager;
     }
 
-    public function getQueryExecutor()
+    public function getQueryExecutor(): QueryExecutorInterface
     {
         return $this->queryExecutor;
     }
 
-    public function getQueryObjectClass()
+    public function getQueryObjectClass(): string
     {
         return $this->queryObjectClass;
     }

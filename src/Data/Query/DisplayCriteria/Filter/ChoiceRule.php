@@ -7,35 +7,47 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ChoiceRule extends FilterRule
 {
-    protected $multiple = false;
+    protected bool $multiple = false;
 
-    protected $choices = [];
+    /**
+     * @var mixed[]
+     */
+    protected array $choices = [];
 
-    public function __construct($name, array $choices, $multiple = false, $type = null, array $options = [])
+    /**
+     * @param mixed[] $choices
+     * @param mixed[] $options
+     */
+    public function __construct(string $name, array $choices, bool $multiple = false, string $type = null, array $options = [])
     {
         parent::__construct($name, $options);
+
         $this->choices = $choices;
         $this->multiple = $multiple;
+
         if (null !== $type) {
             $this->formType = $type;
         }
     }
 
-    public function setChoices(array $choices)
+    /**
+     * @param mixed[] $choices
+     */
+    public function setChoices(array $choices): self
     {
         $this->choices = $choices;
 
         return $this;
     }
 
-    public function setMultiple($bool = true)
+    public function setMultiple(bool $bool = true): self
     {
-        $this->multiple = (bool) $bool;
+        $this->multiple = $bool;
 
         return $this;
     }
 
-    protected function getDefaultOperators()
+    protected function getDefaultOperators(): array
     {
         return [
             FilterOperatorMap::OPERATOR_IN,
@@ -43,7 +55,7 @@ class ChoiceRule extends FilterRule
         ];
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return
             \is_scalar($value)
@@ -53,12 +65,12 @@ class ChoiceRule extends FilterRule
             );
     }
 
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return ChoiceType::class;
     }
 
-    protected function getDefaultFormOptions()
+    protected function getDefaultFormOptions(): array
     {
         return [
             'choices' => &$this->choices,

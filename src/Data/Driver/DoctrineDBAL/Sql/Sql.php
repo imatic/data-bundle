@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Sql;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Platforms\SqlitePlatform;
 
 /**
@@ -9,7 +10,12 @@ use Doctrine\DBAL\Platforms\SqlitePlatform;
  */
 class Sql
 {
-    public static function concat(array $args, Connection $connection)
+    /**
+     * @param mixed[] $args
+     *
+     * @throws Exception
+     */
+    public static function concat(array $args, Connection $connection): string
     {
         switch (\get_class($connection->getDatabasePlatform())) {
             case SqlitePlatform::class:

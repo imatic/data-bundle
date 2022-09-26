@@ -3,28 +3,19 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
-use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager;
 
 class CreateHandler implements HandlerInterface
 {
-    /**
-     * @var ObjectManager
-     */
-    private $objectManager;
+    private ObjectManager $objectManager;
 
     public function __construct(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
     }
 
-    /**
-     * @param CommandInterface $command
-     *
-     * @return CommandResultInterface|bool|void
-     */
-    public function handle(CommandInterface $command)
+    public function handle(CommandInterface $command): CommandResult
     {
         $object = $command->getParameter('data');
 
@@ -37,5 +28,7 @@ class CreateHandler implements HandlerInterface
 
         $this->objectManager->persist($object);
         $this->objectManager->flush();
+
+        return CommandResult::success();
     }
 }

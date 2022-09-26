@@ -6,28 +6,16 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
  */
 class PagerFactory
 {
-    /**
-     * @var int
-     */
-    protected $defaultLimit = 100;
+    protected int $defaultLimit = 100;
 
-    /**
-     * @param int      $page
-     * @param int|null $limit
-     *
-     * @return PagerInterface
-     */
-    public function createPager($page, $limit = null)
+    public function createPager(int $page, int $limit = null): PagerInterface
     {
         $limit = $limit !== null ? $limit : $this->defaultLimit;
 
         return new Pager($page, $limit);
     }
 
-    /**
-     * @param int $defaultLimit
-     */
-    public function setDefaultLimit($defaultLimit)
+    public function setDefaultLimit(int $defaultLimit): void
     {
         $this->defaultLimit = $defaultLimit;
     }

@@ -11,17 +11,14 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
  */
 class SoftDeleteHandler implements HandlerInterface
 {
-    /**
-     * @var QueryExecutorInterface
-     */
-    private $queryExecutor;
+    private QueryExecutorInterface $queryExecutor;
 
     public function __construct(QueryExecutorInterface $queryExecutor)
     {
         $this->queryExecutor = $queryExecutor;
     }
 
-    public function handle(CommandInterface $command)
+    public function handle(CommandInterface $command): void
     {
         $table = $command->getParameter('table');
         $ids = $command->hasParameter('ids') ? $command->getParameter('ids') : [];

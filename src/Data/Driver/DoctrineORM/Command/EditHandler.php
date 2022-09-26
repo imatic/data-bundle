@@ -4,28 +4,19 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandResult;
-use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ObjectManager;
 
 class EditHandler implements HandlerInterface
 {
-    /**
-     * @var ObjectManager
-     */
-    private $objectManager;
+    private ObjectManager $objectManager;
 
     public function __construct(ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
     }
 
-    /**
-     * @param CommandInterface $command
-     *
-     * @return CommandResultInterface|bool|void
-     */
-    public function handle(CommandInterface $command)
+    public function handle(CommandInterface $command): CommandResult
     {
         $object = $command->getParameter('data');
 
@@ -38,6 +29,8 @@ class EditHandler implements HandlerInterface
 
         try {
             $this->objectManager->flush();
+
+            return CommandResult::success();
         } catch (ForeignKeyConstraintViolationException $e) {
             return CommandResult::error('constraint_violation');
         }

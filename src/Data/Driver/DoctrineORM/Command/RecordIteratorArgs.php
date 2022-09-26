@@ -2,9 +2,9 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command;
 
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
+use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SelectableQueryObjectInterface;
-use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
 use InvalidArgumentException;
 
 /**
@@ -12,25 +12,14 @@ use InvalidArgumentException;
  */
 class RecordIteratorArgs
 {
-    /**
-     * @var CommandInterface
-     */
-    protected $command;
-
-    /**
-     * @var QueryObjectInterface
-     */
-    protected $queryObject;
+    protected CommandInterface $command;
+    protected QueryObjectInterface $queryObject;
+    protected int $pageLimit = 100;
 
     /**
      * @var callable
      */
     protected $callback;
-
-    /**
-     * @var int
-     */
-    protected $pageLimit = 100;
 
     public function __construct(CommandInterface $command, QueryObjectInterface $queryObject, callable $callback)
     {
@@ -55,42 +44,27 @@ class RecordIteratorArgs
         $this->callback = $callback;
     }
 
-    /**
-     * @return CommandInterface
-     */
-    public function getCommand()
+    public function getCommand(): CommandInterface
     {
         return $this->command;
     }
 
-    /**
-     * @return QueryObjectInterface
-     */
-    public function getQueryObject()
+    public function getQueryObject(): QueryObjectInterface
     {
         return $this->queryObject;
     }
 
-    /**
-     * @return callable
-     */
-    public function getCallback()
+    public function getCallback(): callable
     {
         return $this->callback;
     }
 
-    /**
-     * @param int $limit
-     */
-    public function setPageLimit($limit)
+    public function setPageLimit(int $limit): void
     {
         $this->pageLimit = $limit;
     }
 
-    /**
-     * @return int
-     */
-    public function getPageLimit()
+    public function getPageLimit(): int
     {
         return $this->pageLimit;
     }

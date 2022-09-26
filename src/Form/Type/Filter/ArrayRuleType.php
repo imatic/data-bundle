@@ -9,19 +9,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArrayRuleType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new ArrayToStringTransformer());
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'multiple' => true,
         ]);
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return HiddenType::class;
     }

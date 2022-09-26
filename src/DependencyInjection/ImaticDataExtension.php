@@ -12,12 +12,12 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-/**
- * ImaticDataExtension.
- */
 class ImaticDataExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    /**
+     * @param mixed[] $configs
+     */
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
         $loader->load('services.xml');
@@ -42,7 +42,10 @@ class ImaticDataExtension extends Extension
         $this->processColumnTypes($config['column_types'], $container);
     }
 
-    private function processUnaccentLower(array $unaccentLowerConfig, ContainerBuilder $container)
+    /**
+     * @param mixed[] $unaccentLowerConfig
+     */
+    private function processUnaccentLower(array $unaccentLowerConfig, ContainerBuilder $container): void
     {
         if (!$unaccentLowerConfig['enabled']) {
             return;
@@ -55,20 +58,18 @@ class ImaticDataExtension extends Extension
     }
 
     /**
-     * @param array            $pagerConfig
-     * @param ContainerBuilder $container
+     * @param mixed[] $pagerConfig
      */
-    private function processPager(array $pagerConfig, ContainerBuilder $container)
+    private function processPager(array $pagerConfig, ContainerBuilder $container): void
     {
         $pagerFactoryDef = $container->findDefinition(PagerFactory::class);
         $pagerFactoryDef->addMethodCall('setDefaultLimit', [$pagerConfig['default_limit']]);
     }
 
     /**
-     * @param array            $columnTypesConfig
-     * @param ContainerBuilder $container
+     * @param mixed[] $columnTypesConfig
      */
-    private function processColumnTypes(array $columnTypesConfig, ContainerBuilder $container)
+    private function processColumnTypes(array $columnTypesConfig, ContainerBuilder $container): void
     {
         $container->setParameter('imatic_data.driver.doctrine_dbal.schema.column_types', $columnTypesConfig);
     }

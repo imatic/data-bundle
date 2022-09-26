@@ -7,18 +7,12 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 interface FilterRuleProcessorInterface
 {
     /**
-     * @param object          $qb
-     * @param FilterRule      $rule
-     * @param string|string[] $column
-     *
-     * @return bool
+     * @param mixed $column
      */
-    public function supports($qb, FilterRule $rule, $column);
+    public function supports(object $qb, FilterRule $rule, $column): bool;
 
     /**
-     * @param object          $qb
-     * @param FilterRule      $rule
-     * @param string|string[] $column
+     * @param mixed $column
      */
-    public function process($qb, FilterRule $rule, $column);
+    public function process(object $qb, FilterRule $rule, $column): void;
 }

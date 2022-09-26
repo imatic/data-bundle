@@ -8,22 +8,18 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class SessionReader implements DisplayCriteriaReader
 {
-    /**
-     * @var RequestStack
-     */
-    protected $requestStack;
+    protected RequestStack $requestStack;
 
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
     }
 
-    public function clearAttribute($name, $component = null, $emptyValue = null)
+    public function clearAttribute(string $name, string $component = null, $emptyValue = null): void
     {
-        if (
-            ($session = ($this->requestStack->getCurrentRequest()->getSession()))
-            && ($sessionKey = $this->getAttributeSessionKey($name, $component))
-        ) {
+        $session = $this->requestStack->getCurrentRequest()->getSession();
+
+        if ($sessionKey = $this->getAttributeSessionKey($name, $component)) {
             if (null === $emptyValue) {
                 $session->remove($sessionKey);
             } else {
@@ -32,16 +28,14 @@ class SessionReader implements DisplayCriteriaReader
         }
     }
 
-    public function readAttribute($name, $default = null, $component = null, $persistent = false)
+    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false)
     {
         $request = $this->requestStack->getCurrentRequest();
         $value = $default;
 
-        if (
-            $persistent
-            && ($session = $request->getSession())
-            && ($sessionKey = $this->getAttributeSessionKey($name, $component))
-        ) {
+        if ($persistent && $request && ($sessionKey = $this->getAttributeSessionKey($name, $component))) {
+            $session = $request->getSession();
+
             if (null === $value) {
                 if ($session->has($sessionKey)) {
                     $value = $session->get($sessionKey);
@@ -54,20 +48,16 @@ class SessionReader implements DisplayCriteriaReader
         return $value;
     }
 
-    /**
-     * @param string      $name
-     * @param string|null $component
-     *
-     * @return string|null
-     */
-    protected function getAttributeSessionKey($name, $component = null)
+    protected function getAttributeSessionKey(string $name, string $component = null): ?string
     {
         if (null !== $component) {
             return "imatic.data.display_criteria.{$component}.{$name}";
         }
+
+        return null;
     }
 
-    public function attributeName($name)
+    public function attributeName(string $name): string
     {
         return $name;
     }

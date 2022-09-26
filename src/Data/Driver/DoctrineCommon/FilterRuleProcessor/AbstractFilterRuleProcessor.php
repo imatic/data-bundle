@@ -11,12 +11,12 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRuleProcessorInter
  */
 abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterface
 {
-    public function supports($qb, FilterRule $rule, $column)
+    public function supports(object $qb, FilterRule $rule, $column): bool
     {
         return $qb instanceof ORMQueryBuilder || $qb instanceof DBALQueryBuilder;
     }
 
-    public function process($qb, FilterRule $rule, $column)
+    public function process(object $qb, FilterRule $rule, $column): void
     {
         $fixedColumns = \is_array($column) ? $column : [$column];
 
@@ -28,14 +28,15 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
         $qb->andWhere(\call_user_func_array([$qb->expr(), 'orX'], $exprs));
     }
 
+    /**
+     * @param ORMQueryBuilder|DBALQueryBuilder $qb
+     * @param mixed $column
+     *
+     * @return mixed
+     */
     abstract protected function processOneColumn($qb, FilterRule $rule, $column);
 
-    /**
-     * @param FilterRule $rule
-     *
-     * @return string
-     */
-    protected function getQueryParameter(FilterRule $rule)
+    protected function getQueryParameter(FilterRule $rule): string
     {
         return \sprintf(
             $rule->getOption('query_parameter_format'),
@@ -43,12 +44,7 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
         );
     }
 
-    /**
-     * @param FilterRule $rule
-     *
-     * @return string
-     */
-    protected function getQueryParameterName(FilterRule $rule)
+    protected function getQueryParameterName(FilterRule $rule): string
     {
         return $rule->getName();
     }

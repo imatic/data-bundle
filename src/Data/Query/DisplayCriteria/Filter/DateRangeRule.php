@@ -5,13 +5,13 @@ use Imatic\Bundle\FormBundle\Form\Type\DateRangeType;
 
 class DateRangeRule extends RangeRule
 {
-    public function __construct($name, array $options = [])
+    public function __construct(string $name, array $options = [])
     {
         parent::__construct($name, $options);
         $this->type = 'date';
     }
 
-    public function setValue($value)
+    public function setValue($value): self
     {
         parent::setValue($value);
         $this->updateValue();
@@ -28,7 +28,7 @@ class DateRangeRule extends RangeRule
         return $result;
     }
 
-    private function updateValue()
+    private function updateValue(): void
     {
         if ($this->isBound()) {
             if ($this->value['start']) {
@@ -40,19 +40,19 @@ class DateRangeRule extends RangeRule
         }
     }
 
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return DateRangeType::class;
     }
 
-    protected function getDefaultFormOptions()
+    protected function getDefaultFormOptions(): array
     {
         return [
             'translation_domain' => 'ImaticDataBundle',
         ];
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return
             parent::validateValue($value)

@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator as ImaticPaginator;
@@ -18,23 +18,16 @@ use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
 
 class QueryExecutor implements QueryExecutorInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private EntityManager $entityManager;
+    private DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder;
 
-    /**
-     * @var DisplayCriteriaQueryBuilderDelegate
-     */
-    private $displayCriteriaQueryBuilder;
-
-    public function __construct(EntityManagerInterface $entityManager, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
+    public function __construct(EntityManager $entityManager, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
     {
         $this->entityManager = $entityManager;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
     }
 
-    private function createPaginator(DoctrineORMQueryObjectInterface $queryObject, Query $query)
+    private function createPaginator(DoctrineORMQueryObjectInterface $queryObject, Query $query): Paginator
     {
         if ($queryObject instanceof ExperimentalOptimizationQueryObjectInterface) {
             return new ImaticPaginator($query, true);
@@ -43,13 +36,14 @@ class QueryExecutor implements QueryExecutorInterface
         return new Paginator($query, true);
     }
 
-    public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): int
     {
         if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
         }
 
         $qb = $queryObject->build($this->entityManager);
+
         if ($displayCriteria) {
             $this->displayCriteriaQueryBuilder->applyFilter($qb, $displayCriteria->getFilter(), $queryObject);
         }
@@ -75,7 +69,7 @@ class QueryExecutor implements QueryExecutorInterface
         return $this->getResult($queryObject, $qb->getQuery());
     }
 
-    public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): array
     {
         return [
             $this->execute($queryObject, $displayCriteria),
@@ -83,28 +77,25 @@ class QueryExecutor implements QueryExecutorInterface
         ];
     }
 
-    public function beginTransaction()
+    public function beginTransaction(): void
     {
         $this->entityManager->beginTransaction();
     }
 
-    public function commit()
+    public function commit(): void
     {
         $this->entityManager->commit();
     }
 
-    public function rollback()
+    public function rollback(): void
     {
         $this->entityManager->rollback();
     }
 
     /**
-     * @param BaseQueryObjectInterface $queryObject
-     * @param Query                    $query
-     *
      * @return mixed
      */
-    private function getResult(BaseQueryObjectInterface $queryObject, Query $query)
+    private function getResult(DoctrineORMQueryObjectInterface $queryObject, Query $query)
     {
         if ($queryObject instanceof SingleScalarResultQueryObjectInterface) {
             return $query->getSingleScalarResult();

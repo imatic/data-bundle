@@ -43,10 +43,7 @@ class EditHandlerTest extends WebTestCase
         ], $adam);
     }
 
-    /**
-     * @return EditHandler
-     */
-    private function getEditHandler()
+    private function getEditHandler(): EditHandler
     {
         return self::getContainer()->get(EditHandler::class);
     }
@@ -62,10 +59,7 @@ class EditHandlerTest extends WebTestCase
             ->fetchAssociative();
     }
 
-    /**
-     * @return Connection
-     */
-    private function getConnection()
+    private function getConnection(): Connection
     {
         return self::getContainer()->get('doctrine.dbal.default_connection');
     }

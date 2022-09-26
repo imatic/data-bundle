@@ -22,20 +22,14 @@ class UserListWithOrderNumbersQuery implements QueryObjectInterface, ResultQuery
             ->groupBy('u.id');
     }
 
-    /**
-     * @return array
-     */
-    public function getSorterMap()
+    public function getSorterMap(): array
     {
         return [
             'order_num' => 'order_num',
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getDefaultSort()
+    public function getDefaultSort(): array
     {
         return [];
     }

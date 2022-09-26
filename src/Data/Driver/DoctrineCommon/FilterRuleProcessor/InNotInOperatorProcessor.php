@@ -14,12 +14,15 @@ class InNotInOperatorProcessor extends AbstractFilterRuleProcessor
         return $qb->expr()->{$rule->getOperator()}($column, $this->getQueryParameter($rule));
     }
 
-    public function supports($qb, FilterRule $rule, $column)
+    public function supports(object $qb, FilterRule $rule, $column): bool
     {
         return parent::supports($qb, $rule, $column) &&
             \in_array($rule->getOperator(), [FilterOperatorMap::OPERATOR_IN, FilterOperatorMap::OPERATOR_NOT_IN], true);
     }
 
+    /**
+     * @return int|string|null
+     */
     private function getType(FilterRule $rule)
     {
         $value = $rule->getValue();

@@ -17,7 +17,7 @@ class ImaticDataBundle extends Bundle
     /**
      * @param ContainerBuilder $container
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new ContainsOperatorProcessorCompilerPass());
         $container->addCompilerPass(new FilterCompilerPass());
@@ -27,7 +27,7 @@ class ImaticDataBundle extends Bundle
         $container->addCompilerPass(new DriverCompilerPass());
     }
 
-    public function boot()
+    public function boot(): void
     {
         $basePath = $this->container->getParameter('imatic_data.base_file_path');
         FileType::setBasePath($basePath);

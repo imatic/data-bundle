@@ -1,6 +1,12 @@
 UPGRADE FROM 5.x to 6.0
 =======================
 
+* all properties are now fully type-hinted
+* all methods arguments are now fully type-hinted
+* all methods have now return types
+* removed `AbstractBatchHandler` in favor of `BatchHandler` or `RecordIterator`
+* `FilterRule::$bound` is private, use method isBound instead
+
 Configuration
 -------------
 

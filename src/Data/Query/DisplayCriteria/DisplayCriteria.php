@@ -3,20 +3,9 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 class DisplayCriteria implements DisplayCriteriaInterface
 {
-    /**
-     * @var PagerInterface
-     */
-    protected $pager;
-
-    /**
-     * @var SorterInterface
-     */
-    protected $sorter;
-
-    /**
-     * @var FilterInterface
-     */
-    protected $filter;
+    protected PagerInterface $pager;
+    protected SorterInterface $sorter;
+    protected FilterInterface $filter;
 
     public function __construct(PagerInterface $pager, SorterInterface $sorter, FilterInterface $filter)
     {
@@ -25,17 +14,17 @@ class DisplayCriteria implements DisplayCriteriaInterface
         $this->filter = $filter;
     }
 
-    public function getPager()
+    public function getPager(): PagerInterface
     {
         return $this->pager;
     }
 
-    public function getSorter()
+    public function getSorter(): SorterInterface
     {
         return $this->sorter;
     }
 
-    public function getFilter()
+    public function getFilter(): FilterInterface
     {
         return $this->filter;
     }

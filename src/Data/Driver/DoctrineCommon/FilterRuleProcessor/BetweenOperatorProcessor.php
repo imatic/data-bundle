@@ -28,7 +28,7 @@ class BetweenOperatorProcessor extends AbstractFilterRuleProcessor
         return \call_user_func_array([$qb->expr(), 'andX'], $conditions);
     }
 
-    public function supports($qb, FilterRule $rule, $column)
+    public function supports(object $qb, FilterRule $rule, $column): bool
     {
         return
             parent::supports($qb, $rule, $column)

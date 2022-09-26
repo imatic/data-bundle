@@ -8,18 +8,19 @@ use Imatic\Bundle\FormBundle\Form\Type\DateTimeRangeType;
  */
 class DateTimeRangeRule extends RangeRule
 {
-    public function __construct($name, array $options = [])
+    public function __construct(string $name, array $options = [])
     {
-        parent::__construct($name, $options);
         $this->type = 'datetime';
+
+        parent::__construct($name, $options);
     }
 
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return DateTimeRangeType::class;
     }
 
-    protected function getDefaultFormOptions()
+    protected function getDefaultFormOptions(): array
     {
         return [
             'translation_domain' => 'ImaticDataBundle',

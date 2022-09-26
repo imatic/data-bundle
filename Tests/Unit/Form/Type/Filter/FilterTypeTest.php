@@ -42,7 +42,7 @@ class FilterTypeTest extends TypeTestCase
 
         $this->assertTrue($form->isSynchronized());
         $this->assertTrue($form->isValid());
-        $this->assertInstanceOf('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter', $data);
+        $this->assertInstanceOf(Filter::class, $data);
         $this->assertEquals($filterRule1, $data->get('field1'));
         $this->assertEquals($filterRule2, $data->get('field2'));
 

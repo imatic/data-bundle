@@ -13,43 +13,26 @@ use Iterator;
  */
 class ResultIterator implements Iterator, \Countable
 {
-    /**
-     * @var QueryObjectInterface
-     */
-    protected $queryObject;
+    protected QueryObjectInterface $queryObject;
+    protected ArrayDisplayCriteriaFactory $displayCriteriaFactory;
+    protected FilterInterface $filter;
+    protected QueryExecutorInterface $queryExecutor;
+    protected int $position = 0;
+    protected int $count = 0;
 
     /**
-     * @var ArrayDisplayCriteriaFactory
+     * @var array{page?: int, limit?: int}
      */
-    protected $displayCriteriaFactory;
+    protected array $criteria;
 
     /**
-     * @var array
+     * @var mixed[]
      */
-    protected $criteria;
+    protected array $cache = [];
 
     /**
-     * @var FilterInterface
+     * @param array{page?: int, limit?: int} $criteria
      */
-    protected $filter;
-
-    /**
-     * @var QueryExecutorInterface
-     */
-    protected $queryExecutor;
-
-    /**
-     * @var int
-     */
-    protected $position = 0;
-
-    /**
-     * @var int
-     */
-    protected $count = 0;
-
-    protected $cache = [];
-
     public function __construct(
         QueryObjectInterface $queryObject,
         ArrayDisplayCriteriaFactory $displayCriteriaFactory,
@@ -75,7 +58,7 @@ class ResultIterator implements Iterator, \Countable
 
     public function key()
     {
-        $this->position;
+        return $this->position;
     }
 
     public function next()
@@ -92,12 +75,12 @@ class ResultIterator implements Iterator, \Countable
         $this->init();
     }
 
-    public function valid()
+    public function valid(): bool
     {
         return $this->position < $this->count;
     }
 
-    protected function init()
+    protected function init(): void
     {
         $this->criteria['page'] = 0;
         $this->position = 0;
@@ -105,16 +88,13 @@ class ResultIterator implements Iterator, \Countable
         $this->loadNextPage();
     }
 
-    protected function loadNextPage()
+    protected function loadNextPage(): void
     {
         ++$this->criteria['page'];
         $this->cache = $this->queryExecutor->execute($this->queryObject, $this->createDisplayCriteria());
     }
 
-    /**
-     * @return DisplayCriteriaInterface
-     */
-    protected function createDisplayCriteria()
+    protected function createDisplayCriteria(): DisplayCriteriaInterface
     {
         $this->displayCriteriaFactory->setAttributes($this->criteria);
 
@@ -123,17 +103,17 @@ class ResultIterator implements Iterator, \Countable
         ]);
     }
 
-    protected function getLimit()
+    protected function getLimit(): int
     {
         return $this->criteria['limit'];
     }
 
-    protected function getPage()
+    protected function getPage(): int
     {
         return $this->criteria['page'];
     }
 
-    public function count()
+    public function count(): int
     {
         return $this->count;
     }

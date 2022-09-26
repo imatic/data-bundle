@@ -6,23 +6,11 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 
 interface DriverInterface
 {
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return ObjectManagerInterface|null
-     */
-    public function getObjectManager();
+    public function getObjectManager(): ?ObjectManagerInterface;
 
-    /**
-     * @return QueryExecutorInterface
-     */
-    public function getQueryExecutor();
+    public function getQueryExecutor(): QueryExecutorInterface;
 
-    /**
-     * @return string
-     */
-    public function getQueryObjectClass();
+    public function getQueryObjectClass(): string;
 }

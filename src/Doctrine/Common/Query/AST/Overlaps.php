@@ -2,18 +2,34 @@
 namespace Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
+use Doctrine\ORM\Query\AST\Node;
 use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 
 class Overlaps extends FunctionNode
 {
+    /**
+     * @var Node|string
+     */
     private $firstDateExpression;
+
+    /**
+     * @var Node|string
+     */
     private $secondDateExpression;
+
+    /**
+     * @var Node|string
+     */
     private $thirdDateExpression;
+
+    /**
+     * @var Node|string
+     */
     private $fourthDateExpression;
 
-    public function getSql(SqlWalker $sqlWalker)
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return \sprintf(
             '(%s, %s) OVERLAPS (%s, %s)',
@@ -24,7 +40,7 @@ class Overlaps extends FunctionNode
         );
     }
 
-    public function parse(Parser $parser)
+    public function parse(Parser $parser): void
     {
         $parser->match(Lexer::T_IDENTIFIER);
 

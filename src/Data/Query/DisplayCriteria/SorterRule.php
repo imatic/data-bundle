@@ -4,28 +4,16 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 class SorterRule
 {
     const ASC = 'ASC';
-
     const DESC = 'DESC';
-
     const COLUMN_PATTERN = '/^[a-zA-Z0-9]{1,1}[a-zA-Z0-9\.\_]{0,50}[a-zA-Z0-9\_]{1,1}$/';
 
-    /**
-     * @var string
-     */
-    protected $column;
+    protected string $column;
+    protected string $direction;
 
     /**
-     * @var string
-     */
-    protected $direction;
-
-    /**
-     * @param string $column
-     * @param string $direction
-     *
      * @throws \InvalidArgumentException
      */
-    public function __construct($column, $direction = self::ASC)
+    public function __construct(string $column, string $direction = self::ASC)
     {
         if (!\preg_match(self::COLUMN_PATTERN, $column)) {
             throw new \InvalidArgumentException(\sprintf('"%s" is not valid column name', $column));
@@ -35,20 +23,12 @@ class SorterRule
         $this->direction = (\strtoupper($direction) === self::DESC) ? self::DESC : self::ASC;
     }
 
-    /**
-     * @return string
-     */
-    public function getColumn()
+    public function getColumn(): string
     {
         return $this->column;
     }
 
-    /**
-     * @param bool $lowercase
-     *
-     * @return string
-     */
-    public function getDirection($lowercase = false)
+    public function getDirection(bool $lowercase = false): string
     {
         $return = $this->direction;
         if ($lowercase) {
@@ -58,12 +38,7 @@ class SorterRule
         return $return;
     }
 
-    /**
-     * @param bool $lowercase
-     *
-     * @return string
-     */
-    public function getReverseDirection($lowercase = false)
+    public function getReverseDirection(bool $lowercase = false): string
     {
         $return = $this->direction === self::DESC ? self::ASC : self::DESC;
         if ($lowercase) {
@@ -73,13 +48,8 @@ class SorterRule
         return $return;
     }
 
-    /**
-     * @param string $direction
-     *
-     * @return bool
-     */
-    public function isDirection($direction)
+    public function isDirection(string $direction): bool
     {
-        return $this->direction === \strtoupper((string) $direction);
+        return $this->direction === \strtoupper($direction);
     }
 }

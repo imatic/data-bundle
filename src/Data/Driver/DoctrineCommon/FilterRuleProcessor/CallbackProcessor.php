@@ -8,16 +8,14 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
  */
 class CallbackProcessor extends AbstractFilterRuleProcessor
 {
-    public function process($qb, FilterRule $rule, $column)
+    public function process(object $qb, FilterRule $rule, $column): void
     {
         $column($qb, $rule);
     }
 
-    public function supports($qb, FilterRule $rule, $column)
+    public function supports(object $qb, FilterRule $rule, $column): bool
     {
-        return
-            parent::supports($qb, $rule, $column)
-            && $column instanceof \Closure;
+        return parent::supports($qb, $rule, $column) && $column instanceof \Closure;
     }
 
     protected function processOneColumn($qb, FilterRule $rule, $column)

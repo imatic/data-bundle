@@ -6,5 +6,8 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
 
 interface ResultNormalizerInterface
 {
+    /**
+     * @return array<string,string>
+     */
     public function normalize(QueryObjectInterface $queryObject, Result $result): array;
 }

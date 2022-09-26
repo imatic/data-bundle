@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
 
@@ -10,16 +11,23 @@ use Imatic\Bundle\DataBundle\Data\Query\SingleResultQueryObjectInterface;
  */
 class RecordIdQuery implements QueryObjectInterface, SingleResultQueryObjectInterface
 {
-    private $table;
-    private $columnValues;
+    private string $table;
 
-    public function __construct($table, array $columnValues = [])
+    /**
+     * @var string[]
+     */
+    private array $columnValues;
+
+    /**
+     * @param string[] $columnValues
+     */
+    public function __construct(string $table, array $columnValues = [])
     {
         $this->table = $table;
         $this->columnValues = $columnValues;
     }
 
-    public function build(Connection $connection)
+    public function build(Connection $connection): QueryBuilder
     {
         $qb = $connection->createQueryBuilder();
         $qb->select(\sprintf('%s.%s', $this->getAlias(), 'id'));
@@ -35,9 +43,13 @@ class RecordIdQuery implements QueryObjectInterface, SingleResultQueryObjectInte
         return $qb;
     }
 
-    private function getQueryColumns()
+    /**
+     * @return mixed[]
+     */
+    private function getQueryColumns(): array
     {
         $queryColumns = [];
+
         foreach ($this->columnValues as $column => $value) {
             $queryColumns[\sprintf('%s.%s', $this->getAlias(), $column)] = $value;
         }
@@ -45,7 +57,7 @@ class RecordIdQuery implements QueryObjectInterface, SingleResultQueryObjectInte
         return $queryColumns;
     }
 
-    private function getAlias()
+    private function getAlias(): string
     {
         return 't';
     }

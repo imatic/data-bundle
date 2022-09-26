@@ -17,54 +17,36 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\CountOutputWalker
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\LimitSubqueryOutputWalker;
 
 /**
- * Copy paste of original paginator with different output walkers.
+ * Copy / paste of original paginator with different output walkers.
  *
  * It extends the original paginator so that this one can be passed in all places original can.
  */
 class Paginator extends DoctrinePaginator
 {
-    /**
-     * @var Query
-     */
-    private $query;
-
-    /**
-     * @var bool
-     */
-    private $fetchJoinCollection;
-
-    /**
-     * @var bool|null
-     */
-    private $useOutputWalkers;
-
-    /**
-     * @var int
-     */
-    private $count;
+    private Query $query;
+    private bool $fetchJoinCollection;
+    private ?bool $useOutputWalkers = null;
+    private ?int $count = null;
 
     /**
      * Constructor.
      *
      * @param Query|QueryBuilder $query               A Doctrine ORM query or query builder.
-     * @param bool            $fetchJoinCollection Whether the query joins a collection (true by default).
+     * @param bool               $fetchJoinCollection Whether the query joins a collection (true by default).
      */
-    public function __construct($query, $fetchJoinCollection = true)
+    public function __construct($query, bool $fetchJoinCollection = true)
     {
+        parent::__construct($query, $fetchJoinCollection);
+
         if ($query instanceof QueryBuilder) {
             $query = $query->getQuery();
         }
 
         $this->query = $query;
-        $this->fetchJoinCollection = (bool) $fetchJoinCollection;
+        $this->fetchJoinCollection = $fetchJoinCollection;
     }
 
-    /**
-     * Returns the query.
-     *
-     * @return Query
-     */
-    public function getQuery()
+    public function getQuery(): Query
     {
         return $this->query;
     }
@@ -73,20 +55,16 @@ class Paginator extends DoctrinePaginator
      * Returns whether the query joins a collection.
      *
      * @return bool Whether the query joins a collection.
-     *
-     * @SuppressWarnings(PHPMD)
      */
-    public function getFetchJoinCollection()
+    public function getFetchJoinCollection(): bool
     {
         return $this->fetchJoinCollection;
     }
 
     /**
      * Returns whether the paginator will use an output walker.
-     *
-     * @return bool|null
      */
-    public function getUseOutputWalkers()
+    public function getUseOutputWalkers(): ?bool
     {
         return $this->useOutputWalkers;
     }
@@ -95,10 +73,8 @@ class Paginator extends DoctrinePaginator
      * Sets whether the paginator will use an output walker.
      *
      * @param bool|null $useOutputWalkers
-     *
-     * @return $this
      */
-    public function setUseOutputWalkers($useOutputWalkers)
+    public function setUseOutputWalkers($useOutputWalkers): self
     {
         $this->useOutputWalkers = $useOutputWalkers;
 
@@ -207,11 +183,8 @@ class Paginator extends DoctrinePaginator
 
     /**
      * Appends a custom tree walker to the tree walkers hint.
-     *
-     * @param Query  $query
-     * @param string $walkerClass
      */
-    private function appendTreeWalker(Query $query, $walkerClass)
+    private function appendTreeWalker(Query $query, string $walkerClass): void
     {
         $hints = $query->getHint(Query::HINT_CUSTOM_TREE_WALKERS);
 
@@ -225,12 +198,9 @@ class Paginator extends DoctrinePaginator
 
     /**
      * Returns Query prepared to count.
-     *
-     * @return Query
      */
-    private function getCountQuery()
+    private function getCountQuery(): Query
     {
-        /* @var $countQuery Query */
         $countQuery = $this->cloneQuery($this->query);
 
         if (!$countQuery->hasHint(CountWalker::HINT_DISTINCT)) {
@@ -241,7 +211,10 @@ class Paginator extends DoctrinePaginator
             $platform = $countQuery->getEntityManager()->getConnection()->getDatabasePlatform(); // law of demeter win
 
             $rsm = new ResultSetMapping();
-            $rsm->addScalarResult($platform->getSQLResultCasing('dctrn_count'), 'count');
+
+            if (method_exists($platform, 'getSQLResultCasing')) {
+                $rsm->addScalarResult($platform->getSQLResultCasing('dctrn_count'), 'count');
+            }
 
             $countQuery->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, CountOutputWalker::class);
             $countQuery->setResultSetMapping($rsm);

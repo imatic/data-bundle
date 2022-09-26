@@ -8,12 +8,10 @@ use Imatic\Bundle\FormBundle\Form\Type\AjaxEntityChoiceType;
 
 class AjaxEntityChoiceRule extends FilterRule
 {
-    /** @var string */
-    private $class;
-    /** @var string */
-    private $route;
+    private string $class;
+    private string $route;
 
-    public function __construct($name, $class, $route, array $options = [])
+    public function __construct(string $name, string $class, string $route, array $options = [])
     {
         $this->class = $class;
         $this->route = $route;
@@ -21,7 +19,7 @@ class AjaxEntityChoiceRule extends FilterRule
         parent::__construct($name, $options);
     }
 
-    protected function getDefaultOperators()
+    protected function getDefaultOperators(): array
     {
         return [
             FilterOperatorMap::OPERATOR_IN,
@@ -29,12 +27,12 @@ class AjaxEntityChoiceRule extends FilterRule
         ];
     }
 
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return AjaxEntityChoiceType::class;
     }
 
-    protected function getDefaultFormOptions()
+    protected function getDefaultFormOptions(): array
     {
         return [
             'multiple' => true,
@@ -43,16 +41,18 @@ class AjaxEntityChoiceRule extends FilterRule
         ];
     }
 
-    public function setValue($value)
+    public function setValue($value): self
     {
         parent::setValue($value);
 
         if (null !== $this->value && $this->value->count() < 1) {
             $this->reset();
         }
+
+        return $this;
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return $value instanceof ArrayCollection;
     }

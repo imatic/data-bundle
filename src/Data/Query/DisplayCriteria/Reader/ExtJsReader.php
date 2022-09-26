@@ -11,13 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ExtJsReader extends SessionReader
 {
-    public function readAttribute($name, $default = null, $component = null, $persistent = false)
+    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false)
     {
         $request = $this->requestStack->getCurrentRequest();
 
         $path = $this->createAttributePath($name, $component);
 
-        $value = null;
         if ($name === 'filter') {
             $value = $this->readFilter($request, $path);
         } elseif ($name === 'sorter') {
@@ -33,7 +32,10 @@ class ExtJsReader extends SessionReader
             : $default;
     }
 
-    protected function readFilter(Request $request, $path)
+    /**
+     * @return mixed[]
+     */
+    protected function readFilter(Request $request, string $path): ?array
     {
         $encodedExtFilter = (new ArrayPathResolver($request->query->all()))->resolve($path, '[]');
         $decodedExtFilter = \json_decode($encodedExtFilter, true);
@@ -52,12 +54,16 @@ class ExtJsReader extends SessionReader
         return null;
     }
 
-    protected function readSorter(Request $request, $component, $path)
+    /**
+     * @return mixed[]
+     */
+    protected function readSorter(Request $request, ?string $component, string $path): ?array
     {
         $encodedExtSorter = (new ArrayPathResolver($request->query->all()))->resolve($path, '[]');
         $decodedExtSorter = \json_decode($encodedExtSorter, true);
 
         $value = [];
+
         if (\is_array($decodedExtSorter)) {
             if (\count($decodedExtSorter)) {
                 foreach ($decodedExtSorter as $sorter) {
@@ -72,7 +78,7 @@ class ExtJsReader extends SessionReader
         return \count($value) ? $value : null;
     }
 
-    protected function createAttributePath($attributeName, $component = null)
+    protected function createAttributePath(string $attributeName, string $component = null): string
     {
         $extAttributeName = $this->attributeName($attributeName);
 
@@ -83,7 +89,7 @@ class ExtJsReader extends SessionReader
         return $extAttributeName;
     }
 
-    public function attributeName($name)
+    public function attributeName(string $name): string
     {
         return $name === 'sorter' ? 'sort' : $name;
     }

@@ -10,6 +10,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReade
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -22,7 +23,7 @@ class DisplayCriteriaFactoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $requestStack = $this->createMock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack = $this->createMock(RequestStack::class);
 
         $requestStack
             ->expects($this->any())
@@ -132,9 +133,10 @@ class DisplayCriteriaFactoryTest extends TestCase
 
 class UserFilter extends Filter
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
-            ->add(new FilterRule\TextRule('name'));
+            ->add(new FilterRule\TextRule('name'))
+        ;
     }
 }

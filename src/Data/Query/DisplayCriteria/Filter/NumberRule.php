@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class NumberRule extends FilterRule
 {
-    protected function getDefaultOperators()
+    protected function getDefaultOperators(): array
     {
         return [
             FilterOperatorMap::OPERATOR_EQUAL,
@@ -21,12 +21,12 @@ class NumberRule extends FilterRule
         ];
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return \is_numeric($value);
     }
 
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return NumberType::class;
     }

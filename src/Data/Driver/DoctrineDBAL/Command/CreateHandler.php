@@ -12,11 +12,8 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
  */
 class CreateHandler implements HandlerInterface
 {
-    /** @var Connection */
-    private $connection;
-
-    /** @var Schema */
-    private $schema;
+    private Connection $connection;
+    private Schema $schema;
 
     public function __construct(Connection $connection, Schema $schema)
     {

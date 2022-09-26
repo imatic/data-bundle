@@ -7,26 +7,10 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class DisplayCriteriaFactory
 {
-    /**
-     * @var PagerFactory
-     */
-    protected $pagerFactory;
+    protected PagerFactory $pagerFactory;
+    private FormFactoryInterface $formFactory;
+    protected DisplayCriteriaReader $displayCriteriaReader;
 
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
-     * @var DisplayCriteriaReader
-     */
-    protected $displayCriteriaReader;
-
-    /**
-     * @param PagerFactory          $pagerFactory
-     * @param FormFactoryInterface  $formFactory
-     * @param DisplayCriteriaReader $displayCriteriaReader
-     */
     public function __construct(
         PagerFactory $pagerFactory,
         FormFactoryInterface $formFactory,
@@ -38,17 +22,14 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param array $options
-     * @param bool  $persistent
-     *
-     * @return DisplayCriteria
+     * @param mixed[] $options
      */
-    public function createCriteria(array $options = [], $persistent = false)
+    public function createCriteria(array $options = [], bool $persistent = false): DisplayCriteria
     {
-        $componentId = isset($options['componentId']) ? $options['componentId'] : null;
-        $pager = isset($options['pager']) ? $options['pager'] : [];
-        $filter = isset($options['filter']) ? $options['filter'] : null;
-        $sorter = isset($options['sorter']) ? $options['sorter'] : [];
+        $componentId = $options['componentId'] ?? null;
+        $pager = $options['pager'] ?? [];
+        $filter = $options['filter'] ?? null;
+        $sorter = $options['sorter'] ?? [];
 
         return new DisplayCriteria(
             $this->createPager($componentId, $pager, $persistent),
@@ -58,46 +39,33 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param string|null $componentId
-     * @param bool        $persistent
-     *
-     * @return PagerInterface
+     * @param mixed[] $pager
      */
-    public function createPager($componentId = null, array $pager = [], $persistent = false)
+    public function createPager(string $componentId = null, array $pager = [], bool $persistent = false): PagerInterface
     {
         return $this->pagerFactory->createPager(
-            $this->displayCriteriaReader->readAttribute(
+            (int) $this->displayCriteriaReader->readAttribute(
                 DisplayCriteriaReader::PAGE,
-                isset($pager[DisplayCriteriaReader::PAGE])
-                    ? $pager[DisplayCriteriaReader::PAGE]
-                    : null,
+                $pager[DisplayCriteriaReader::PAGE] ?? null,
                 $componentId,
                 $persistent
             ),
-            $this->displayCriteriaReader->readAttribute(
+            (int) $this->displayCriteriaReader->readAttribute(
                 DisplayCriteriaReader::LIMIT,
-                isset($pager[DisplayCriteriaReader::LIMIT])
-                    ? $pager[DisplayCriteriaReader::LIMIT]
-                    : null,
+                $pager[DisplayCriteriaReader::LIMIT] ?? null,
                 $componentId,
                 $persistent
             )
         );
     }
 
-    /**
-     * @param string|null          $componentId
-     * @param FilterInterface|null $filter
-     * @param bool                 $persistent
-     *
-     * @return FilterInterface
-     */
-    public function createFilter($componentId = null, FilterInterface $filter = null, $persistent = false)
+    public function createFilter(string $componentId = null, FilterInterface $filter = null, bool $persistent = false): FilterInterface
     {
         if (!\is_null($filter)) {
             $filterData = $this
                 ->displayCriteriaReader
-                ->readAttribute(DisplayCriteriaReader::FILTER, null, $componentId, $persistent);
+                ->readAttribute(DisplayCriteriaReader::FILTER, null, $componentId, $persistent)
+            ;
 
             $clearFilter = null !== $filterData && isset($filterData['clearFilter']);
             $defaultFilter = null !== $filterData && isset($filterData['defaultFilter']);
@@ -140,13 +108,9 @@ class DisplayCriteriaFactory
     }
 
     /**
-     * @param string|null $componentId
-     * @param array       $sorter
-     * @param bool        $persistent
-     *
-     * @return SorterInterface
+     * @param mixed[] $sorter
      */
-    public function createSorter($componentId = null, array $sorter = [], $persistent = false)
+    public function createSorter(string $componentId = null, array $sorter = [], bool $persistent = false): SorterInterface
     {
         $sorterData = $this
             ->displayCriteriaReader

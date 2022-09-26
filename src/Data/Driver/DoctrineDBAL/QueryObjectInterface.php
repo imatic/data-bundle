@@ -10,10 +10,5 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface as BaseQueryObjectI
  */
 interface QueryObjectInterface extends BaseQueryObjectInterface
 {
-    /**
-     * @param Connection $connection
-     *
-     * @return QueryBuilder
-     */
-    public function build(Connection $connection);
+    public function build(Connection $connection): QueryBuilder;
 }

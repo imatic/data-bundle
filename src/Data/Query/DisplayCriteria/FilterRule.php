@@ -6,24 +6,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class FilterRule
 {
     /**
-     * Filer name for compare.
-     *
-     * @var string
+     * File name for compare.
      */
-    protected $name;
+    protected string $name;
 
     /**
-     * @var array
+     * @var mixed[]
      */
-    protected $options;
-
-    /**
-     * @var bool
-     *
-     * @deprecated Use method isBound instead
-     * If you wanna set this value, you should override the method instead
-     */
-    protected $bound;
+    protected array $options;
 
     /**
      * Filer value for compare.
@@ -34,45 +24,33 @@ abstract class FilterRule
 
     /**
      * Filer operator for compare.
-     *
-     * @var string
      */
-    protected $operator;
+    protected ?string $operator = null;
 
     /**
      * Allowed operators.
      *
-     * @var string|null|array
+     * @var mixed[]
      */
-    protected $operators;
+    protected array $operators;
+
+    protected string $formType;
+    protected ?string $type = null;
 
     /**
-     * Form type.
-     *
-     * @var string
+     * @var mixed[]
      */
-    protected $formType;
+    protected array $formOptions;
+
+    private ?FilterInterface $filter = null;
+    private bool $bound;
 
     /**
-     * Form options.
-     *
-     * @var array
+     * @param mixed[] $options
      */
-    protected $formOptions;
-
-    /**
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * @var FilterInterface|null
-     */
-    private $filter = null;
-
-    public function __construct($name, array $options = [])
+    public function __construct(string $name, array $options = [])
     {
-        $this->name = (string) $name;
+        $this->name = $name;
         $this->options = $this->processOptions($options);
         $this->formType = $this->getDefaultFormType();
         $this->formOptions = $this->getDefaultFormOptions();
@@ -81,18 +59,12 @@ abstract class FilterRule
         $this->updateBound();
     }
 
-    /**
-     * @return bool
-     */
-    public function isBound()
+    public function isBound(): bool
     {
         return $this->bound;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -102,7 +74,7 @@ abstract class FilterRule
      *
      * @return mixed
      */
-    public function getOption($name)
+    public function getOption(string $name)
     {
         if (!\array_key_exists($name, $this->options)) {
             throw new \OutOfBoundsException(\sprintf('Unknown option "%s"', $name));
@@ -122,11 +94,9 @@ abstract class FilterRule
     /**
      * @param mixed $value
      *
-     * @return $this
-     *
      * @throws \InvalidArgumentException
      */
-    public function setValue($value)
+    public function setValue($value): self
     {
         if (null !== $value) {
             if (!$this->validateValue($value)) {
@@ -168,22 +138,15 @@ abstract class FilterRule
         return $this->value;
     }
 
-    /**
-     * @return string
-     */
-    public function getOperator()
+    public function getOperator(): ?string
     {
         return $this->operator;
     }
 
     /**
-     * @param string $operator
-     *
-     * @return $this
-     *
      * @throws \InvalidArgumentException
      */
-    public function setOperator($operator)
+    public function setOperator(?string $operator): self
     {
         if ($operator) {
             if (!$this->validateOperator($operator)) {
@@ -197,19 +160,19 @@ abstract class FilterRule
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getOperators()
+    public function getOperators(): array
     {
         return $this->operators;
     }
 
     /**
-     * @param array $operators
+     * @param mixed[] $operators
      *
      * @throws \InvalidArgumentException
      */
-    public function setOperators(array $operators)
+    public function setOperators(array $operators): self
     {
         $invalid = [];
         if (!$this->validateOperators($operators, $invalid)) {
@@ -220,58 +183,44 @@ abstract class FilterRule
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormType()
+    public function getFormType(): string
     {
         return $this->formType;
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getFormOptions()
+    public function getFormOptions(): array
     {
         return $this->formOptions;
     }
 
-    /**
-     * @param string $translationDomain
-     */
-    public function setTranslationDomain($translationDomain)
+    public function setTranslationDomain(string $translationDomain): self
     {
         $this->formOptions['translation_domain'] = $translationDomain;
 
         return $this;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return string
-     */
-    public function setType($type)
+    public function setType(string $type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getType()
+    public function getType() :?string
     {
         return $this->type;
     }
 
     /**
-     * @param array $options
+     * @param mixed[] $options
      *
-     * @return array
+     * @return mixed[]
      */
-    protected function processOptions(array $options)
+    protected function processOptions(array $options): array
     {
         $resolver = new OptionsResolver();
         $this->setDefaultOptions($resolver);
@@ -279,10 +228,7 @@ abstract class FilterRule
         return $resolver->resolve($options);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
-    protected function setDefaultOptions(OptionsResolver $resolver)
+    protected function setDefaultOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'query_parameter_format' => '%s',
@@ -291,54 +237,39 @@ abstract class FilterRule
 
     /**
      * @param mixed $value
-     *
-     * @return bool
      */
-    abstract protected function validateValue($value);
+    abstract protected function validateValue($value): bool;
 
     /**
-     * @return array
+     * @return array<int, string>
      */
-    abstract protected function getDefaultOperators();
+    abstract protected function getDefaultOperators(): array;
 
-    /**
-     * @return string|null
-     */
-    protected function getDefaultOperator()
+    protected function getDefaultOperator(): ?string
     {
         return \reset($this->operators);
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getDefaultFormType();
+    abstract protected function getDefaultFormType(): string;
 
     /**
-     * @return array
+     * @return array<mixed>
      */
-    protected function getDefaultFormOptions()
+    protected function getDefaultFormOptions(): array
     {
         return [];
     }
 
-    /**
-     * @param string $operator
-     *
-     * @return bool
-     */
-    protected function validateOperator($operator)
+    protected function validateOperator(string $operator): bool
     {
         return \in_array($operator, $this->getDefaultOperators(), true);
     }
 
     /**
-     * @param array $operators
-     * @param array $invalid
-     *
-     * @return bool
+     * @param mixed[] $operators
+     * @param mixed[] $invalid
      */
-    protected function validateOperators($operators, array &$invalid = [])
+    protected function validateOperators(array $operators, array &$invalid): bool
     {
         $defaultOperators = $this->getDefaultOperators();
 
@@ -351,25 +282,27 @@ abstract class FilterRule
         return 0 === \count($invalid);
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->value = null;
         $this->updateBound();
     }
 
-    private function updateBound()
+    private function updateBound(): void
     {
         $this->bound = $this->value !== null ||
             \in_array($this->operator, [FilterOperatorMap::OPERATOR_EMPTY, FilterOperatorMap::OPERATOR_NOT_EMPTY], true);
     }
 
-    public function getFilter()
+    public function getFilter(): ?FilterInterface
     {
         return $this->filter;
     }
 
-    public function setFilter(FilterInterface $filter)
+    public function setFilter(FilterInterface $filter): self
     {
         $this->filter = $filter;
+
+        return $this;
     }
 }

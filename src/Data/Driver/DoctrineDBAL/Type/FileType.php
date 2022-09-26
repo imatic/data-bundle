@@ -12,7 +12,7 @@ class FileType extends Type
 {
     const FILE = 'file';
 
-    protected static $basePath = '';
+    protected static string $basePath = '';
 
     public function getName(): string
     {
@@ -25,12 +25,9 @@ class FileType extends Type
     }
 
     /**
-     * @param File|null        $value
-     * @param AbstractPlatform $platform
-     *
-     * @return string|null
+     * @param File|null $value
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if ($value === null) {
             return null;
@@ -44,12 +41,9 @@ class FileType extends Type
     }
 
     /**
-     * @param string           $value
-     * @param AbstractPlatform $platform
-     *
-     * @return File|null
+     * @param ?string $value
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?File
     {
         if ($value === null) {
             return null;
@@ -68,7 +62,7 @@ class FileType extends Type
         return true;
     }
 
-    public static function setBasePath($path)
+    public static function setBasePath(string $path): void
     {
         static::$basePath = $path;
     }

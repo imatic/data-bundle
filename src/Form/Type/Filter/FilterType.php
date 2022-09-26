@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Form\Type\Filter;
 
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -8,13 +10,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FilterType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var $rule FilterRule */
+        /** @var FilterRule $rule */
         foreach ($options['filter'] as $rule) {
             $builder->add(
                 $rule->getName(),
@@ -29,10 +27,10 @@ class FilterType extends AbstractType
         $builder->add('defaultFilter', SubmitType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter',
+            'data_class' => Filter::class,
             'csrf_protection' => false,
             'filter' => null,
         ]);

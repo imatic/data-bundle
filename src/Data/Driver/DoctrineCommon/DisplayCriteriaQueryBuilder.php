@@ -15,19 +15,25 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SorterRule;
  */
 class DisplayCriteriaQueryBuilder implements DisplayCriteriaQueryBuilderInterface
 {
-    public function supports($qb)
+    public function supports(object $qb): bool
     {
         return $qb instanceof ORMQueryBuilder || $qb instanceof DBALQueryBuilder;
     }
 
-    public function applyPager($qb, PagerInterface $pager)
+    /**
+     * @param object|ORMQueryBuilder|DBALQueryBuilder $qb
+     */
+    public function applyPager(object $qb, PagerInterface $pager): void
     {
         $qb
             ->setFirstResult($pager->getOffset())
             ->setMaxResults($pager->getLimit());
     }
 
-    public function applySorter($qb, SorterInterface $sorter, array $sorterMap)
+    /**
+     * @param object|ORMQueryBuilder|DBALQueryBuilder $qb
+     */
+    public function applySorter(object $qb, SorterInterface $sorter, array $sorterMap): void
     {
         /* @var $sorterRule SorterRule */
         foreach ($sorter as $sorterRule) {

@@ -6,9 +6,8 @@ use PHPUnit\Framework\TestCase;
 
 class PagerTest extends TestCase
 {
-    protected $page = 3;
-
-    protected $limit = 10;
+    protected int $page = 3;
+    protected int $limit = 10;
 
     public function testPage()
     {
@@ -27,17 +26,17 @@ class PagerTest extends TestCase
 
     public function testLimit()
     {
-        $pager = new Pager(null, $this->limit);
+        $pager = new Pager(0, $this->limit);
         $this->assertEquals($this->limit, $pager->getLimit(), 'Standard set/get');
 
-        $pager = new Pager(null, 1000);
+        $pager = new Pager(0, 1000);
         $pager->setMaxLimit($this->limit);
         $this->assertEquals($this->limit, $pager->getLimit(), 'Setting big limit before');
 
-        $pager = new Pager(null, 0);
+        $pager = new Pager(0, 0);
         $this->assertEquals($pager->getDefaultLimit(), $pager->getLimit(), 'Setting zero limit');
 
-        $pager = new Pager(null, -10);
+        $pager = new Pager(0, -10);
         $this->assertEquals($pager->getDefaultLimit(), $pager->getLimit(), 'Setting negative limit');
     }
 
@@ -50,7 +49,7 @@ class PagerTest extends TestCase
 
         $this->assertEquals(60, $pager->getLastIndice(), 'Last indice');
 
-        $pager = new Pager(null, 10);
+        $pager = new Pager(0, 10);
         $pager->setTotal(1000);
 
         $this->assertEquals(1, $pager->getFirstIndice(), 'First indice');
@@ -69,7 +68,7 @@ class PagerTest extends TestCase
 
         $this->assertEquals(50, $pager->getOffset());
 
-        $pager = new Pager(null, 10);
+        $pager = new Pager(0, 10);
 
         $this->assertEquals(0, $pager->getOffset());
     }

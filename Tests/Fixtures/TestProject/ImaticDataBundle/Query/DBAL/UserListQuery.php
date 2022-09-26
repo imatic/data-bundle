@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SelectableQueryObjectInterface;
@@ -13,7 +14,7 @@ use Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface;
  */
 class UserListQuery implements QueryObjectInterface, ResultQueryObjectInterface, FilterableQueryObjectInterface, SortableQueryObjectInterface, SelectableQueryObjectInterface
 {
-    public function build(Connection $connection)
+    public function build(Connection $connection): QueryBuilder
     {
         return $connection->createQueryBuilder()
             ->select('u.id, u.name, u.activated, u.birth_date, u.hairs')
@@ -21,10 +22,7 @@ class UserListQuery implements QueryObjectInterface, ResultQueryObjectInterface,
         ;
     }
 
-    /**
-     * @return array
-     */
-    public function getFilterMap()
+    public function getFilterMap(): array
     {
         return [
             'user_name' => 'u.name',
@@ -37,10 +35,7 @@ class UserListQuery implements QueryObjectInterface, ResultQueryObjectInterface,
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getSorterMap()
+    public function getSorterMap(): array
     {
         return [
             'user_name' => 'u.name',
@@ -48,15 +43,12 @@ class UserListQuery implements QueryObjectInterface, ResultQueryObjectInterface,
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function getDefaultSort()
+    public function getDefaultSort(): array
     {
         return [];
     }
 
-    public function getIdentifierFilterKey()
+    public function getIdentifierFilterKey(): string
     {
         return 'id';
     }

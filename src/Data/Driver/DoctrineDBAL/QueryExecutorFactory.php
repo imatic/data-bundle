@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorFactoryInterface;
+use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class QueryExecutorFactory implements QueryExecutorFactoryInterface
@@ -11,6 +12,10 @@ class QueryExecutorFactory implements QueryExecutorFactoryInterface
     private DisplayCriteriaQueryBuilderDelegate $delegate;
     private ResultNormalizerInterface $normalizer;
     private ContainerInterface $container;
+
+    /**
+     * @var mixed[]
+     */
     private array $queryExecutorCache = [];
 
     public function __construct(
@@ -23,7 +28,7 @@ class QueryExecutorFactory implements QueryExecutorFactoryInterface
         $this->container = $container;
     }
 
-    public function createWithConnection($connectionName = null)
+    public function createWithConnection(string $connectionName = null): QueryExecutorInterface
     {
         if ($connectionName !== null) {
             $connectionId = \sprintf('doctrine.dbal.%s_connection', $connectionName);

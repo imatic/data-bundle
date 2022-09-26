@@ -17,10 +17,7 @@ class CreateOrEditHandler implements HandlerInterface, CommandExecutorAwareInter
 {
     use CommandExecutorAwareTrait;
 
-    /**
-     * @var QueryExecutorInterface
-     */
-    private $queryExecutor;
+    private QueryExecutorInterface $queryExecutor;
 
     public function __construct(QueryExecutorInterface $queryExecutor)
     {

@@ -6,7 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
 abstract class RangeRule extends FilterRule
 {
-    protected function getDefaultOperators()
+    protected function getDefaultOperators(): array
     {
         return [
             FilterOperatorMap::OPERATOR_BETWEEN,
@@ -14,7 +14,7 @@ abstract class RangeRule extends FilterRule
         ];
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return
             \is_array($value)
@@ -23,14 +23,12 @@ abstract class RangeRule extends FilterRule
             && \array_key_exists('end', $value);
     }
 
-    public function isBound()
+    public function isBound(): bool
     {
-        $this->bound = parent::isBound() &&
+        return parent::isBound() &&
             \is_array($this->value) &&
             \array_filter($this->value, function ($val) {
                 return $val !== null;
             });
-
-        return $this->bound;
     }
 }

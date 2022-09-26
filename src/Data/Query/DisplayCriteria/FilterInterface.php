@@ -5,32 +5,13 @@ use Symfony\Component\Form\FormInterface;
 
 interface FilterInterface extends \IteratorAggregate, \Countable, \ArrayAccess
 {
-    /**
-     * @param string $index
-     *
-     * @return FilterRule
-     */
-    public function get($index);
+    public function get(string $index): ?FilterRule;
 
-    /**
-     * @param string $index
-     *
-     * @return bool
-     */
-    public function has($index);
+    public function has(string $index): bool;
 
-    /**
-     * @return bool
-     */
-    public function hasDefaults();
+    public function hasDefaults(): bool;
 
-    /**
-     * @return FormInterface
-     */
-    public function getForm();
+    public function getForm(): ?FormInterface;
 
-    /**
-     * @return string
-     */
-    public function getTranslationDomain();
+    public function getTranslationDomain(): ?string;
 }

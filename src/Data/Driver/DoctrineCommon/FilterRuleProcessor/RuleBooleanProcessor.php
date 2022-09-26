@@ -22,7 +22,7 @@ class RuleBooleanProcessor extends AbstractFilterRuleProcessor
         }
     }
 
-    public function supports($qb, FilterRule $rule, $column)
+    public function supports(object $qb, FilterRule $rule, $column): bool
     {
         return parent::supports($qb, $rule, $column) && $rule instanceof BooleanRule;
     }

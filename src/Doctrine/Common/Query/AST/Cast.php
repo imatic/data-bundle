@@ -2,16 +2,21 @@
 namespace Imatic\Bundle\DataBundle\Doctrine\Common\Query\AST;
 
 use Doctrine\ORM\Query\AST\Functions\FunctionNode;
+use Doctrine\ORM\Query\AST\Node;
 use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 
 class Cast extends FunctionNode
 {
+    /**
+     * @var Node|string
+     */
     private $valueExpression;
-    private $typeString;
 
-    public function getSql(SqlWalker $sqlWalker)
+    private string $typeString;
+
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return \sprintf(
             '%s::%s',
@@ -20,7 +25,7 @@ class Cast extends FunctionNode
         );
     }
 
-    public function parse(Parser $parser)
+    public function parse(Parser $parser): void
     {
         $parser->match(Lexer::T_IDENTIFIER);
 

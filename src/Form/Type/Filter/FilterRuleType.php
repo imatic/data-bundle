@@ -9,13 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FilterRuleType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var $rule FilterRule */
+        /** @var FilterRule $rule */
         $rule = $options['filter_rule'];
         $operators = $rule->getOperators();
         $preferredOperator = $rule->getOperator();
@@ -44,12 +40,13 @@ class FilterRuleType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'filter_rule' => null,
             'data_class' => 'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule',
         ]);
+
         $resolver->setAllowedTypes(
             'filter_rule',
             'Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule'

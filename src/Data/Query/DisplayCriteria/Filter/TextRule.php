@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class TextRule extends FilterRule
 {
-    protected function getDefaultOperators()
+    protected function getDefaultOperators(): array
     {
         return [
             FilterOperatorMap::OPERATOR_EQUAL,
@@ -19,17 +19,17 @@ class TextRule extends FilterRule
         ];
     }
 
-    protected function getDefaultOperator()
+    protected function getDefaultOperator(): string
     {
         return FilterOperatorMap::OPERATOR_CONTAINS;
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return \is_string($value);
     }
 
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return TextType::class;
     }

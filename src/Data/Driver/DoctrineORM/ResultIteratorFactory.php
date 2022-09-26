@@ -3,8 +3,8 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use Doctrine\Persistence\ObjectManager as DoctrineObjectManager;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use LogicException;
 
@@ -13,25 +13,10 @@ use LogicException;
  */
 class ResultIteratorFactory
 {
-    /**
-     * @var ArrayDisplayCriteriaFactory
-     */
-    protected $displayCriteriaFactory;
-
-    /**
-     * @var FilterFactory
-     */
-    protected $filterFactory;
-
-    /**
-     * @var QueryExecutorInterface
-     */
-    protected $queryExecutor;
-
-    /**
-     * @var DoctrineObjectManager
-     */
-    protected $om;
+    protected ArrayDisplayCriteriaFactory $displayCriteriaFactory;
+    protected FilterFactory $filterFactory;
+    protected QueryExecutorInterface $queryExecutor;
+    protected DoctrineObjectManager $om;
 
     public function __construct(
         ArrayDisplayCriteriaFactory $displayCriteriaFactory,
@@ -45,7 +30,10 @@ class ResultIteratorFactory
         $this->om = $om;
     }
 
-    public function create(QueryObjectInterface $queryObject, array $criteria = [], Filter $filter = null)
+    /**
+     * @param mixed[] $criteria
+     */
+    public function create(QueryObjectInterface $queryObject, array $criteria = [], FilterInterface $filter = null): ResultIterator
     {
         if (!isset($criteria['filter_type'])) {
             throw new LogicException('Filter type has to be specified!');
@@ -62,11 +50,9 @@ class ResultIteratorFactory
     }
 
     /**
-     * @param array $criteria
-     *
-     * @return Filter
+     * @param mixed[] $criteria
      */
-    public function createFilter(array $criteria = [])
+    public function createFilter(array $criteria = []): FilterInterface
     {
         return $this->filterFactory->create($criteria['filter_type']);
     }

@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class DisplayCriteriaQueryBuilderPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $displayCriteriaQueryBuilderDef = $container->findDefinition(DisplayCriteriaQueryBuilderDelegate::class);
         $displayCriteriaQueryBuilderServices = $container->findTaggedServiceIds('imatic_data.display_criteria_query_builder');

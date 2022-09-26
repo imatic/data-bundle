@@ -3,48 +3,24 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 
 interface MessageInterface
 {
-    /**
-     * @return string
-     */
-    public function getType();
+    public function getType(): string;
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getParameters();
+    public function getParameters(): array;
 
-    /**
-     * @return string
-     */
-    public function getMessage();
+    public function getMessage(): string;
 
-    /**
-     * @return string
-     */
-    public function getText();
+    public function getText(): ?string;
 
-    /**
-     * @return string
-     */
-    public function getTranslationDomain();
+    public function getTranslationDomain(): ?string;
 
-    /**
-     * @param string $translationDomain
-     */
-    public function setTranslationDomain($translationDomain);
+    public function setTranslationDomain(string $translationDomain): self;
 
-    /**
-     * @param string $prefix
-     */
-    public function setPrefix($prefix);
+    public function setPrefix(string $prefix): self;
 
-    /**
-     * @return string
-     */
-    public function getPrefix();
+    public function getPrefix(): ?string;
 
-    /**
-     * @return string
-     */
     public function __toString();
 }

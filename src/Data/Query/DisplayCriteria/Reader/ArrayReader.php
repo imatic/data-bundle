@@ -7,16 +7,19 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader;
 class ArrayReader implements DisplayCriteriaReader
 {
     /**
-     * @var array
+     * @var mixed[]
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
-    public function __construct($attributes = [])
+    /**
+     * @param mixed[] $attributes
+     */
+    public function __construct(array $attributes = [])
     {
         $this->attributes = $attributes;
     }
 
-    public function clearAttribute($name, $component = null, $emptyValue = null)
+    public function clearAttribute(string $name, string $component = null, $emptyValue = null): void
     {
         if (null === $emptyValue) {
             unset($this->attributes[$name]);
@@ -25,12 +28,12 @@ class ArrayReader implements DisplayCriteriaReader
         }
     }
 
-    public function readAttribute($name, $default = null, $component = null, $persistent = false)
+    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false)
     {
         return \array_key_exists($name, $this->attributes) ? $this->attributes[$name] : $default;
     }
 
-    public function attributeName($name)
+    public function attributeName(string $name): string
     {
         return $name;
     }

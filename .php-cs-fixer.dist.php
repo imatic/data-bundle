@@ -81,7 +81,7 @@ return (new PhpCsFixer\Config())
         PhpCsFixer\Finder::create()
             ->exclude([
                 'vendor',
-                'Tests/Fixtures/TestProject/var',
+                'tests/Fixtures/TestProject/var',
             ])
             ->in(__DIR__)
     )

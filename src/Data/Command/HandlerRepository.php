@@ -7,10 +7,7 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class HandlerRepository implements HandlerRepositoryInterface, ServiceSubscriberInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $locator;
+    private ContainerInterface $locator;
 
     /**
      * @var string[]
@@ -19,11 +16,8 @@ class HandlerRepository implements HandlerRepositoryInterface, ServiceSubscriber
      *     ...
      * ]
      */
-    private $bundles;
+    private array $bundles;
 
-    /**
-     * @param ContainerInterface $locator
-     */
     public function __construct(ContainerInterface $locator)
     {
         $this->locator = $locator;
@@ -50,12 +44,12 @@ class HandlerRepository implements HandlerRepositoryInterface, ServiceSubscriber
         return $this->bundles[$command];
     }
 
-    public function addBundleName(string $handlerId, ?string $bundleName)
+    public function addBundleName(string $handlerId, ?string $bundleName): void
     {
         $this->bundles[$handlerId] = $bundleName;
     }
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [];
     }

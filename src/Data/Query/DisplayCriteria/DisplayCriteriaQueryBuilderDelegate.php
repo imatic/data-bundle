@@ -11,10 +11,12 @@ use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryBuilderException;
  */
 class DisplayCriteriaQueryBuilderDelegate
 {
-    /** @var FilterRuleProcessorDelegate */
-    private $filterRuleProcessor;
-    /** @var DisplayCriteriaQueryBuilderInterface[] */
-    private $builders;
+    private FilterRuleProcessorDelegate $filterRuleProcessor;
+
+    /**
+     * @var DisplayCriteriaQueryBuilderInterface[]
+     */
+    private array $builders = [];
 
     public function __construct(FilterRuleProcessorDelegate $ruleProcessor)
     {
@@ -24,19 +26,15 @@ class DisplayCriteriaQueryBuilderDelegate
     /**
      * @param DisplayCriteriaQueryBuilderInterface[] $builders
      */
-    public function setBuilders(array $builders)
+    public function setBuilders(array $builders): void
     {
         $this->builders = $builders;
     }
 
     /**
-     * @param object $qb
-     *
      * @throws UnsupportedQueryBuilderException
-     *
-     * @return DisplayCriteriaQueryBuilderInterface
      */
-    private function getBuilderFor($qb)
+    private function getBuilderFor(object $qb): DisplayCriteriaQueryBuilderInterface
     {
         foreach ($this->builders as $builder) {
             if ($builder->supports($qb)) {
@@ -47,12 +45,7 @@ class DisplayCriteriaQueryBuilderDelegate
         throw new UnsupportedQueryBuilderException($qb);
     }
 
-    /**
-     * @param object                   $qb
-     * @param QueryObjectInterface     $queryObject
-     * @param DisplayCriteriaInterface $displayCriteria
-     */
-    public function apply($qb, QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function apply(object $qb, QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): void
     {
         if (null !== $displayCriteria) {
             $this->applyPager($qb, $displayCriteria->getPager());
@@ -61,11 +54,7 @@ class DisplayCriteriaQueryBuilderDelegate
         }
     }
 
-    /**
-     * @param object         $qb
-     * @param PagerInterface $pager
-     */
-    public function applyPager($qb, PagerInterface $pager)
+    public function applyPager(object $qb, PagerInterface $pager): void
     {
         if ($pager->isEnabled()) {
             $this->getBuilderFor($qb)->applyPager($qb, $pager);
@@ -73,13 +62,9 @@ class DisplayCriteriaQueryBuilderDelegate
     }
 
     /**
-     * @param object               $qb
-     * @param FilterInterface      $filter
-     * @param QueryObjectInterface $queryObject
-     *
      * @throws \InvalidArgumentException
      */
-    public function applyFilter($qb, FilterInterface $filter, QueryObjectInterface $queryObject)
+    public function applyFilter(object $qb, FilterInterface $filter, QueryObjectInterface $queryObject): void
     {
         if ($queryObject instanceof FilterableQueryObjectInterface) {
             $filterMap = $queryObject->getFilterMap();
@@ -105,13 +90,9 @@ class DisplayCriteriaQueryBuilderDelegate
     }
 
     /**
-     * @param object               $qb
-     * @param SorterInterface      $sorter
-     * @param QueryObjectInterface $queryObject
-     *
      * @throws \InvalidArgumentException
      */
-    public function applySorter($qb, SorterInterface $sorter, QueryObjectInterface $queryObject)
+    public function applySorter(object $qb, SorterInterface $sorter, QueryObjectInterface $queryObject): void
     {
         if ($queryObject instanceof SortableQueryObjectInterface) {
             // default sorting if no sorter rules exists

@@ -3,17 +3,20 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 
 class Message implements MessageInterface
 {
-    private $type;
+    private string $type;
+    private ?string $prefix = null;
+    private ?string $text;
+    private ?string $translationDomain;
 
-    private $prefix;
+    /**
+     * @var mixed[]
+     */
+    private array $parameters;
 
-    private $text;
-
-    private $parameters;
-
-    private $translationDomain;
-
-    public function __construct($type, $text, array $parameters = [], $translationDomain = null)
+    /**
+     * @param mixed[] $parameters
+     */
+    public function __construct(string $type, string $text = null, array $parameters = [], string $translationDomain = null)
     {
         $this->type = $type;
         $this->text = $text;
@@ -21,46 +24,50 @@ class Message implements MessageInterface
         $this->translationDomain = $translationDomain;
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    public function getMessage()
+    public function getMessage(): string
     {
         $prefix = $this->prefix ? $this->prefix . '.' : '';
 
         return $prefix . $this->text;
     }
 
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function getTranslationDomain()
+    public function getTranslationDomain(): ?string
     {
         return $this->translationDomain;
     }
 
-    public function setTranslationDomain($translationDomain)
+    public function setTranslationDomain(string $translationDomain): self
     {
         $this->translationDomain = $translationDomain;
+
+        return $this;
     }
 
-    public function getPrefix()
+    public function getPrefix(): ?string
     {
         return $this->prefix;
     }
 
-    public function setPrefix($prefix)
+    public function setPrefix(string $prefix): self
     {
         $this->prefix = $prefix;
+
+        return $this;
     }
 
     public function __toString()

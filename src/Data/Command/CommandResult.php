@@ -1,110 +1,109 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Command;
 
-class CommandResult implements CommandResultInterface
+final class CommandResult implements CommandResultInterface
 {
-    /**
-     * @var bool
-     */
-    private $success;
+    private bool $success;
 
     /**
-     * @var array
+     * @var mixed[]
      */
-    private $data;
+    private array $data;
 
     /**
      * @var MessageInterface[]
      */
-    private $messages;
+    private array $messages;
+
+    private ?\Exception $exception;
 
     /**
-     * @var \Exception
-     */
-    private $exception;
-
-    /**
-     * @param bool $success
      * @param MessageInterface[] $messages
-     * @param \Exception $exception
      *
      * @throws \LogicException
      */
-    public function __construct($success, array $messages = [], \Exception $exception = null)
+    public function __construct(bool $success, array $messages = [], \Exception $exception = null)
     {
         if ($success && $exception) {
             throw new \LogicException('Result cannot be successful with exception.');
         }
 
-        $this->success = (bool) $success;
-        $this->messages = (array) $messages;
+        $this->success = $success;
+        $this->messages = $messages;
         $this->exception = $exception;
         $this->data = [];
     }
 
-    public static function success($message = null, array $parameters = [])
+    /**
+     * @param mixed[] $parameters
+     */
+    public static function success(string $message = null, array $parameters = []): self
     {
         $messages = [];
         if ($message) {
             $messages[] = new Message('success', $message, $parameters);
         }
 
-        return new static(true, $messages);
+        return new self(true, $messages);
     }
 
-    public static function error($message = null, array $parameters = [], \Exception $exception = null)
+    /**
+     * @param mixed[] $parameters
+     */
+    public static function error(string $message = null, array $parameters = [], \Exception $exception = null): self
     {
         $messages = [];
+
         if ($message) {
             $messages[] = new Message('error', $message, $parameters);
         }
 
-        return new static(false, $messages, $exception);
+        return new self(false, $messages, $exception);
     }
 
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return $this->success;
     }
 
-    public function hasMessages()
+    public function hasMessages(): bool
     {
         return !empty($this->messages);
     }
 
-    public function getMessages()
+    public function getMessages(): array
     {
         return $this->messages;
     }
 
-    public function getMessagesAsString()
+    public function getMessagesAsString(): string
     {
         return \implode(', ', $this->messages);
     }
 
-    public function addMessage(MessageInterface $message)
+    public function addMessage(MessageInterface $message): void
     {
         $this->messages[] = $message;
     }
 
-    public function addMessages(array $messages)
+    public function addMessages(array $messages): void
     {
         foreach ($messages as $message) {
             $this->addMessage($message);
         }
     }
 
-    public function hasException()
+    public function hasException(): bool
     {
         return $this->exception !== null;
     }
 
-    public function getException()
+    public function getException(): ?\Exception
     {
         return $this->exception;
     }
 
-    public function throwException($exceptionClass = null)
+    public function throwException(string $exceptionClass = null): void
     {
         if (!$this->isSuccessful()) {
             if ($this->hasException()) {
@@ -115,12 +114,12 @@ class CommandResult implements CommandResultInterface
         }
     }
 
-    public function has($name)
+    public function has(string $name): bool
     {
         return isset($this->data[$name]);
     }
 
-    public function get($name, $default = null)
+    public function get(string $name, $default = null)
     {
         if (isset($this->data[$name])) {
             return $this->data[$name];
@@ -129,7 +128,7 @@ class CommandResult implements CommandResultInterface
         return $default;
     }
 
-    public function set($name, $value)
+    public function set(string $name, $value): self
     {
         $this->data[$name] = $value;
 

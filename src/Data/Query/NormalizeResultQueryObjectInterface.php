@@ -3,5 +3,8 @@ namespace Imatic\Bundle\DataBundle\Data\Query;
 
 interface NormalizeResultQueryObjectInterface
 {
+    /**
+     * @return array<string,string>
+     */
     public function getNormalizerMap(): array;
 }

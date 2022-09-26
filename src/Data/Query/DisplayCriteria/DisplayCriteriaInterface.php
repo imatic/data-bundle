@@ -3,18 +3,9 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 interface DisplayCriteriaInterface
 {
-    /**
-     * @return PagerInterface
-     */
-    public function getPager();
+    public function getPager(): PagerInterface;
 
-    /**
-     * @return FilterInterface
-     */
-    public function getFilter();
+    public function getFilter(): FilterInterface;
 
-    /**
-     * @return SorterInterface
-     */
-    public function getSorter();
+    public function getSorter(): SorterInterface;
 }

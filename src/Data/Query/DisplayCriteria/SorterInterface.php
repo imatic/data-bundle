@@ -3,36 +3,16 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 interface SorterInterface extends \IteratorAggregate, \Countable
 {
-    /**
-     * @return bool
-     */
-    public function hasSorterRules();
+    public function hasSorterRules(): bool;
+
+    public function isSorted(string $column): bool;
+
+    public function getDirection(string $column, bool $lowercase = false): string;
+
+    public function getReverseDirection(string $column, bool $lowercase = false): string;
 
     /**
-     * @param string $column
-     *
-     * @return bool
+     * @param mixed[] $sorterRules
      */
-    public function isSorted($column);
-
-    /**
-     * @param string $column
-     * @param bool   $lowercase
-     *
-     * @return string
-     */
-    public function getDirection($column, $lowercase = false);
-
-    /**
-     * @param string $column
-     * @param bool   $lowercase
-     *
-     * @return string
-     */
-    public function getReverseDirection($column, $lowercase = false);
-
-    /**
-     * @param SorterRule[] $sorterRules
-     */
-    public function setSorterRules(array $sorterRules);
+    public function setSorterRules(array $sorterRules): void;
 }

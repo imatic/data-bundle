@@ -6,7 +6,7 @@ class Sorter implements SorterInterface
     /**
      * @var SorterRule[]
      */
-    protected $sorterRules;
+    protected array $sorterRules;
 
     /**
      * @param SorterRule[] $sorterRules
@@ -16,28 +16,17 @@ class Sorter implements SorterInterface
         $this->setSorterRules($sorterRules);
     }
 
-    public function hasSorterRules()
+    public function hasSorterRules(): bool
     {
         return !empty($this->sorterRules);
     }
 
-    /**
-     * @param string $column
-     *
-     * @return bool
-     */
-    public function isSorted($column)
+    public function isSorted(string $column): bool
     {
-        return \array_key_exists((string) $column, $this->sorterRules);
+        return \array_key_exists($column, $this->sorterRules);
     }
 
-    /**
-     * @param string $column
-     * @param bool   $lowercase
-     *
-     * @return string
-     */
-    public function getDirection($column, $lowercase = false)
+    public function getDirection(string $column, bool $lowercase = false): string
     {
         if (!$this->isSorted($column)) {
             return $lowercase ? \strtolower(SorterRule::ASC) : SorterRule::ASC;
@@ -46,13 +35,7 @@ class Sorter implements SorterInterface
         return $this->sorterRules[$column]->getDirection($lowercase);
     }
 
-    /**
-     * @param string $column
-     * @param bool   $lowercase
-     *
-     * @return string
-     */
-    public function getReverseDirection($column, $lowercase = false)
+    public function getReverseDirection(string $column, bool $lowercase = false): string
     {
         if (!$this->isSorted($column)) {
             return $lowercase ? \strtolower(SorterRule::ASC) : SorterRule::ASC;
@@ -63,28 +46,21 @@ class Sorter implements SorterInterface
 
     /**
      * Retrieve an external iterator.
-     *
-     * @return \Iterator
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->sorterRules);
     }
 
-    /**
-     * @return int
-     */
-    public function count()
+    public function count(): int
     {
         return \count($this->sorterRules);
     }
 
-    /**
-     * @param SorterRule[] $sorterRules
-     */
-    public function setSorterRules(array $sorterRules)
+    public function setSorterRules(array $sorterRules): void
     {
         $this->sorterRules = [];
+
         foreach ($sorterRules as $key => $sorterRule) {
             if ($sorterRule instanceof SorterRule) {
                 $this->addSorterRule($sorterRule);
@@ -94,12 +70,7 @@ class Sorter implements SorterInterface
         }
     }
 
-    /**
-     * @param SorterRule $sorterRule
-     *
-     * @return $this
-     */
-    protected function addSorterRule(SorterRule $sorterRule)
+    protected function addSorterRule(SorterRule $sorterRule): self
     {
         $this->sorterRules[$sorterRule->getColumn()] = $sorterRule;
 

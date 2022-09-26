@@ -12,13 +12,13 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
  */
 class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
 {
-    /** @var string */
-    private $dbalFunctionTemplate;
+    private string $dbalFunctionTemplate;
+    private string $ormFunctionTemplate;
 
-    /** @var string */
-    private $ormFunctionTemplate;
-
-    private $postgresOperators = [
+    /**
+     * @var array<string,string>
+     */
+    private array $postgresOperators = [
         FilterOperatorMap::OPERATOR_CONTAINS => 'ILIKE',
         FilterOperatorMap::OPERATOR_NOT_CONTAINS => 'NOT ILIKE',
     ];
@@ -28,7 +28,7 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
         $this->setFunction();
     }
 
-    public function setFunction($function = null)
+    public function setFunction(string $function = null): void
     {
         $this->dbalFunctionTemplate = $function ? \sprintf('%s(%%s)', $function) : '%s';
         $this->ormFunctionTemplate = $function ? 'unaccent_lower(%s)' : '%s';
@@ -61,7 +61,7 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
         );
     }
 
-    public function supports($qb, FilterRule $rule, $column)
+    public function supports(object $qb, FilterRule $rule, $column): bool
     {
         return
             parent::supports($qb, $rule, $column)
@@ -71,14 +71,17 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
             ], true);
     }
 
-    private function wrapColumn($qb, $column)
+    /**
+     * @param mixed $column
+     */
+    private function wrapColumn(object $qb, $column): string
     {
         $template = $qb instanceof ORMQueryBuilder ? $this->ormFunctionTemplate : $this->dbalFunctionTemplate;
 
         return \sprintf($template, $column);
     }
 
-    private function hasPostgresqlConnection($qb)
+    private function hasPostgresqlConnection(object $qb): bool
     {
         if ($qb instanceof DBALQueryBuilder) {
             $connection = $qb->getConnection();

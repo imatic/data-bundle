@@ -11,7 +11,7 @@ class BooleanRule extends FilterRule
 
     const NO = 'false';
 
-    protected function getDefaultOperators()
+    protected function getDefaultOperators(): array
     {
         return [
             FilterOperatorMap::OPERATOR_EQUAL,
@@ -20,17 +20,17 @@ class BooleanRule extends FilterRule
         ];
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return \is_bool($value) || \is_string($value);
     }
 
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return ChoiceType::class;
     }
 
-    protected function getDefaultFormOptions()
+    protected function getDefaultFormOptions(): array
     {
         $choices = [
             self::YES,

@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
@@ -11,11 +12,8 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema;
  */
 class EditHandler implements HandlerInterface
 {
-    /** @var Connection */
-    private $connection;
-
-    /** @var Schema */
-    private $schema;
+    private Connection $connection;
+    private Schema $schema;
 
     public function __construct(Connection $connection, Schema $schema)
     {
@@ -23,7 +21,10 @@ class EditHandler implements HandlerInterface
         $this->schema = $schema;
     }
 
-    public function handle(CommandInterface $command)
+    /**
+     * @throws Exception
+     */
+    public function handle(CommandInterface $command): void
     {
         $table = $command->getParameter('table');
         $data = $command->getParameter('data');

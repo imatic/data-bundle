@@ -8,26 +8,19 @@ interface CommandInterface extends \Serializable
     /**
      * @return string the alias of a command handler service
      */
-    public function getHandlerName();
+    public function getHandlerName(): string;
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getParameters();
+    public function getParameters(): array;
 
     /**
-     * @param string $name
+     * @return mixed
      *
      * @throws ParameterNotFoundException
-     *
-     * @return mixed
      */
-    public function getParameter($name);
+    public function getParameter(string $name);
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function hasParameter($name);
+    public function hasParameter(string $name): bool;
 }

@@ -5,50 +5,34 @@ use Imatic\Bundle\DataBundle\Exception\ParameterNotFoundException;
 
 class Command implements CommandInterface
 {
-    /**
-     * @var string
-     */
-    private $handlerName;
+    private string $handlerName;
 
     /**
-     * @var array
+     * @var mixed[]
      */
-    private $parameters;
+    private array $parameters;
 
     /**
      * @param string $handlerName Alias of the command handler service.
-     * @param array  $parameters Parameters used by command handler.
+     * @param mixed[] $parameters Parameters used by command handler.
      */
-    public function __construct($handlerName, array $parameters = [])
+    public function __construct(string $handlerName, array $parameters = [])
     {
         $this->handlerName = $handlerName;
         $this->parameters = $parameters;
     }
 
-    /**
-     * @return string
-     */
-    public function getHandlerName()
+    public function getHandlerName(): string
     {
         return $this->handlerName;
     }
 
-    /**
-     * @return array
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * @param string $name
-     *
-     * @throws ParameterNotFoundException
-     *
-     * @return mixed
-     */
-    public function getParameter($name)
+    public function getParameter(string $name)
     {
         if (\array_key_exists($name, $this->parameters)) {
             return $this->parameters[$name];
@@ -57,33 +41,17 @@ class Command implements CommandInterface
         throw new ParameterNotFoundException($name);
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function hasParameter($name)
+    public function hasParameter(string $name): bool
     {
         return \array_key_exists($name, $this->parameters);
     }
 
-    /**
-     * String representation of object.
-     *
-     * @return string
-     */
-    public function serialize()
+    public function serialize(): ?string
     {
-        // TODO: Implement serialize() method.
+        return null;
     }
 
-    /**
-     * Constructs the object.
-     *
-     * @param string $serialized
-     */
-    public function unserialize($serialized)
+    public function unserialize($data): void
     {
-        // TODO: Implement unserialize() method.
     }
 }

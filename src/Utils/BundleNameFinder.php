@@ -4,21 +4,19 @@ namespace Imatic\Bundle\DataBundle\Utils;
 class BundleNameFinder
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
-    private $bundles;
+    private array $bundles;
 
+    /**
+     * @param array<string, string> $bundles
+     */
     public function __construct(array $bundles)
     {
         $this->bundles = $bundles;
     }
 
-    /**
-     * @param string $class
-     *
-     * @return string|null
-     */
-    public function find($class)
+    public function find(string $class): ?string
     {
         $reflectionClass = new \ReflectionClass($class);
 

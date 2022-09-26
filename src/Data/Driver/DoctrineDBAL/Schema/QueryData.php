@@ -6,11 +6,23 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema;
  */
 class QueryData
 {
-    private $data;
-    private $types;
-    private $table;
+    private string $table;
 
-    public function __construct($table, array $data, array $types)
+    /**
+     * @var mixed[]
+     */
+    private array $data;
+
+    /**
+     * @var mixed[]
+     */
+    private array $types;
+
+    /**
+     * @param mixed[] $data
+     * @param mixed[] $types
+     */
+    public function __construct(string $table, array $data, array $types)
     {
         $this->data = $data;
         $this->types = $types;
@@ -20,23 +32,23 @@ class QueryData
     /**
      * @return string
      */
-    public function getTable()
+    public function getTable(): string
     {
         return $this->table;
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }

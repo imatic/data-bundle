@@ -11,10 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class QueryObjectQueryCommand extends Command
 {
-    const OPTION_ARGS = 'args';
+    private const OPTION_ARGS = 'args';
 
-    /** @var QueryExecutorInterface */
-    private $queryExecutor;
+    private QueryExecutorInterface $queryExecutor;
 
     public function __construct(QueryExecutorInterface $queryExecutor)
     {
@@ -23,19 +22,19 @@ class QueryObjectQueryCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('imatic:data:query-object-query')
             ->setDescription('Execute query defined in query object')
             ->addArgument('class', InputArgument::REQUIRED, 'Query object class')
-            ->addOption(static::OPTION_ARGS, null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'List of arguments to pass into query object');
+            ->addOption(self::OPTION_ARGS, null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'List of arguments to pass into query object');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $class = $input->getArgument('class');
-        $args = $input->getOption(static::OPTION_ARGS);
+        $args = $input->getOption(self::OPTION_ARGS);
 
         $classRef = new \ReflectionClass($class);
         $constructorRef = $classRef->getConstructor();
@@ -55,6 +54,6 @@ class QueryObjectQueryCommand extends Command
 
         $output->writeln(Debug::dump($result, 2, false, false));
 
-        return 0;
+        return Command::SUCCESS;
     }
 }

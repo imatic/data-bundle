@@ -5,19 +5,19 @@ use Imatic\Bundle\FormBundle\Form\Type\RangeType;
 
 class NumberRangeRule extends RangeRule
 {
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return RangeType::class;
     }
 
-    protected function getDefaultFormOptions()
+    protected function getDefaultFormOptions(): array
     {
         return [
             'translation_domain' => 'ImaticDataBundle',
         ];
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return
             parent::validateValue($value)

@@ -28,18 +28,12 @@ class CommandExecutorTest extends WebTestCase
         $this->assertFalse($user->isActivated());
     }
 
-    /**
-     * @return EntityRepository
-     */
-    public function getUserRepository()
+    public function getUserRepository(): EntityRepository
     {
         return $this->getEntityManager()->getRepository(User::class);
     }
 
-    /**
-     * @return CommandExecutor
-     */
-    private function getCommandExecutor()
+    private function getCommandExecutor(): CommandExecutor
     {
         return self::getContainer()->get(CommandExecutor::class);
     }

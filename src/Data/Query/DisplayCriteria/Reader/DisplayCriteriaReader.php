@@ -12,26 +12,16 @@ interface DisplayCriteriaReader
     const LIMIT = 'limit';
 
     /**
-     * @param string      $name
      * @param mixed|null  $default
-     * @param string|null $component
-     * @param bool        $persistent
      *
      * @return mixed
      */
-    public function readAttribute($name, $default = null, $component = null, $persistent = false);
+    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false);
 
     /**
-     * @param string      $name
-     * @param string|null $component
-     * @param mixed       $emptyValue
+     * @param mixed $emptyValue
      */
-    public function clearAttribute($name, $component = null, $emptyValue = null);
+    public function clearAttribute(string $name, string $component = null, $emptyValue = null): void;
 
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function attributeName($name);
+    public function attributeName(string $name): string;
 }

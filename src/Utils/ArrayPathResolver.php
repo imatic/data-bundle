@@ -10,21 +10,25 @@ namespace Imatic\Bundle\DataBundle\Utils;
  */
 class ArrayPathResolver
 {
-    /** @var array */
-    private $data;
+    /**
+     * @var mixed[]
+     */
+    private array $data;
 
+    /**
+     * @param mixed[] $data
+     */
     public function __construct(array $data)
     {
         $this->data = $data;
     }
 
     /**
-     * @param string $path
      * @param mixed  $default
      *
      * @return mixed
      */
-    public function resolve($path, $default = null)
+    public function resolve(string $path, $default = null)
     {
         if (false === ($pos = \strpos($path, '['))) {
             return \array_key_exists($path, $this->data) ? $this->data[$path] : $default;
@@ -67,7 +71,7 @@ class ArrayPathResolver
         }
 
         if (null !== $currentKey) {
-            throw new \InvalidArgumentException(\sprintf('Malformed path. Path must end with "]".'));
+            throw new \InvalidArgumentException('Malformed path. Path must end with "]".');
         }
 
         return $value;

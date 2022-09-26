@@ -18,6 +18,8 @@ class ResultNormalizer implements ResultNormalizerInterface
     }
 
     /**
+     * @return mixed[]
+     *
      * @throws Exception
      */
     public function normalize(QueryObjectInterface $queryObject, Result $result): array

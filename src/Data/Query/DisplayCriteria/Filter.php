@@ -8,29 +8,17 @@ class Filter implements FilterInterface
     /**
      * @var FilterRule[]
      */
-    protected $rules = [];
-
-    /**
-     * @var FormInterface
-     */
-    protected $form;
-
-    /**
-     * @var string
-     */
-    protected $translationDomain;
-
-    /**
-     * @var bool
-     */
-    protected $hasDefaults = false;
+    protected array $rules = [];
+    protected ?FormInterface $form = null;
+    protected ?string $translationDomain = null;
+    protected bool $hasDefaults = false;
 
     public function __construct()
     {
         $this->configure();
     }
 
-    public function boundCount()
+    public function boundCount(): int
     {
         return \array_reduce($this->rules, function ($count, FilterRule $rule) {
             return $rule->isBound() ? $count + 1 : $count;
@@ -40,48 +28,41 @@ class Filter implements FilterInterface
     /**
      * @return FilterRule[]
      */
-    public function getRules()
+    public function getRules(): array
     {
         return $this->rules;
     }
 
-    public function get($index)
+    /**
+     * @param mixed $index
+     */
+    public function get($index): ?FilterRule
     {
-        return $this->rules[$index];
+        return $this->rules[$index] ?? null;
     }
 
     /**
-     * @param $index
-     *
-     * @return bool
+     * @param mixed $index
      */
-    public function has($index)
+    public function has($index): bool
     {
         return isset($this->rules[$index]);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDefaults()
+    public function hasDefaults(): bool
     {
         return $this->hasDefaults;
     }
 
     /**
-     * @param string $index
+     * @param mixed $index
      */
-    public function remove($index)
+    public function remove($index): void
     {
         unset($this->rules[$index]);
     }
 
-    /**
-     * @param FilterRule $rule
-     *
-     * @return $this
-     */
-    public function add(FilterRule $rule)
+    public function add(FilterRule $rule): self
     {
         $this->rules[$rule->getName()] = $rule;
         $rule->setFilter($this);
@@ -93,76 +74,65 @@ class Filter implements FilterInterface
         return $this;
     }
 
-    /**
-     * @return FormInterface
-     */
-    public function getForm()
+    public function getForm(): ?FormInterface
     {
         return $this->form;
     }
 
     /**
-     * @param FormInterface $form
-     *
      * @throws \LogicException
      */
-    public function setForm(FormInterface $form)
+    public function setForm(FormInterface $form): void
     {
         if ($this->form) {
             throw new \LogicException('Form is already set.');
         }
+
         $this->form = $form;
     }
 
-    /**
-     * @return string
-     */
-    public function getTranslationDomain()
+    public function getTranslationDomain(): ?string
     {
         return $this->translationDomain;
     }
 
-    /**
-     * @param string $translationDomain
-     *
-     * @return $this
-     */
-    public function setTranslationDomain($translationDomain)
+    public function setTranslationDomain(string $translationDomain): self
     {
         $this->translationDomain = $translationDomain;
 
         return $this;
     }
 
-    public function offsetExists($index)
+    public function offsetExists($offset): bool
     {
-        return $this->has($index);
+        return $this->has($offset);
     }
 
-    public function offsetGet($index)
+    public function offsetGet($offset)
     {
-        return $this->get($index);
+        return $this->get($offset);
     }
 
-    public function offsetSet($index, $value)
+    public function offsetSet($offset, $value)
     {
-        if (!($value instanceof FilterRule) || $index !== $value->getName()) {
+        if (!($value instanceof FilterRule) || $offset !== $value->getName()) {
             throw new \InvalidArgumentException('Value must be a instance of FilterRule and index must be same as rule name');
         }
         $this->add($value);
     }
 
-    public function offsetUnset($index)
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset): void
     {
-        $this->remove($index);
+        $this->remove($offset);
     }
 
     /**
      * Retrieve an external iterator.
-     *
-     * @return \Iterator
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->rules);
     }
@@ -170,12 +140,12 @@ class Filter implements FilterInterface
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return \count($this->rules);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
     }
 }

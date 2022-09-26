@@ -8,15 +8,19 @@ use Doctrine\ORM\Query\SqlWalker;
 
 class UnaccentLower extends FunctionNode
 {
-    protected $stringPrimary;
-    protected static $function = 'unaccent_lower';
+    protected static string $function = 'unaccent_lower';
 
-    public function getSql(SqlWalker $sqlWalker)
+    /**
+     * @var mixed
+     */
+    protected $stringPrimary;
+
+    public function getSql(SqlWalker $sqlWalker): string
     {
         return \sprintf('%s(%s)', static::$function, $sqlWalker->walkSimpleArithmeticExpression($this->stringPrimary));
     }
 
-    public function parse(Parser $parser)
+    public function parse(Parser $parser): void
     {
         $parser->match(Lexer::T_IDENTIFIER);
         $parser->match(Lexer::T_OPEN_PARENTHESIS);
@@ -26,7 +30,7 @@ class UnaccentLower extends FunctionNode
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 
-    public static function setFunction($function)
+    public static function setFunction(string $function): void
     {
         static::$function = $function;
     }

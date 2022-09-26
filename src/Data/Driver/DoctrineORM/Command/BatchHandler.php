@@ -5,35 +5,32 @@ use Imatic\Bundle\DataBundle\Data\Command\Command;
 use Imatic\Bundle\DataBundle\Data\Command\CommandExecutorAwareInterface;
 use Imatic\Bundle\DataBundle\Data\Command\CommandExecutorAwareTrait;
 use Imatic\Bundle\DataBundle\Data\Command\CommandInterface;
+use Imatic\Bundle\DataBundle\Data\Command\CommandResultInterface;
 use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
 
 class BatchHandler implements HandlerInterface, CommandExecutorAwareInterface
 {
     use CommandExecutorAwareTrait;
 
-    /**
-     * @var RecordIterator
-     */
-    private $recordIterator;
+    private RecordIterator $recordIterator;
+    private string $commandName;
 
     /**
-     * @var string
+     * @var mixed[]
      */
-    private $commandName;
+    private array $commandParameters;
 
     /**
-     * @var array
+     * @param mixed[] $commandParameters
      */
-    private $commandParameters;
-
-    public function __construct(RecordIterator $recordIterator, $commandName, array $commandParameters = [])
+    public function __construct(RecordIterator $recordIterator, string $commandName, array $commandParameters = [])
     {
         $this->recordIterator = $recordIterator;
         $this->commandName = $commandName;
         $this->commandParameters = $commandParameters;
     }
 
-    public function handle(CommandInterface $command)
+    public function handle(CommandInterface $command): CommandResultInterface
     {
         $callback = function ($item) use ($command) {
             $batchCommand = new Command(
@@ -50,7 +47,12 @@ class BatchHandler implements HandlerInterface, CommandExecutorAwareInterface
         return $this->recordIterator->each($recordIteratorArgs);
     }
 
-    private function getCommandParameters(CommandInterface $command, $item)
+    /**
+     * @param mixed $item
+     *
+     * @return mixed[]
+     */
+    private function getCommandParameters(CommandInterface $command, $item): array
     {
         $parameters = $command->hasParameter('batch_command_parameters')
             ? $command->getParameter('batch_command_parameters')

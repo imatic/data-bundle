@@ -29,7 +29,7 @@ class ResultIterator extends BaseResultIterator
         $this->om = $om;
     }
 
-    protected function loadNextPage()
+    protected function loadNextPage(): void
     {
         $this->om->flush();
         $this->om->clear();

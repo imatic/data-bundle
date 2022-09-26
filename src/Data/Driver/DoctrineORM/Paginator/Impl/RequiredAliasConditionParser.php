@@ -17,9 +17,15 @@ use LogicException;
 
 class RequiredAliasConditionParser
 {
-    private static $handlers;
+    /**
+     * @var \Closure[]
+     */
+    private static array $handlers;
 
-    private static function create()
+    /**
+     * @return \Closure[]
+     */
+    private static function create(): array
     {
         return  [
             ConditionalTerm::class => function (ConditionalTerm $expr) {
@@ -86,7 +92,10 @@ class RequiredAliasConditionParser
         ];
     }
 
-    public static function parse($expr): array
+    /**
+     * @return mixed
+     */
+    public static function parse(object $expr)
     {
         if (!self::$handlers) {
             self::$handlers = self::create();

@@ -3,12 +3,9 @@ namespace Imatic\Bundle\DataBundle\Data\Command;
 
 trait CommandExecutorAwareTrait
 {
-    /**
-     * @var CommandExecutorInterface
-     */
-    protected $commandExecutor;
+    protected ?CommandExecutorInterface $commandExecutor = null;
 
-    public function setCommandExecutor(CommandExecutorInterface $commandExecutor)
+    public function setCommandExecutor(CommandExecutorInterface $commandExecutor): void
     {
         $this->commandExecutor = $commandExecutor;
     }

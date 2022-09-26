@@ -7,17 +7,17 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
  */
 class FilterRuleProcessorDelegate
 {
-    /** @var FilterRuleProcessorInterface[] */
-    private $filterRuleProcessors = [];
+    /**
+     * @var FilterRuleProcessorInterface[]
+     */
+    private array $filterRuleProcessors = [];
 
     /**
-     * @param object     $qb
-     * @param FilterRule $rule
-     * @param string     $column
+     * @param mixed $column
      *
      * @throws \LogicException
      */
-    public function process($qb, FilterRule $rule, $column)
+    public function process(object $qb, FilterRule $rule, $column): void
     {
         foreach ($this->filterRuleProcessors as $filterRoleProcessor) {
             if ($filterRoleProcessor->supports($qb, $rule, $column)) {
@@ -37,7 +37,7 @@ class FilterRuleProcessorDelegate
     /**
      * @param FilterRuleProcessorInterface[] $filterRuleProcessors
      */
-    public function setFilterRuleProcessors(array $filterRuleProcessors)
+    public function setFilterRuleProcessors(array $filterRuleProcessors): void
     {
         $this->filterRuleProcessors = $filterRuleProcessors;
     }

@@ -14,7 +14,7 @@ class EmptyOperatorProcessor extends AbstractFilterRuleProcessor
         return $qb->expr()->{$rule->getOperator()}($column);
     }
 
-    public function supports($qb, FilterRule $rule, $column)
+    public function supports(object $qb, FilterRule $rule, $column): bool
     {
         return
             parent::supports($qb, $rule, $column)

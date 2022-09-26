@@ -12,8 +12,7 @@ use Imatic\Bundle\DataBundle\Data\Command\HandlerInterface;
  */
 class DeleteHandler implements HandlerInterface
 {
-    /** @var Connection */
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {
@@ -27,6 +26,8 @@ class DeleteHandler implements HandlerInterface
 
         try {
             $this->connection->delete($table, $id);
+
+            return CommandResult::success();
         } catch (ForeignKeyConstraintViolationException $e) {
             return CommandResult::error('constraint_violation');
         }

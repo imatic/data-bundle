@@ -8,10 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class DriverCompilerPass implements CompilerPassInterface
 {
-    /**
-     * @param ContainerBuilder $container
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $drivers = $container->findTaggedServiceIds('imatic_data.driver');
         $driverRepositoryDef = $container->findDefinition(DriverRepository::class);

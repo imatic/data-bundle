@@ -3,7 +3,7 @@ namespace Imatic\Bundle\DataBundle\Utils;
 
 class QueryUtil
 {
-    public static function generateParameterName($prefix = 'param')
+    public static function generateParameterName(string $prefix = 'param'): string
     {
         static $c = 0;
 

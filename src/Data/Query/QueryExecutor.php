@@ -6,10 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface
 
 class QueryExecutor implements QueryExecutorInterface
 {
-    /**
-     * @var DriverRepositoryInterface
-     */
-    private $driverRepository;
+    private DriverRepositoryInterface$driverRepository;
 
     public function __construct(DriverRepositoryInterface $driverRepository)
     {
@@ -21,12 +18,12 @@ class QueryExecutor implements QueryExecutorInterface
         return $this->driverRepository->getQueryExecutorFor($queryObject)->execute($queryObject, $displayCriteria);
     }
 
-    public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): int
     {
         return $this->driverRepository->getQueryExecutorFor($queryObject)->count($queryObject, $displayCriteria);
     }
 
-    public function executeAndCount(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function executeAndCount(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): array
     {
         return $this->driverRepository->getQueryExecutorFor($queryObject)->executeAndCount($queryObject, $displayCriteria);
     }

@@ -6,43 +6,20 @@ use LogicException;
 class Pager implements PagerInterface
 {
     const DEFAULT_MAX_LIMIT = 300;
-
     const DEFAULT_LIMIT = 100;
-
     const MIN_PAGE = 1;
 
-    /**
-     * @var int
-     */
-    protected $defaultLimit;
+    protected int $defaultLimit = self::DEFAULT_LIMIT;
+    protected int $maxLimit = self::DEFAULT_MAX_LIMIT;
+    protected int $page;
+    protected int $limit;
+    protected ?int $total = null;
+    protected bool $enabled;
 
-    /**
-     * @var int
-     */
-    protected $maxLimit;
-
-    /**
-     * @var int Current page
-     */
-    protected $page;
-
-    /**
-     * @var int Items per page
-     */
-    protected $limit;
-
-    /**
-     * @var int Total items
-     */
-    protected $total;
-
-    /**
-     * @var bool
-     */
-    protected $enabled;
-
-    public function __construct($page = null, $limit = null)
+    public function __construct(int $page = 0, int $limit = 0)
     {
+        $this->limit = $limit;
+
         $this->setDefaultLimit(self::DEFAULT_LIMIT);
         $this->setMaxLimit(self::DEFAULT_MAX_LIMIT);
 
@@ -52,17 +29,17 @@ class Pager implements PagerInterface
         $this->enable();
     }
 
-    public function disable()
+    public function disable(): void
     {
         $this->enabled = false;
     }
 
-    public function enable()
+    public function enable(): void
     {
         $this->enabled = true;
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -70,58 +47,49 @@ class Pager implements PagerInterface
     /**
      * @return int
      */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * @param int $limit
-     */
-    protected function setLimit($limit)
+    protected function setLimit(int $limit): void
     {
-        $limit = (int) $limit;
         if ($limit < 1) {
             $limit = $this->getDefaultLimit();
         }
+
         if ($limit > $this->getMaxLimit()) {
             $limit = $this->getMaxLimit();
         }
+
         $this->limit = $limit;
     }
 
-    public function getOffset()
+    public function getOffset(): int
     {
         return ($this->getPage() - 1) * $this->getLimit();
     }
 
-    /**
-     * @return int
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @param int $page
-     */
-    protected function setPage($page)
+    protected function setPage(int $page): void
     {
-        $page = (int) $page;
         if ($page < self::MIN_PAGE) {
             $page = self::MIN_PAGE;
         }
+
         $this->page = $page;
+
         $this->fixPage();
     }
 
     /**
      * @throws LogicException
-     *
-     * @return int
      */
-    public function getTotal()
+    public function getTotal(): int
     {
         if (null === $this->total) {
             throw new LogicException('Total property is not initialized yet');
@@ -130,33 +98,21 @@ class Pager implements PagerInterface
         return $this->total;
     }
 
-    /**
-     * @param int $total
-     */
-    public function setTotal($total)
+    public function setTotal(int $total): void
     {
-        $this->total = (int) $total;
+        $this->total = $total;
         $this->fixPage();
     }
 
-    /**
-     * Returns first indice.
-     *
-     * @return int
-     */
-    public function getFirstIndice()
+    public function getFirstIndice(): int
     {
         return ($this->getPage() - 1) * $this->getLimit() + 1;
     }
 
-    /**
-     * Returns last indice.
-     *
-     * @return int
-     */
-    public function getLastIndice()
+    public function getLastIndice(): int
     {
         $last = $this->getFirstIndice() - 1 + $this->getLimit();
+
         if ($last > $this->getTotal()) {
             $last = $this->getTotal();
         }
@@ -164,12 +120,7 @@ class Pager implements PagerInterface
         return $last;
     }
 
-    /**
-     * Returns first page.
-     *
-     * @return int
-     */
-    public function getFirstPage()
+    public function getFirstPage(): int
     {
         return self::MIN_PAGE;
     }
@@ -179,46 +130,31 @@ class Pager implements PagerInterface
      *
      * @return int
      */
-    public function getLastPage()
+    public function getLastPage(): int
     {
         return (int) \max(self::MIN_PAGE, \ceil($this->getTotal() / $this->getLimit()));
     }
 
-    /**
-     * @return bool
-     */
-    public function isFirstPage()
+    public function isFirstPage(): bool
     {
         return $this->getPage() === $this->getFirstPage();
     }
 
-    /**
-     * @return bool
-     */
-    public function isLastPage()
+    public function isLastPage(): bool
     {
         return $this->getPage() === $this->getLastPage();
     }
 
-    /**
-     * @param $page
-     *
-     * @return bool
-     */
-    public function isCurrentPage($page)
+    public function isCurrentPage(int $page): bool
     {
         return $this->getPage() === $page;
     }
 
-    /**
-     * Returns next page.
-     *
-     * @return int
-     */
-    public function getNextPage()
+    public function getNextPage(): int
     {
         $nextPage = $this->getPage() + 1;
         $lastPage = $this->getLastPage();
+
         if ($lastPage < $nextPage) {
             $nextPage = $lastPage;
         }
@@ -226,15 +162,11 @@ class Pager implements PagerInterface
         return $nextPage;
     }
 
-    /**
-     * Returns previous page.
-     *
-     * @return int
-     */
-    public function getPreviousPage()
+    public function getPreviousPage(): int
     {
         $previousPage = $this->getPage() - 1;
         $firstPage = $this->getFirstPage();
+
         if ($firstPage > $previousPage) {
             $previousPage = $firstPage;
         }
@@ -242,24 +174,12 @@ class Pager implements PagerInterface
         return $previousPage;
     }
 
-    /**
-     * Returns true if total results more than page limit.
-     *
-     * @return bool
-     */
-    public function haveToPaginate()
+    public function haveToPaginate(): bool
     {
         return $this->getTotal() > $this->getLimit();
     }
 
-    /**
-     * Return pager navigation links.
-     *
-     * @param int $nb
-     *
-     * @return array
-     */
-    public function getLinks($nb = 5)
+    public function getLinks(int $nb = 5): array
     {
         $links = [];
         $fistPage = $this->getFirstPage();
@@ -283,46 +203,34 @@ class Pager implements PagerInterface
         return $links;
     }
 
-    /**
-     * @return int
-     */
-    public function getDefaultLimit()
+    public function getDefaultLimit(): int
     {
         return $this->defaultLimit;
     }
 
-    /**
-     * @param int $defaultLimit
-     */
-    public function setDefaultLimit($defaultLimit)
+    public function setDefaultLimit(int $defaultLimit): void
     {
-        $this->defaultLimit = (int) $defaultLimit;
+        $this->defaultLimit = $defaultLimit;
     }
 
-    /**
-     * @return int
-     */
-    public function getMaxLimit()
+    public function getMaxLimit(): int
     {
         return $this->maxLimit;
     }
 
-    /**
-     * @param int $maxLimit
-     */
-    public function setMaxLimit($maxLimit)
+    public function setMaxLimit(int $maxLimit): void
     {
-        $maxLimit = (int) $maxLimit;
         if ($this->getLimit() > $maxLimit) {
             $this->setLimit($maxLimit);
         }
+
         $this->maxLimit = $maxLimit;
     }
 
     /**
-     * Fix current page so it is not past the last one.
+     * Fix current page, so it is not past the last one.
      */
-    protected function fixPage()
+    protected function fixPage(): void
     {
         if (null !== $this->total) {
             $this->page = \min($this->page, $this->getLastPage());

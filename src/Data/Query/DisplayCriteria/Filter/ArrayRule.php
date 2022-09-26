@@ -7,19 +7,19 @@ use Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType;
 
 class ArrayRule extends FilterRule
 {
-    protected function getDefaultFormType()
+    protected function getDefaultFormType(): string
     {
         return ArrayRuleType::class;
     }
 
-    protected function getDefaultOperators()
+    protected function getDefaultOperators(): array
     {
         return [
             FilterOperatorMap::OPERATOR_IN,
         ];
     }
 
-    protected function validateValue($value)
+    protected function validateValue($value): bool
     {
         return \is_array($value);
     }

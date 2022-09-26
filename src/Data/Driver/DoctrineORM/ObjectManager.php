@@ -6,27 +6,24 @@ use Imatic\Bundle\DataBundle\Data\ObjectManagerInterface;
 
 class ObjectManager implements ObjectManagerInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    public function flush()
+    public function flush(): void
     {
         $this->em->flush();
     }
 
-    public function persist($object)
+    public function persist(object $object): void
     {
         $this->em->persist($object);
     }
 
-    public function remove($object)
+    public function remove(object $object): void
     {
         $this->em->remove($object);
     }

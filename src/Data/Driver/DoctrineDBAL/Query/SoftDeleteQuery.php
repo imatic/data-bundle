@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
 
 /**
@@ -9,16 +10,23 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
  */
 class SoftDeleteQuery implements QueryObjectInterface
 {
-    private $table;
-    private $ids;
+    private string $table;
 
-    public function __construct($table, $ids)
+    /**
+     * @var int[]
+     */
+    private array $ids;
+
+    /**
+     * @param int|int[] $ids
+     */
+    public function __construct(string $table, $ids)
     {
         $this->table = $table;
         $this->ids = \is_array($ids) ? $ids : [$ids];
     }
 
-    public function build(Connection $connection)
+    public function build(Connection $connection): QueryBuilder
     {
         $idsType = \count(\array_filter($this->ids, 'is_numeric')) === \count($this->ids)
             ? Connection::PARAM_INT_ARRAY

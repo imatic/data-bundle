@@ -28,15 +28,19 @@ class AstUtil
         );
     }
 
+    /**
+     * @return mixed[]
+     */
     private static function orderByRequiredAliases(SelectStatement $ast): array
     {
         return \array_map(
             function (OrderByItem $obi) {
                 if (!$obi->expression instanceof PathExpression) {
-                    throw new LogicException(
+                    throw new LogicException(sprintf(
                         'Expected expression of type "%s", got "%s".',
+                        PathExpression::class,
                         \gettype($obi->expression) === 'object' ? \get_class($obi->expression) : \gettype($obi->expression)
-                    );
+                    ));
                 }
 
                 return $obi->expression->identificationVariable;
@@ -45,6 +49,9 @@ class AstUtil
         );
     }
 
+    /**
+     * @return mixed[]
+     */
     private static function whereRequiredAliases(SelectStatement $ast): array
     {
         if (!$ast->whereClause) {
@@ -54,6 +61,11 @@ class AstUtil
         return RequiredAliasConditionParser::parse($ast->whereClause->conditionalExpression);
     }
 
+    /**
+     * @param mixed[] $queryComponents
+     *
+     * @return mixed[]
+     */
     private static function joinRequiredAliases(SelectStatement $ast, array $queryComponents): array
     {
         $requiredAliases = [];
@@ -81,6 +93,8 @@ class AstUtil
 
     /**
      * @todo Extract dependencies from join condition
+     *
+     * @return mixed[]
      */
     private static function joinDependencies(SelectStatement $ast): array
     {
@@ -95,6 +109,9 @@ class AstUtil
         return $joinDependencies;
     }
 
+    /**
+     * @param mixed[] $requiredAliases
+     */
     private static function trimJoins(SelectStatement $ast, array $requiredAliases): void
     {
         $rq = \array_flip($requiredAliases);
@@ -102,12 +119,17 @@ class AstUtil
             $ivd->joins = \array_filter(
                 $ivd->joins,
                 function (Join $join) use ($rq) {
-                    return isset($rq[$join->joinAssociationDeclaration->aliasIdentificationVariable]);
+                    return isset($rq[$join->joinAssociationDeclaration->aliasIdentificationVariable ?? null]);
                 }
             );
         }
     }
 
+    /**
+     * @param mixed[] $queryComponents
+     *
+     * @return mixed[]
+     */
     private static function requiredAliases(SelectStatement $ast, array $queryComponents): array
     {
         $requiredAliases = \array_flip(
@@ -138,7 +160,10 @@ class AstUtil
         return \array_keys($requiredAliases);
     }
 
-    public static function trim(SelectStatement $ast, array $queryComponents)
+    /**
+     * @param mixed[] $queryComponents
+     */
+    public static function trim(SelectStatement $ast, array $queryComponents): void
     {
         self::trimSelect($ast);
         self::trimJoins($ast, self::requiredAliases($ast, $queryComponents));

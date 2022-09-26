@@ -5,25 +5,10 @@ use Psr\Log\LoggerInterface;
 
 class CommandExecutor implements CommandExecutorInterface
 {
-    /**
-     * @var HandlerRepositoryInterface
-     */
-    private $handlerRepository;
+    private HandlerRepositoryInterface $handlerRepository;
+    private ?LoggerInterface $logger;
+    private bool $debug;
 
-    /**
-     * @var LoggerInterface|null
-     */
-    private $logger;
-
-    /**
-     * @var bool
-     */
-    private $debug;
-
-    /**
-     * @param HandlerRepositoryInterface $handlerRepository
-     * @param bool                       $debug
-     */
     public function __construct(HandlerRepositoryInterface $handlerRepository, LoggerInterface $logger = null, bool $debug = false)
     {
         $this->handlerRepository = $handlerRepository;
@@ -32,13 +17,9 @@ class CommandExecutor implements CommandExecutorInterface
     }
 
     /**
-     * @param CommandInterface $command
-     *
      * @throws \Exception
-     *
-     * @return CommandResultInterface
      */
-    public function execute(CommandInterface $command)
+    public function execute(CommandInterface $command): CommandResultInterface
     {
         $commandHandler = $this->handlerRepository->getHandler($command);
 
@@ -73,11 +54,7 @@ class CommandExecutor implements CommandExecutorInterface
         return $result;
     }
 
-    /**
-     * @param CommandInterface       $command
-     * @param CommandResultInterface $result
-     */
-    private function processMessages(CommandInterface $command, CommandResultInterface $result)
+    private function processMessages(CommandInterface $command, CommandResultInterface $result): void
     {
         $translationDomain = $this->handlerRepository->getBundleName($command) . 'Messages';
 

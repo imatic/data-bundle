@@ -14,7 +14,10 @@ class ArrayDisplayCriteriaFactory extends DisplayCriteriaFactory
         parent::__construct($pagerFactory, $formFactory, new ArrayReader());
     }
 
-    public function setAttributes(array $attributes = [])
+    /**
+     * @param mixed[] $attributes
+     */
+    public function setAttributes(array $attributes = []): void
     {
         $this->displayCriteriaReader = new ArrayReader($attributes);
     }
