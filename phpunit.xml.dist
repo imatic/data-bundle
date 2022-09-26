@@ -4,7 +4,7 @@
 <phpunit backupGlobals="false"
          colors="true"
          stopOnFailure="false"
-         bootstrap="Tests/bootstrap.php"
+         bootstrap="tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="ImaticDataBundle test suite">

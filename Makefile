@@ -1,11 +1,15 @@
 SHELL := /usr/bin/env bash
 
 .PHONY: test
-test: phpunit phpcs
+test: phpstan phpunit phpcs
 
 .PHONY: phpcs
 phpcs:
 	./vendor/bin/php-cs-fixer fix --dry-run
+
+.PHONY: phpstan
+phpunit:
+	./vendor/bin/phpstan
 
 .PHONY: phpunit
 phpunit:
@@ -13,7 +17,7 @@ phpunit:
 
 .PHONY: update-test
 update-test: | composer
-	rm -rf Tests/Fixtures/TestProject/cache/test/
+	rm -rf tests/Fixtures/TestProject/cache/test/
 	./composer install
 
 composer:
