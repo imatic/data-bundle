@@ -1,0 +1,26 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity}'
+
+    # https://github.com/symfony/symfony-docs/issues/9890
+    imatic_data.tests.command_executor:
+        public: true
+        alias: Imatic\Bundle\DataBundle\Data\Command\CommandExecutor
+
+    imatic_data.tests.display_criteria_factory:
+        public: true
+        alias: Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory
+
+    imatic_data.tests.doctrine_dbal.record_iterator:
+        public: true
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator
+
+    imatic_data.tests.doctrine_orm.record_iterator:
+        public: true
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator
