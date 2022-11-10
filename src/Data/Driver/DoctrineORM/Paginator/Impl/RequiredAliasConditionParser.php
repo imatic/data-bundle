@@ -18,9 +18,9 @@ use LogicException;
 class RequiredAliasConditionParser
 {
     /**
-     * @var \Closure[]
+     * @var ?\Closure[]
      */
-    private static array $handlers;
+    private static ?array $handlers = null;
 
     /**
      * @return \Closure[]
