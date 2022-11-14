@@ -3,6 +3,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
 use ArrayIterator;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Internal\SQLResultCasing;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Parameter;
@@ -23,6 +24,8 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\LimitSubqueryOutp
  */
 class Paginator extends DoctrinePaginator
 {
+    use SQLResultCasing;
+
     private Query $query;
     private bool $fetchJoinCollection;
     private ?bool $useOutputWalkers = null;
@@ -212,10 +215,7 @@ class Paginator extends DoctrinePaginator
 
             $rsm = new ResultSetMapping();
 
-            if (method_exists($platform, 'getSQLResultCasing')) {
-                $rsm->addScalarResult($platform->getSQLResultCasing('dctrn_count'), 'count');
-            }
-
+            $rsm->addScalarResult($this->getSQLResultCasing($platform, 'dctrn_count'), 'count');
             $countQuery->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, CountOutputWalker::class);
             $countQuery->setResultSetMapping($rsm);
         } else {

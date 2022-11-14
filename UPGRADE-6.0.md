@@ -15,7 +15,8 @@ Configuration
 QueryObject
 -----------
 
-* it is required that every`QueryObject` that selects data implements `Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface`
+* it is required that every DBAL `QueryObject` that selects data implements `Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface`
+* it is required that every ORM `QueryObject` that selects data for listing implements `Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface`
 
 Before:
    ```php
