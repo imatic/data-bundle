@@ -10,8 +10,12 @@ class Filter implements FilterInterface
      */
     protected array $rules = [];
     protected ?FormInterface $form = null;
-    protected ?string $translationDomain = null;
     protected bool $hasDefaults = false;
+
+    /**
+     * @var string|null|false
+     */
+    protected $translationDomain = null;
 
     public function __construct()
     {
@@ -91,12 +95,15 @@ class Filter implements FilterInterface
         $this->form = $form;
     }
 
-    public function getTranslationDomain(): ?string
+    public function getTranslationDomain()
     {
         return $this->translationDomain;
     }
 
-    public function setTranslationDomain(string $translationDomain): self
+    /**
+     * @param string|null|false $translationDomain
+     */
+    public function setTranslationDomain($translationDomain): self
     {
         $this->translationDomain = $translationDomain;
 

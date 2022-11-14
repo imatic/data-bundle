@@ -196,7 +196,10 @@ abstract class FilterRule
         return $this->formOptions;
     }
 
-    public function setTranslationDomain(string $translationDomain): self
+    /**
+     * @param string|null|false $translationDomain
+     */
+    public function setTranslationDomain($translationDomain): self
     {
         $this->formOptions['translation_domain'] = $translationDomain;
 

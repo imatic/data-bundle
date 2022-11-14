@@ -13,5 +13,8 @@ interface FilterInterface extends \IteratorAggregate, \Countable, \ArrayAccess
 
     public function getForm(): ?FormInterface;
 
-    public function getTranslationDomain(): ?string;
+    /**
+     * @return string|null|false
+     */
+    public function getTranslationDomain();
 }
