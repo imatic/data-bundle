@@ -144,11 +144,13 @@ abstract class FilterRule
     }
 
     /**
+     * @param mixed $operator
+     *
      * @throws \InvalidArgumentException
      */
-    public function setOperator(?string $operator): self
+    public function setOperator($operator): self
     {
-        if ($operator) {
+        if (\is_string($operator)) {
             if (!$this->validateOperator($operator)) {
                 throw new \InvalidArgumentException(\sprintf('Binding invalid operator "%s" into filter "%s"', $operator, $this->name));
             }
@@ -248,7 +250,10 @@ abstract class FilterRule
      */
     abstract protected function getDefaultOperators(): array;
 
-    protected function getDefaultOperator(): ?string
+    /**
+     * @return false|mixed
+     */
+    protected function getDefaultOperator()
     {
         return \reset($this->operators);
     }
