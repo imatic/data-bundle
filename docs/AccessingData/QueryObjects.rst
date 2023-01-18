@@ -196,16 +196,12 @@ Example of using query executor
    $allActiveUsers = $queryExecutor->execute(new ActiveUsersQuery());
    $totalNumberOfActiveUsers = $queryExecutor->count(new ActiveUsersQuery());
 
-Using multiple storage connections
-----------------------------------
+Using multiple Entity Managers and Connections
+----------------------------------------------
 
-- in case application is using multiple storage connections (e.g.
-  `doctrine connectinos <http://docs.doctrine-project.org/projects/doctrine1/en/latest/en/manual/connections.html#connections>`__
-  in case of doctrine), connection can be specified by implementing ``ConnectionQueryObjectInterface`` and returning
-  name of the connection in ``getConnectionName`` method.
-
-Example of getting configuration via ``config`` connection
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In case application is using `multiple connections or entity managers <https://symfony.com/doc/current/doctrine/multiple_entity_managers.html>`__,
+connection can be specified by implementing ``ConnectionQueryObjectInterface`` and returning name of the connection
+in ``getConnectionName`` method.
 
 .. sourcecode:: php
 
@@ -218,20 +214,9 @@ Example of getting configuration via ``config`` connection
 
    class UserConfigQuery implements QueryObjectInterface, ConnectionQueryObjectInterface
    {
-       private $userId;
-
-       public function __construct($userId)
-       {
-           $this->userId = $userId;
-       }
-
        public function build(Connection $connection): QueryBuilder
        {
-           return $connection->createQueryBuilder()
-               ->select('c.*')
-               ->from('user_config', 'c')
-               ->where('c.user_id = :user_id')
-               ->setParameter('user_id', $this->userId);
+           // ...
        }
 
        public function getConnectionName(): string
@@ -239,6 +224,31 @@ Example of getting configuration via ``config`` connection
            return 'config';
        }
    }
+
+Entity manager can be specified by implementing ``ManagerQueryObjectInterface`` and returning name of the manager
+in ``getManagerName`` method.
+
+.. sourcecode:: php
+
+    <?php
+
+    use Doctrine\ORM\EntityManager;
+    use Doctrine\ORM\QueryBuilder;
+    use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ManagerQueryObjectInterface;
+    use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
+
+    final class ListQuery implements QueryObjectInterface, ManagerQueryObjectInterface
+    {
+        public function build(EntityManager $em): QueryBuilder
+        {
+            // ...
+        }
+
+        public function getManagerName(): string
+        {
+            return 'customer';
+        }
+    }
 
 Making query object selectable
 ------------------------------

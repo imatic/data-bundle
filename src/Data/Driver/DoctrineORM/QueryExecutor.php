@@ -4,6 +4,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\Persistence\ManagerRegistry;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator as ImaticPaginator;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface as DoctrineORMQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaInterface;
@@ -18,12 +19,12 @@ use Imatic\Bundle\DataBundle\Exception\UnsupportedQueryObjectException;
 
 class QueryExecutor implements QueryExecutorInterface
 {
-    private EntityManager $entityManager;
+    private ManagerRegistry $managerRegistry;
     private DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder;
 
-    public function __construct(EntityManager $entityManager, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
+    public function __construct(ManagerRegistry $managerRegistry, DisplayCriteriaQueryBuilderDelegate $displayCriteriaQueryBuilder)
     {
-        $this->entityManager = $entityManager;
+        $this->managerRegistry = $managerRegistry;
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
     }
 
@@ -42,7 +43,7 @@ class QueryExecutor implements QueryExecutorInterface
             throw new UnsupportedQueryObjectException($queryObject, $this);
         }
 
-        $qb = $queryObject->build($this->entityManager);
+        $qb = $queryObject->build($this->getManager($queryObject));
 
         if ($displayCriteria) {
             $this->displayCriteriaQueryBuilder->applyFilter($qb, $displayCriteria->getFilter(), $queryObject);
@@ -60,7 +61,7 @@ class QueryExecutor implements QueryExecutorInterface
             throw new UnsupportedQueryObjectException($queryObject, $this);
         }
 
-        $qb = $queryObject->build($this->entityManager);
+        $qb = $queryObject->build($this->getManager($queryObject));
 
         if ($displayCriteria) {
             $this->displayCriteriaQueryBuilder->apply($qb, $queryObject, $displayCriteria);
@@ -79,17 +80,49 @@ class QueryExecutor implements QueryExecutorInterface
 
     public function beginTransaction(): void
     {
-        $this->entityManager->beginTransaction();
+        trigger_deprecation('imatic/data-bundle', '6.1', 'Method "%s()" is deprecated, use "%s::getManager()" instead.', __METHOD__, __CLASS__);
+
+        $this->getManager()->beginTransaction();
     }
 
     public function commit(): void
     {
-        $this->entityManager->commit();
+        trigger_deprecation('imatic/data-bundle', '6.1', 'Method "%s()" is deprecated, use "%s::getManager()" instead.', __METHOD__, __CLASS__);
+
+        $this->getManager()->commit();
     }
 
     public function rollback(): void
     {
-        $this->entityManager->rollback();
+        trigger_deprecation('imatic/data-bundle', '6.1', 'Method "%s()" is deprecated, use "%s::getManager()" instead.', __METHOD__, __CLASS__);
+
+        $this->getManager()->rollback();
+    }
+
+    public function getManager(BaseQueryObjectInterface $queryObject = null): EntityManager
+    {
+        $manager = $this->managerRegistry->getManager($this->getManagerName($queryObject));
+
+        if (!$manager instanceof EntityManager) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Only managers of type "%s" are supported. Instance of "%s given.',
+                    EntityManager::class,
+                    \get_class($manager)
+                )
+            );
+        }
+
+        return $manager;
+    }
+
+    private function getManagerName(BaseQueryObjectInterface $queryObject = null): ?string
+    {
+        if ($queryObject instanceof ManagerQueryObjectInterface) {
+            $name = $queryObject->getManagerName();
+        }
+
+        return $name ?? null;
     }
 
     /**

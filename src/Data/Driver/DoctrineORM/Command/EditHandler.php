@@ -19,6 +19,7 @@ class EditHandler implements HandlerInterface
     public function handle(CommandInterface $command): CommandResult
     {
         $object = $command->getParameter('data');
+        $managerName = $command->hasParameter('manager_name') ? $command->getParameter('manager_name') : null;
 
         if ($command->hasParameter('class')) {
             $class = $command->getParameter('class');
@@ -28,7 +29,7 @@ class EditHandler implements HandlerInterface
         }
 
         try {
-            $this->objectManager->flush();
+            $this->objectManager->flush($managerName);
 
             return CommandResult::success();
         } catch (ForeignKeyConstraintViolationException $e) {

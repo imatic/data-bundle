@@ -30,25 +30,27 @@ class RecordIterator
 
     public function each(RecordIteratorArgs $recordIteratorArgs): CommandResult
     {
-        $records = $this->getRecords($recordIteratorArgs->getCommand(), $recordIteratorArgs->getQueryObject());
+        $queryObject = $recordIteratorArgs->getQueryObject();
+        $records = $this->getRecords($recordIteratorArgs->getCommand(), $queryObject);
 
-        return $this->passValues($records, $recordIteratorArgs->getCallback());
+        return $this->passValues($records, $recordIteratorArgs->getCallback(), $queryObject);
     }
 
     public function eachIdentifier(RecordIteratorArgs $recordIteratorArgs): CommandResult
     {
-        $ids = $this->getRecordIds($recordIteratorArgs->getCommand(), $recordIteratorArgs->getQueryObject());
+        $queryObject = $recordIteratorArgs->getQueryObject();
+        $ids = $this->getRecordIds($recordIteratorArgs->getCommand(), $queryObject);
 
-        return $this->passValues($ids, $recordIteratorArgs->getCallback());
+        return $this->passValues($ids, $recordIteratorArgs->getCallback(), $queryObject);
     }
 
     /**
      * @param mixed $values
      */
-    protected function passValues($values, callable $callback): CommandResult
+    protected function passValues($values, callable $callback, QueryObjectInterface $queryObject = null): CommandResult
     {
         try {
-            $this->queryExecutor->beginTransaction();
+            $this->queryExecutor->getManager($queryObject)->beginTransaction();
 
             foreach ($values as $value) {
                 $result = \call_user_func($callback, $value);
@@ -62,9 +64,9 @@ class RecordIterator
                 }
             }
 
-            $this->queryExecutor->commit();
+            $this->queryExecutor->getManager($queryObject)->commit();
         } catch (\Exception $e) {
-            $this->queryExecutor->rollback();
+            $this->queryExecutor->getManager($queryObject)->rollback();
 
             $return = CommandResult::error('batch_error', [], $e);
             if (isset($result)) {

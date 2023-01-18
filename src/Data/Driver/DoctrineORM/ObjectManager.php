@@ -1,30 +1,39 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Imatic\Bundle\DataBundle\Data\ObjectManagerInterface;
 
 class ObjectManager implements ObjectManagerInterface
 {
-    private EntityManagerInterface $em;
+    private ManagerRegistry $registry;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(ManagerRegistry $registry)
     {
-        $this->em = $em;
+        $this->registry = $registry;
     }
 
-    public function flush(): void
+    /**
+     * @param string|null $name The object manager name (null for the default one).
+     */
+    public function flush(string $name = null): void
     {
-        $this->em->flush();
+        $this->registry->getManager($name)->flush();
     }
 
-    public function persist(object $object): void
+    /**
+     * @param string|null $name The object manager name (null for the default one).
+     */
+    public function persist(object $object, string $name = null): void
     {
-        $this->em->persist($object);
+        $this->registry->getManager($name)->persist($object);
     }
 
-    public function remove(object $object): void
+    /**
+     * @param string|null $name The object manager name (null for the default one).
+     */
+    public function remove(object $object, string $name = null): void
     {
-        $this->em->remove($object);
+        $this->registry->getManager($name)->remove($object);
     }
 }

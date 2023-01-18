@@ -18,6 +18,7 @@ class CreateHandler implements HandlerInterface
     public function handle(CommandInterface $command): CommandResult
     {
         $object = $command->getParameter('data');
+        $managerName = $command->hasParameter('manager_name') ? $command->getParameter('manager_name') : null;
 
         if ($command->hasParameter('class')) {
             $class = $command->getParameter('class');
@@ -26,8 +27,8 @@ class CreateHandler implements HandlerInterface
             }
         }
 
-        $this->objectManager->persist($object);
-        $this->objectManager->flush();
+        $this->objectManager->persist($object, $managerName);
+        $this->objectManager->flush($managerName);
 
         return CommandResult::success();
     }

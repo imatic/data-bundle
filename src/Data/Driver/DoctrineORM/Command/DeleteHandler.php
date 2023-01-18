@@ -23,6 +23,7 @@ class DeleteHandler implements HandlerInterface
     {
         $class = $command->getParameter('class');
         $object = $command->hasParameter('object') ? $command->getParameter('object') : null;
+        $managerName = $command->hasParameter('manager_name') ? $command->getParameter('manager_name') : null;
 
         // if no object has been given, try loading it using a query object
         if (!$object) {
@@ -32,8 +33,8 @@ class DeleteHandler implements HandlerInterface
         // try removing the object if it is valid
         if ($object instanceof $class) {
             try {
-                $this->objectManager->remove($object);
-                $this->objectManager->flush();
+                $this->objectManager->remove($object, $managerName);
+                $this->objectManager->flush($managerName);
 
                 return CommandResult::success();
             } catch (ForeignKeyConstraintViolationException $e) {

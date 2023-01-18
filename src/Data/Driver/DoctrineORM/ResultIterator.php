@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM;
 
-use Doctrine\Persistence\ObjectManager as DoctrineObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterInterface;
-use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Data\ResultIterator as BaseResultIterator;
 
 /**
@@ -12,27 +11,25 @@ use Imatic\Bundle\DataBundle\Data\ResultIterator as BaseResultIterator;
  */
 class ResultIterator extends BaseResultIterator
 {
-    /**
-     * @var DoctrineObjectManager
-     */
-    protected $om;
+    private EntityManagerInterface $manager;
 
     public function __construct(
         QueryObjectInterface $queryObject,
         ArrayDisplayCriteriaFactory $displayCriteriaFactory,
         FilterInterface $filter,
-        QueryExecutorInterface $queryExecutor,
-        DoctrineObjectManager $om,
+        QueryExecutor $queryExecutor,
         array $criteria = []
     ) {
+        $this->manager = $queryExecutor->getManager($queryObject);
+
         parent::__construct($queryObject, $displayCriteriaFactory, $filter, $queryExecutor, $criteria);
-        $this->om = $om;
     }
 
     protected function loadNextPage(): void
     {
-        $this->om->flush();
-        $this->om->clear();
+        $this->manager->flush();
+        $this->manager->clear();
+
         parent::loadNextPage();
     }
 }
