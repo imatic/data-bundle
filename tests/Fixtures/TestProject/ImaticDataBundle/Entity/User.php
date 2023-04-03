@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="test_user")
  *
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -16,7 +17,9 @@ class User
      * @var int
      *
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;

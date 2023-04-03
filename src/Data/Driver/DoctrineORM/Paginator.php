@@ -87,7 +87,7 @@ class Paginator extends DoctrinePaginator
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         if ($this->count === null) {
             try {
@@ -103,7 +103,7 @@ class Paginator extends DoctrinePaginator
     /**
      * {@inheritdoc}
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         $offset = $this->query->getFirstResult();
         $length = $this->query->getMaxResults();

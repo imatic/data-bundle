@@ -51,17 +51,17 @@ class ResultIterator implements Iterator, \Countable
         $this->criteria = $criteria;
     }
 
-    public function current()
+    public function current(): mixed
     {
         return $this->cache[$this->position % $this->getLimit()];
     }
 
-    public function key()
+    public function key(): mixed
     {
         return $this->position;
     }
 
-    public function next()
+    public function next(): void
     {
         ++$this->position;
 
@@ -70,7 +70,7 @@ class ResultIterator implements Iterator, \Countable
         }
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         $this->init();
     }
