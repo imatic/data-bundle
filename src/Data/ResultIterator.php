@@ -51,12 +51,14 @@ class ResultIterator implements Iterator, \Countable
         $this->criteria = $criteria;
     }
 
-    public function current(): mixed
+    #[\ReturnTypeWillChange]
+    public function current()
     {
         return $this->cache[$this->position % $this->getLimit()];
     }
 
-    public function key(): mixed
+    #[\ReturnTypeWillChange]
+    public function key()
     {
         return $this->position;
     }
