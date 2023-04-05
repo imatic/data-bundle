@@ -115,12 +115,13 @@ class Filter implements FilterInterface
         return $this->has($offset);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!($value instanceof FilterRule) || $offset !== $value->getName()) {
             throw new \InvalidArgumentException('Value must be a instance of FilterRule and index must be same as rule name');
