@@ -35,7 +35,9 @@ abstract class FilterRule
     protected array $operators;
 
     protected string $formType;
-    protected ?string $type = null;
+
+    /** @var int|string|null */
+    protected $type = null;
 
     /**
      * @var mixed[]
@@ -208,14 +210,20 @@ abstract class FilterRule
         return $this;
     }
 
-    public function setType(string $type): self
+    /**
+     * @param int|string|null $type
+     */
+    public function setType($type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getType() :?string
+    /**
+     * @return int|string|null
+     */
+    public function getType()
     {
         return $this->type;
     }
