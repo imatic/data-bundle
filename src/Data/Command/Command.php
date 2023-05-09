@@ -46,6 +46,21 @@ class Command implements CommandInterface
         return \array_key_exists($name, $this->parameters);
     }
 
+    /**
+     * @return mixed[]
+     */
+    public function __serialize(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param mixed[] $data
+     */
+    public function __unserialize(array $data): void
+    {
+    }
+
     public function serialize(): ?string
     {
         return null;

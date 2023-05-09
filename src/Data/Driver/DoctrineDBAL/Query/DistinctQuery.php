@@ -4,11 +4,12 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface;
+use Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
-class DistinctQuery implements QueryObjectInterface
+class DistinctQuery implements QueryObjectInterface, ResultQueryObjectInterface
 {
     private string $table;
     private string $column;
