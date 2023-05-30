@@ -7,7 +7,9 @@ use Doctrine\ORM\Query\AST\ConditionalExpression;
 use Doctrine\ORM\Query\AST\ConditionalPrimary;
 use Doctrine\ORM\Query\AST\ConditionalTerm;
 use Doctrine\ORM\Query\AST\InExpression;
+use Doctrine\ORM\Query\AST\InListExpression;
 use Doctrine\ORM\Query\AST\InputParameter;
+use Doctrine\ORM\Query\AST\InSubselectExpression;
 use Doctrine\ORM\Query\AST\Literal;
 use Doctrine\ORM\Query\AST\NullComparisonExpression;
 use Doctrine\ORM\Query\AST\PathExpression;
@@ -62,6 +64,12 @@ class RequiredAliasConditionParser
             InExpression::class => function (InExpression $expr): array {
                 return self::parse($expr->expression->simpleArithmeticExpression);
             },
+            InListExpression::class => function (InListExpression $expr): array {
+                return self::parse($expr->expression->simpleArithmeticExpression);
+            },
+            InSubselectExpression::class => function (InSubselectExpression $expr): array {
+                return self::parse($expr->expression->simpleArithmeticExpression);
+            },
             PathExpression::class => function (PathExpression $expr): array {
                 return [$expr->identificationVariable];
             },
@@ -102,6 +110,7 @@ class RequiredAliasConditionParser
         }
 
         $handler = self::$handlers[\get_class($expr)] ?? null;
+
         if (!$handler) {
             throw new LogicException(\sprintf(
                 'Handler for "%s" expr is not registered.',

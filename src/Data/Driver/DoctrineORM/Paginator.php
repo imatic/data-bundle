@@ -129,7 +129,7 @@ class Paginator extends DoctrinePaginator
             }
 
             $this->appendTreeWalker($whereInQuery, WhereInWalker::class);
-            $whereInQuery->setHint(WhereInWalker::HINT_PAGINATOR_ID_COUNT, \count($ids));
+            $whereInQuery->setHint(WhereInWalker::HINT_PAGINATOR_HAS_IDS, \count($ids));
             $whereInQuery->setFirstResult(null)->setMaxResults(null);
             $whereInQuery->setParameter(WhereInWalker::PAGINATOR_ID_ALIAS, $ids);
             $whereInQuery->setCacheable($this->query->isCacheable());

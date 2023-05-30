@@ -12,9 +12,13 @@ class CountOutputWalker extends DoctrineWalker
      */
     private array $queryComponents;
 
+    /**
+     * @param mixed[] $queryComponents
+     */
     public function __construct($query, $parserResult, array $queryComponents)
     {
         $this->queryComponents = $queryComponents;
+
         parent::__construct($query, $parserResult, $queryComponents);
     }
 

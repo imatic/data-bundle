@@ -136,7 +136,7 @@ class QueryExecutor implements QueryExecutorInterface
             return $query->getScalarResult();
         } elseif ($queryObject instanceof SingleResultQueryObjectInterface) {
             return $query->getOneOrNullResult();
-        } elseif ($queryObject instanceof ResultQueryObjectInterface && (null !== $query->getMaxResults() || null !== $query->getFirstResult())) {
+        } elseif ($queryObject instanceof ResultQueryObjectInterface && (null !== $query->getMaxResults() || 0 !== $query->getFirstResult())) {
             return \iterator_to_array($this->createPaginator($queryObject, $query));
         }
 
