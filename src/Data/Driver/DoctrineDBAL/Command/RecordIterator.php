@@ -11,21 +11,22 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\ArrayRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SelectableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\ResultIterator;
+use Psr\Log\LoggerInterface;
 
-/**
- * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
- */
 class RecordIterator
 {
     protected QueryExecutor $queryExecutor;
     protected ResultIteratorFactory $resultIteratorFactory;
+    protected ?LoggerInterface $logger;
 
     public function __construct(
         QueryExecutor $queryExecutor,
-        ResultIteratorFactory $resultIteratorFactory
+        ResultIteratorFactory $resultIteratorFactory,
+        LoggerInterface $logger = null
     ) {
         $this->queryExecutor = $queryExecutor;
         $this->resultIteratorFactory = $resultIteratorFactory;
+        $this->logger = $logger;
     }
 
     public function each(RecordIteratorArgs $recordIteratorArgs): CommandResult
@@ -61,6 +62,10 @@ class RecordIterator
             $this->queryExecutor->commit();
         } catch (Exception $e) {
             $this->queryExecutor->rollback();
+
+            if (null !== $this->logger) {
+                $this->logger->error('An exception was thrown when passing values.', ['exception' => $e]);
+            }
 
             $return = CommandResult::error('batch_error', [], $e);
             if (isset($result)) {

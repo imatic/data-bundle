@@ -10,22 +10,22 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\ArrayRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SelectableQueryObjectInterface;
-use RuntimeException;
+use Psr\Log\LoggerInterface;
 
-/**
- * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
- */
 class RecordIterator
 {
     protected QueryExecutor $queryExecutor;
     protected ResultIteratorFactory $resultIteratorFactory;
+    protected ?LoggerInterface $logger;
 
     public function __construct(
         QueryExecutor $queryExecutor,
-        ResultIteratorFactory $resultIteratorFactory
+        ResultIteratorFactory $resultIteratorFactory,
+        LoggerInterface $logger = null
     ) {
         $this->queryExecutor = $queryExecutor;
         $this->resultIteratorFactory = $resultIteratorFactory;
+        $this->logger = $logger;
     }
 
     public function each(RecordIteratorArgs $recordIteratorArgs): CommandResult
@@ -56,7 +56,7 @@ class RecordIterator
                 $result = \call_user_func($callback, $value);
 
                 if (!$result->isSuccessful()) {
-                    throw new RuntimeException(
+                    throw new \RuntimeException(
                         'Unsuccessful batch processing',
                         0,
                         $result->hasException() ? $result->getException() : null
@@ -67,6 +67,10 @@ class RecordIterator
             $this->queryExecutor->getManager($queryObject)->commit();
         } catch (\Exception $e) {
             $this->queryExecutor->getManager($queryObject)->rollback();
+
+            if (null !== $this->logger) {
+                $this->logger->error('An exception was thrown when passing values.', ['exception' => $e]);
+            }
 
             $return = CommandResult::error('batch_error', [], $e);
             if (isset($result)) {

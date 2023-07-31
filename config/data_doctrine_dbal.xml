@@ -38,6 +38,7 @@
         <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator">
             <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor" />
             <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory" />
+            <argument type="service" id="logger" on-invalid="null" />
         </service>
 
         <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory">

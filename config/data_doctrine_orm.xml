@@ -34,6 +34,7 @@
         <service id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Command\RecordIterator">
             <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryExecutor" />
             <argument type="service" id="Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\ResultIteratorFactory" />
+            <argument type="service" id="logger" on-invalid="null" />
         </service>
 
         <!-- Handlers -->
