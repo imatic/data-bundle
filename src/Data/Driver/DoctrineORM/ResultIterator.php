@@ -16,7 +16,7 @@ class ResultIterator extends BaseResultIterator
     public function __construct(
         QueryObjectInterface $queryObject,
         ArrayDisplayCriteriaFactory $displayCriteriaFactory,
-        FilterInterface $filter,
+        ?FilterInterface $filter,
         QueryExecutor $queryExecutor,
         array $criteria = []
     ) {

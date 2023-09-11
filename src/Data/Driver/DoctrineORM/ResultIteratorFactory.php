@@ -29,14 +29,14 @@ class ResultIteratorFactory
      */
     public function create(QueryObjectInterface $queryObject, array $criteria = [], FilterInterface $filter = null): ResultIterator
     {
-        if (!isset($criteria['filter_type'])) {
-            throw new \LogicException('Filter type has to be specified!');
+        if (!$filter && \array_key_exists('filter_type', $criteria)) {
+            $filter = $this->createFilter($criteria);
         }
 
         return new ResultIterator(
             $queryObject,
             $this->displayCriteriaFactory,
-            $filter ?: $this->createFilter($criteria),
+            $filter,
             $this->queryExecutor,
             $criteria
         );

@@ -15,7 +15,7 @@ class ResultIterator implements Iterator, \Countable
 {
     protected QueryObjectInterface $queryObject;
     protected ArrayDisplayCriteriaFactory $displayCriteriaFactory;
-    protected FilterInterface $filter;
+    protected ?FilterInterface $filter;
     protected QueryExecutorInterface $queryExecutor;
     protected int $position = 0;
     protected int $count = 0;
@@ -36,7 +36,7 @@ class ResultIterator implements Iterator, \Countable
     public function __construct(
         QueryObjectInterface $queryObject,
         ArrayDisplayCriteriaFactory $displayCriteriaFactory,
-        FilterInterface $filter,
+        ?FilterInterface $filter,
         QueryExecutorInterface $queryExecutor,
         array $criteria = []
     ) {
@@ -100,9 +100,13 @@ class ResultIterator implements Iterator, \Countable
     {
         $this->displayCriteriaFactory->setAttributes($this->criteria);
 
-        return $this->displayCriteriaFactory->createCriteria([
-            'filter' => clone $this->filter,
-        ]);
+        $criteria = [];
+
+        if ($this->filter) {
+            $criteria['filter'] = clone $this->filter;
+        }
+
+        return $this->displayCriteriaFactory->createCriteria($criteria);
     }
 
     protected function getLimit(): int
