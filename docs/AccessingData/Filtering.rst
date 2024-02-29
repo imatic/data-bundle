@@ -190,6 +190,10 @@ When we use the rule above, we get only users having ``username`` value ``john``
 
 - same as `DateRangeRule <date_range_rule_h_>`_ except it filters by time instead of date
 
+`EnumRule </Data/Query/DisplayCriteria/Filter/EnumRule.php>`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- used to filter values by `EnumType Field <https://symfony.com/doc/current/reference/forms/types/enum.html>`_
 
 `NumberRangeRule </Data/Query/DisplayCriteria/Filter/NumberRangeRule.php>`_
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
