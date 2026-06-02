@@ -6,7 +6,7 @@ use Imatic\Bundle\DataBundle\Data\Query\QueryObjectInterface;
 
 class UnsupportedQueryObjectException extends \InvalidArgumentException implements DataExceptionInterface
 {
-    public function __construct(QueryObjectInterface $queryObject, QueryExecutorInterface $queryExecutor = null)
+    public function __construct(QueryObjectInterface $queryObject, ?QueryExecutorInterface $queryExecutor = null)
     {
         $message = \sprintf(
             '"%s" is not supported by "%s"',

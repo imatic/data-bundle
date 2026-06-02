@@ -33,7 +33,7 @@ class QueryExecutor implements QueryExecutorInterface
         $this->resultNormalizer = $resultNormalizer;
     }
 
-    public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): int
+    public function count(BaseQueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): int
     {
         if (!$queryObject instanceof DoctrineDBALQueryObjectInterface) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
@@ -58,7 +58,7 @@ class QueryExecutor implements QueryExecutorInterface
         return $qb->select(\sprintf('COUNT(%s)', $count))->executeQuery()->fetchOne();
     }
 
-    public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function execute(BaseQueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!$queryObject instanceof DoctrineDBALQueryObjectInterface) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
@@ -77,7 +77,7 @@ class QueryExecutor implements QueryExecutorInterface
         return $qb->executeStatement();
     }
 
-    public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): array
+    public function executeAndCount(BaseQueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): array
     {
         return [
             $this->execute($queryObject, $displayCriteria),

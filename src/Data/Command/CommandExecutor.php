@@ -9,7 +9,7 @@ class CommandExecutor implements CommandExecutorInterface
     private ?LoggerInterface $logger;
     private bool $debug;
 
-    public function __construct(HandlerRepositoryInterface $handlerRepository, LoggerInterface $logger = null, bool $debug = false)
+    public function __construct(HandlerRepositoryInterface $handlerRepository, ?LoggerInterface $logger = null, bool $debug = false)
     {
         $this->handlerRepository = $handlerRepository;
         $this->logger = $logger;

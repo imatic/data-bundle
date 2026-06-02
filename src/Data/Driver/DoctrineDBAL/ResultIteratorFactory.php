@@ -30,7 +30,7 @@ class ResultIteratorFactory
     /**
      * @param mixed[] $criteria
      */
-    public function create(QueryObjectInterface $queryObject, array $criteria, FilterInterface $filter = null): ResultIterator
+    public function create(QueryObjectInterface $queryObject, array $criteria, ?FilterInterface $filter = null): ResultIterator
     {
         if (!isset($criteria['filter_type'])) {
             throw new LogicException('Filter type has to be specified!');

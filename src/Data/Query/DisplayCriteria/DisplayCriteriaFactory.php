@@ -41,7 +41,7 @@ class DisplayCriteriaFactory
     /**
      * @param mixed[] $pager
      */
-    public function createPager(string $componentId = null, array $pager = [], bool $persistent = false): PagerInterface
+    public function createPager(?string $componentId = null, array $pager = [], bool $persistent = false): PagerInterface
     {
         return $this->pagerFactory->createPager(
             (int) $this->displayCriteriaReader->readAttribute(
@@ -59,7 +59,7 @@ class DisplayCriteriaFactory
         );
     }
 
-    public function createFilter(string $componentId = null, FilterInterface $filter = null, bool $persistent = false): FilterInterface
+    public function createFilter(?string $componentId = null, ?FilterInterface $filter = null, bool $persistent = false): FilterInterface
     {
         if (!\is_null($filter)) {
             $filterData = $this
@@ -110,7 +110,7 @@ class DisplayCriteriaFactory
     /**
      * @param mixed[] $sorter
      */
-    public function createSorter(string $componentId = null, array $sorter = [], bool $persistent = false): SorterInterface
+    public function createSorter(?string $componentId = null, array $sorter = [], bool $persistent = false): SorterInterface
     {
         $sorterData = $this
             ->displayCriteriaReader

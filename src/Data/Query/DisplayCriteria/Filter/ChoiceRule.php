@@ -18,7 +18,7 @@ class ChoiceRule extends FilterRule
      * @param mixed[] $choices
      * @param mixed[] $options
      */
-    public function __construct(string $name, array $choices, bool $multiple = false, string $type = null, array $options = [])
+    public function __construct(string $name, array $choices, bool $multiple = false, ?string $type = null, array $options = [])
     {
         parent::__construct($name, $options);
 

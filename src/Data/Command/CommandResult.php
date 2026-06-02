@@ -22,7 +22,7 @@ final class CommandResult implements CommandResultInterface
      *
      * @throws \LogicException
      */
-    public function __construct(bool $success, array $messages = [], \Exception $exception = null)
+    public function __construct(bool $success, array $messages = [], ?\Exception $exception = null)
     {
         if ($success && $exception) {
             throw new \LogicException('Result cannot be successful with exception.');
@@ -37,7 +37,7 @@ final class CommandResult implements CommandResultInterface
     /**
      * @param mixed[] $parameters
      */
-    public static function success(string $message = null, array $parameters = []): self
+    public static function success(?string $message = null, array $parameters = []): self
     {
         $messages = [];
         if ($message) {
@@ -50,7 +50,7 @@ final class CommandResult implements CommandResultInterface
     /**
      * @param mixed[] $parameters
      */
-    public static function error(string $message = null, array $parameters = [], \Exception $exception = null): self
+    public static function error(?string $message = null, array $parameters = [], ?\Exception $exception = null): self
     {
         $messages = [];
 
@@ -103,7 +103,7 @@ final class CommandResult implements CommandResultInterface
         return $this->exception;
     }
 
-    public function throwException(string $exceptionClass = null): void
+    public function throwException(?string $exceptionClass = null): void
     {
         if (!$this->isSuccessful()) {
             if ($this->hasException()) {

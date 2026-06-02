@@ -28,7 +28,7 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
         $this->setFunction();
     }
 
-    public function setFunction(string $function = null): void
+    public function setFunction(?string $function = null): void
     {
         $this->dbalFunctionTemplate = $function ? \sprintf('%s(%%s)', $function) : '%s';
         $this->ormFunctionTemplate = $function ? 'unaccent_lower(%s)' : '%s';

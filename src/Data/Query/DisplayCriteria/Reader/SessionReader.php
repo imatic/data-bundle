@@ -15,7 +15,7 @@ class SessionReader implements DisplayCriteriaReader
         $this->requestStack = $requestStack;
     }
 
-    public function clearAttribute(string $name, string $component = null, $emptyValue = null): void
+    public function clearAttribute(string $name, ?string $component = null, $emptyValue = null): void
     {
         $session = $this->requestStack->getCurrentRequest()->getSession();
 
@@ -28,7 +28,7 @@ class SessionReader implements DisplayCriteriaReader
         }
     }
 
-    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false)
+    public function readAttribute(string $name, $default = null, ?string $component = null, bool $persistent = false)
     {
         $request = $this->requestStack->getCurrentRequest();
         $value = $default;
@@ -48,7 +48,7 @@ class SessionReader implements DisplayCriteriaReader
         return $value;
     }
 
-    protected function getAttributeSessionKey(string $name, string $component = null): ?string
+    protected function getAttributeSessionKey(string $name, ?string $component = null): ?string
     {
         if (null !== $component) {
             return "imatic.data.display_criteria.{$component}.{$name}";

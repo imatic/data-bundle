@@ -28,7 +28,7 @@ class QueryExecutorFactory implements QueryExecutorFactoryInterface
         $this->container = $container;
     }
 
-    public function createWithConnection(string $connectionName = null): QueryExecutorInterface
+    public function createWithConnection(?string $connectionName = null): QueryExecutorInterface
     {
         if ($connectionName !== null) {
             $connectionId = \sprintf('doctrine.dbal.%s_connection', $connectionName);

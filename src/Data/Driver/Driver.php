@@ -15,7 +15,7 @@ class Driver implements DriverInterface
         string $name,
         QueryExecutorInterface $queryExecutor,
         string $queryObjectClass,
-        ObjectManagerInterface $objectManager = null
+        ?ObjectManagerInterface $objectManager = null
     ) {
         $this->name = $name;
         $this->objectManager = $objectManager;

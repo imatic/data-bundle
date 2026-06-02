@@ -37,7 +37,7 @@ class QueryExecutor implements QueryExecutorInterface
         return new Paginator($query, true);
     }
 
-    public function count(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): int
+    public function count(BaseQueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): int
     {
         if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
@@ -55,7 +55,7 @@ class QueryExecutor implements QueryExecutorInterface
         return \count($paginator);
     }
 
-    public function execute(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function execute(BaseQueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null)
     {
         if (!($queryObject instanceof DoctrineORMQueryObjectInterface)) {
             throw new UnsupportedQueryObjectException($queryObject, $this);
@@ -70,7 +70,7 @@ class QueryExecutor implements QueryExecutorInterface
         return $this->getResult($queryObject, $qb->getQuery());
     }
 
-    public function executeAndCount(BaseQueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): array
+    public function executeAndCount(BaseQueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): array
     {
         return [
             $this->execute($queryObject, $displayCriteria),
@@ -99,7 +99,7 @@ class QueryExecutor implements QueryExecutorInterface
         $this->getManager()->rollback();
     }
 
-    public function getManager(BaseQueryObjectInterface $queryObject = null): EntityManager
+    public function getManager(?BaseQueryObjectInterface $queryObject = null): EntityManager
     {
         $manager = $this->managerRegistry->getManager($this->getManagerName($queryObject));
 
@@ -116,7 +116,7 @@ class QueryExecutor implements QueryExecutorInterface
         return $manager;
     }
 
-    private function getManagerName(BaseQueryObjectInterface $queryObject = null): ?string
+    private function getManagerName(?BaseQueryObjectInterface $queryObject = null): ?string
     {
         if ($queryObject instanceof ManagerQueryObjectInterface) {
             $name = $queryObject->getManagerName();

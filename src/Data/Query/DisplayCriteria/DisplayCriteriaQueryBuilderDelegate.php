@@ -45,7 +45,7 @@ class DisplayCriteriaQueryBuilderDelegate
         throw new UnsupportedQueryBuilderException($qb);
     }
 
-    public function apply(object $qb, QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): void
+    public function apply(object $qb, QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): void
     {
         if (null !== $displayCriteria) {
             $this->applyPager($qb, $displayCriteria->getPager());

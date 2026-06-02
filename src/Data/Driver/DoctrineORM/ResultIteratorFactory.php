@@ -27,7 +27,7 @@ class ResultIteratorFactory
     /**
      * @param mixed[] $criteria
      */
-    public function create(QueryObjectInterface $queryObject, array $criteria = [], FilterInterface $filter = null): ResultIterator
+    public function create(QueryObjectInterface $queryObject, array $criteria = [], ?FilterInterface $filter = null): ResultIterator
     {
         if (!$filter && \array_key_exists('filter_type', $criteria)) {
             $filter = $this->createFilter($criteria);
