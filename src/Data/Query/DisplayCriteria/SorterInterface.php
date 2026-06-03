@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
+/** @extends \IteratorAggregate<string, SorterRule> */
 interface SorterInterface extends \IteratorAggregate, \Countable
 {
     public function hasSorterRules(): bool;

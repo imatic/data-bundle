@@ -36,7 +36,7 @@ class AstUtil
         return \array_map(
             function (OrderByItem $obi) {
                 if (!$obi->expression instanceof PathExpression) {
-                    throw new LogicException(sprintf(
+                    throw new LogicException(\sprintf(
                         'Expected expression of type "%s", got "%s".',
                         PathExpression::class,
                         \gettype($obi->expression) === 'object' ? \get_class($obi->expression) : \gettype($obi->expression)

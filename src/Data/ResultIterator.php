@@ -10,6 +10,8 @@ use Iterator;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
+ *
+ * @implements Iterator<int, mixed>
  */
 class ResultIterator implements Iterator, \Countable
 {
@@ -51,14 +53,12 @@ class ResultIterator implements Iterator, \Countable
         $this->criteria = $criteria;
     }
 
-    #[\ReturnTypeWillChange]
-    public function current()
+    public function current(): mixed
     {
         return $this->cache[$this->position % $this->getLimit()];
     }
 
-    #[\ReturnTypeWillChange]
-    public function key()
+    public function key(): mixed
     {
         return $this->position;
     }

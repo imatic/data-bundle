@@ -34,7 +34,7 @@ class Cast extends FunctionNode
         $parser->match(Lexer::T_COMMA);
         $parser->match(Lexer::T_IDENTIFIER);
         $lexer = $parser->getLexer();
-        $this->typeString = $lexer->token['value'];
+        $this->typeString = $lexer->token->value;
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
 }

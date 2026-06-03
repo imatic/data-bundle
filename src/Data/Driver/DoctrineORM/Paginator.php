@@ -21,6 +21,8 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\LimitSubqueryOutp
  * Copy / paste of original paginator with different output walkers.
  *
  * It extends the original paginator so that this one can be passed in all places original can.
+ *
+ * @extends DoctrinePaginator<mixed>
  */
 class Paginator extends DoctrinePaginator
 {

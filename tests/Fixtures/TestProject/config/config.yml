@@ -1,7 +1,7 @@
 imports:
-    - { resource: '@ImaticDataBundle/config/data_doctrine.xml' }
-    - { resource: '@ImaticDataBundle/config/data_doctrine_orm.xml' }
-    - { resource: '@ImaticDataBundle/config/data_doctrine_dbal.xml' }
+    - { resource: '@ImaticDataBundle/config/data_doctrine.yaml' }
+    - { resource: '@ImaticDataBundle/config/data_doctrine_orm.yaml' }
+    - { resource: '@ImaticDataBundle/config/data_doctrine_dbal.yaml' }
 
 parameters:
     env(DATABASE_URL): ''
@@ -20,14 +20,15 @@ framework:
     csrf_protection:            true
     validation:
         enabled:                true
-        enable_annotations:     true
     translator:
         enabled:                true
     router:
         utf8:                   true
         resource:               '%kernel.project_dir%/config/routing.yml'
     default_locale:             cs_CZ
-    profiler:                   { only_exceptions: false }
+    profiler:
+        only_exceptions:            false
+        collect_serializer_data:    true
     property_access: ~
 
 twig:
@@ -48,6 +49,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         auto_mapping:           true
+        report_fields_where_declared: true
         resolve_target_entities: []
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         dql:
@@ -88,5 +90,3 @@ security:
 services:
     _defaults:
         public: true
-    annotation_reader:
-        class: Doctrine\Common\Annotations\AnnotationReader

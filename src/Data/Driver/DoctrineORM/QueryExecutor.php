@@ -28,6 +28,7 @@ class QueryExecutor implements QueryExecutorInterface
         $this->displayCriteriaQueryBuilder = $displayCriteriaQueryBuilder;
     }
 
+    /** @return Paginator<mixed> */
     private function createPaginator(DoctrineORMQueryObjectInterface $queryObject, Query $query): Paginator
     {
         if ($queryObject instanceof ExperimentalOptimizationQueryObjectInterface) {
@@ -105,7 +106,7 @@ class QueryExecutor implements QueryExecutorInterface
 
         if (!$manager instanceof EntityManager) {
             throw new \RuntimeException(
-                sprintf(
+                \sprintf(
                     'Only managers of type "%s" are supported. Instance of "%s given.',
                     EntityManager::class,
                     \get_class($manager)

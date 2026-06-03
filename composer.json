@@ -20,20 +20,20 @@
         "ext-json": "*",
         "doctrine/dbal": "^3.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "symfony/framework-bundle": "^4.4 || ^5.4 || ^6.2"
+        "symfony/framework-bundle": "^7.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "doctrine/orm": "^2.15",
         "friendsofphp/php-cs-fixer": "^3.2.1",
-        "imatic/form-bundle": "^5.0.0",
-        "imatic/testing": "^6.0.0",
+        "imatic/form-bundle": "^5.3.0",
+        "imatic/testing": "^6.1.0",
         "mikey179/vfsstream": "^1.4",
         "phpstan/phpstan": "^1.8",
-        "symfony/browser-kit": "^4.4 || ^5.0 || ^6.2",
+        "symfony/browser-kit": "^7.0",
         "symfony/phpunit-bridge": "^4.4 || ^5.0 || ^6.2",
-        "symfony/security-bundle": "^4.4 || ^5.0 || ^6.2",
-        "symfony/yaml": "^4.4 || ^5.0 || ^6.2"
+        "symfony/security-bundle": "^7.0",
+        "symfony/yaml": "^7.0"
     },
     "suggest": {
         "doctrine/dbal": "*",

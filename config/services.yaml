@@ -1,0 +1,39 @@
+imports:
+    - { resource: data.yaml }
+
+services:
+    _defaults:
+        public: false
+
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader:
+        arguments:
+            - '@request_stack'
+
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\ExtJsReader:
+        arguments:
+            - '@request_stack'
+
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory'
+            - '@form.factory'
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\DisplayCriteriaReader'
+
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory'
+            - '@form.factory'
+
+    Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory:
+        arguments:
+            - '@service_container'
+
+    # Form types
+    Imatic\Bundle\DataBundle\Form\Type\Filter\ArrayRuleType:
+        tags:
+            - { name: form.type }
+
+    # Form extensions
+    Imatic\Bundle\DataBundle\Form\Extension\EntityTypeQueryObjectExtension:
+        tags:
+            - { name: form.type_extension, extended-type: 'Symfony\Bridge\Doctrine\Form\Type\EntityType' }

@@ -3,69 +3,37 @@ namespace Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\E
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- *
- * @ORM\Table(name="test_user_order")
- *
- * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'test_user_order')]
 class Order
 {
-    /**
-     * @var int
-     *
-     * @ORM\Id()
-     *
-     * @ORM\GeneratedValue()
-     *
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="orders")
-     *
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'orders')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private $user;
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $deletedAt;
 
-    /**
-     * @param User $user
-     */
     public function __construct(User $user)
     {
         $this->user = $user;
     }
 
-    /**
-     * @return int
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
     public function getUser()
     {
         return $this->user;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getDeletedAt()
     {
         return $this->deletedAt;

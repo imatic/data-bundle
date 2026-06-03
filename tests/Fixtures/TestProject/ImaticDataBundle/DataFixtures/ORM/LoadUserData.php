@@ -13,7 +13,7 @@ class LoadUserData extends Fixture
     const ADAM_REF = 'user-adam';
     const EVA_REF = 'eva-ref';
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $adam = new User();
         $adam->setName('Adam');

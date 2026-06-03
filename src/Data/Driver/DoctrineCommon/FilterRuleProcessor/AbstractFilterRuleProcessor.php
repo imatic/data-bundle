@@ -25,7 +25,11 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
             $exprs[] = $this->processOneColumn($qb, $rule, $oneColumn);
         }
 
-        $qb->andWhere(\call_user_func_array([$qb->expr(), 'orX'], $exprs));
+        $qb->andWhere(
+            $qb instanceof DBALQueryBuilder
+                ? $qb->expr()->or(...$exprs)
+                : $qb->expr()->orX(...$exprs)
+        );
     }
 
     /**

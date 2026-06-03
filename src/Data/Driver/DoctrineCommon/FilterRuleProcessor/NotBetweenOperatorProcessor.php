@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
+use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
@@ -25,7 +26,13 @@ class NotBetweenOperatorProcessor extends AbstractFilterRuleProcessor
             $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end'], $rule->getType());
         }
 
-        return \call_user_func_array([$qb->expr(), 'orX'], $conditions);
+        return $conditions
+            ? (
+                $qb instanceof DBALQueryBuilder
+                    ? $qb->expr()->or(...$conditions)
+                    : $qb->expr()->orX(...$conditions)
+            )
+            : '1=1';
     }
 
     public function supports(object $qb, FilterRule $rule, $column): bool

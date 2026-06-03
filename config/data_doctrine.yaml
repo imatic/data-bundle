@@ -1,0 +1,39 @@
+services:
+    _defaults:
+        public: false
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\DisplayCriteriaQueryBuilder:
+        tags:
+            - { name: imatic_data.display_criteria_query_builder }
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\CallbackProcessor:
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 6 }
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\RuleBooleanProcessor:
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 5 }
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\BetweenOperatorProcessor:
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 4 }
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\NotBetweenOperatorProcessor:
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 3 }
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\ContainsOperatorProcessor:
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 2 }
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\EmptyOperatorProcessor:
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 1 }
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\InNotInOperatorProcessor:
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 1 }
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor\DefaultRuleProcessor:
+        tags:
+            - { name: imatic_data.filter_rule_processor, priority: 0 }

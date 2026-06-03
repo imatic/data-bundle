@@ -110,18 +110,17 @@ class Filter implements FilterInterface
         return $this;
     }
 
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         return $this->has($offset);
     }
 
-    #[\ReturnTypeWillChange]
-    public function offsetGet($offset)
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (!($value instanceof FilterRule) || $offset !== $value->getName()) {
             throw new \InvalidArgumentException('Value must be a instance of FilterRule and index must be same as rule name');
@@ -129,10 +128,7 @@ class Filter implements FilterInterface
         $this->add($value);
     }
 
-    /**
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         $this->remove($offset);
     }

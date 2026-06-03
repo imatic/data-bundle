@@ -3,6 +3,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
 use Doctrine\DBAL\Result;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface as DoctrineDBALQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerInterface;
@@ -47,13 +48,13 @@ class QueryExecutor implements QueryExecutorInterface
 
         $count = '1';
 
-        $groupByPart = $qb->getQueryPart('groupBy');
+        $groupByPart = \Closure::bind(fn () => $this->sqlParts['groupBy'], $qb, DBALQueryBuilder::class)();
         if ($groupByPart) {
             $count = \sprintf('DISTINCT(%s)', \implode(', ', $groupByPart));
-            $qb->resetQueryPart('groupBy');
+            $qb->resetGroupBy();
         }
 
-        $qb->resetQueryPart('orderBy');
+        $qb->resetOrderBy();
 
         return $qb->select(\sprintf('COUNT(%s)', $count))->executeQuery()->fetchOne();
     }

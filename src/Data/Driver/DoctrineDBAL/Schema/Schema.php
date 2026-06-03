@@ -3,6 +3,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\DBAL\Schema\Table;
@@ -12,6 +13,7 @@ use Doctrine\DBAL\Schema\Table;
  */
 class Schema
 {
+    /** @var AbstractSchemaManager<AbstractPlatform>|null */
     private ?AbstractSchemaManager $schemaManager = null;
     private Connection $connection;
 
@@ -142,6 +144,7 @@ class Schema
         throw new \InvalidArgumentException(\sprintf('Table with name "%s" does not exists.', $tableName));
     }
 
+    /** @return AbstractSchemaManager<AbstractPlatform> */
     private function getSchemaManager(): AbstractSchemaManager
     {
         if (null === $this->schemaManager) {

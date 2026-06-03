@@ -3,6 +3,10 @@ namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @extends \IteratorAggregate<string, FilterRule>
+ * @extends \ArrayAccess<string, FilterRule>
+ */
 interface FilterInterface extends \IteratorAggregate, \Countable, \ArrayAccess
 {
     public function get(string $index): ?FilterRule;
