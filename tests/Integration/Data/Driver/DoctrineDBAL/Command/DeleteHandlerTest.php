@@ -41,8 +41,8 @@ class DeleteHandlerTest extends WebTestCase
             ->from('test_user', 'u')
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
-            ->execute()
-            ->fetch()['count'];
+            ->executeQuery()
+            ->fetchOne();
     }
 
     /**
