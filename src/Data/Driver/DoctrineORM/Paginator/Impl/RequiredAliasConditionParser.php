@@ -6,7 +6,6 @@ use Doctrine\ORM\Query\AST\ComparisonExpression;
 use Doctrine\ORM\Query\AST\ConditionalExpression;
 use Doctrine\ORM\Query\AST\ConditionalPrimary;
 use Doctrine\ORM\Query\AST\ConditionalTerm;
-use Doctrine\ORM\Query\AST\InExpression;
 use Doctrine\ORM\Query\AST\InListExpression;
 use Doctrine\ORM\Query\AST\InputParameter;
 use Doctrine\ORM\Query\AST\InSubselectExpression;
@@ -60,9 +59,6 @@ class RequiredAliasConditionParser
                     self::parse($expr->leftExpression),
                     self::parse($expr->rightExpression)
                 );
-            },
-            InExpression::class => function (InExpression $expr): array {
-                return self::parse($expr->expression->simpleArithmeticExpression);
             },
             InListExpression::class => function (InListExpression $expr): array {
                 return self::parse($expr->expression->simpleArithmeticExpression);

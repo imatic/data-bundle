@@ -36,7 +36,7 @@ class ResultNormalizer implements ResultNormalizerInterface
         return array_map(function (array $row) use ($map, $platform) {
             foreach ($row as $key => $value) {
                 if (\array_key_exists($key, $map)) {
-                    $row[$key] = Type::getType($platform->getDoctrineTypeMapping($map[$key]))->convertToPHPValue($value, $platform);
+                    $row[$key] = Type::getType($map[$key])->convertToPHPValue($value, $platform);
                 }
             }
             return $row;

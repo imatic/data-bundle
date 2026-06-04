@@ -15,9 +15,6 @@ class CommandHandlerCompilerPass implements CompilerPassInterface
 {
     public const HANDLER_TAG = 'imatic_data.handler';
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedLocalVariables)
-     */
     public function process(ContainerBuilder $container): void
     {
         $repository = $container->getDefinition(HandlerRepository::class);

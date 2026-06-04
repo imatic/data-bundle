@@ -20,6 +20,7 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\D
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UsernameQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\DBAL\UserQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -169,9 +170,7 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals('Adam', $results[1]['name']);
     }
 
-    /**
-     * @dataProvider adamFilterRulesProvider
-     */
+    #[DataProvider('adamFilterRulesProvider')]
     public function testQueryExecutorshouldReturnAdamBasedOnFilterRule(FilterRule $rule)
     {
         $filter = new UserFilter();
@@ -184,7 +183,7 @@ class QueryExecutorTest extends WebTestCase
         $this->assertEquals('Adam', $results[0]['name']);
     }
 
-    public function adamFilterRulesProvider()
+    public static function adamFilterRulesProvider()
     {
         $dateBirthdayRule = new DateRangeRule('birthDate');
         $dateBirthdayRule->setValue([

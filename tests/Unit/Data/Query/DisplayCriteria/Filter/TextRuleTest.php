@@ -3,13 +3,12 @@ namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Query\DisplayCriteria\Filter;
 
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter\TextRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class TextRuleTest extends TestCase
 {
-    /**
-     * @dataProvider operatorNotRequiringValueProvider
-     */
+    #[DataProvider('operatorNotRequiringValueProvider')]
     public function testRuleShouldBeBoundWhenValueIsNotSetAndOperatorDoesntRequireIt($operator)
     {
         $textRule = new TextRule('name');
@@ -19,7 +18,7 @@ class TextRuleTest extends TestCase
         $this->assertTrue($textRule->isBound());
     }
 
-    public function operatorNotRequiringValueProvider()
+    public static function operatorNotRequiringValueProvider()
     {
         return [
             [FilterOperatorMap::OPERATOR_EMPTY],
@@ -27,9 +26,7 @@ class TextRuleTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider operatorRequiringValueProvider
-     */
+    #[DataProvider('operatorRequiringValueProvider')]
     public function testRuleShouldBeBoundAfterValueIsSetWhenOperatorRequiresValue($operator)
     {
         $textRule = new TextRule('name');
@@ -41,7 +38,7 @@ class TextRuleTest extends TestCase
         $this->assertTrue($textRule->isBound());
     }
 
-    public function operatorRequiringValueProvider()
+    public static function operatorRequiringValueProvider()
     {
         return [
             [FilterOperatorMap::OPERATOR_EQUAL],

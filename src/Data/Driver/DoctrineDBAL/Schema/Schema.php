@@ -7,6 +7,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -74,7 +75,7 @@ class Schema
 
         $columnTypes = [];
         foreach ($columns as $column) {
-            $columnTypes[$column->getName()] = $column->getType()->getName();
+            $columnTypes[$column->getName()] = Type::getTypeRegistry()->lookupName($column->getType());
         }
 
         if (!isset($this->overwrittenColumnTypes[$table])) {

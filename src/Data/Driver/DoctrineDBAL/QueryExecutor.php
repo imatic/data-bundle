@@ -48,7 +48,7 @@ class QueryExecutor implements QueryExecutorInterface
 
         $count = '1';
 
-        $groupByPart = \Closure::bind(fn () => $this->sqlParts['groupBy'], $qb, DBALQueryBuilder::class)();
+        $groupByPart = (new \ReflectionProperty(DBALQueryBuilder::class, 'groupBy'))->getValue($qb);
         if ($groupByPart) {
             $count = \sprintf('DISTINCT(%s)', \implode(', ', $groupByPart));
             $qb->resetGroupBy();

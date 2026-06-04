@@ -122,6 +122,7 @@ class Filter implements FilterInterface
 
     public function offsetSet(mixed $offset, mixed $value): void
     {
+        // @phpstan-ignore-next-line
         if (!($value instanceof FilterRule) || $offset !== $value->getName()) {
             throw new \InvalidArgumentException('Value must be a instance of FilterRule and index must be same as rule name');
         }

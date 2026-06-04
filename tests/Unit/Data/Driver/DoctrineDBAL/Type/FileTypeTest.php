@@ -1,10 +1,12 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Data\Driver\DoctrineDBAL\Type;
 
+use Doctrine\DBAL\Platforms\SQLitePlatform;
 use Doctrine\DBAL\Types\Type;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Type\FileType;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamWrapper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -21,9 +23,7 @@ class FileTypeTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->platform = $this->getMockBuilder('Doctrine\DBAL\Platforms\AbstractPlatform')
-            ->disableOriginalConstructor()
-            ->getMockForAbstractClass();
+        $this->platform = new SQLitePlatform();
 
         if (Type::hasType('file')) {
             Type::overrideType('file', 'Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Type\FileType');
@@ -35,9 +35,7 @@ class FileTypeTest extends TestCase
         FileType::setBasePath('');
     }
 
-    /**
-     * @dataProvider filePathProvider
-     */
+    #[DataProvider('filePathProvider')]
     public function testPathsShouldBePreservedInDatabaseIfBasePathIsNotSpecified($givenPath)
     {
         $file = new File($givenPath, false);
@@ -46,7 +44,7 @@ class FileTypeTest extends TestCase
         $this->assertEquals($givenPath, $actual);
     }
 
-    public function filePathProvider()
+    public static function filePathProvider()
     {
         return [
             ['file.txt'],

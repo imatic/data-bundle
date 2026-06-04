@@ -28,18 +28,18 @@ class DisplayCriteriaFactoryTest extends TestCase
         $requestStack
             ->expects($this->any())
             ->method('getCurrentRequest')
-            ->will($this->returnCallback(function () {
+            ->willReturnCallback(function () {
                 return $this->currentRequest;
-            }));
+            });
 
         $pagerFactory = $this->createMock('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory');
 
         $pagerFactory
             ->expects($this->any())
             ->method('createPager')
-            ->will($this->returnCallback(function ($page, $limit) {
+            ->willReturnCallback(function ($page, $limit) {
                 return new Pager($page, $limit);
-            }));
+            });
 
         $formFactory = Forms::createFormFactoryBuilder()->getFormFactory();
 

@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
@@ -20,10 +20,7 @@ class InNotInOperatorProcessor extends AbstractFilterRuleProcessor
             \in_array($rule->getOperator(), [FilterOperatorMap::OPERATOR_IN, FilterOperatorMap::OPERATOR_NOT_IN], true);
     }
 
-    /**
-     * @return int|string|null
-     */
-    private function getType(FilterRule $rule)
+    private function getType(FilterRule $rule): ArrayParameterType|string|null
     {
         $value = $rule->getValue();
         if ($rule->getType() || !\is_array($value)) {
@@ -31,7 +28,7 @@ class InNotInOperatorProcessor extends AbstractFilterRuleProcessor
         }
 
         return \count(\array_filter($value, 'is_numeric')) === \count($value)
-            ? Connection::PARAM_INT_ARRAY
-            : Connection::PARAM_STR_ARRAY;
+            ? ArrayParameterType::INTEGER
+            : ArrayParameterType::STRING;
     }
 }

@@ -3,7 +3,7 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Sql;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Doctrine\DBAL\Platforms\SqlitePlatform;
+use Doctrine\DBAL\Platforms\SQLitePlatform;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
@@ -18,7 +18,7 @@ class Sql
     public static function concat(array $args, Connection $connection): string
     {
         switch (\get_class($connection->getDatabasePlatform())) {
-            case SqlitePlatform::class:
+            case SQLitePlatform::class:
                 return \implode(' || ', $args);
             default:
                 return \sprintf('CONCAT(%s)', \implode(', ', $args));

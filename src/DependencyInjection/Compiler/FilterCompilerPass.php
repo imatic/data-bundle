@@ -11,9 +11,6 @@ class FilterCompilerPass implements CompilerPassInterface
 {
     public const FILTER_TAG = 'imatic_data.filter';
 
-    /**
-     * @SuppressWarnings(PHPMD.UnusedLocalVariables)
-     */
     public function process(ContainerBuilder $container): void
     {
         $factory = $container->findDefinition(FilterFactory::class);
