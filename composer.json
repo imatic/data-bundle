@@ -20,7 +20,7 @@
         "ext-json": "*",
         "doctrine/dbal": "^3.0",
         "doctrine/doctrine-bundle": "^2.0",
-        "symfony/framework-bundle": "^7.0"
+        "symfony/framework-bundle": "^7.4"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
@@ -30,10 +30,10 @@
         "imatic/testing": "^6.1.0",
         "mikey179/vfsstream": "^1.4",
         "phpstan/phpstan": "^1.8",
-        "symfony/browser-kit": "^7.0",
+        "symfony/browser-kit": "^7.4",
         "symfony/phpunit-bridge": "^4.4 || ^5.0 || ^6.2",
-        "symfony/security-bundle": "^7.0",
-        "symfony/yaml": "^7.0"
+        "symfony/security-bundle": "^7.4",
+        "symfony/yaml": "^7.4"
     },
     "suggest": {
         "doctrine/dbal": "*",
