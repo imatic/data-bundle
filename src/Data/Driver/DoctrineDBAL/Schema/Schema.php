@@ -75,7 +75,12 @@ class Schema
 
         $columnTypes = [];
         foreach ($columns as $column) {
-            $columnTypes[$column->getName()] = Type::getTypeRegistry()->lookupName($column->getType());
+            $typeName = Type::getTypeRegistry()->lookupName($column->getType());
+            $comment = $column->getComment();
+            if ($comment !== '' && preg_match('/\(DC2Type:([^)]+)\)/', $comment, $matches)) {
+                $typeName = $matches[1];
+            }
+            $columnTypes[$column->getName()] = $typeName;
         }
 
         if (!isset($this->overwrittenColumnTypes[$table])) {
