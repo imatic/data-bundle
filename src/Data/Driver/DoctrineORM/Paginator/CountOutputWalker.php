@@ -9,13 +9,15 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\Impl\AstUtil;
 
 class CountOutputWalker extends DoctrineWalker
 {
-    function __construct(
-        Query $query, ParserResult $parserResult, private readonly array $queryComponents
+    public function __construct(
+        Query $query,
+        ParserResult $parserResult,
+        private readonly array $queryComponents
     ) {
         parent::__construct($query, $parserResult, $queryComponents);
     }
 
-    function walkSelectStatement(SelectStatement $ast): string
+    public function walkSelectStatement(SelectStatement $ast): string
     {
         AstUtil::trim($ast, $this->queryComponents);
 

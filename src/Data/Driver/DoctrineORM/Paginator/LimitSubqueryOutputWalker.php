@@ -9,13 +9,15 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\Impl\AstUtil;
 
 class LimitSubqueryOutputWalker extends DoctrineWalker
 {
-    function __construct(
-        Query $query, ParserResult $parserResult, private readonly array $queryComponents
+    public function __construct(
+        Query $query,
+        ParserResult $parserResult,
+        private readonly array $queryComponents
     ) {
         parent::__construct($query, $parserResult, $queryComponents);
     }
 
-    function walkSelectStatementWithRowNumber(SelectStatement $AST): string
+    public function walkSelectStatementWithRowNumber(SelectStatement $AST): string
     {
         AstUtil::trim($AST, $this->queryComponents);
 
