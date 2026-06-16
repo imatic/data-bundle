@@ -2,20 +2,19 @@
 namespace Imatic\Bundle\DataBundle\Tests\Unit\Form\DataTransformer;
 
 use Imatic\Bundle\DataBundle\Form\DataTransformer\ArrayToStringTransformer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ArrayToStringTransformerTest extends TestCase
 {
-    /**
-     * @dataProvider reverseTransformDataProvider
-     */
+    #[DataProvider('reverseTransformDataProvider')]
     public function testReverseTransform($value, $expectedValue)
     {
         $transformer = new ArrayToStringTransformer();
         $this->assertEquals($expectedValue, $transformer->reverseTransform($value));
     }
 
-    public function reverseTransformDataProvider(): array
+    public static function reverseTransformDataProvider(): array
     {
         return [
             [
@@ -45,16 +44,14 @@ class ArrayToStringTransformerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider transformDataProvider
-     */
+    #[DataProvider('transformDataProvider')]
     public function testTransform($value, $expectedValue)
     {
         $transformer = new ArrayToStringTransformer();
         $this->assertEquals($expectedValue, $transformer->transform($value));
     }
 
-    public function transformDataProvider(): array
+    public static function transformDataProvider(): array
     {
         return [
             [

@@ -8,5 +8,5 @@ interface QueryExecutorFactoryInterface
     /**
      * @throws RuntimeException
      */
-    public function createWithConnection(string $connectionName = null): QueryExecutorInterface;
+    public function createWithConnection(?string $connectionName = null): QueryExecutorInterface;
 }

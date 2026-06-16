@@ -16,7 +16,7 @@ class Message implements MessageInterface
     /**
      * @param mixed[] $parameters
      */
-    public function __construct(string $type, string $text = null, array $parameters = [], string $translationDomain = null)
+    public function __construct(string $type, ?string $text = null, array $parameters = [], ?string $translationDomain = null)
     {
         $this->type = $type;
         $this->text = $text;

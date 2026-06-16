@@ -22,7 +22,7 @@ class DateRangeRule extends RangeRule
     public function ruleValue($value = null)
     {
         $args = \func_get_args();
-        $result = \call_user_func_array(parent::class . '::ruleValue', $args);
+        $result = parent::ruleValue(...$args);
         $this->updateValue();
 
         return $result;

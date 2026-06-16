@@ -21,7 +21,7 @@ class RecordIterator
     public function __construct(
         QueryExecutor $queryExecutor,
         ResultIteratorFactory $resultIteratorFactory,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->queryExecutor = $queryExecutor;
         $this->resultIteratorFactory = $resultIteratorFactory;
@@ -47,7 +47,7 @@ class RecordIterator
     /**
      * @param mixed $values
      */
-    protected function passValues($values, callable $callback, QueryObjectInterface $queryObject = null): CommandResult
+    protected function passValues($values, callable $callback, ?QueryObjectInterface $queryObject = null): CommandResult
     {
         try {
             $this->queryExecutor->getManager($queryObject)->beginTransaction();

@@ -1,0 +1,83 @@
+services:
+    _defaults:
+        public: false
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema:
+        arguments:
+            - '@database_connection'
+        calls:
+            - [overwriteColumnTypes, ['%imatic_data.driver.doctrine_dbal.schema.column_types%']]
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerInterface'
+            - '@service_container'
+
+    Imatic\Bundle\DataBundle\Data\Query\QueryExecutorDelegate:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor:
+        factory: ['@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutorFactory', createWithConnection]
+
+    imatic_data.driver.doctrine_dbal:
+        class: Imatic\Bundle\DataBundle\Data\Driver\Driver
+        tags:
+            - { name: imatic_data.driver }
+        arguments:
+            - 'doctrine.dbal'
+            - '@Imatic\Bundle\DataBundle\Data\Query\QueryExecutorDelegate'
+            - 'Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryObjectInterface'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\RecordIterator:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory'
+            - '@?logger'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultIteratorFactory:
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\ArrayDisplayCriteriaFactory'
+            - '@Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterFactory'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
+
+    # Handlers
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateHandler:
+        tags:
+            - { name: imatic_data.handler }
+        arguments:
+            - '@database_connection'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\EditHandler:
+        tags:
+            - { name: imatic_data.handler }
+        arguments:
+            - '@database_connection'
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema\Schema'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\CreateOrEditHandler:
+        tags:
+            - { name: imatic_data.handler }
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\DeleteHandler:
+        tags:
+            - { name: imatic_data.handler }
+        arguments:
+            - '@database_connection'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Command\SoftDeleteHandler:
+        tags:
+            - { name: imatic_data.handler }
+        arguments:
+            - '@Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\QueryExecutor'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizer:
+        arguments:
+            - '@database_connection'
+
+    Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizerInterface:
+        alias: Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\ResultNormalizer\ResultNormalizer

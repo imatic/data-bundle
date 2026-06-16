@@ -6,6 +6,7 @@ use Doctrine\ORM\QueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\QueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\SortableQueryObjectInterface;
 use Imatic\Bundle\DataBundle\Data\Query\ResultQueryObjectInterface;
+use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\Order;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 
 /**
@@ -18,7 +19,7 @@ class UserListWithOrderNumbersQuery implements QueryObjectInterface, ResultQuery
         return (new QueryBuilder($em))
             ->from(User::class, 'u')
             ->select('u, COUNT(o.id) order_num')
-            ->join('AppImaticDataBundle:Order', 'o', 'WITH', 'u.id = o.user')
+            ->join(Order::class, 'o', 'WITH', 'u.id = o.user')
             ->groupBy('u.id');
     }
 

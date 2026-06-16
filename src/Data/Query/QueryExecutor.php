@@ -13,17 +13,17 @@ class QueryExecutor implements QueryExecutorInterface
         $this->driverRepository = $driverRepository;
     }
 
-    public function execute(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function execute(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null)
     {
         return $this->driverRepository->getQueryExecutorFor($queryObject)->execute($queryObject, $displayCriteria);
     }
 
-    public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): int
+    public function count(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): int
     {
         return $this->driverRepository->getQueryExecutorFor($queryObject)->count($queryObject, $displayCriteria);
     }
 
-    public function executeAndCount(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): array
+    public function executeAndCount(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): array
     {
         return $this->driverRepository->getQueryExecutorFor($queryObject)->executeAndCount($queryObject, $displayCriteria);
     }

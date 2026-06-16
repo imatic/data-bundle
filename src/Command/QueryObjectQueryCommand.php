@@ -1,7 +1,6 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Command;
 
-use Doctrine\Common\Util\Debug;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -52,7 +51,7 @@ class QueryObjectQueryCommand extends Command
 
         $result = $this->queryExecutor->execute($queryObject);
 
-        $output->writeln(Debug::dump($result, 2, false, false));
+        $output->writeln(\var_export($result, true));
 
         return Command::SUCCESS;
     }

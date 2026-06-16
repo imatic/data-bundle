@@ -8,7 +8,7 @@ use Imatic\Bundle\DataBundle\Utils\ArrayPathResolver;
  */
 class RequestQueryReader extends SessionReader
 {
-    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false)
+    public function readAttribute(string $name, $default = null, ?string $component = null, bool $persistent = false)
     {
         $request = $this->requestStack->getCurrentRequest();
 
@@ -21,7 +21,7 @@ class RequestQueryReader extends SessionReader
             : $default;
     }
 
-    protected function createAttributePath(string $attributeName, string $component = null): string
+    protected function createAttributePath(string $attributeName, ?string $component = null): string
     {
         if ($component) {
             return $component . '[' . $attributeName . ']';

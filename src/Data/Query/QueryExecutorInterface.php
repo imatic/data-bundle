@@ -10,14 +10,14 @@ interface QueryExecutorInterface
      *
      * @return mixed
      */
-    public function execute(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null);
+    public function execute(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null);
 
     /**
      * Count matched objects.
      *
      * @return int Affected rows
      */
-    public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): int;
+    public function count(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): int;
 
     /**
      * Execute query and count the matched objects.
@@ -26,5 +26,5 @@ interface QueryExecutorInterface
      *
      * @return array<mixed,int>
      */
-    public function executeAndCount(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): array;
+    public function executeAndCount(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): array;
 }

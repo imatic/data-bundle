@@ -3,15 +3,18 @@ namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Schema;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Doctrine\DBAL\Schema\Sequence;
 use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Types\Type;
 
 /**
  * @author Miloslav Nenadal <miloslav.nenadal@imatic.cz>
  */
 class Schema
 {
+    /** @var AbstractSchemaManager<AbstractPlatform>|null */
     private ?AbstractSchemaManager $schemaManager = null;
     private Connection $connection;
 
@@ -72,7 +75,12 @@ class Schema
 
         $columnTypes = [];
         foreach ($columns as $column) {
-            $columnTypes[$column->getName()] = $column->getType()->getName();
+            $typeName = Type::getTypeRegistry()->lookupName($column->getType());
+            $comment = $column->getComment();
+            if ($comment !== '' && preg_match('/\(DC2Type:([^)]+)\)/', $comment, $matches)) {
+                $typeName = $matches[1];
+            }
+            $columnTypes[$column->getName()] = $typeName;
         }
 
         if (!isset($this->overwrittenColumnTypes[$table])) {
@@ -89,14 +97,22 @@ class Schema
     {
         $sequence = $this->findAutoincrementSequence($tableName);
 
-        if (!$sequence) {
+        if ($sequence) {
+            $sql = $this->connection->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
+            return (int) $this->connection->executeQuery($sql)->fetchOne();
+        }
+
+        // Fallback for SERIAL / IDENTITY columns not listed by listSequences()
+        $sequenceName = $this->connection->executeQuery(
+            'SELECT pg_get_serial_sequence(:table, :column)',
+            ['table' => $tableName, 'column' => 'id']
+        )->fetchOne();
+
+        if (!$sequenceName) {
             return null;
         }
 
-        $sql = $this->connection->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
-        $statement = $this->connection->executeQuery($sql);
-
-        return (int) $statement->fetchOne();
+        return (int) $this->connection->executeQuery("SELECT nextval('$sequenceName')")->fetchOne();
     }
 
     /**
@@ -142,6 +158,7 @@ class Schema
         throw new \InvalidArgumentException(\sprintf('Table with name "%s" does not exists.', $tableName));
     }
 
+    /** @return AbstractSchemaManager<AbstractPlatform> */
     private function getSchemaManager(): AbstractSchemaManager
     {
         if (null === $this->schemaManager) {

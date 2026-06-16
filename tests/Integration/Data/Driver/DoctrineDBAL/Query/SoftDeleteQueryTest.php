@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineDBAL;
 
-use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ArrayParameterType;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineDBAL\Query\SoftDeleteQuery;
 use Imatic\Bundle\DataBundle\Data\Query\QueryExecutorInterface;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
@@ -39,7 +39,7 @@ class SoftDeleteQueryTest extends WebTestCase
             ->from('test_user_order', 'r')
             ->where('r.id IN (:ids)')
             ->andWhere('r.deleted_at IS NULL')
-            ->setParameter('ids', $ids, Connection::PARAM_INT_ARRAY)
+            ->setParameter('ids', $ids, ArrayParameterType::INTEGER)
             ->executeQuery()
             ->fetchAllAssociative();
     }

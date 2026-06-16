@@ -83,6 +83,7 @@ return (new PhpCsFixer\Config())
                 'vendor',
                 'tests/Fixtures/TestProject/var',
             ])
+            ->notPath('tests/Fixtures/TestProject/config/reference.php')
             ->in(__DIR__)
     )
 ;

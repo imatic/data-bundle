@@ -16,7 +16,7 @@ class ObjectManager implements ObjectManagerInterface
     /**
      * @param string|null $name The object manager name (null for the default one).
      */
-    public function flush(string $name = null): void
+    public function flush(?string $name = null): void
     {
         $this->registry->getManager($name)->flush();
     }
@@ -24,7 +24,7 @@ class ObjectManager implements ObjectManagerInterface
     /**
      * @param string|null $name The object manager name (null for the default one).
      */
-    public function persist(object $object, string $name = null): void
+    public function persist(object $object, ?string $name = null): void
     {
         $this->registry->getManager($name)->persist($object);
     }
@@ -32,7 +32,7 @@ class ObjectManager implements ObjectManagerInterface
     /**
      * @param string|null $name The object manager name (null for the default one).
      */
-    public function remove(object $object, string $name = null): void
+    public function remove(object $object, ?string $name = null): void
     {
         $this->registry->getManager($name)->remove($object);
     }

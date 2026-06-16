@@ -16,12 +16,12 @@ interface DisplayCriteriaReader
      *
      * @return mixed
      */
-    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false);
+    public function readAttribute(string $name, $default = null, ?string $component = null, bool $persistent = false);
 
     /**
      * @param mixed $emptyValue
      */
-    public function clearAttribute(string $name, string $component = null, $emptyValue = null): void;
+    public function clearAttribute(string $name, ?string $component = null, $emptyValue = null): void;
 
     public function attributeName(string $name): string;
 }

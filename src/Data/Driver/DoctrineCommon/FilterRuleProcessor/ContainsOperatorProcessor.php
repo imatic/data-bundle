@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
 use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
@@ -28,7 +29,7 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
         $this->setFunction();
     }
 
-    public function setFunction(string $function = null): void
+    public function setFunction(?string $function = null): void
     {
         $this->dbalFunctionTemplate = $function ? \sprintf('%s(%%s)', $function) : '%s';
         $this->ormFunctionTemplate = $function ? 'unaccent_lower(%s)' : '%s';
@@ -36,7 +37,11 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
 
     protected function processOneColumn($qb, FilterRule $rule, $column)
     {
-        $qb->setParameter($this->getQueryParameterName($rule), '%' . $rule->getValue() . '%', $rule->getType());
+        $qb->setParameter(
+            $this->getQueryParameterName($rule),
+            '%' . $rule->getValue() . '%',
+            $rule->getType() ?? ParameterType::STRING
+        );
 
         if (!$this->hasPostgresqlConnection($qb)) {
             return $qb->expr()->{$rule->getOperator()}(
@@ -84,7 +89,7 @@ class ContainsOperatorProcessor extends AbstractFilterRuleProcessor
     private function hasPostgresqlConnection(object $qb): bool
     {
         if ($qb instanceof DBALQueryBuilder) {
-            $connection = $qb->getConnection();
+            $connection = \Closure::bind(fn () => $this->connection, $qb, DBALQueryBuilder::class)();
         } elseif ($qb instanceof ORMQueryBuilder) {
             $connection = $qb->getEntityManager()->getConnection();
         } else {

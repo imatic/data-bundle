@@ -21,6 +21,8 @@ use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\LimitSubqueryOutp
  * Copy / paste of original paginator with different output walkers.
  *
  * It extends the original paginator so that this one can be passed in all places original can.
+ *
+ * @extends DoctrinePaginator<mixed>
  */
 class Paginator extends DoctrinePaginator
 {
@@ -77,7 +79,7 @@ class Paginator extends DoctrinePaginator
      *
      * @param bool|null $useOutputWalkers
      */
-    public function setUseOutputWalkers($useOutputWalkers): self
+    public function setUseOutputWalkers($useOutputWalkers): static
     {
         $this->useOutputWalkers = $useOutputWalkers;
 
@@ -130,7 +132,7 @@ class Paginator extends DoctrinePaginator
 
             $this->appendTreeWalker($whereInQuery, WhereInWalker::class);
             $whereInQuery->setHint(WhereInWalker::HINT_PAGINATOR_HAS_IDS, \count($ids));
-            $whereInQuery->setFirstResult(null)->setMaxResults(null);
+            $whereInQuery->setFirstResult(0)->setMaxResults(null);
             $whereInQuery->setParameter(WhereInWalker::PAGINATOR_ID_ALIAS, $ids);
             $whereInQuery->setCacheable($this->query->isCacheable());
 
@@ -223,7 +225,7 @@ class Paginator extends DoctrinePaginator
             $this->unbindUnusedQueryParams($countQuery);
         }
 
-        $countQuery->setFirstResult(null)->setMaxResults(null);
+        $countQuery->setFirstResult(0)->setMaxResults(null);
 
         return $countQuery;
     }

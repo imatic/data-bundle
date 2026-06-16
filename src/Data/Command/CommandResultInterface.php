@@ -21,7 +21,7 @@ interface CommandResultInterface
     /**
      * @throws \Exception
      */
-    public function throwException(string $exceptionClass = null): void;
+    public function throwException(?string $exceptionClass = null): void;
 
     public function addMessage(MessageInterface $message): void;
 

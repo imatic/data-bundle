@@ -1,24 +1,19 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator;
 
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\AST\SelectStatement;
+use Doctrine\ORM\Query\ParserResult;
 use Doctrine\ORM\Tools\Pagination\LimitSubqueryOutputWalker as DoctrineWalker;
 use Imatic\Bundle\DataBundle\Data\Driver\DoctrineORM\Paginator\Impl\AstUtil;
 
 class LimitSubqueryOutputWalker extends DoctrineWalker
 {
-    /**
-     * @var mixed[]
-     */
-    private array $queryComponents;
-
-    /**
-     * @param mixed[] $queryComponents
-     */
-    public function __construct($query, $parserResult, array $queryComponents)
-    {
-        $this->queryComponents = $queryComponents;
-
+    public function __construct(
+        Query $query,
+        ParserResult $parserResult,
+        private readonly array $queryComponents
+    ) {
         parent::__construct($query, $parserResult, $queryComponents);
     }
 

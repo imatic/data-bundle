@@ -14,3 +14,4 @@
 Thumbs.db
 
 tests/Fixtures/TestProject/var
+tests/Fixtures/TestProject/config/reference.php

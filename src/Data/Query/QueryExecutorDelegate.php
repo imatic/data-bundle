@@ -12,17 +12,17 @@ class QueryExecutorDelegate implements QueryExecutorInterface
         $this->queryExecutorFactory = $queryExecutorFactory;
     }
 
-    public function count(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): int
+    public function count(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): int
     {
         return $this->getQueryExecutor($queryObject)->count($queryObject, $displayCriteria);
     }
 
-    public function execute(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null)
+    public function execute(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null)
     {
         return $this->getQueryExecutor($queryObject)->execute($queryObject, $displayCriteria);
     }
 
-    public function executeAndCount(QueryObjectInterface $queryObject, DisplayCriteriaInterface $displayCriteria = null): array
+    public function executeAndCount(QueryObjectInterface $queryObject, ?DisplayCriteriaInterface $displayCriteria = null): array
     {
         return $this->getQueryExecutor($queryObject)->executeAndCount($queryObject, $displayCriteria);
     }

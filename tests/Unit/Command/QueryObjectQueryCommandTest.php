@@ -21,7 +21,7 @@ class QueryObjectQueryCommandTest extends TestCase
         $queryObjectQueryCommand = new QueryObjectQueryCommand($this->queryExecutorMock);
 
         $application = new Application();
-        $application->add($queryObjectQueryCommand);
+        $application->addCommand($queryObjectQueryCommand);
 
         $command = $application->find('imatic:data:query-object-query');
         $commandTester = new CommandTester($command);
@@ -38,7 +38,7 @@ class QueryObjectQueryCommandTest extends TestCase
         $queryObjectQueryCommand = new QueryObjectQueryCommand($this->queryExecutorMock);
 
         $application = new Application();
-        $application->add($queryObjectQueryCommand);
+        $application->addCommand($queryObjectQueryCommand);
 
         $command = $application->find('imatic:data:query-object-query');
         $commandTester = new CommandTester($command);
@@ -59,7 +59,7 @@ class QueryObjectQueryCommandTest extends TestCase
         $queryObjectQueryCommand = new QueryObjectQueryCommand($this->queryExecutorMock);
 
         $application = new Application();
-        $application->add($queryObjectQueryCommand);
+        $application->addCommand($queryObjectQueryCommand);
 
         $command = $application->find('imatic:data:query-object-query');
         $commandTester = new CommandTester($command);

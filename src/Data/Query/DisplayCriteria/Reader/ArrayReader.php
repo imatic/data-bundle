@@ -19,7 +19,7 @@ class ArrayReader implements DisplayCriteriaReader
         $this->attributes = $attributes;
     }
 
-    public function clearAttribute(string $name, string $component = null, $emptyValue = null): void
+    public function clearAttribute(string $name, ?string $component = null, $emptyValue = null): void
     {
         if (null === $emptyValue) {
             unset($this->attributes[$name]);
@@ -28,7 +28,7 @@ class ArrayReader implements DisplayCriteriaReader
         }
     }
 
-    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false)
+    public function readAttribute(string $name, $default = null, ?string $component = null, bool $persistent = false)
     {
         return \array_key_exists($name, $this->attributes) ? $this->attributes[$name] : $default;
     }

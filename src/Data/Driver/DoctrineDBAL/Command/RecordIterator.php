@@ -22,7 +22,7 @@ class RecordIterator
     public function __construct(
         QueryExecutor $queryExecutor,
         ResultIteratorFactory $resultIteratorFactory,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->queryExecutor = $queryExecutor;
         $this->resultIteratorFactory = $resultIteratorFactory;

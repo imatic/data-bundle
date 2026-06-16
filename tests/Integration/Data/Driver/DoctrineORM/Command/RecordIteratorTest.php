@@ -10,6 +10,7 @@ use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Fi
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Query\UserListQuery;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\WebTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -31,9 +32,7 @@ class RecordIteratorTest extends WebTestCase
         $this->requestStack = self::getContainer()->get('request_stack');
     }
 
-    /**
-     * @dataProvider selectedProvider
-     */
+    #[DataProvider('selectedProvider')]
     public function testIteratorShouldIterateThroughAllRecordIdentifiersGivenFromSelectedOption($selected)
     {
         $command = new Command('unusedHandler', [
@@ -56,9 +55,7 @@ class RecordIteratorTest extends WebTestCase
         $this->assertEquals($selected, $ids);
     }
 
-    /**
-     * @dataProvider selectedProvider
-     */
+    #[DataProvider('selectedProvider')]
     public function testIteratorShouldIterateThroughAllRecordsGivenFromSelectedOption($selected)
     {
         $command = new Command('unusedHandler', [
@@ -88,7 +85,7 @@ class RecordIteratorTest extends WebTestCase
         $this->assertEquals($selected, $ids);
     }
 
-    public function selectedProvider()
+    public static function selectedProvider()
     {
         return [
             [[1]],

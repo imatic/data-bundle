@@ -22,9 +22,9 @@ class ExtJsReaderTest extends TestCase
         $requestStack
             ->expects($this->any())
             ->method('getCurrentRequest')
-            ->will($this->returnCallback(function () {
+            ->willReturnCallback(function () {
                 return $this->currentRequest;
-            }));
+            });
 
         $this->requestStack = $requestStack;
     }

@@ -8,7 +8,7 @@ class PagerFactory
 {
     protected int $defaultLimit = 100;
 
-    public function createPager(int $page, int $limit = null): PagerInterface
+    public function createPager(int $page, ?int $limit = null): PagerInterface
     {
         $limit = $limit !== null ? $limit : $this->defaultLimit;
 

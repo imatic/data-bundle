@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ExtJsReader extends SessionReader
 {
-    public function readAttribute(string $name, $default = null, string $component = null, bool $persistent = false)
+    public function readAttribute(string $name, $default = null, ?string $component = null, bool $persistent = false)
     {
         $request = $this->requestStack->getCurrentRequest();
 
@@ -78,7 +78,7 @@ class ExtJsReader extends SessionReader
         return \count($value) ? $value : null;
     }
 
-    protected function createAttributePath(string $attributeName, string $component = null): string
+    protected function createAttributePath(string $attributeName, ?string $component = null): string
     {
         $extAttributeName = $this->attributeName($attributeName);
 
