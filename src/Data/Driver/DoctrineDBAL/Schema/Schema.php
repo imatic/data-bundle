@@ -97,14 +97,22 @@ class Schema
     {
         $sequence = $this->findAutoincrementSequence($tableName);
 
-        if (!$sequence) {
+        if ($sequence) {
+            $sql = $this->connection->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
+            return (int) $this->connection->executeQuery($sql)->fetchOne();
+        }
+
+        // Fallback for SERIAL / IDENTITY columns not listed by listSequences()
+        $sequenceName = $this->connection->executeQuery(
+            'SELECT pg_get_serial_sequence(:table, :column)',
+            ['table' => $tableName, 'column' => 'id']
+        )->fetchOne();
+
+        if (!$sequenceName) {
             return null;
         }
 
-        $sql = $this->connection->getDatabasePlatform()->getSequenceNextValSQL($sequence->getName());
-        $statement = $this->connection->executeQuery($sql);
-
-        return (int) $statement->fetchOne();
+        return (int) $this->connection->executeQuery("SELECT nextval('$sequenceName')")->fetchOne();
     }
 
     /**
