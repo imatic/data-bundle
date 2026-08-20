@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Tests\Integration\Data\Driver\DoctrineCommon;
 
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderInterface;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaQueryBuilderDelegate;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Data\Filter\User\UserFilter;
 use Imatic\Bundle\DataBundle\Tests\Fixtures\TestProject\ImaticDataBundle\Entity\User;
@@ -162,11 +162,8 @@ class DisplayCriteriaQueryBuilderTest extends WebTestCase
         $this->assertEquals('Adam', $user->getName());
     }
 
-    /**
-     * @return DisplayCriteriaQueryBuilderInterface
-     */
-    private function getDisplayCriteriaQueryBuilder()
+    private function getDisplayCriteriaQueryBuilder(): DisplayCriteriaQueryBuilderDelegate
     {
-        return self::getContainer()->get(DisplayCriteriaQueryBuilderInterface::class);
+        return self::getContainer()->get(DisplayCriteriaQueryBuilderDelegate::class);
     }
 }
