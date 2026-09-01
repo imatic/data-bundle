@@ -24,7 +24,7 @@ class InNotInOperatorProcessor extends AbstractFilterRuleProcessor
     private function getType(FilterRule $rule): ParameterType|ArrayParameterType|string
     {
         $value = $rule->getValue();
-        if ($rule->getType() || !\is_array($value)) {
+        if (null !== $rule->getType() || !\is_array($value)) {
             return $rule->getType() ?? ParameterType::STRING;
         }
 

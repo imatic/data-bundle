@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
+use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\QueryBuilder as DBALQueryBuilder;
 use Doctrine\ORM\QueryBuilder as ORMQueryBuilder;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
@@ -51,5 +53,21 @@ abstract class AbstractFilterRuleProcessor implements FilterRuleProcessorInterfa
     protected function getQueryParameterName(FilterRule $rule): string
     {
         return $rule->getName();
+    }
+
+    /**
+     * Resolves the parameter type to a value accepted by the given query builder.
+     *
+     * ORM's QueryBuilder::setParameter() accepts null and infers the type from the value,
+     * DBAL's does not accept null at all, so a default has to be supplied there.
+     *
+     * @param ORMQueryBuilder|DBALQueryBuilder $qb
+     */
+    protected function resolveType(
+        $qb,
+        FilterRule $rule,
+        ParameterType|ArrayParameterType|string $dbalDefault = ParameterType::STRING,
+    ): ParameterType|ArrayParameterType|string|null {
+        return $rule->getType() ?? ($qb instanceof DBALQueryBuilder ? $dbalDefault : null);
     }
 }

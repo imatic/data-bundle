@@ -1,6 +1,8 @@
 <?php declare(strict_types=1);
 namespace Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria;
 
+use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\ParameterType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class FilterRule
@@ -36,8 +38,7 @@ abstract class FilterRule
 
     protected string $formType;
 
-    /** @var int|string|null */
-    protected $type = null;
+    protected ParameterType|ArrayParameterType|string|null $type = null;
 
     /**
      * @var mixed[]
@@ -210,10 +211,7 @@ abstract class FilterRule
         return $this;
     }
 
-    /**
-     * @param int|string|null $type
-     */
-    public function setType($type): self
+    public function setType(ParameterType|ArrayParameterType|string|null $type): self
     {
         $this->type = $type;
 
@@ -221,9 +219,9 @@ abstract class FilterRule
     }
 
     /**
-     * @return int|string|null
+     * A `null` type means "not specified" - the driver is left to infer it from the value.
      */
-    public function getType()
+    public function getType(): ParameterType|ArrayParameterType|string|null
     {
         return $this->type;
     }

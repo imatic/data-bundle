@@ -17,11 +17,10 @@ class Sql
      */
     public static function concat(array $args, Connection $connection): string
     {
-        switch (\get_class($connection->getDatabasePlatform())) {
-            case SQLitePlatform::class:
-                return \implode(' || ', $args);
-            default:
-                return \sprintf('CONCAT(%s)', \implode(', ', $args));
+        if ($connection->getDatabasePlatform() instanceof SQLitePlatform) {
+            return \implode(' || ', $args);
         }
+
+        return \sprintf('CONCAT(%s)', \implode(', ', $args));
     }
 }

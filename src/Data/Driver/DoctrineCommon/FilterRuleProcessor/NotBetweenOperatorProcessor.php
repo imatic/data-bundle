@@ -18,12 +18,12 @@ class NotBetweenOperatorProcessor extends AbstractFilterRuleProcessor
         $conditions = [];
         if ($start) {
             $conditions[] = $qb->expr()->lt($column, $this->getQueryParameter($rule) . 'Start');
-            $qb->setParameter($this->getQueryParameterName($rule) . 'Start', $rule->getValue()['start'], $rule->getType());
+            $qb->setParameter($this->getQueryParameterName($rule) . 'Start', $rule->getValue()['start'], $this->resolveType($qb, $rule));
         }
 
         if ($end) {
             $conditions[] = $qb->expr()->gt($column, $this->getQueryParameter($rule) . 'End');
-            $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end'], $rule->getType());
+            $qb->setParameter($this->getQueryParameterName($rule) . 'End', $rule->getValue()['end'], $this->resolveType($qb, $rule));
         }
 
         return $conditions
