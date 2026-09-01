@@ -2,6 +2,7 @@
 namespace Imatic\Bundle\DataBundle\Data\Driver\DoctrineCommon\FilterRuleProcessor;
 
 use Doctrine\DBAL\ArrayParameterType;
+use Doctrine\DBAL\ParameterType;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterRule;
 
@@ -20,11 +21,11 @@ class InNotInOperatorProcessor extends AbstractFilterRuleProcessor
             \in_array($rule->getOperator(), [FilterOperatorMap::OPERATOR_IN, FilterOperatorMap::OPERATOR_NOT_IN], true);
     }
 
-    private function getType(FilterRule $rule): ArrayParameterType|string|null
+    private function getType(FilterRule $rule): ParameterType|ArrayParameterType|string
     {
         $value = $rule->getValue();
         if ($rule->getType() || !\is_array($value)) {
-            return $rule->getType();
+            return $rule->getType() ?? ParameterType::STRING;
         }
 
         return \count(\array_filter($value, 'is_numeric')) === \count($value)
