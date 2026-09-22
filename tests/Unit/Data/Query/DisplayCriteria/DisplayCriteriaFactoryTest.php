@@ -5,7 +5,7 @@ use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\DisplayCriteriaFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Filter as FilterRule;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\FilterOperatorMap;
-use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Pager;
+use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory;
 use Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\Reader\RequestQueryReader;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Forms;
@@ -32,18 +32,10 @@ class DisplayCriteriaFactoryTest extends TestCase
                 return $this->currentRequest;
             });
 
-        $pagerFactory = $this->createMock('Imatic\Bundle\DataBundle\Data\Query\DisplayCriteria\PagerFactory');
-
-        $pagerFactory
-            ->expects($this->any())
-            ->method('createPager')
-            ->willReturnCallback(function ($page, $limit) {
-                return new Pager($page, $limit);
-            });
-
+        // Real factory, not a mock: the default limit handling is part of what is tested here.
         $formFactory = Forms::createFormFactoryBuilder()->getFormFactory();
 
-        $this->displayCriteriaFactory = new DisplayCriteriaFactory($pagerFactory, $formFactory, new RequestQueryReader($requestStack));
+        $this->displayCriteriaFactory = new DisplayCriteriaFactory(new PagerFactory(), $formFactory, new RequestQueryReader($requestStack));
     }
 
     public function testcreateCriteriaShouldReturnDefaultValuesIfComponentIsNotInsideRequest()
@@ -55,6 +47,28 @@ class DisplayCriteriaFactoryTest extends TestCase
         $this->assertEquals(1, $displayCriteria->getPager()->getPage());
         $this->assertCount(0, $displayCriteria->getFilter());
         $this->assertCount(0, $displayCriteria->getSorter());
+    }
+
+    public function testCreateCriteriaShouldUseConfiguredDefaultLimitWhenRequestHasNone()
+    {
+        $this->currentRequest = new Request();
+
+        $pagerFactory = new PagerFactory();
+        $pagerFactory->setDefaultLimit(20);
+
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack
+            ->expects($this->any())
+            ->method('getCurrentRequest')
+            ->willReturnCallback(fn () => $this->currentRequest);
+
+        $displayCriteriaFactory = new DisplayCriteriaFactory(
+            $pagerFactory,
+            Forms::createFormFactoryBuilder()->getFormFactory(),
+            new RequestQueryReader($requestStack)
+        );
+
+        $this->assertEquals(20, $displayCriteriaFactory->createCriteria()->getPager()->getLimit());
     }
 
     public function testCreateCriteriaShouldReturnValuesFromRequest()

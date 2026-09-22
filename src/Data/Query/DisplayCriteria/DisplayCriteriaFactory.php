@@ -43,19 +43,25 @@ class DisplayCriteriaFactory
      */
     public function createPager(?string $componentId = null, array $pager = [], bool $persistent = false): PagerInterface
     {
+        $page = $this->displayCriteriaReader->readAttribute(
+            DisplayCriteriaReader::PAGE,
+            $pager[DisplayCriteriaReader::PAGE] ?? null,
+            $componentId,
+            $persistent
+        );
+        // A missing limit has to stay null so that PagerFactory can apply the
+        // configured default (imatic_data.pager.default_limit). Casting it to 0
+        // makes Pager fall back to its own hardcoded DEFAULT_LIMIT instead.
+        $limit = $this->displayCriteriaReader->readAttribute(
+            DisplayCriteriaReader::LIMIT,
+            $pager[DisplayCriteriaReader::LIMIT] ?? null,
+            $componentId,
+            $persistent
+        );
+
         return $this->pagerFactory->createPager(
-            (int) $this->displayCriteriaReader->readAttribute(
-                DisplayCriteriaReader::PAGE,
-                $pager[DisplayCriteriaReader::PAGE] ?? null,
-                $componentId,
-                $persistent
-            ),
-            (int) $this->displayCriteriaReader->readAttribute(
-                DisplayCriteriaReader::LIMIT,
-                $pager[DisplayCriteriaReader::LIMIT] ?? null,
-                $componentId,
-                $persistent
-            )
+            (int) $page,
+            null !== $limit ? (int) $limit : null
         );
     }
 
